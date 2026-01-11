@@ -18,10 +18,10 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
         
@@ -43,11 +43,12 @@ jobs:
         head -n 50 EPG/epg.xml
         
     - name: Upload EPG files
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: epg-files
         path: EPG/
         retention-days: 7
+        if-no-files-found: warn
         
     - name: Commit and push EPG files
       run: |
