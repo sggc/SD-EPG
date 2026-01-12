@@ -1,9 +1,9 @@
 name: TVMAO EPG Crawler
 
 on:
-  # 每天北京时间早上6点运行 (UTC时间22:00)
+  # 每天北京时间早上3点运行 (UTC时间19:00)
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 19 * * *'
   # 允许手动触发
   workflow_dispatch:
   # 推送到main或master分支时触发
