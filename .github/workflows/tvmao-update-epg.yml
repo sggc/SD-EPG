@@ -1,0 +1,94 @@
+name: TVMAO EPG
+
+on:
+  schedule:
+    - cron: '0 19 * * *'  # 北京时间每天3点运行（UTC 19:00）
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 拉取完整仓库历史，解决浅克隆冲突
+        ref: ${{ github.ref }}  # 锁定当前分支（main/master）
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        else
+          pip install requests beautifulsoup4 lxml
+        fi
+        
+    - name: Run EPG Crawler
+      run: |
+        python scripts/tvmao_epg_crawler.py --province 370000
+        
+    - name: Display results
+      run: |
+        echo "生成的文件:"
+        ls -lh EPG/
+        echo ""
+        echo "文件内容预览 (前50行):"
+        if [ -f "EPG/tvmao.xml" ]; then
+          head -n 50 EPG/tvmao.xml
+        else
+          echo "警告：tvmao.xml 文件未生成"
+        fi
+        
+    - name: Upload EPG files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-files
+        path: EPG/
+        retention-days: 7
+        if-no-files-found: warn
+        
+    - name: Commit and push EPG files (解决推送冲突)
+      run: |
+        # 1. 配置 Git 用户信息
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # 2. 先拉取远程最新代码，关键：使用 rebase 模式 + 自动解决冲突（优先保留本地生成的 EPG 文件）
+        # --allow-unrelated-histories：兼容本地与远程历史不一致的极端情况
+        # -X ours：冲突时优先使用本地文件（即本次生成的 tvmao.xml/.gz），放弃远程的旧版本
+        git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
+        
+        # 3. 添加生成的 EPG 文件
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz
+        
+        # 4. 仅当有变更时才提交
+        if ! git diff --quiet && ! git diff --staged --quiet; then
+          git commit -m "Update EPG data [skip ci]"
+          
+          # 5. 安全推送：使用 GITHUB_TOKEN + 明确分支，避免权限和分支错误
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          echo "EPG 文件已成功提交并推送"
+        else
+          echo "无 EPG 文件变更，跳过提交和推送"
+          exit 0
+        fi
+        
+        # 6. 兜底：若 rebase 失败，回滚并尝试普通推送（可选，应对极端情况）
+        if [ $? -ne 0 ]; then
+          echo "Rebase 或推送失败，尝试回滚并普通推送"
+          git rebase --abort
+          git commit -m "Update EPG data [skip ci]" || true
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }} --force-with-lease || true
+        fi
