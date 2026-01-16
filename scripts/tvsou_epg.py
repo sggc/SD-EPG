@@ -91,6 +91,7 @@ class TvsouEPG:
         if not html:
             return []
         
+        # 修复：这里应该调用parse_programs，而不是get_day_programs
         programs = self.parse_programs(html)
         
         # 组合日期和时间，生成完整的开始时间
@@ -183,7 +184,6 @@ class TvsouEPG:
         
         return xml_str
 
-    
     def compress_gz(self, xml_str, output_path):
         """压缩为.gz文件"""
         with gzip.open(output_path, 'wt', encoding='utf-8') as f:
