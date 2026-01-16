@@ -319,13 +319,13 @@ class TvmaoEPGCrawler:
         pretty_xml = '\n'.join(lines)
         
         # 保存XML
-        xml_path = os.path.join(self.output_dir, 'epg.xml')
+        xml_path = os.path.join(self.output_dir, 'tvmao.xml')
         with open(xml_path, 'w', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {xml_path}")
         
         # 保存压缩版
-        gz_path = os.path.join(self.output_dir, 'epg.xml.gz')
+        gz_path = os.path.join(self.output_dir, 'tvmao.xml.gz')
         with gzip.open(gz_path, 'wt', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {gz_path}")
