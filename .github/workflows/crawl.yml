@@ -1,9 +1,9 @@
-name: TVMAO EPG Crawler
+name: TVMAO EPG
 
 on:
   # 每天北京时间早上3点运行 (UTC时间19:00)
   schedule:
-    - cron: '0 19 * * *'
+    - cron: '0 19,4 * * *'
   # 允许手动触发
   workflow_dispatch:
   # 推送到main或master分支时触发
@@ -32,7 +32,7 @@ jobs:
         
     - name: Run EPG Crawler
       run: |
-        python tvmao_epg_crawler.py --province 370000
+        python scripts/tvmao_epg_crawler.py --province 370000
         
     - name: Display results
       run: |
