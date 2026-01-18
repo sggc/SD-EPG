@@ -17,7 +17,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # 拉取完整仓库历史，解决浅克隆冲突
+        fetch-depth: 0  # 拉取完整仓库历史
         ref: ${{ github.ref }}
     
     - name: Set up Python
@@ -65,17 +65,20 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 2. 先拉取远程最新代码（此时工作区是干净的）
+        # 2. 先把刚生成的文件暂存起来（stash），解决 "unstaged changes" 报错
+        # -u 参数包含未跟踪的文件，确保工作区变干净
+        git stash push -u -m "Temporarily stash EPG files" || true
+        
+        # 3. 拉取远程最新代码（此时工作区干净，不会报错）
         git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
         
-        # 3. 使用 --cached 删除旧的 EPG 文件索引（只从暂存区删除，不影响工作区的新文件）
-        # 这会标记旧文件的删除，同时保留工作区新生成的文件
-        git rm --cached -rf EPG/ || true
+        # 4. 恢复之前暂存的新文件
+        git stash pop || true
         
-        # 4. 添加新生成的 EPG 文件
-        git add EPG/
+        # 5. 关键点：只添加本次更新的 tvmao 文件，不影响目录下其他文件（如 epg.xml 等）
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz
         
-        # 5. 检查暂存区 和 HEAD 的差异，有变化就提交
+        # 6. 检查暂存区变化并提交
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data [skip ci]"
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
