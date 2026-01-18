@@ -65,18 +65,17 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 2. 关键修复：先删除远程旧文件索引（避免合并冲突或内容判断失误）
-        # 使用 || true 确保即使文件不存在也不报错
-        git rm -rf EPG/ || true
-        
-        # 3. 拉取远程最新代码
+        # 2. 先拉取远程最新代码（此时工作区是干净的）
         git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
+        
+        # 3. 使用 --cached 删除旧的 EPG 文件索引（只从暂存区删除，不影响工作区的新文件）
+        # 这会标记旧文件的删除，同时保留工作区新生成的文件
+        git rm --cached -rf EPG/ || true
         
         # 4. 添加新生成的 EPG 文件
         git add EPG/
         
-        # 5. 关键修复：只检查暂存区 和 HEAD 的差异
-        # git diff --cached 是比较暂存区和仓库，这才是判断是否需要提交的正确方式
+        # 5. 检查暂存区 和 HEAD 的差异，有变化就提交
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data [skip ci]"
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
