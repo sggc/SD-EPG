@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0  # 拉取完整仓库历史，解决浅克隆冲突
-        ref: ${{ github.ref }}  # 锁定当前分支（main/master）
+        ref: ${{ github.ref }}
     
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -59,44 +59,28 @@ jobs:
         retention-days: 7
         if-no-files-found: warn
         
-    - name: Commit and push EPG files (解决未暂存变更 + 推送冲突)
+    - name: Commit and push EPG files
       run: |
         # 1. 配置 Git 用户信息
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 2. 关键：暂存本地未提交的变更（EPG文件），让工作区变干净（解决 unstaged changes 错误）
-        # stash save：给暂存起个名字，方便识别；--include-untracked：包含新增的未跟踪文件（tvmao.xml/.gz）
-        # 容错：若没有可暂存的变更，stash 不会报错，直接跳过
-        git stash save "Temporarily stash EPG files before pull" --include-untracked
+        # 2. 关键修复：先删除远程旧文件索引（避免合并冲突或内容判断失误）
+        # 使用 || true 确保即使文件不存在也不报错
+        git rm -rf EPG/ || true
         
-        # 3. 拉取远程最新代码，使用 rebase 模式 + 自动解决冲突（优先保留后续恢复的本地 EPG 文件）
+        # 3. 拉取远程最新代码
         git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
         
-        # 4. 关键：恢复之前暂存的 EPG 文件变更，回到工作区
-        # stash pop：恢复最新的 stash 并删除该 stash；--index：尝试恢复暂存状态（避免文件状态混乱）
-        # 容错：若 stash 为空，pop 失败不中断流程
-        git stash pop --index || true
+        # 4. 添加新生成的 EPG 文件
+        git add EPG/
         
-        # 5. 添加生成的 EPG 文件（此时文件是最新的，且已同步远程代码）
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz
-        
-        # 6. 仅当有变更时才提交
-        if ! git diff --quiet && ! git diff --staged --quiet; then
+        # 5. 关键修复：只检查暂存区 和 HEAD 的差异
+        # git diff --cached 是比较暂存区和仓库，这才是判断是否需要提交的正确方式
+        if ! git diff --cached --quiet; then
           git commit -m "Update EPG data [skip ci]"
-          
-          # 7. 安全推送：使用 GITHUB_TOKEN + 明确分支
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
           echo "EPG 文件已成功提交并推送"
         else
           echo "无 EPG 文件变更，跳过提交和推送"
-          exit 0
-        fi
-        
-        # 8. 兜底：若步骤执行失败，回滚并尝试普通推送（应对极端情况）
-        if [ $? -ne 0 ]; then
-          echo "执行过程中出现错误，尝试回滚并兜底推送"
-          git rebase --abort || true
-          git commit -m "Update EPG data [skip ci]" || true
-          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }} --force-with-lease || true
         fi
