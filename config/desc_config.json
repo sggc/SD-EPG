@@ -1,0 +1,21 @@
+{
+  "reference_epg": {
+    "name": "聚合后的EPG",
+    "url": "https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/EPG/sggc.xml.gz",
+    "compressed": true
+  },
+  "existing_db": "https://raw.githubusercontent.com/sggc/SDU-EPG/main/EPG/desc_database.json",
+  "accumulate": true,
+  "desc_sources": [
+    {
+      "name": "mxdyeah",
+      "url": "https://tv.mxdyeah.top/epgphp/t.xml.gz",
+      "compressed": true
+    },
+    {
+      "name": "epgpw",
+      "url": "https://epg.pw/xmltv/epg.xml.gz",
+      "compressed": true
+    }
+  ]
+}
