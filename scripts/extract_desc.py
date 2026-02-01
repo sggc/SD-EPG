@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
 EPG Desc 提取器
-优化：智能去除节目名中的日期/序号，避免重复存储
+优化：
+1. 修复HTML实体乱码
+2. 过滤无效desc（暂无描述等）
+3. 智能清洗节目名
 """
 import os
 import sys
@@ -10,6 +13,7 @@ import logging
 import argparse
 import gzip
 import re
+import html
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 import requests
@@ -32,11 +36,43 @@ class DescExtractor:
         self.target_channels = {}
         self.desc_db = {}
         
+        # 无效desc的关键词
+        self.invalid_desc_patterns = [
+            r'^暂无',
+            r'^无节目',
+            r'^无简介',
+            r'^无描述',
+            r'^无内容',
+            r'^节目简介暂无',
+            r'^暂时没有',
+            r'^敬请期待',
+            r'^精彩内容',
+            r'^稍后播出',
+            r'^即将播出',
+            r'^播出中',
+            r'^正在播出',
+            r'^节目预告',
+            r'^详情请',
+            r'^更多精彩',
+            r'^敬请关注',
+            r'^欢迎收看',
+            r'^精彩节目',
+            r'^本节目',
+            r'^\s*$',
+            r'^null$',
+            r'^undefined$',
+            r'^N/A$',
+            r'^TBA$',
+            r'^TBD$',
+        ]
+        
         self.stats = {
             'sources_processed': 0,
             'total_descs': 0,
             'new_descs': 0,
             'deduplicated': 0,
+            'invalid_filtered': 0,
+            'html_fixed': 0,
             'channels_with_desc': 0
         }
     
@@ -44,14 +80,80 @@ class DescExtractor:
         """标准化文本用于索引key"""
         if not text:
             return ""
-        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：]', '', text)
+        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：·""\"Mo Mo Mo Mo]', '', text)
         return text.lower()
     
+    def fix_html_entities(self, text):
+        """
+        修复HTML实体乱码
+        如: &amp;amp;amp;lt;xxx&amp;amp;amp;gt; -> 《xxx》
+        """
+        if not text:
+            return text
+        
+        original = text
+        fixed = text
+        
+        # 多次解码，处理多层转义
+        max_iterations = 10
+        for _ in range(max_iterations):
+            decoded = html.unescape(fixed)
+            if decoded == fixed:
+                break
+            fixed = decoded
+        
+        # 替换常见的HTML标签残留为中文符号
+        replacements = [
+            (r'<', '《'),
+            (r'>', '》'),
+            (r'&lt;', '《'),
+            (r'&gt;', '》'),
+            (r'&quot;', '"'),
+            (r'&apos;', "'"),
+            (r'&nbsp;', ' '),
+            (r'&amp;', '&'),
+        ]
+        
+        for pattern, replacement in replacements:
+            fixed = fixed.replace(pattern, replacement)
+        
+        # 清理多余的空白
+        fixed = re.sub(r'\s+', ' ', fixed).strip()
+        
+        if fixed != original:
+            self.stats['html_fixed'] += 1
+        
+        return fixed
+    
+    def is_valid_desc(self, desc):
+        """
+        检查desc是否有效
+        过滤掉"暂无描述"等占位文本
+        """
+        if not desc:
+            return False
+        
+        desc_clean = desc.strip()
+        
+        # 太短的不要
+        if len(desc_clean) < 5:
+            return False
+        
+        # 检查无效模式
+        for pattern in self.invalid_desc_patterns:
+            if re.match(pattern, desc_clean, re.IGNORECASE):
+                self.stats['invalid_filtered'] += 1
+                return False
+        
+        # 如果全是标点符号或数字，也不要
+        if re.match(r'^[\d\s\.\,\!\?\-\+\*\/\\\|\@\#\$\%\^\&\(\)\[\]\{\}\<\>\=\:\;\'\"\`\~]+$', desc_clean):
+            self.stats['invalid_filtered'] += 1
+            return False
+        
+        return True
+    
     def clean_program_title(self, title):
-        """
-        清洗节目名称，去除日期/序号等变化部分
-        返回: (cleaned_title, original_title, is_cleaned)
-        """
+        """清洗节目名称"""
         if not title:
             return "", "", False
         
@@ -59,61 +161,44 @@ class DescExtractor:
         cleaned = original
         
         # 1. 去除末尾的日期格式
-        # 如: "新闻联播 20240115" -> "新闻联播"
-        # 如: "天气预报2024-01-15" -> "天气预报"
-        # 如: "晚间新闻（2024.01.15）" -> "晚间新闻"
         date_patterns = [
-            r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*$',  # 2024-01-15, 2024.01.15, 2024年1月15日
-            r'\s*[\(（]?\d{8}[\)）]?\s*$',  # 20240115
-            r'\s*[\(（]?\d{4}[-./]\d{1,2}[-./]\d{1,2}[\)）]?\s*$',  # 2024/01/15
-            r'\s*\d{1,2}[-./月]\d{1,2}[日]?\s*$',  # 01-15, 1月15日
+            r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*$',
+            r'\s*[\(（]?\d{8}[\)）]?\s*$',
+            r'\s*[\(（]?\d{4}[-./]\d{1,2}[-./]\d{1,2}[\)）]?\s*$',
+            r'\s*\d{1,2}[-./月]\d{1,2}[日]?\s*$',
         ]
         for pattern in date_patterns:
             cleaned = re.sub(pattern, '', cleaned)
         
-        # 2. 去除末尾的纯数字序号（但保留有意义的数字如"新闻30分"）
-        # 如: "非诚勿扰 20240115期" -> "非诚勿扰"
-        # 如: "快乐大本营第20240115期" -> "快乐大本营"
+        # 2. 去除期数/集数
         episode_patterns = [
-            r'\s*第?\d{6,}期?\s*$',  # 第20240115期, 20240115期
-            r'\s*[\(（]\d{6,}[\)）]\s*$',  # (20240115)
-            r'\s*第\d{1,4}期\s*$',  # 第123期
-            r'\s*第\d{1,4}集\s*$',  # 第123集
-            r'\s*EP?\d{1,4}\s*$',  # E01, EP01
-            r'\s*\(\d{1,4}\)\s*$',  # (1), (123)
+            r'\s*第?\d{6,}期?\s*$',
+            r'\s*[\(（]\d{6,}[\)）]\s*$',
+            r'\s*第\d{1,4}期\s*$',
+            r'\s*第\d{1,4}集\s*$',
+            r'\s*EP?\d{1,4}\s*$',
+            r'\s*\(\d{1,4}\)\s*$',
+            r'\s*[\(（]\d{1,3}[\)）]\s*$',
+            r'\s*第\d{1,3}回\s*$',
         ]
         for pattern in episode_patterns:
             cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
         
-        # 3. 去除末尾的年份
-        # 如: "春节联欢晚会2024" -> "春节联欢晚会"
-        # 但保留开头的年份如 "2024春晚"
+        # 3. 去除末尾年份
         cleaned = re.sub(r'\s*\d{4}\s*$', '', cleaned)
         
-        # 4. 去除常见的重播/首播标记
+        # 4. 去除重播/首播标记
         cleaned = re.sub(r'\s*[\(（]?重播[\)）]?\s*$', '', cleaned)
         cleaned = re.sub(r'\s*[\(（]?首播[\)）]?\s*$', '', cleaned)
         cleaned = re.sub(r'\s*[\(（]?直播[\)）]?\s*$', '', cleaned)
         
-        # 5. 去除电视剧集数标记
-        # 如: "狂飙(1)" -> "狂飙"
-        # 如: "狂飙 第1集" -> "狂飙"
-        # 如: "狂飙1" -> "狂飙" (仅当数字在末尾且<=3位)
-        drama_patterns = [
-            r'\s*[\(（]\d{1,3}[\)）]\s*$',  # (1), (12)
-            r'\s*第\d{1,3}集\s*$',  # 第1集
-            r'\s*第\d{1,3}回\s*$',  # 第1回
-            r'\s*\d{1,2}\s*$',  # 末尾1-2位数字（谨慎处理）
-        ]
-        for pattern in drama_patterns:
-            new_cleaned = re.sub(pattern, '', cleaned)
-            # 只有当去除后还有内容时才应用
-            if new_cleaned.strip():
-                cleaned = new_cleaned
+        # 5. 去除末尾1-2位数字
+        new_cleaned = re.sub(r'\s*\d{1,2}\s*$', '', cleaned)
+        if new_cleaned.strip() and len(new_cleaned) >= 2:
+            cleaned = new_cleaned
         
         cleaned = cleaned.strip()
         
-        # 如果清洗后为空或太短，使用原标题
         if len(cleaned) < 2:
             cleaned = original
         
@@ -227,9 +312,13 @@ class DescExtractor:
                     continue
                 
                 original_title = title_elem.text.strip()
-                desc = desc_elem.text.strip()
+                raw_desc = desc_elem.text.strip()
                 
-                if not desc or len(desc) < 5:
+                # 修复HTML实体乱码
+                desc = self.fix_html_entities(raw_desc)
+                
+                # 检查是否有效
+                if not self.is_valid_desc(desc):
                     continue
                 
                 # 清洗节目名称
@@ -244,11 +333,10 @@ class DescExtractor:
                 if norm_channel not in self.desc_db:
                     self.desc_db[norm_channel] = {}
                 
-                # 使用清洗后的标题作为key
                 if norm_title not in self.desc_db[norm_channel]:
                     self.desc_db[norm_channel][norm_title] = {
                         "channel": canonical_name,
-                        "title": cleaned_title,  # 存储清洗后的标题
+                        "title": cleaned_title,
                         "desc": desc
                     }
                     count += 1
@@ -304,7 +392,7 @@ class DescExtractor:
         
         logger.info(f"数据库已保存: {self.output_path} ({size_str})")
         logger.info(f"频道数: {self.stats['channels_with_desc']}, Desc总数: {self.stats['total_descs']}")
-        logger.info(f"去重节目数: {self.stats['deduplicated']}")
+        logger.info(f"HTML修复: {self.stats['html_fixed']}, 无效过滤: {self.stats['invalid_filtered']}")
     
     def save_log(self):
         log_path = self.output_path.replace('.json', '_log.txt')
@@ -320,6 +408,8 @@ class DescExtractor:
             f.write(f"处理EPG源数: {self.stats['sources_processed']}\n")
             f.write(f"新增desc数: {self.stats['new_descs']}\n")
             f.write(f"去重节目数: {self.stats['deduplicated']}\n")
+            f.write(f"HTML修复数: {self.stats['html_fixed']}\n")
+            f.write(f"无效过滤数: {self.stats['invalid_filtered']}\n")
             f.write(f"总desc数: {self.stats['total_descs']}\n")
             f.write(f"覆盖频道数: {self.stats['channels_with_desc']}\n\n")
             
