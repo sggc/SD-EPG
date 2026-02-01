@@ -1,0 +1,79 @@
+name: EPG Aggregation
+
+on:
+  schedule:
+    - cron: '5 18,22,4,10 * * *'
+  workflow_dispatch:
+
+jobs:
+  aggregate-epg:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout public repository (SDU-IPTV-PRO)
+      uses: actions/checkout@v4
+      with:
+        path: public_repo
+    
+    - name: Checkout private repository (SDU-IPTV-NEW)
+      uses: actions/checkout@v4
+      with:
+        repository: sggc/SDU-IPTV-NEW
+        path: private_repo
+        token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests lxml beautifulsoup4
+    
+    # ========== 第一步：聚合EPG ==========
+    - name: Run EPG aggregation script
+      run: |
+        cd public_repo
+        python ../private_repo/scripts/aggregate_epg.py \
+          --config ../private_repo/config/epg_config.json \
+          --output-dir ./EPG
+    
+    # ========== 第二步：先提交聚合结果 ==========
+    - name: Commit aggregated EPG
+      run: |
+        cd public_repo
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add EPG/sggc.xml.gz EPG/aggregation_log.txt
+        
+        if git diff --staged --quiet; then
+          echo "No changes to aggregated EPG"
+        else
+          git commit -m "EPG聚合 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
+    
+    # ========== 第三步：注入Desc ==========
+    - name: Inject Desc to EPG
+      run: |
+        cd public_repo
+        python ../private_repo/scripts/add_desc.py \
+          --input ./EPG/sggc.xml.gz \
+          --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/desc_database.json" \
+          --output ./EPG/sggc-desc.xml.gz \
+          --log ./EPG/desc_match_log.txt
+      continue-on-error: true
+    
+    # ========== 第四步：提交带Desc的EPG ==========
+    - name: Commit EPG with Desc
+      run: |
+        cd public_repo
+        git add EPG/sggc-desc.xml.gz EPG/desc_match_log.txt 2>/dev/null || true
+        
+        if git diff --staged --quiet; then
+          echo "No desc changes"
+        else
+          git commit -m "EPG+Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
