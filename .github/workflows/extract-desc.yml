@@ -1,0 +1,42 @@
+name: Extract EPG Desc
+
+on:
+  schedule:
+    - cron: '0 19 * * *'  # UTC 19:00 = 北京时间 03:00
+  workflow_dispatch:
+
+jobs:
+  extract-desc:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests
+    
+    - name: Run extract script
+      run: |
+        python scripts/extract_desc.py \
+          --config config/desc_config.json \
+          --output EPG/desc_database.json
+    
+    - name: Commit and push
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add EPG/desc_database.json EPG/desc_database_log.txt
+        
+        if git diff --staged --quiet; then
+          echo "No changes"
+        else
+          git commit -m "更新Desc数据库 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M')"
+          git push
+        fi
