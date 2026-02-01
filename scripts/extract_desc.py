@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 EPG Desc 提取器
-从多个EPG源提取desc，保存为JSON格式
-优化：只取channel的第一个display-name作为频道名
+优化：智能去除节目名中的日期/序号，避免重复存储
 """
 import os
 import sys
@@ -10,6 +9,7 @@ import json
 import logging
 import argparse
 import gzip
+import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 import requests
@@ -29,36 +29,104 @@ class DescExtractor:
         self.output_path = output_path
         self.config = None
         
-        # 目标频道: {normalized_name: canonical_name}
-        # canonical_name 是第一个display-name
         self.target_channels = {}
-        
-        # desc数据库: {norm_channel: {norm_title: {"channel": str, "title": str, "desc": str}}}
         self.desc_db = {}
         
         self.stats = {
             'sources_processed': 0,
             'total_descs': 0,
             'new_descs': 0,
+            'deduplicated': 0,
             'channels_with_desc': 0
         }
     
     def normalize(self, text):
-        """标准化文本用于匹配"""
+        """标准化文本用于索引key"""
         if not text:
             return ""
-        import re
-        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》]', '', text)
+        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：]', '', text)
         return text.lower()
     
+    def clean_program_title(self, title):
+        """
+        清洗节目名称，去除日期/序号等变化部分
+        返回: (cleaned_title, original_title, is_cleaned)
+        """
+        if not title:
+            return "", "", False
+        
+        original = title.strip()
+        cleaned = original
+        
+        # 1. 去除末尾的日期格式
+        # 如: "新闻联播 20240115" -> "新闻联播"
+        # 如: "天气预报2024-01-15" -> "天气预报"
+        # 如: "晚间新闻（2024.01.15）" -> "晚间新闻"
+        date_patterns = [
+            r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*$',  # 2024-01-15, 2024.01.15, 2024年1月15日
+            r'\s*[\(（]?\d{8}[\)）]?\s*$',  # 20240115
+            r'\s*[\(（]?\d{4}[-./]\d{1,2}[-./]\d{1,2}[\)）]?\s*$',  # 2024/01/15
+            r'\s*\d{1,2}[-./月]\d{1,2}[日]?\s*$',  # 01-15, 1月15日
+        ]
+        for pattern in date_patterns:
+            cleaned = re.sub(pattern, '', cleaned)
+        
+        # 2. 去除末尾的纯数字序号（但保留有意义的数字如"新闻30分"）
+        # 如: "非诚勿扰 20240115期" -> "非诚勿扰"
+        # 如: "快乐大本营第20240115期" -> "快乐大本营"
+        episode_patterns = [
+            r'\s*第?\d{6,}期?\s*$',  # 第20240115期, 20240115期
+            r'\s*[\(（]\d{6,}[\)）]\s*$',  # (20240115)
+            r'\s*第\d{1,4}期\s*$',  # 第123期
+            r'\s*第\d{1,4}集\s*$',  # 第123集
+            r'\s*EP?\d{1,4}\s*$',  # E01, EP01
+            r'\s*\(\d{1,4}\)\s*$',  # (1), (123)
+        ]
+        for pattern in episode_patterns:
+            cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
+        
+        # 3. 去除末尾的年份
+        # 如: "春节联欢晚会2024" -> "春节联欢晚会"
+        # 但保留开头的年份如 "2024春晚"
+        cleaned = re.sub(r'\s*\d{4}\s*$', '', cleaned)
+        
+        # 4. 去除常见的重播/首播标记
+        cleaned = re.sub(r'\s*[\(（]?重播[\)）]?\s*$', '', cleaned)
+        cleaned = re.sub(r'\s*[\(（]?首播[\)）]?\s*$', '', cleaned)
+        cleaned = re.sub(r'\s*[\(（]?直播[\)）]?\s*$', '', cleaned)
+        
+        # 5. 去除电视剧集数标记
+        # 如: "狂飙(1)" -> "狂飙"
+        # 如: "狂飙 第1集" -> "狂飙"
+        # 如: "狂飙1" -> "狂飙" (仅当数字在末尾且<=3位)
+        drama_patterns = [
+            r'\s*[\(（]\d{1,3}[\)）]\s*$',  # (1), (12)
+            r'\s*第\d{1,3}集\s*$',  # 第1集
+            r'\s*第\d{1,3}回\s*$',  # 第1回
+            r'\s*\d{1,2}\s*$',  # 末尾1-2位数字（谨慎处理）
+        ]
+        for pattern in drama_patterns:
+            new_cleaned = re.sub(pattern, '', cleaned)
+            # 只有当去除后还有内容时才应用
+            if new_cleaned.strip():
+                cleaned = new_cleaned
+        
+        cleaned = cleaned.strip()
+        
+        # 如果清洗后为空或太短，使用原标题
+        if len(cleaned) < 2:
+            cleaned = original
+        
+        is_cleaned = (cleaned != original)
+        
+        return cleaned, original, is_cleaned
+    
     def load_config(self):
-        """加载配置"""
         with open(self.config_path, 'r', encoding='utf-8') as f:
             self.config = json.load(f)
         logger.info("配置加载完成")
     
     def download_epg(self, url, compressed=True):
-        """下载EPG"""
         try:
             if url.startswith(('http://', 'https://')):
                 logger.info(f"下载: {url[:80]}...")
@@ -83,11 +151,6 @@ class DescExtractor:
             return None
     
     def load_target_channels(self):
-        """
-        从参考EPG加载目标频道列表
-        只取每个channel的第一个display-name作为标准名称
-        但所有display-name都作为匹配别名
-        """
         ref_epg = self.config.get('reference_epg')
         if not ref_epg:
             logger.error("配置中缺少 reference_epg")
@@ -105,12 +168,10 @@ class DescExtractor:
                 if not display_names:
                     continue
                 
-                # 第一个display-name作为标准名称
                 first_name = display_names[0].text.strip() if display_names[0].text else None
                 if not first_name:
                     continue
                 
-                # 所有display-name都映射到第一个名称
                 for dn in display_names:
                     if dn.text:
                         alias = dn.text.strip()
@@ -126,17 +187,12 @@ class DescExtractor:
             return False
     
     def get_canonical_channel(self, channel_name):
-        """
-        获取标准频道名
-        返回: (标准名称, 是否为目标频道)
-        """
         norm = self.normalize(channel_name)
         if norm in self.target_channels:
             return self.target_channels[norm], True
         return channel_name, False
     
     def extract_from_source(self, epg_config, source_name):
-        """从单个源提取desc"""
         content = self.download_epg(epg_config['url'], epg_config.get('compressed', True))
         if not content:
             return
@@ -144,7 +200,6 @@ class DescExtractor:
         try:
             root = ET.fromstring(content)
             
-            # 建立channel_id到第一个display-name的映射
             channel_map = {}
             for ch in root.findall('.//channel'):
                 cid = ch.get('id')
@@ -153,11 +208,12 @@ class DescExtractor:
                     channel_map[cid] = display_names[0].text.strip()
             
             count = 0
+            dedup_count = 0
+            
             for prog in root.findall('.//programme'):
                 cid = prog.get('channel')
                 source_channel_name = channel_map.get(cid, '')
                 
-                # 检查是否为目标频道，并获取标准名称
                 canonical_name, is_target = self.get_canonical_channel(source_channel_name)
                 if not is_target:
                     continue
@@ -170,42 +226,46 @@ class DescExtractor:
                 if desc_elem is None or not desc_elem.text:
                     continue
                 
-                title = title_elem.text.strip()
+                original_title = title_elem.text.strip()
                 desc = desc_elem.text.strip()
                 
-                if not desc or len(desc) < 5:  # 过滤太短的desc
+                if not desc or len(desc) < 5:
                     continue
                 
+                # 清洗节目名称
+                cleaned_title, _, was_cleaned = self.clean_program_title(original_title)
+                
+                if was_cleaned:
+                    dedup_count += 1
+                
                 norm_channel = self.normalize(canonical_name)
-                norm_title = self.normalize(title)
+                norm_title = self.normalize(cleaned_title)
                 
                 if norm_channel not in self.desc_db:
                     self.desc_db[norm_channel] = {}
                 
-                # 只保留第一个，或更长的desc
+                # 使用清洗后的标题作为key
                 if norm_title not in self.desc_db[norm_channel]:
                     self.desc_db[norm_channel][norm_title] = {
                         "channel": canonical_name,
-                        "title": title,
+                        "title": cleaned_title,  # 存储清洗后的标题
                         "desc": desc
                     }
                     count += 1
                     self.stats['new_descs'] += 1
                 elif len(desc) > len(self.desc_db[norm_channel][norm_title]["desc"]):
-                    # 更长的desc替换短的
                     self.desc_db[norm_channel][norm_title]["desc"] = desc
             
-            logger.info(f"{source_name}: 提取 {count} 条新desc")
+            self.stats['deduplicated'] += dedup_count
+            logger.info(f"{source_name}: 提取 {count} 条, 去重 {dedup_count} 条")
             self.stats['sources_processed'] += 1
             
         except Exception as e:
             logger.error(f"解析失败 {source_name}: {e}")
     
     def load_existing_db(self):
-        """加载现有数据库（累加模式）"""
         existing_path = self.config.get('existing_db')
         
-        # 优先从配置的URL加载
         if existing_path and existing_path.startswith(('http://', 'https://')):
             try:
                 logger.info(f"从URL加载现有数据库...")
@@ -218,7 +278,6 @@ class DescExtractor:
             except Exception as e:
                 logger.warning(f"从URL加载失败: {e}")
         
-        # 其次从本地文件加载
         if os.path.exists(self.output_path):
             try:
                 with open(self.output_path, 'r', encoding='utf-8') as f:
@@ -232,26 +291,22 @@ class DescExtractor:
             logger.info("无现有数据库，将创建新文件")
     
     def save_database(self):
-        """保存数据库"""
         os.makedirs(os.path.dirname(self.output_path) or '.', exist_ok=True)
         
-        # 统计
         self.stats['channels_with_desc'] = len(self.desc_db)
         self.stats['total_descs'] = sum(len(v) for v in self.desc_db.values())
         
-        # 保存为紧凑JSON
         with open(self.output_path, 'w', encoding='utf-8') as f:
             json.dump(self.desc_db, f, ensure_ascii=False, separators=(',', ':'))
         
-        # 计算文件大小
         file_size = os.path.getsize(self.output_path)
         size_str = f"{file_size / 1024:.1f}KB" if file_size < 1024*1024 else f"{file_size / 1024 / 1024:.1f}MB"
         
         logger.info(f"数据库已保存: {self.output_path} ({size_str})")
         logger.info(f"频道数: {self.stats['channels_with_desc']}, Desc总数: {self.stats['total_descs']}")
+        logger.info(f"去重节目数: {self.stats['deduplicated']}")
     
     def save_log(self):
-        """保存提取日志"""
         log_path = self.output_path.replace('.json', '_log.txt')
         now = datetime.now(BEIJING_TZ)
         
@@ -264,22 +319,20 @@ class DescExtractor:
             f.write(f"目标频道数: {len(set(self.target_channels.values()))}\n")
             f.write(f"处理EPG源数: {self.stats['sources_processed']}\n")
             f.write(f"新增desc数: {self.stats['new_descs']}\n")
+            f.write(f"去重节目数: {self.stats['deduplicated']}\n")
             f.write(f"总desc数: {self.stats['total_descs']}\n")
             f.write(f"覆盖频道数: {self.stats['channels_with_desc']}\n\n")
             
-            # 列出每个频道的desc数量
             f.write("📺 各频道desc数量\n")
             f.write("-" * 30 + "\n")
             
             channel_counts = []
             for norm_ch, programs in self.desc_db.items():
                 if programs:
-                    # 获取标准频道名
                     sample = list(programs.values())[0]
                     channel_name = sample.get('channel', norm_ch)
                     channel_counts.append((channel_name, len(programs)))
             
-            # 按数量排序
             channel_counts.sort(key=lambda x: -x[1])
             for name, count in channel_counts:
                 f.write(f"{name}: {count}\n")
@@ -287,7 +340,6 @@ class DescExtractor:
         logger.info(f"日志已保存: {log_path}")
     
     def run(self):
-        """运行提取流程"""
         logger.info("开始提取Desc")
         
         self.load_config()
@@ -295,11 +347,9 @@ class DescExtractor:
         if not self.load_target_channels():
             return False
         
-        # 加载现有数据库（累加模式）
         if self.config.get('accumulate', True):
             self.load_existing_db()
         
-        # 从各源提取
         for source in self.config.get('desc_sources', []):
             self.extract_from_source(source, source.get('name', 'unknown'))
         
