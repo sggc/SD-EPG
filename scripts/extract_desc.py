@@ -3,7 +3,7 @@
 EPG Desc 提取器
 优化：
 1. 修复HTML实体乱码
-2. 过滤无效desc（暂无描述等）
+2. 只过滤明确的"暂无描述"类占位文本
 3. 智能清洗节目名
 """
 import os
@@ -36,34 +36,15 @@ class DescExtractor:
         self.target_channels = {}
         self.desc_db = {}
         
-        # 无效desc的关键词
+        # 无效desc - 只过滤明确的占位文本
         self.invalid_desc_patterns = [
-            r'^暂无',
-            r'^无节目',
-            r'^无简介',
+            r'^暂无节目描述',
+            r'^暂无描述',
+            r'^暂无简介',
+            r'^暂无内容',
+            r'^无节目描述',
             r'^无描述',
-            r'^无内容',
-            r'^节目简介暂无',
-            r'^暂时没有',
-            r'^敬请期待',
-            r'^精彩内容',
-            r'^稍后播出',
-            r'^即将播出',
-            r'^播出中',
-            r'^正在播出',
-            r'^节目预告',
-            r'^详情请',
-            r'^更多精彩',
-            r'^敬请关注',
-            r'^欢迎收看',
-            r'^精彩节目',
-            r'^本节目',
-            r'^\s*$',
-            r'^null$',
-            r'^undefined$',
-            r'^N/A$',
-            r'^TBA$',
-            r'^TBD$',
+            r'^无简介',
         ]
         
         self.stats = {
@@ -80,7 +61,7 @@ class DescExtractor:
         """标准化文本用于索引key"""
         if not text:
             return ""
-        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：·""\"Mo Mo Mo Mo]', '', text)
+        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：]', '', text)
         return text.lower()
     
     def fix_html_entities(self, text):
@@ -95,8 +76,7 @@ class DescExtractor:
         fixed = text
         
         # 多次解码，处理多层转义
-        max_iterations = 10
-        for _ in range(max_iterations):
+        for _ in range(10):
             decoded = html.unescape(fixed)
             if decoded == fixed:
                 break
@@ -104,18 +84,18 @@ class DescExtractor:
         
         # 替换常见的HTML标签残留为中文符号
         replacements = [
-            (r'<', '《'),
-            (r'>', '》'),
-            (r'&lt;', '《'),
-            (r'&gt;', '》'),
-            (r'&quot;', '"'),
-            (r'&apos;', "'"),
-            (r'&nbsp;', ' '),
-            (r'&amp;', '&'),
+            ('<', '《'),
+            ('>', '》'),
+            ('&lt;', '《'),
+            ('&gt;', '》'),
+            ('&quot;', '"'),
+            ('&apos;', "'"),
+            ('&nbsp;', ' '),
+            ('&amp;', '&'),
         ]
         
-        for pattern, replacement in replacements:
-            fixed = fixed.replace(pattern, replacement)
+        for old, new in replacements:
+            fixed = fixed.replace(old, new)
         
         # 清理多余的空白
         fixed = re.sub(r'\s+', ' ', fixed).strip()
@@ -128,27 +108,22 @@ class DescExtractor:
     def is_valid_desc(self, desc):
         """
         检查desc是否有效
-        过滤掉"暂无描述"等占位文本
+        只过滤明确的"暂无描述"类占位文本
         """
         if not desc:
             return False
         
         desc_clean = desc.strip()
         
-        # 太短的不要
+        # 太短的不要（少于5个字符）
         if len(desc_clean) < 5:
             return False
         
-        # 检查无效模式
+        # 检查是否为明确的占位文本
         for pattern in self.invalid_desc_patterns:
             if re.match(pattern, desc_clean, re.IGNORECASE):
                 self.stats['invalid_filtered'] += 1
                 return False
-        
-        # 如果全是标点符号或数字，也不要
-        if re.match(r'^[\d\s\.\,\!\?\-\+\*\/\\\|\@\#\$\%\^\&\(\)\[\]\{\}\<\>\=\:\;\'\"\`\~]+$', desc_clean):
-            self.stats['invalid_filtered'] += 1
-            return False
         
         return True
     
