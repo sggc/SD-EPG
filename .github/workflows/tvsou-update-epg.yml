@@ -3,7 +3,7 @@ name: TVSOU EPG
 on:
   schedule:
     # 北京时间3:00 (UTC 19:00)
-    - cron: '0 19 * * *'
+    - cron: '0 17 * * *'
     # 北京时间15:00 (UTC 7:00)
     - cron: '0 7 * * *'
   
