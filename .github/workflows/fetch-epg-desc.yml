@@ -1,0 +1,86 @@
+name: Fetch EPG Descriptions
+
+on:
+  workflow_dispatch:
+    inputs:
+      xml_gz_url:
+        description: 'XML.GZ 文件的 URL 地址'
+        required: true
+        default: 'https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc-desc.xml.gz'
+      resume:
+        description: '是否从上次中断处继续 (true/false)'
+        required: false
+        default: 'true'
+  schedule:
+    # 每天凌晨 3 点运行
+    - cron: '0 3 * * *'
+
+jobs:
+  fetch-descriptions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350  # 设置超时时间
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests lxml
+
+      - name: Create EPG directory
+        run: mkdir -p EPG
+
+      - name: Download and restore previous data
+        run: |
+          # 如果存在之前的数据，保留它
+          if [ -f "EPG/apidb.json" ]; then
+            echo "Found existing apidb.json"
+            cp EPG/apidb.json EPG/apidb_backup.json
+          fi
+          if [ -f "EPG/progress.json" ]; then
+            echo "Found existing progress.json"
+          fi
+
+      - name: Fetch EPG descriptions
+        id: fetch
+        env:
+          XML_GZ_URL: ${{ github.event.inputs.xml_gz_url || 'https://example.com/epg.xml.gz' }}
+          RESUME: ${{ github.event.inputs.resume || 'true' }}
+        run: python fetch_epg_desc.py
+        continue-on-error: true
+
+      - name: Save results on completion or failure
+        if: always()
+        run: |
+          echo "Saving current progress..."
+          if [ -f "EPG/apidb.json" ]; then
+            echo "apidb.json exists with $(wc -c < EPG/apidb.json) bytes"
+          fi
+
+      - name: Commit and push changes
+        if: always()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add EPG/
+          git diff --staged --quiet || git commit -m "Update EPG descriptions - $(date '+%Y-%m-%d %H:%M:%S')"
+          git push
+        continue-on-error: true
+
+      - name: Upload artifacts as backup
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: epg-data-backup
+          path: |
+            EPG/apidb.json
+            EPG/progress.json
+          retention-days: 7
