@@ -54,7 +54,7 @@ jobs:
         env:
           XML_GZ_URL: ${{ github.event.inputs.xml_gz_url || 'https://example.com/epg.xml.gz' }}
           RESUME: ${{ github.event.inputs.resume || 'true' }}
-        run: python fetch_epg_desc.py
+        run: python scripts/fetch_epg_desc.py
         continue-on-error: true
 
       - name: Save results on completion or failure
