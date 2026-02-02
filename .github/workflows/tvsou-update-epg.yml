@@ -2,10 +2,8 @@ name: TVSOU EPG
 
 on:
   schedule:
-    # 北京时间3:00 (UTC 19:00)
+    # 北京时间1:00 (UTC 17:00)
     - cron: '0 17 * * *'
-    # 北京时间15:00 (UTC 7:00)
-    - cron: '0 7 * * *'
   
   workflow_dispatch:  # 允许手动触发
 
