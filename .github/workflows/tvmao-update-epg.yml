@@ -2,7 +2,7 @@ name: TVMAO EPG
 
 on:
   schedule:
-    - cron: '0 19 * * *'  # 北京时间每天3点运行（UTC 19:00）
+    - cron: '0 18 * * *'  # 北京时间每天2点运行（UTC 18:00）
   workflow_dispatch:
   push:
     branches:
