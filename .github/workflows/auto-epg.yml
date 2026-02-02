@@ -2,7 +2,7 @@ name: EPG Aggregation
 
 on:
   schedule:
-    - cron: '5 18,22,4,10 * * *'
+    - cron: '30 21,2,8 * * *'
   workflow_dispatch:
 
 jobs:
