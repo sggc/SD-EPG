@@ -1,0 +1,80 @@
+name: Fetch EPG Descriptions
+
+on:
+  workflow_dispatch:
+    inputs:
+      xml_gz_url:
+        description: 'XML.GZ 文件的 URL 地址'
+        required: true
+        default: 'https://example.com/epg.xml.gz'
+      resume:
+        description: '是否从上次中断处继续 (true/false)'
+        required: false
+        default: 'true'
+      clean_non_whitelist:
+        description: '是否清理非白名单频道数据 (true/false)'
+        required: false
+        default: 'false'
+  schedule:
+    - cron: '0 3 * * *'
+
+concurrency:
+  group: epg-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch-descriptions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout public repo (SD-EPG)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout private repo (SDU-IPTV-NEW)
+        uses: actions/checkout@v4
+        with:
+          repository: sggc/SDU-IPTV-NEW
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private-scripts
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests lxml
+
+      - name: Create EPG directory
+        run: mkdir -p EPG
+
+      - name: Run fetch script
+        env:
+          XML_GZ_URL: ${{ github.event.inputs.xml_gz_url || 'https://example.com/epg.xml.gz' }}
+          RESUME: ${{ github.event.inputs.resume || 'true' }}
+          CLEAN_NON_WHITELIST: ${{ github.event.inputs.clean_non_whitelist || 'false' }}
+        run: python private-scripts/scripts/fetch_epg_desc.py
+        continue-on-error: true
+
+      - name: Remove private scripts before commit
+        run: rm -rf private-scripts
+
+      - name: Commit and push changes
+        if: always()
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add EPG/
+          git diff --staged --quiet || git commit -m "Update EPG - $(date '+%Y-%m-%d %H:%M:%S')"
+          git push
+
+      - name: Upload backup
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: epg-backup-${{ github.run_id }}
+          path: EPG/
+          retention-days: 7
