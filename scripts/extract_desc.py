@@ -354,20 +354,20 @@ class DescExtractor:
             logger.info("无现有数据库，将创建新文件")
     
     def save_database(self):
-    os.makedirs(os.path.dirname(self.output_path) or '.', exist_ok=True)
+        os.makedirs(os.path.dirname(self.output_path) or '.', exist_ok=True)
     
-    self.stats['channels_with_desc'] = len(self.desc_db)
-    self.stats['total_descs'] = sum(len(v) for v in self.desc_db.values())
+        self.stats['channels_with_desc'] = len(self.desc_db)
+        self.stats['total_descs'] = sum(len(v) for v in self.desc_db.values())
     
-    with open(self.output_path, 'w', encoding='utf-8') as f:
-        json.dump(self.desc_db, f, ensure_ascii=False, indent=2)  # ← 改这里
+        with open(self.output_path, 'w', encoding='utf-8') as f:
+            json.dump(self.desc_db, f, ensure_ascii=False, indent=2)  # ← 改这里
     
-    file_size = os.path.getsize(self.output_path)
-    size_str = f"{file_size / 1024:.1f}KB" if file_size < 1024*1024 else f"{file_size / 1024 / 1024:.1f}MB"
+        file_size = os.path.getsize(self.output_path)
+        size_str = f"{file_size / 1024:.1f}KB" if file_size < 1024*1024 else f"{file_size / 1024 / 1024:.1f}MB"
     
-    logger.info(f"数据库已保存: {self.output_path} ({size_str})")
-    logger.info(f"频道数: {self.stats['channels_with_desc']}, Desc总数: {self.stats['total_descs']}")
-    logger.info(f"HTML修复: {self.stats['html_fixed']}, 无效过滤: {self.stats['invalid_filtered']}")
+        logger.info(f"数据库已保存: {self.output_path} ({size_str})")
+        logger.info(f"频道数: {self.stats['channels_with_desc']}, Desc总数: {self.stats['total_descs']}")
+        logger.info(f"HTML修复: {self.stats['html_fixed']}, 无效过滤: {self.stats['invalid_filtered']}")
     
     def save_log(self):
         log_path = self.output_path.replace('.json', '_log.txt')
