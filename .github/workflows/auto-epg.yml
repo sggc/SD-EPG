@@ -60,7 +60,7 @@ jobs:
         cd public_repo
         python ../private_repo/scripts/add_desc.py \
           --input ./EPG/sggc.xml.gz \
-          --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/desc_database.json" \
+          --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/desc_database.json,https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/apidb.json" \
           --output ./EPG/sggc-desc.xml.gz \
           --log ./EPG/desc_match_log.txt
       continue-on-error: true
