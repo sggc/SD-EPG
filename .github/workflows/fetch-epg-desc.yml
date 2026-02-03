@@ -6,7 +6,7 @@ on:
       xml_gz_url:
         description: 'XML.GZ 文件的 URL 地址'
         required: true
-        default: 'https://example.com/epg.xml.gz'
+        default: 'https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc-desc.xml.gz'
       resume:
         description: '是否从上次中断处继续 (true/false)'
         required: false
