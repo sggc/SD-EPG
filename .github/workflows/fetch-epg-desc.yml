@@ -53,8 +53,8 @@ jobs:
 
       - name: Run fetch script
         env:
-          XML_GZ_URL: ${{ github.event.inputs.xml_gz_url || 'https://example.com/epg.xml.gz' }}
-          RESUME: ${{ github.event.inputs.resume || 'true' }}
+          XML_GZ_URL: ${{ github.event.inputs.xml_gz_url || 'https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc-desc.xml.gz' }}
+          RESUME: ${{ github.event.inputs.resume || 'false' }}
           CLEAN_NON_WHITELIST: ${{ github.event.inputs.clean_non_whitelist || 'false' }}
         run: python private-scripts/scripts/fetch_epg_desc.py
         continue-on-error: true
