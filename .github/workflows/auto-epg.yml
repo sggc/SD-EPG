@@ -61,6 +61,7 @@ jobs:
         python ../private_repo/scripts/add_desc.py \
           --input ./EPG/sggc.xml.gz \
           --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/desc_database.json,https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/apidb.json" \
+          --man-made-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/man-made.json" \
           --output ./EPG/sggc-desc.xml.gz \
           --log ./EPG/desc_match_log.txt
       continue-on-error: true
