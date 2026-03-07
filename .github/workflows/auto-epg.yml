@@ -42,9 +42,15 @@ jobs:
       run: |
         pip install requests lxml beautifulsoup4
     
+    - name: Configure git
+      run: |
+        cd public_repo
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+    
     # ========== 第一步：聚合EPG ==========
     - name: Run EPG aggregation script
-      if: ${{ github.event.inputs.run_aggregation != 'false' }}
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
         cd public_repo
         python ../private_repo/scripts/aggregate_epg.py \
@@ -53,11 +59,9 @@ jobs:
     
     # ========== 第二步：提交聚合结果 ==========
     - name: Commit aggregated EPG
-      if: ${{ github.event.inputs.run_aggregation != 'false' }}
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
         cd public_repo
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
         git add EPG/sggc.xml.gz EPG/aggregation_log.txt
         
         if git diff --staged --quiet; then
@@ -69,7 +73,7 @@ jobs:
     
     # ========== 第三步：注入Desc ==========
     - name: Inject Desc to EPG
-      if: ${{ github.event.inputs.run_desc_injection != 'false' }}
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
         cd public_repo
         python ../private_repo/scripts/add_desc.py \
@@ -82,7 +86,7 @@ jobs:
     
     # ========== 第四步：提交带Desc的EPG ==========
     - name: Commit EPG with Desc
-      if: ${{ github.event.inputs.run_desc_injection != 'false' }}
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
         cd public_repo
         git add EPG/sggc-desc.xml.gz EPG/desc_match_log.txt 2>/dev/null || true
