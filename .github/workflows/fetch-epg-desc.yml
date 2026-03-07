@@ -16,7 +16,7 @@ on:
         required: false
         default: 'false'
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '50 19 * * *'
 
 concurrency:
   group: epg-fetch
