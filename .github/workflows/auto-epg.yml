@@ -2,7 +2,14 @@ name: EPG Aggregation
 
 on:
   schedule:
-    - cron: '30 21,2,8 * * *'
+    # 北京时间 03:20 → UTC 19:20
+    - cron: '20 19 * * *'
+    # 北京时间 04:50 → UTC 20:50
+    - cron: '50 20 * * *'
+    # 北京时间 10:20 → UTC 02:20
+    - cron: '20 2 * * *'
+    # 北京时间 16:20 → UTC 08:20
+    - cron: '20 8 * * *'
   workflow_dispatch:
     inputs:
       run_aggregation:
