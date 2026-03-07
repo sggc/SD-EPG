@@ -2,7 +2,7 @@ name: Extract EPG Desc
 
 on:
   schedule:
-    - cron: '0 19 * * *'  # UTC 19:00 = 北京时间 03:00
+    - cron: '35 19 * * *'  # UTC 19:35 = 北京时间 03:35
   workflow_dispatch:
 
 jobs:
