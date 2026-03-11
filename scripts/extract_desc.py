@@ -28,9 +28,10 @@ logger = logging.getLogger(__name__)
 
 
 class DescExtractor:
-    def __init__(self, config_path, output_path):
+    def __init__(self, config_path, output_path, log_dir='log'):
         self.config_path = config_path
         self.output_path = output_path
+        self.log_dir = log_dir
         self.config = None
         
         self.target_channels = {}
@@ -370,7 +371,8 @@ class DescExtractor:
         logger.info(f"HTML修复: {self.stats['html_fixed']}, 无效过滤: {self.stats['invalid_filtered']}")
     
     def save_log(self):
-        log_path = self.output_path.replace('.json', '_log.txt')
+        os.makedirs(self.log_dir, exist_ok=True)
+        log_path = os.path.join(self.log_dir, 'desc_database_log.txt')
         now = datetime.now(BEIJING_TZ)
         
         with open(log_path, 'w', encoding='utf-8') as f:
@@ -429,10 +431,11 @@ def main():
     parser = argparse.ArgumentParser(description='EPG Desc提取器')
     parser.add_argument('--config', required=True, help='配置文件路径')
     parser.add_argument('--output', required=True, help='输出文件路径')
+    parser.add_argument('--log-dir', default='log', help='日志目录 (默认: log)')
     
     args = parser.parse_args()
     
-    extractor = DescExtractor(args.config, args.output)
+    extractor = DescExtractor(args.config, args.output, args.log_dir)
     success = extractor.run()
     sys.exit(0 if success else 1)
 
