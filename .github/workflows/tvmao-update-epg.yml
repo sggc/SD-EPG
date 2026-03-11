@@ -37,7 +37,7 @@ jobs:
         
     - name: Run EPG Crawler
       run: |
-        python scripts/tvmao_epg_crawler.py --province 370000
+        python scripts/tvmao_epg_crawler.py --province 370000 --output EPG --log-dir log
         
     - name: Display results
       run: |
@@ -75,8 +75,8 @@ jobs:
         # 4. 恢复之前暂存的新文件
         git stash pop || true
         
-        # 5. 关键点：只添加本次更新的 tvmao 文件，不影响目录下其他文件（如 epg.xml 等）
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz
+        # 5. 关键点：只添加本次更新的 tvmao 文件，不影响目录下其他文件
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
         
         # 6. 检查暂存区变化并提交
         if ! git diff --cached --quiet; then
