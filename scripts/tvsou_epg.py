@@ -289,6 +289,7 @@ def main():
     config_path = 'config/tvsou_channels.json'
     output_xml = 'EPG/tvsou.xml'
     output_gz = 'EPG/tvsou.xml.gz'
+    os.makedirs('EPG', exist_ok=True)
     
     print("=" * 60)
     print("搜视网EPG爬虫启动 - 优化版")
