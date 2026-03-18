@@ -6,11 +6,9 @@
 	let stats = $state({
 		totalChannels: 0,
 		totalPrograms: 0,
-		epgSources: 0,
-		enabledSources: 0,
 		descSources: 0,
 		lastUpdate: null,
-		databaseRecords: 0
+		processedCount: 0
 	});
 
 	let recentPrograms = $state([]);
@@ -38,7 +36,7 @@
 
 			if (progress) {
 				stats.lastUpdate = progress.last_update;
-				stats.databaseRecords = progress.processed?.length || 0;
+				stats.processedCount = progress.processed?.length || 0;
 			}
 
 			if (database) {
@@ -48,24 +46,25 @@
 				let totalPrograms = 0;
 				const programs = [];
 				
-				for (const channel of channels.slice(0, 5)) {
-					const channelData = database[channel];
+				for (const channelKey of channels.slice(0, 10)) {
+					const channelData = database[channelKey];
 					if (typeof channelData === 'object') {
 						const programNames = Object.keys(channelData);
 						totalPrograms += programNames.length;
 						
-						for (const program of programNames.slice(0, 3)) {
+						for (const programName of programNames.slice(0, 2)) {
+							const programData = channelData[programName];
 							programs.push({
-								channel,
-								program,
-								desc: channelData[program]?.desc || channelData[program]?.substring?.(0, 100) || ''
+								channel: programData?.channel || channelKey,
+								program: programData?.title || programName,
+								desc: programData?.desc?.substring?.(0, 80) || ''
 							});
 						}
 					}
 				}
 				
 				stats.totalPrograms = totalPrograms;
-				recentPrograms = programs.slice(0, 10);
+				recentPrograms = programs.slice(0, 8);
 			}
 
 		} catch (e) {
@@ -255,14 +254,14 @@
 			<div class="card" style="margin-top: 1.5rem;">
 				<div class="card-header">
 					<h2>节目描述示例</h2>
-					<span class="card-badge">最近更新</span>
+					<span class="card-badge">共 {stats.processedCount.toLocaleString()} 条记录</span>
 				</div>
 				<div class="programs-list">
 					{#each recentPrograms as item}
 						<div class="program-item">
 							<div class="program-channel">{item.channel}</div>
 							<div class="program-name">{item.program}</div>
-							<div class="program-desc">{truncate(item.desc, 80)}</div>
+							<div class="program-desc">{truncate(item.desc, 60)}</div>
 						</div>
 					{/each}
 				</div>
@@ -505,7 +504,7 @@
 
 	.program-item {
 		display: grid;
-		grid-template-columns: 120px 150px 1fr;
+		grid-template-columns: 100px 140px 1fr;
 		gap: 1rem;
 		padding: 0.75rem;
 		background: var(--bg);
