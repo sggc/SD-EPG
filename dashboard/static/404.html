@@ -2,13 +2,18 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="/SD-EPG/favicon.png" />
+		<link rel="icon" href="/SD-EPG/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="SD-EPG 电子节目指南管理系统" />
 		<title>SD-EPG Dashboard</title>
 		<script>
-			// SPA redirect for GitHub Pages
-			var pathSegmentsToKeep = 1;
+			// Single Page Apps for GitHub Pages
+			// MIT License
+			// https://github.com/rafgraph/spa-github-pages
+			// This script takes the current URL and converts the path and query
+			// string into just a query string, and then redirects the browser
+			// to the new URL with only a query string and hash fragment.
+			var pathSegmentsToKeep = 1; // Keep one segment (for /SD-EPG)
 			var l = window.location;
 			l.replace(
 				l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
@@ -20,18 +25,10 @@
 		</script>
 	</head>
 	<body>
-		<script>
-			// Handle SPA redirect
-			(function(l) {
-				if (l.search[1] === '/' ) {
-					var decoded = l.search.slice(1).split('&').map(function(s) { 
-						return s.replace(/~and~/g, '&')
-					}).join('?');
-					window.history.replaceState(null, null,
-						l.pathname.slice(0, -1) + decoded + l.hash
-					);
-				}
-			}(window.location))
-		</script>
+		<noscript>
+			<h1>SD-EPG Dashboard</h1>
+			<p>请启用 JavaScript 以使用此应用。</p>
+			<p><a href="/SD-EPG/">返回首页</a></p>
+		</noscript>
 	</body>
 </html>
