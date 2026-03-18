@@ -2,12 +2,8 @@ name: TVMAO EPG
 
 on:
   schedule:
-    - cron: '0 18 * * *'  # 北京时间每天2点运行（UTC 18:00）
+    - cron: '0 18 * * *'
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
 
 jobs:
   crawl:
@@ -17,7 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # 拉取完整仓库历史
+        fetch-depth: 0
         ref: ${{ github.ref }}
     
     - name: Set up Python
@@ -61,24 +57,17 @@ jobs:
         
     - name: Commit and push EPG files
       run: |
-        # 1. 配置 Git 用户信息
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 2. 先把刚生成的文件暂存起来（stash），解决 "unstaged changes" 报错
-        # -u 参数包含未跟踪的文件，确保工作区变干净
         git stash push -u -m "Temporarily stash EPG files" || true
         
-        # 3. 拉取远程最新代码（此时工作区干净，不会报错）
         git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
         
-        # 4. 恢复之前暂存的新文件
         git stash pop || true
         
-        # 5. 关键点：只添加本次更新的 tvmao 文件，不影响目录下其他文件
         git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
         
-        # 6. 检查暂存区变化并提交
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data [skip ci]"
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
