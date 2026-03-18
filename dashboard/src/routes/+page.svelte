@@ -4,14 +4,20 @@
 	import { authStore } from '$lib/stores/auth.js';
 
 	let stats = $state({
-		totalChannels: 0,
+		whitelistChannels: 0,
+		matchedChannels: 0,
+		unmatchedChannels: 0,
 		totalPrograms: 0,
-		descSources: 0,
-		lastUpdate: null,
-		processedCount: 0
+		filteredPrograms: 0,
+		dateRange: '',
+		lastUpdate: '',
+		epgSources: [],
+		unmatchedList: [],
+		lowProgramChannels: [],
+		gapChannels: []
 	});
 
-	let recentPrograms = $state([]);
+	let descSources = $state(0);
 	let loading = $state(true);
 	let error = $state(null);
 
@@ -24,47 +30,17 @@
 		error = null;
 
 		try {
-			const [descConfig, progress, database] = await Promise.all([
-				github.getPublicFile('config/desc_config.json').catch(() => null),
-				github.getPublicFile('database/progress.json').catch(() => null),
-				github.getPublicFile('database/desc_database.json').catch(() => null)
+			const [logContent, descConfig] = await Promise.all([
+				github.getPublicFileRaw('log/aggregation_log.txt').catch(() => null),
+				github.getPublicFile('config/desc_config.json').catch(() => null)
 			]);
 
 			if (descConfig) {
-				stats.descSources = descConfig.desc_sources?.length || 0;
+				descSources = descConfig.desc_sources?.length || 0;
 			}
 
-			if (progress) {
-				stats.lastUpdate = progress.last_update;
-				stats.processedCount = progress.processed?.length || 0;
-			}
-
-			if (database) {
-				const channels = Object.keys(database);
-				stats.totalChannels = channels.length;
-				
-				let totalPrograms = 0;
-				const programs = [];
-				
-				for (const channelKey of channels.slice(0, 10)) {
-					const channelData = database[channelKey];
-					if (typeof channelData === 'object') {
-						const programNames = Object.keys(channelData);
-						totalPrograms += programNames.length;
-						
-						for (const programName of programNames.slice(0, 2)) {
-							const programData = channelData[programName];
-							programs.push({
-								channel: programData?.channel || channelKey,
-								program: programData?.title || programName,
-								desc: programData?.desc?.substring?.(0, 80) || ''
-							});
-						}
-					}
-				}
-				
-				stats.totalPrograms = totalPrograms;
-				recentPrograms = programs.slice(0, 8);
+			if (logContent) {
+				parseAggregationLog(logContent);
 			}
 
 		} catch (e) {
@@ -74,8 +50,117 @@
 		}
 	}
 
+	function parseAggregationLog(content) {
+		if (!content) return;
+
+		const lines = content.split('\n');
+		
+		const headerMatch = content.match(/EPG 聚合日志.*?(\d{4}-\d{2}-\d{2}[\s\d:]+)/);
+		if (headerMatch) {
+			stats.lastUpdate = headerMatch[1].trim();
+		}
+
+		const whitelistMatch = content.match(/白名单频道:\s*(\d+)/);
+		if (whitelistMatch) stats.whitelistChannels = parseInt(whitelistMatch[1]);
+
+		const matchedMatch = content.match(/成功匹配:\s*(\d+)/);
+		if (matchedMatch) stats.matchedChannels = parseInt(matchedMatch[1]);
+
+		const unmatchedMatch = content.match(/未匹配:\s*(\d+)/);
+		if (unmatchedMatch) stats.unmatchedChannels = parseInt(unmatchedMatch[1]);
+
+		const totalProgramsMatch = content.match(/总节目数:\s*([\d,]+)/);
+		if (totalProgramsMatch) stats.totalPrograms = parseInt(totalProgramsMatch[1].replace(/,/g, ''));
+
+		const filteredMatch = content.match(/过滤过期节目:\s*([\d,]+)/);
+		if (filteredMatch) stats.filteredPrograms = parseInt(filteredMatch[1].replace(/,/g, ''));
+
+		const dateRangeMatch = content.match(/日期范围:\s*(\d+)\s*~\s*(\d+)/);
+		if (dateRangeMatch) {
+			stats.dateRange = `${dateRangeMatch[1]} ~ ${dateRangeMatch[2]}`;
+		}
+
+		const sourcesMatch = content.match(/📡 EPG 源统计[\s\S]*?(?=⚠|$)/);
+		if (sourcesMatch) {
+			const sourceLines = sourcesMatch[0].split('\n').filter(l => l.startsWith('['));
+			stats.epgSources = sourceLines.map(line => {
+				const match = line.match(/\[(\w+)\]\s*(?:⛔\s*)?(.+)$/);
+				if (match) {
+					const name = match[1];
+					const info = match[2];
+					const disabled = info.includes('已禁用');
+					const channelMatch = info.match(/频道:\s*([\d,]+)/);
+					const programMatch = info.match(/节目:\s*([\d,]+)/);
+					const matchedMatch = info.match(/匹配:\s*(\d+)/);
+					
+					return {
+						name,
+						disabled,
+						channels: channelMatch ? parseInt(channelMatch[1].replace(/,/g, '')) : 0,
+						programs: programMatch ? parseInt(programMatch[1].replace(/,/g, '')) : 0,
+						matched: matchedMatch ? parseInt(matchedMatch[1]) : 0
+					};
+				}
+				return null;
+			}).filter(Boolean);
+		}
+
+		const unmatchedSection = content.match(/⚠ 未匹配的白名单频道[\s\S]*?(?=📉|$)/);
+		if (unmatchedSection) {
+			const unmatchedLines = unmatchedSection[0].split('\n').filter(l => l.startsWith('•'));
+			stats.unmatchedList = unmatchedLines.map(line => {
+				const match = line.match(/•\s*\[([^\]]+)\]\s*(.+)/);
+				return match ? { id: match[1], name: match[2].trim() } : null;
+			}).filter(Boolean);
+		}
+
+		const lowSection = content.match(/📉 今日节目过少的频道[\s\S]*?(?=⏰|$)/);
+		if (lowSection) {
+			const lowLines = lowSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
+			stats.lowProgramChannels = lowLines.map(line => {
+				const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\].*?今日:\s*(\d+)/);
+				return match ? { 
+					index: parseInt(match[1]), 
+					name: match[2].trim(), 
+					id: match[3],
+					todayPrograms: parseInt(match[4])
+				} : null;
+			}).filter(Boolean);
+		}
+
+		const gapSection = content.match(/⏰ 今日含有断层的频道[\s\S]*?(?=📺|$)/);
+		if (gapSection) {
+			const gapLines = gapSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
+			const gaps = [];
+			let currentGap = null;
+			
+			for (const line of gapLines) {
+				const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\]/);
+				if (match) {
+					if (currentGap) gaps.push(currentGap);
+					currentGap = {
+						index: parseInt(match[1]),
+						name: match[2].trim(),
+						id: match[3],
+						gaps: []
+					};
+				} else if (currentGap) {
+					const gapMatch = line.match(/断层:\s*(.+)/);
+					if (gapMatch) {
+						currentGap.gaps.push(gapMatch[1].trim());
+					}
+				}
+			}
+			if (currentGap) gaps.push(currentGap);
+			stats.gapChannels = gaps;
+		}
+	}
+
 	function formatDate(dateStr) {
 		if (!dateStr) return '-';
+		if (dateStr.length === 8) {
+			return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+		}
 		const date = new Date(dateStr);
 		return date.toLocaleString('zh-CN', {
 			year: 'numeric',
@@ -84,11 +169,6 @@
 			hour: '2-digit',
 			minute: '2-digit'
 		});
-	}
-
-	function truncate(str, len) {
-		if (!str) return '';
-		return str.length > len ? str.substring(0, len) + '...' : str;
 	}
 </script>
 
@@ -100,6 +180,9 @@
 	<header class="page-header">
 		<h1>SD-EPG 电子节目指南</h1>
 		<p>实时 EPG 数据聚合与管理平台</p>
+		{#if stats.lastUpdate}
+			<p class="update-time">最后更新: {formatDate(stats.lastUpdate)}</p>
+		{/if}
 	</header>
 
 	{#if loading}
@@ -123,8 +206,21 @@
 					</svg>
 				</div>
 				<div class="stat-content">
-					<span class="stat-value">{stats.totalChannels.toLocaleString()}</span>
-					<span class="stat-label">频道数量</span>
+					<span class="stat-value">{stats.whitelistChannels.toLocaleString()}</span>
+					<span class="stat-label">白名单频道</span>
+				</div>
+			</div>
+
+			<div class="stat-card">
+				<div class="stat-icon matched">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+						<polyline points="22 4 12 14.01 9 11.01"/>
+					</svg>
+				</div>
+				<div class="stat-content">
+					<span class="stat-value">{stats.matchedChannels.toLocaleString()}</span>
+					<span class="stat-label">成功匹配</span>
 				</div>
 			</div>
 
@@ -139,7 +235,7 @@
 				</div>
 				<div class="stat-content">
 					<span class="stat-value">{stats.totalPrograms.toLocaleString()}</span>
-					<span class="stat-label">节目描述</span>
+					<span class="stat-label">总节目数</span>
 				</div>
 			</div>
 
@@ -152,26 +248,88 @@
 					</svg>
 				</div>
 				<div class="stat-content">
-					<span class="stat-value">{stats.descSources}</span>
-					<span class="stat-label">描述数据源</span>
-				</div>
-			</div>
-
-			<div class="stat-card">
-				<div class="stat-icon update">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="10"/>
-						<polyline points="12 6 12 12 16 14"/>
-					</svg>
-				</div>
-				<div class="stat-content">
-					<span class="stat-value" style="font-size: 1rem;">{formatDate(stats.lastUpdate)}</span>
-					<span class="stat-label">最后更新</span>
+					<span class="stat-value">{stats.epgSources.filter(s => !s.disabled).length}</span>
+					<span class="stat-label">EPG 数据源</span>
 				</div>
 			</div>
 		</div>
 
+		{#if stats.unmatchedChannels > 0 || stats.lowProgramChannels.length > 0}
+			<div class="alert-grid">
+				{#if stats.unmatchedChannels > 0}
+					<div class="alert-card warning">
+						<div class="alert-header">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+								<line x1="12" y1="9" x2="12" y2="13"/>
+								<line x1="12" y1="17" x2="12.01" y2="17"/>
+							</svg>
+							<span>未匹配频道 ({stats.unmatchedChannels})</span>
+						</div>
+						<div class="alert-content">
+							{#each stats.unmatchedList as item}
+								<div class="alert-item">
+									<span class="item-id">{item.id}</span>
+									<span class="item-name">{item.name}</span>
+								</div>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				{#if stats.lowProgramChannels.length > 0}
+					<div class="alert-card danger">
+						<div class="alert-header">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="10"/>
+								<line x1="12" y1="8" x2="12" y2="12"/>
+								<line x1="12" y1="16" x2="12.01" y2="16"/>
+							</svg>
+							<span>今日节目过少 ({stats.lowProgramChannels.length})</span>
+						</div>
+						<div class="alert-content">
+							{#each stats.lowProgramChannels.slice(0, 5) as item}
+								<div class="alert-item">
+									<span class="item-name">{item.name}</span>
+									<span class="item-count">{item.todayPrograms} 个节目</span>
+								</div>
+							{/each}
+							{#if stats.lowProgramChannels.length > 5}
+								<div class="more-items">还有 {stats.lowProgramChannels.length - 5} 个频道...</div>
+							{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
+		{/if}
+
 		<div class="content-grid">
+			<div class="card">
+				<div class="card-header">
+					<h2>EPG 源状态</h2>
+					<span class="card-badge">共 {stats.epgSources.length} 个源</span>
+				</div>
+				<div class="sources-list">
+					{#each stats.epgSources as source}
+						<div class="source-item" class:disabled={source.disabled}>
+							<div class="source-name">
+								{source.name}
+								{#if source.disabled}
+									<span class="disabled-badge">已禁用</span>
+								{/if}
+							</div>
+							{#if !source.disabled}
+								<div class="source-stats">
+									<span class="stat"><span class="num">{source.channels.toLocaleString()}</span> 频道</span>
+									<span class="stat"><span class="num">{source.programs.toLocaleString()}</span> 节目</span>
+									<span class="stat highlight"><span class="num">{source.matched}</span> 匹配</span>
+								</div>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			</div>
+
 			<div class="card">
 				<div class="card-header">
 					<h2>快速入口</h2>
@@ -199,7 +357,7 @@
 						</div>
 						<div class="link-content">
 							<span class="link-title">Desc 配置</span>
-							<span class="link-desc">管理节目描述数据源</span>
+							<span class="link-desc">{descSources} 个描述数据源</span>
 						</div>
 					</a>
 
@@ -217,10 +375,8 @@
 						</div>
 					</a>
 				</div>
-			</div>
 
-			<div class="card">
-				<div class="card-header">
+				<div class="card-header" style="margin-top: 1.5rem;">
 					<h2>EPG 文件下载</h2>
 				</div>
 				<div class="download-list">
@@ -250,18 +406,21 @@
 			</div>
 		</div>
 
-		{#if recentPrograms.length > 0}
+		{#if stats.gapChannels.length > 0}
 			<div class="card" style="margin-top: 1.5rem;">
 				<div class="card-header">
-					<h2>节目描述示例</h2>
-					<span class="card-badge">共 {stats.processedCount.toLocaleString()} 条记录</span>
+					<h2>今日节目断层</h2>
+					<span class="card-badge warning">{stats.gapChannels.length} 个频道</span>
 				</div>
-				<div class="programs-list">
-					{#each recentPrograms as item}
-						<div class="program-item">
-							<div class="program-channel">{item.channel}</div>
-							<div class="program-name">{item.program}</div>
-							<div class="program-desc">{truncate(item.desc, 60)}</div>
+				<div class="gap-list">
+					{#each stats.gapChannels.slice(0, 6) as item}
+						<div class="gap-item">
+							<div class="gap-channel">{item.name}</div>
+							<div class="gap-info">
+								{#each item.gaps.slice(0, 2) as gap}
+									<span class="gap-time">{gap}</span>
+								{/each}
+							</div>
 						</div>
 					{/each}
 				</div>
@@ -307,9 +466,15 @@
 		color: var(--text-muted);
 	}
 
+	.update-time {
+		font-size: 0.875rem;
+		color: var(--text-muted);
+		margin-top: 0.5rem;
+	}
+
 	.stats-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		gap: 1rem;
 		margin-bottom: 1.5rem;
 	}
@@ -338,19 +503,19 @@
 		color: #3b82f6;
 	}
 
-	.stat-icon.programs {
+	.stat-icon.matched {
 		background: rgba(34, 197, 94, 0.15);
 		color: #22c55e;
+	}
+
+	.stat-icon.programs {
+		background: rgba(139, 92, 246, 0.15);
+		color: #8b5cf6;
 	}
 
 	.stat-icon.sources {
 		background: rgba(245, 158, 11, 0.15);
 		color: #f59e0b;
-	}
-
-	.stat-icon.update {
-		background: rgba(139, 92, 246, 0.15);
-		color: #8b5cf6;
 	}
 
 	.stat-content {
@@ -368,10 +533,85 @@
 		color: var(--text-muted);
 	}
 
+	.alert-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.alert-card {
+		padding: 1rem;
+		border-radius: var(--radius);
+		border: 1px solid;
+	}
+
+	.alert-card.warning {
+		background: rgba(245, 158, 11, 0.1);
+		border-color: rgba(245, 158, 11, 0.3);
+	}
+
+	.alert-card.danger {
+		background: rgba(239, 68, 68, 0.1);
+		border-color: rgba(239, 68, 68, 0.3);
+	}
+
+	.alert-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	.alert-card.warning .alert-header {
+		color: #f59e0b;
+	}
+
+	.alert-card.danger .alert-header {
+		color: #ef4444;
+	}
+
+	.alert-content {
+		font-size: 0.875rem;
+	}
+
+	.alert-item {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.5rem;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 4px;
+		margin-bottom: 0.25rem;
+	}
+
+	.item-id {
+		font-family: monospace;
+		color: var(--text-muted);
+	}
+
+	.item-count {
+		color: #ef4444;
+		font-weight: 500;
+	}
+
+	.more-items {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		text-align: center;
+		padding: 0.5rem;
+	}
+
 	.content-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: 1fr 1fr;
 		gap: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.content-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 
 	.card-header {
@@ -394,6 +634,63 @@
 		background: rgba(34, 197, 94, 0.15);
 		color: var(--success);
 		border-radius: 9999px;
+	}
+
+	.card-badge.warning {
+		background: rgba(245, 158, 11, 0.15);
+		color: #f59e0b;
+	}
+
+	.sources-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		max-height: 300px;
+		overflow-y: auto;
+	}
+
+	.source-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.75rem;
+		background: var(--bg);
+		border-radius: var(--radius);
+		font-size: 0.875rem;
+	}
+
+	.source-item.disabled {
+		opacity: 0.5;
+	}
+
+	.source-name {
+		font-family: monospace;
+		font-weight: 500;
+	}
+
+	.disabled-badge {
+		font-size: 0.625rem;
+		padding: 0.125rem 0.375rem;
+		background: rgba(239, 68, 68, 0.15);
+		color: #ef4444;
+		border-radius: 4px;
+		margin-left: 0.5rem;
+	}
+
+	.source-stats {
+		display: flex;
+		gap: 0.75rem;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.source-stats .num {
+		font-weight: 600;
+		color: var(--text);
+	}
+
+	.source-stats .stat.highlight .num {
+		color: var(--success);
 	}
 
 	.quick-links {
@@ -497,33 +794,35 @@
 		color: var(--text-muted);
 	}
 
-	.programs-list {
+	.gap-list {
 		display: grid;
 		gap: 0.5rem;
 	}
 
-	.program-item {
-		display: grid;
-		grid-template-columns: 100px 140px 1fr;
-		gap: 1rem;
+	.gap-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		padding: 0.75rem;
 		background: var(--bg);
 		border-radius: var(--radius);
 		font-size: 0.875rem;
 	}
 
-	.program-channel {
+	.gap-channel {
 		font-weight: 500;
-		color: var(--primary);
 	}
 
-	.program-name {
-		color: var(--text);
-	}
-
-	.program-desc {
-		color: var(--text-muted);
+	.gap-info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
 		font-size: 0.75rem;
+		color: #f59e0b;
+	}
+
+	.gap-time {
+		font-family: monospace;
 	}
 
 	.login-banner {
@@ -558,15 +857,20 @@
 	}
 
 	@media (max-width: 768px) {
-		.program-item {
-			grid-template-columns: 1fr;
-			gap: 0.25rem;
-		}
-
 		.login-banner {
 			flex-direction: column;
 			text-align: center;
 			gap: 1rem;
+		}
+
+		.gap-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.gap-info {
+			align-items: flex-start;
 		}
 	}
 </style>

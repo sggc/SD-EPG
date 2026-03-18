@@ -32,6 +32,13 @@ export const github = {
 		return response.json();
 	},
 	
+	async getPublicFileRaw(path) {
+		const url = `${CONFIG.RAW_BASE}/${CONFIG.GITHUB_USER}/${CONFIG.PUBLIC_REPO}/main/${path}`;
+		const response = await fetch(url);
+		if (!response.ok) throw new Error(`获取文件失败: ${path}`);
+		return response.text();
+	},
+	
 	async getPrivateFile(path) {
 		const url = `${CONFIG.API_BASE}/repos/${CONFIG.GITHUB_USER}/${CONFIG.PRIVATE_REPO}/contents/${path}`;
 		const response = await fetchWithAuth(url);
