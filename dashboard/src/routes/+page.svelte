@@ -14,12 +14,17 @@
 		epgSources: [],
 		unmatchedList: [],
 		lowProgramChannels: [],
-		gapChannels: []
+		gapChannels: [],
+		allChannels: [],
+		aliasCount: 0
 	});
 
 	let descSources = $state(0);
 	let loading = $state(true);
 	let error = $state(null);
+	let showAllLowPrograms = $state(false);
+	let showAllGaps = $state(false);
+	let activeSection = $state('overview');
 
 	onMount(async () => {
 		await loadData();
@@ -30,16 +35,19 @@
 		error = null;
 
 		try {
-			const [logContent, descConfig] = await Promise.all([
+			const [logContent, descConfig, dashboardLog] = await Promise.all([
 				github.getPublicFileRaw('log/aggregation_log.txt').catch(() => null),
-				github.getPublicFile('config/desc_config.json').catch(() => null)
+				github.getPublicFile('config/desc_config.json').catch(() => null),
+				github.getPublicFile('log/dashboard_data.json').catch(() => null)
 			]);
 
 			if (descConfig) {
 				descSources = descConfig.desc_sources?.length || 0;
 			}
 
-			if (logContent) {
+			if (dashboardLog) {
+				stats = { ...stats, ...dashboardLog };
+			} else if (logContent) {
 				parseAggregationLog(logContent);
 			}
 
@@ -53,8 +61,6 @@
 	function parseAggregationLog(content) {
 		if (!content) return;
 
-		const lines = content.split('\n');
-		
 		const headerMatch = content.match(/EPG 聚合日志.*?(\d{4}-\d{2}-\d{2}[\s\d:]+)/);
 		if (headerMatch) {
 			stats.lastUpdate = headerMatch[1].trim();
@@ -154,6 +160,46 @@
 			if (currentGap) gaps.push(currentGap);
 			stats.gapChannels = gaps;
 		}
+
+		const allChannelsSection = content.match(/📺 所有频道信息[\s\S]*?(?=🏷|$)/);
+		if (allChannelsSection) {
+			const channelBlocks = allChannelsSection[0].split(/\[(\d+)\]/).slice(1);
+			const channels = [];
+			for (let i = 0; i < channelBlocks.length; i += 2) {
+				const index = parseInt(channelBlocks[i]);
+				const block = channelBlocks[i + 1];
+				if (block) {
+					const nameMatch = block.match(/^\s*([^\n]+)/);
+					const idMatch = block.match(/ID:([^\n]+)/);
+					const programMatch = block.match(/节目:\s*(\d+)/);
+					const todayMatch = block.match(/今日:\s*(\d+)/);
+					const sourceMatch = block.match(/📡(\w+)/);
+					
+					if (nameMatch) {
+						channels.push({
+							index,
+							name: nameMatch[1].trim(),
+							id: idMatch ? idMatch[1].trim() : '',
+							programs: programMatch ? parseInt(programMatch[1]) : 0,
+							todayPrograms: todayMatch ? parseInt(todayMatch[1]) : 0,
+							source: sourceMatch ? sourceMatch[1] : ''
+						});
+					}
+				}
+			}
+			stats.allChannels = channels;
+		}
+
+		const aliasSection = content.match(/🏷 别名表[\s\S]*$/);
+		if (aliasSection) {
+			const aliasBlocks = aliasSection[0].split('\n\n');
+			let aliasCount = 0;
+			for (const block of aliasBlocks) {
+				const aliases = block.match(/^[ \t]+.+/gm);
+				if (aliases) aliasCount += aliases.length;
+			}
+			stats.aliasCount = aliasCount;
+		}
 	}
 
 	function formatDate(dateStr) {
@@ -170,6 +216,9 @@
 			minute: '2-digit'
 		});
 	}
+
+	let displayedLowPrograms = $derived(showAllLowPrograms ? stats.lowProgramChannels : stats.lowProgramChannels.slice(0, 5));
+	let displayedGaps = $derived(showAllGaps ? stats.gapChannels : stats.gapChannels.slice(0, 6));
 </script>
 
 <svelte:head>
@@ -252,6 +301,36 @@
 					<span class="stat-label">EPG 数据源</span>
 				</div>
 			</div>
+
+			<div class="stat-card">
+				<div class="stat-icon alias">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+						<circle cx="9" cy="7" r="4"/>
+						<path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+						<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+					</svg>
+				</div>
+				<div class="stat-content">
+					<span class="stat-value">{stats.aliasCount.toLocaleString()}</span>
+					<span class="stat-label">别名映射</span>
+				</div>
+			</div>
+
+			<div class="stat-card">
+				<div class="stat-icon date">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+						<line x1="16" y1="2" x2="16" y2="6"/>
+						<line x1="8" y1="2" x2="8" y2="6"/>
+						<line x1="3" y1="10" x2="21" y2="10"/>
+					</svg>
+				</div>
+				<div class="stat-content">
+					<span class="stat-value">{stats.dateRange.split(' ~ ')[1] || '-'}</span>
+					<span class="stat-label">数据截止日期</span>
+				</div>
+			</div>
 		</div>
 
 		{#if stats.unmatchedChannels > 0 || stats.lowProgramChannels.length > 0}
@@ -266,7 +345,7 @@
 							</svg>
 							<span>未匹配频道 ({stats.unmatchedChannels})</span>
 						</div>
-						<div class="alert-content">
+						<div class="alert-content scrollable">
 							{#each stats.unmatchedList as item}
 								<div class="alert-item">
 									<span class="item-id">{item.id}</span>
@@ -287,15 +366,17 @@
 							</svg>
 							<span>今日节目过少 ({stats.lowProgramChannels.length})</span>
 						</div>
-						<div class="alert-content">
-							{#each stats.lowProgramChannels.slice(0, 5) as item}
+						<div class="alert-content scrollable">
+							{#each displayedLowPrograms as item}
 								<div class="alert-item">
 									<span class="item-name">{item.name}</span>
 									<span class="item-count">{item.todayPrograms} 个节目</span>
 								</div>
 							{/each}
 							{#if stats.lowProgramChannels.length > 5}
-								<div class="more-items">还有 {stats.lowProgramChannels.length - 5} 个频道...</div>
+								<button class="show-more-btn" onclick={() => showAllLowPrograms = !showAllLowPrograms}>
+									{showAllLowPrograms ? '收起' : `显示全部 ${stats.lowProgramChannels.length} 个频道`}
+								</button>
 							{/if}
 						</div>
 					</div>
@@ -309,7 +390,7 @@
 					<h2>EPG 源状态</h2>
 					<span class="card-badge">共 {stats.epgSources.length} 个源</span>
 				</div>
-				<div class="sources-list">
+				<div class="sources-list scrollable">
 					{#each stats.epgSources as source}
 						<div class="source-item" class:disabled={source.disabled}>
 							<div class="source-name">
@@ -412,8 +493,8 @@
 					<h2>今日节目断层</h2>
 					<span class="card-badge warning">{stats.gapChannels.length} 个频道</span>
 				</div>
-				<div class="gap-list">
-					{#each stats.gapChannels.slice(0, 6) as item}
+				<div class="gap-list scrollable">
+					{#each displayedGaps as item}
 						<div class="gap-item">
 							<div class="gap-channel">{item.name}</div>
 							<div class="gap-info">
@@ -424,6 +505,11 @@
 						</div>
 					{/each}
 				</div>
+				{#if stats.gapChannels.length > 6}
+					<button class="show-more-btn" onclick={() => showAllGaps = !showAllGaps}>
+						{showAllGaps ? '收起' : `显示全部 ${stats.gapChannels.length} 个频道`}
+					</button>
+				{/if}
 			</div>
 		{/if}
 
@@ -445,15 +531,17 @@
 	.page {
 		max-width: 1000px;
 		margin: 0 auto;
+		padding: 0 1rem;
 	}
 
 	.page-header {
 		text-align: center;
 		margin-bottom: 2rem;
+		padding-top: 1rem;
 	}
 
 	.page-header h1 {
-		font-size: 2rem;
+		font-size: clamp(1.5rem, 5vw, 2rem);
 		font-weight: 700;
 		margin-bottom: 0.5rem;
 		background: linear-gradient(135deg, #3b82f6, #8b5cf6);
@@ -464,78 +552,70 @@
 
 	.page-header p {
 		color: var(--text-muted);
+		font-size: 0.9rem;
 	}
 
 	.update-time {
-		font-size: 0.875rem;
+		font-size: 0.8rem;
 		color: var(--text-muted);
 		margin-top: 0.5rem;
 	}
 
 	.stats-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 0.75rem;
 		margin-bottom: 1.5rem;
 	}
 
 	.stat-card {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		padding: 1.25rem;
+		gap: 0.75rem;
+		padding: 1rem;
 		background: var(--bg-card);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 	}
 
 	.stat-icon {
-		width: 48px;
-		height: 48px;
+		width: 40px;
+		height: 40px;
+		min-width: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 12px;
+		border-radius: 10px;
 	}
 
-	.stat-icon.channels {
-		background: rgba(59, 130, 246, 0.15);
-		color: #3b82f6;
-	}
-
-	.stat-icon.matched {
-		background: rgba(34, 197, 94, 0.15);
-		color: #22c55e;
-	}
-
-	.stat-icon.programs {
-		background: rgba(139, 92, 246, 0.15);
-		color: #8b5cf6;
-	}
-
-	.stat-icon.sources {
-		background: rgba(245, 158, 11, 0.15);
-		color: #f59e0b;
-	}
+	.stat-icon.channels { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+	.stat-icon.matched { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+	.stat-icon.programs { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+	.stat-icon.sources { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+	.stat-icon.alias { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+	.stat-icon.date { background: rgba(20, 184, 166, 0.15); color: #14b8a6; }
 
 	.stat-content {
 		display: flex;
 		flex-direction: column;
+		min-width: 0;
 	}
 
 	.stat-value {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		font-weight: 700;
+		line-height: 1.2;
 	}
 
 	.stat-label {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		color: var(--text-muted);
+		white-space: nowrap;
 	}
 
 	.alert-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 		gap: 1rem;
 		margin-bottom: 1.5rem;
 	}
@@ -547,13 +627,13 @@
 	}
 
 	.alert-card.warning {
-		background: rgba(245, 158, 11, 0.1);
-		border-color: rgba(245, 158, 11, 0.3);
+		background: #fef3c7;
+		border-color: #f59e0b;
 	}
 
 	.alert-card.danger {
-		background: rgba(239, 68, 68, 0.1);
-		border-color: rgba(239, 68, 68, 0.3);
+		background: #fee2e2;
+		border-color: #ef4444;
 	}
 
 	.alert-header {
@@ -564,54 +644,80 @@
 		margin-bottom: 0.75rem;
 	}
 
-	.alert-card.warning .alert-header {
-		color: #f59e0b;
-	}
-
-	.alert-card.danger .alert-header {
-		color: #ef4444;
-	}
+	.alert-card.warning .alert-header { color: #b45309; }
+	.alert-card.danger .alert-header { color: #b91c1c; }
 
 	.alert-content {
-		font-size: 0.875rem;
+		font-size: 0.85rem;
+	}
+
+	.alert-content.scrollable {
+		max-height: 200px;
+		overflow-y: auto;
+		padding-right: 0.5rem;
 	}
 
 	.alert-item {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		padding: 0.5rem;
-		background: rgba(255, 255, 255, 0.5);
+		background: rgba(255, 255, 255, 0.7);
 		border-radius: 4px;
 		margin-bottom: 0.25rem;
+		gap: 0.5rem;
 	}
 
 	.item-id {
 		font-family: monospace;
 		color: var(--text-muted);
+		font-size: 0.75rem;
+	}
+
+	.item-name {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.item-count {
-		color: #ef4444;
-		font-weight: 500;
+		color: #dc2626;
+		font-weight: 600;
+		font-size: 0.8rem;
+		white-space: nowrap;
 	}
 
-	.more-items {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		text-align: center;
+	.show-more-btn {
+		width: 100%;
 		padding: 0.5rem;
+		margin-top: 0.5rem;
+		background: rgba(255, 255, 255, 0.5);
+		border: 1px dashed;
+		border-radius: 4px;
+		font-size: 0.8rem;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.alert-card.warning .show-more-btn {
+		border-color: #f59e0b;
+		color: #b45309;
+	}
+
+	.alert-card.danger .show-more-btn {
+		border-color: #ef4444;
+		color: #b91c1c;
+	}
+
+	.show-more-btn:hover {
+		background: rgba(255, 255, 255, 0.8);
 	}
 
 	.content-grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 1.5rem;
-	}
-
-	@media (max-width: 768px) {
-		.content-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 
 	.card-header {
@@ -629,8 +735,8 @@
 	}
 
 	.card-badge {
-		font-size: 0.75rem;
-		padding: 0.25rem 0.5rem;
+		font-size: 0.7rem;
+		padding: 0.2rem 0.5rem;
 		background: rgba(34, 197, 94, 0.15);
 		color: var(--success);
 		border-radius: 9999px;
@@ -641,12 +747,16 @@
 		color: #f59e0b;
 	}
 
+	.scrollable {
+		overflow-y: auto;
+		padding-right: 0.25rem;
+	}
+
 	.sources-list {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		max-height: 300px;
-		overflow-y: auto;
+		max-height: 350px;
 	}
 
 	.source-item {
@@ -656,12 +766,12 @@
 		padding: 0.75rem;
 		background: var(--bg);
 		border-radius: var(--radius);
-		font-size: 0.875rem;
+		font-size: 0.85rem;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
-	.source-item.disabled {
-		opacity: 0.5;
-	}
+	.source-item.disabled { opacity: 0.5; }
 
 	.source-name {
 		font-family: monospace;
@@ -669,8 +779,8 @@
 	}
 
 	.disabled-badge {
-		font-size: 0.625rem;
-		padding: 0.125rem 0.375rem;
+		font-size: 0.6rem;
+		padding: 0.1rem 0.35rem;
 		background: rgba(239, 68, 68, 0.15);
 		color: #ef4444;
 		border-radius: 4px;
@@ -679,9 +789,10 @@
 
 	.source-stats {
 		display: flex;
-		gap: 0.75rem;
-		font-size: 0.75rem;
+		gap: 0.5rem;
+		font-size: 0.7rem;
 		color: var(--text-muted);
+		flex-wrap: wrap;
 	}
 
 	.source-stats .num {
@@ -689,9 +800,7 @@
 		color: var(--text);
 	}
 
-	.source-stats .stat.highlight .num {
-		color: var(--success);
-	}
+	.source-stats .stat.highlight .num { color: var(--success); }
 
 	.quick-links {
 		display: flex;
@@ -720,40 +829,25 @@
 	.link-icon {
 		width: 36px;
 		height: 36px;
+		min-width: 36px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 8px;
 	}
 
-	.link-icon.epg {
-		background: rgba(59, 130, 246, 0.15);
-		color: #3b82f6;
-	}
-
-	.link-icon.desc {
-		background: rgba(34, 197, 94, 0.15);
-		color: #22c55e;
-	}
-
-	.link-icon.database {
-		background: rgba(139, 92, 246, 0.15);
-		color: #8b5cf6;
-	}
+	.link-icon.epg { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+	.link-icon.desc { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+	.link-icon.database { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
 
 	.link-content {
 		display: flex;
 		flex-direction: column;
+		min-width: 0;
 	}
 
-	.link-title {
-		font-weight: 500;
-	}
-
-	.link-desc {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-	}
+	.link-title { font-weight: 500; }
+	.link-desc { font-size: 0.75rem; color: var(--text-muted); }
 
 	.download-list {
 		display: flex;
@@ -779,24 +873,15 @@
 		color: var(--success);
 	}
 
-	.download-info {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.download-name {
-		font-family: monospace;
-		font-weight: 500;
-	}
-
-	.download-desc {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-	}
+	.download-info { display: flex; flex-direction: column; }
+	.download-name { font-family: monospace; font-weight: 500; }
+	.download-desc { font-size: 0.75rem; color: var(--text-muted); }
 
 	.gap-list {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		gap: 0.5rem;
+		max-height: 300px;
 	}
 
 	.gap-item {
@@ -806,12 +891,11 @@
 		padding: 0.75rem;
 		background: var(--bg);
 		border-radius: var(--radius);
-		font-size: 0.875rem;
+		font-size: 0.85rem;
+		gap: 1rem;
 	}
 
-	.gap-channel {
-		font-weight: 500;
-	}
+	.gap-channel { font-weight: 500; }
 
 	.gap-info {
 		display: flex;
@@ -821,9 +905,7 @@
 		color: #f59e0b;
 	}
 
-	.gap-time {
-		font-family: monospace;
-	}
+	.gap-time { font-family: monospace; }
 
 	.login-banner {
 		display: flex;
@@ -834,33 +916,32 @@
 		background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
 		border: 1px solid var(--primary);
 		border-radius: var(--radius);
+		gap: 1rem;
+		flex-wrap: wrap;
 	}
 
-	.banner-content h3 {
-		font-size: 1rem;
-		margin-bottom: 0.25rem;
-	}
+	.banner-content h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+	.banner-content p { font-size: 0.85rem; color: var(--text-muted); }
 
-	.banner-content p {
-		font-size: 0.875rem;
-		color: var(--text-muted);
-	}
+	.error-card { text-align: center; padding: 2rem; }
+	.error-card p { color: var(--danger); margin-bottom: 1rem; }
 
-	.error-card {
-		text-align: center;
-		padding: 2rem;
-	}
+	@media (max-width: 600px) {
+		.stats-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
 
-	.error-card p {
-		color: var(--danger);
-		margin-bottom: 1rem;
-	}
+		.alert-grid {
+			grid-template-columns: 1fr;
+		}
 
-	@media (max-width: 768px) {
+		.content-grid {
+			grid-template-columns: 1fr;
+		}
+
 		.login-banner {
 			flex-direction: column;
 			text-align: center;
-			gap: 1rem;
 		}
 
 		.gap-item {
@@ -869,8 +950,11 @@
 			gap: 0.5rem;
 		}
 
-		.gap-info {
-			align-items: flex-start;
+		.gap-info { align-items: flex-start; }
+
+		.source-stats {
+			width: 100%;
+			justify-content: flex-start;
 		}
 	}
 </style>

@@ -16,6 +16,8 @@
 	let editData = $state({ id: '', n: '', a: [], x: [] });
 	let newAlias = $state('');
 	let newExtend = $state('');
+	let showAddChannelModal = $state(false);
+	let newChannelInput = $state({ id: '', n: '', a: '', x: '' });
 
 	onMount(async () => {
 		await loadConfig();
@@ -109,15 +111,29 @@
 		return channels;
 	}
 
-	function addChannel() {
+	function openAddChannelModal() {
+		newChannelInput = { id: '', n: '', a: '', x: '' };
+		showAddChannelModal = true;
+	}
+
+	function closeAddChannelModal() {
+		showAddChannelModal = false;
+	}
+
+	function confirmAddChannel() {
+		const id = newChannelInput.id.trim();
+		if (!id) return;
+
 		if (!config.channels) config.channels = {};
-		const newId = 'NEW_CHANNEL_' + Date.now();
-		config.channels[newId] = {
-			n: newId,
-			a: [],
-			x: []
+		
+		config.channels[id] = {
+			n: newChannelInput.n.trim() || id,
+			a: newChannelInput.a.split(',').map(s => s.trim()).filter(s => s),
+			x: newChannelInput.x.split(',').map(s => s.trim()).filter(s => s)
 		};
-		startEditChannel(newId);
+
+		showAddChannelModal = false;
+		startEditChannel(id);
 	}
 
 	function removeChannel(id) {
@@ -308,7 +324,7 @@
 								</label>
 							</div>
 							<button class="btn-icon danger" onclick={() => removeSource(index)}>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 									<polyline points="3 6 5 6 21 6"/>
 									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
 								</svg>
@@ -345,7 +361,7 @@
 							placeholder="搜索频道..."
 							bind:value={searchChannel}
 						/>
-						<button class="btn btn-secondary" onclick={addChannel}>
+						<button class="btn btn-primary" onclick={openAddChannelModal}>
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<line x1="12" y1="5" x2="12" y2="19"/>
 								<line x1="5" y1="12" x2="19" y2="12"/>
@@ -360,7 +376,7 @@
 					<ul>
 						<li><strong>频道 ID</strong>：频道的唯一标识符</li>
 						<li><strong>n (name)</strong>：频道主名称</li>
-						<li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称</li>
+						<li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称，li>
 						<li><strong>x (extend)</strong>：扩展别名，适应不同名称变体</li>
 					</ul>
 				</div>
@@ -500,14 +516,75 @@
 	{/if}
 </div>
 
+{#if showAddChannelModal}
+	<div class="modal-overlay" onclick={closeAddChannelModal}>
+		<div class="modal" onclick={(e) => e.stopPropagation()}>
+			<div class="modal-header">
+				<h3>添加新频道</h3>
+				<button class="modal-close" onclick={closeAddChannelModal}>&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>频道 ID <span class="required">*</span></label>
+					<input 
+						type="text" 
+						class="form-input" 
+						bind:value={newChannelInput.id}
+						placeholder="例如: CCTV1"
+					/>
+				</div>
+				<div class="form-group">
+					<label>频道名称</label>
+					<input 
+						type="text" 
+						class="form-input" 
+						bind:value={newChannelInput.n}
+						placeholder="例如: 中央电视台综合频道"
+					/>
+				</div>
+				<div class="form-group">
+					<label>别名 (逗号分隔)</label>
+					<input 
+						type="text" 
+						class="form-input" 
+						bind:value={newChannelInput.a}
+						placeholder="例如: CCTV-1, CCTV1综合"
+					/>
+				</div>
+				<div class="form-group">
+					<label>扩展别名 (逗号分隔)</label>
+					<input 
+						type="text" 
+						class="form-input" 
+						bind:value={newChannelInput.x}
+						placeholder="例如: CCTV-1 高清, CCTV1 高清"
+					/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" onclick={closeAddChannelModal}>取消</button>
+				<button 
+					class="btn btn-primary" 
+					onclick={confirmAddChannel}
+					disabled={!newChannelInput.id.trim()}
+				>
+					确认添加
+				</button>
+			</div>
+		</div>
+	</div>
+{/if}
+
 <style>
 	.page {
 		max-width: 900px;
 		margin: 0 auto;
+		padding: 0 1rem;
 	}
 
 	.page-header {
 		margin-bottom: 1.5rem;
+		padding-top: 1rem;
 	}
 
 	.back-link {
@@ -525,7 +602,7 @@
 	}
 
 	.page-header h1 {
-		font-size: 1.5rem;
+		font-size: clamp(1.25rem, 4vw, 1.5rem);
 		font-weight: 600;
 		margin-bottom: 0.25rem;
 	}
@@ -540,6 +617,7 @@
 		display: flex;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
+		flex-wrap: wrap;
 	}
 
 	.tab {
@@ -550,6 +628,7 @@
 		color: var(--text-muted);
 		cursor: pointer;
 		transition: all 0.2s;
+		font-size: 0.875rem;
 	}
 
 	.tab:hover {
@@ -569,6 +648,8 @@
 		margin-bottom: 1rem;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--border);
+		flex-wrap: wrap;
+		gap: 0.75rem;
 	}
 
 	.card-header h2 {
@@ -580,6 +661,7 @@
 		display: flex;
 		gap: 0.5rem;
 		align-items: center;
+		flex-wrap: wrap;
 	}
 
 	.search-input {
@@ -588,7 +670,8 @@
 		border-radius: var(--radius);
 		background: var(--bg);
 		font-size: 0.875rem;
-		width: 200px;
+		width: 180px;
+		max-width: 100%;
 	}
 
 	.channel-hint {
@@ -596,7 +679,7 @@
 		padding: 0.75rem 1rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
-		font-size: 0.875rem;
+		font-size: 0.85rem;
 	}
 
 	.channel-hint p {
@@ -620,6 +703,7 @@
 		margin-bottom: 1.5rem;
 		max-height: 500px;
 		overflow-y: auto;
+		padding-right: 0.25rem;
 	}
 
 	.source-item, .channel-item {
@@ -630,6 +714,7 @@
 		background: var(--bg);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
+		flex-wrap: wrap;
 	}
 
 	.source-item.disabled {
@@ -645,6 +730,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		min-width: 200px;
 	}
 
 	.source-name, .source-url {
@@ -652,6 +738,7 @@
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		background: var(--bg-card);
+		font-size: 0.875rem;
 	}
 
 	.source-name {
@@ -678,17 +765,18 @@
 	.channel-main {
 		display: flex;
 		flex-direction: column;
-		min-width: 120px;
+		min-width: 100px;
 	}
 
 	.channel-id {
 		font-family: monospace;
 		font-weight: 600;
 		color: var(--primary);
+		font-size: 0.875rem;
 	}
 
 	.channel-name {
-		font-size: 0.875rem;
+		font-size: 0.8rem;
 		color: var(--text-muted);
 	}
 
@@ -740,25 +828,29 @@
 		align-items: flex-start;
 		gap: 0.75rem;
 		margin-bottom: 0.75rem;
+		flex-wrap: wrap;
 	}
 
 	.editor-row label {
-		min-width: 80px;
+		min-width: 70px;
 		padding-top: 0.5rem;
-		font-size: 0.875rem;
+		font-size: 0.85rem;
 		font-weight: 500;
 	}
 
 	.editor-input {
 		flex: 1;
+		min-width: 150px;
 		padding: 0.5rem;
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		background: var(--bg-card);
+		font-size: 0.875rem;
 	}
 
 	.tags-input {
 		flex: 1;
+		min-width: 200px;
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.25rem;
@@ -772,7 +864,7 @@
 
 	.tags-input input {
 		flex: 1;
-		min-width: 100px;
+		min-width: 80px;
 		border: none;
 		background: transparent;
 		padding: 0.25rem;
@@ -809,6 +901,7 @@
 		gap: 0.5rem;
 		justify-content: flex-end;
 		margin-top: 1rem;
+		flex-wrap: wrap;
 	}
 
 	.btn-icon {
@@ -846,9 +939,9 @@
 
 	.json-editor {
 		width: 100%;
-		min-height: 500px;
-		font-family: 'Fira Code', monospace;
-		font-size: 0.875rem;
+		min-height: 400px;
+		font-family: 'Fira Code', 'Consolas', monospace;
+		font-size: 0.8rem;
 		line-height: 1.5;
 		background: var(--bg);
 		border: 1px solid var(--border);
@@ -861,12 +954,14 @@
 	.actions {
 		display: flex;
 		gap: 0.75rem;
+		flex-wrap: wrap;
 	}
 
 	.alert {
 		padding: 0.75rem 1rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
+		font-size: 0.875rem;
 	}
 
 	.alert.success {
@@ -886,7 +981,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 3rem;
+		padding: 3rem 1rem;
 		text-align: center;
 	}
 
@@ -913,4 +1008,139 @@
 		color: var(--danger);
 		margin-bottom: 1rem;
 	}
+
+	.modal-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1000;
+		padding: 1rem;
+	}
+
+	.modal {
+		background: var(--bg-card);
+		border-radius: var(--radius);
+		width: 100%;
+		max-width: 450px;
+		max-height: 90vh;
+		overflow-y: auto;
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+	}
+
+	.modal-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.modal-header h3 {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	.modal-close {
+		background: none;
+		border: none;
+		font-size: 1.5rem;
+		color: var(--text-muted);
+		cursor: pointer;
+		padding: 0;
+		line-height: 1;
+	}
+
+	.modal-close:hover {
+		color: var(--text);
+	}
+
+	.modal-body {
+		padding: 1.25rem;
+	}
+
+	.form-group {
+		margin-bottom: 1rem;
+	}
+
+	.form-group label {
+		display: block;
+		font-size: 0.875rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+	}
+
+	.form-group .required {
+		color: var(--danger);
+	}
+
+	.form-input {
+		width: 100%;
+		padding: 0.625rem 0.75rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		font-size: 0.875rem;
+		box-sizing: border-box;
+	}
+
+	.form-input:focus {
+		outline: none;
+		border-color: var(--primary);
+	}
+
+	.modal-footer {
+		display: flex;
+		gap: 0.75rem;
+		justify-content: flex-end;
+		padding: 1rem 1.25rem;
+		border-top: 1px solid var(--border);
+	}
+
+	@media (max-width: 600px) {
+		.header-actions {
+			width: 100%;
+		}
+
+		.search-input {
+			flex: 1;
+		}
+
+		.source-item {
+			flex-direction: column;
+		}
+
+		.source-toggle {
+			order: -1;
+		}
+
+		.channel-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.channel-actions {
+			align-self: flex-end;
+		}
+
+		.editor-row {
+			flex-direction: column;
+		}
+
+		.editor-row label {
+			min-width: auto;
+			padding-top: 0;
+		}
+
+		.tags-input {
+			min-width: 100%;
+		}
+	}
 </style>
+
