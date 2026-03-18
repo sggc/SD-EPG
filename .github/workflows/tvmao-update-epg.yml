@@ -1,0 +1,88 @@
+name: TVMAO EPG
+
+on:
+  schedule:
+    - cron: '0 18 * * *'  # 北京时间每天2点运行（UTC 18:00）
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 拉取完整仓库历史
+        ref: ${{ github.ref }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        else
+          pip install requests beautifulsoup4 lxml
+        fi
+        
+    - name: Run EPG Crawler
+      run: |
+        python scripts/tvmao_epg_crawler.py --province 370000 --output EPG --log-dir log
+        
+    - name: Display results
+      run: |
+        echo "生成的文件:"
+        ls -lh EPG/
+        echo ""
+        echo "文件内容预览 (前50行):"
+        if [ -f "EPG/tvmao.xml" ]; then
+          head -n 50 EPG/tvmao.xml
+        else
+          echo "警告：tvmao.xml 文件未生成"
+        fi
+        
+    - name: Upload EPG files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-files
+        path: EPG/
+        retention-days: 7
+        if-no-files-found: warn
+        
+    - name: Commit and push EPG files
+      run: |
+        # 1. 配置 Git 用户信息
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # 2. 先把刚生成的文件暂存起来（stash），解决 "unstaged changes" 报错
+        # -u 参数包含未跟踪的文件，确保工作区变干净
+        git stash push -u -m "Temporarily stash EPG files" || true
+        
+        # 3. 拉取远程最新代码（此时工作区干净，不会报错）
+        git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
+        
+        # 4. 恢复之前暂存的新文件
+        git stash pop || true
+        
+        # 5. 关键点：只添加本次更新的 tvmao 文件，不影响目录下其他文件
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
+        
+        # 6. 检查暂存区变化并提交
+        if ! git diff --cached --quiet; then
+          git commit -m "Update EPG data [skip ci]"
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          echo "EPG 文件已成功提交并推送"
+        else
+          echo "无 EPG 文件变更，跳过提交和推送"
+        fi
