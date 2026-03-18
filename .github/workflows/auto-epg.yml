@@ -70,7 +70,7 @@ jobs:
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
         cd public_repo
-        git add EPG/sggc.xml.gz log/aggregation_log.txt
+        git add EPG/sggc.xml.gz log/aggregation_log.txt log/dashboard_data.json
         
         if git diff --staged --quiet; then
           echo "No changes to aggregated EPG"

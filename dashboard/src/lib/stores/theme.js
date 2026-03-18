@@ -1,10 +1,8 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-type Theme = 'light' | 'dark';
-
 function createThemeStore() {
-	const getInitialTheme = (): Theme => {
+	const getInitialTheme = () => {
 		if (browser) {
 			const stored = localStorage.getItem('theme');
 			if (stored === 'light' || stored === 'dark') {
@@ -17,9 +15,9 @@ function createThemeStore() {
 		return 'dark';
 	};
 
-	const theme = writable<Theme>(getInitialTheme());
+	const theme = writable(getInitialTheme());
 
-	function setTheme(newTheme: Theme) {
+	function setTheme(newTheme) {
 		theme.set(newTheme);
 		if (browser) {
 			localStorage.setItem('theme', newTheme);
