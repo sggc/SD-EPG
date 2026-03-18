@@ -335,7 +335,7 @@
 					<h2>快速入口</h2>
 				</div>
 				<div class="quick-links">
-					<a href="/epg-config" class="quick-link">
+					<a href="./epg-config" class="quick-link">
 						<div class="link-icon epg">
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<circle cx="12" cy="12" r="3"/>
@@ -348,7 +348,7 @@
 						</div>
 					</a>
 
-					<a href="/desc-config" class="quick-link">
+					<a href="./desc-config" class="quick-link">
 						<div class="link-icon desc">
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -361,7 +361,7 @@
 						</div>
 					</a>
 
-					<a href="/database" class="quick-link">
+					<a href="./database" class="quick-link">
 						<div class="link-icon database">
 							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<ellipse cx="12" cy="5" rx="9" ry="3"/>

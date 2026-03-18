@@ -28,7 +28,7 @@
 
 <header class="header">
 	<div class="header-content">
-		<a href="/" class="logo">
+		<a href="./" class="logo">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 				<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
 				<line x1="8" y1="21" x2="16" y2="21"/>
@@ -38,10 +38,10 @@
 		</a>
 
 		<nav class="nav">
-			<a href="/" class="nav-link" class:active={isActive('/') && currentPath === '/'}>首页</a>
-			<a href="/epg-config" class="nav-link" class:active={isActive('/epg-config')}>EPG配置</a>
-			<a href="/desc-config" class="nav-link" class:active={isActive('/desc-config')}>Desc配置</a>
-			<a href="/database" class="nav-link" class:active={isActive('/database')}>数据库</a>
+			<a href="./" class="nav-link" class:active={isActive('/') && currentPath === '/'}>首页</a>
+			<a href="./epg-config" class="nav-link" class:active={isActive('/epg-config')}>EPG配置</a>
+			<a href="./desc-config" class="nav-link" class:active={isActive('/desc-config')}>Desc配置</a>
+			<a href="./database" class="nav-link" class:active={isActive('/database')}>数据库</a>
 		</nav>
 
 		<div class="user-section">
