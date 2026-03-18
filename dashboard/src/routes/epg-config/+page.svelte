@@ -297,33 +297,34 @@
 				<div class="sources-list">
 					{#each config.epg_sources as source, index (index)}
 						<div class="source-item" class:disabled={!source.enabled}>
-							<div class="source-toggle">
-								<label class="switch">
-									<input 
-										type="checkbox" 
-										checked={source.enabled}
-										onchange={() => toggleSource(index)}
-									/>
-									<span class="switch-slider"></span>
-								</label>
-							</div>
-							<div class="source-info">
-								<input 
-									type="text" 
-									class="source-name"
-									bind:value={source.name}
-									placeholder="数据源名称"
-								/>
-								<input 
-									type="text" 
-									class="source-url"
-									bind:value={source.url}
-									placeholder="EPG 数据 URL"
-								/>
-								<label class="checkbox-label">
-									<input type="checkbox" bind:checked={source.compressed} />
-									<span>压缩文件 (.gz)</span>
-								</label>
+							<div class="source-main">
+								<div class="source-header">
+									<label class="checkbox-wrapper">
+										<input 
+											type="checkbox" 
+											checked={source.enabled}
+											onchange={() => toggleSource(index)}
+										/>
+										<span class="source-name-text">{source.name || '未命名'}</span>
+									</label>
+								</div>
+								<div class="source-fields">
+									<div class="field-row">
+										<label>URL:</label>
+										<input 
+											type="text" 
+											class="source-url"
+											bind:value={source.url}
+											placeholder="EPG 数据 URL"
+										/>
+									</div>
+									<div class="field-row checkbox-row">
+										<label class="checkbox-wrapper">
+											<input type="checkbox" bind:checked={source.compressed} />
+											<span>压缩文件 (.gz)</span>
+										</label>
+									</div>
+								</div>
 							</div>
 							<button class="btn-icon danger" onclick={() => removeSource(index)}>
 								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -378,7 +379,7 @@
 					<ul>
 						<li><strong>频道 ID</strong>：频道的唯一标识符</li>
 						<li><strong>n (name)</strong>：频道主名称</li>
-						<li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称，li>
+						<li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称</li>
 						<li><strong>x (extend)</strong>：扩展别名，适应不同名称变体</li>
 					</ul>
 				</div>
@@ -594,7 +595,7 @@
 		align-items: center;
 		gap: 0.25rem;
 		color: var(--text-muted);
-		font-size: 0.875rem;
+		font-size: 1rem;
 		margin-bottom: 0.75rem;
 	}
 
@@ -604,13 +605,13 @@
 	}
 
 	.page-header h1 {
-		font-size: clamp(1.25rem, 4vw, 1.5rem);
+		font-size: clamp(1.5rem, 4vw, 1.75rem);
 		font-weight: 600;
 		margin-bottom: 0.25rem;
 	}
 
 	.repo-hint {
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		color: var(--text-muted);
 		font-family: monospace;
 	}
@@ -623,14 +624,14 @@
 	}
 
 	.tab {
-		padding: 0.5rem 1rem;
+		padding: 0.625rem 1.25rem;
 		background: var(--bg-card);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		color: var(--text-muted);
 		cursor: pointer;
 		transition: all 0.2s;
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 
 	.tab:hover {
@@ -655,7 +656,7 @@
 	}
 
 	.card-header h2 {
-		font-size: 1rem;
+		font-size: 1.25rem;
 		font-weight: 600;
 	}
 
@@ -667,21 +668,21 @@
 	}
 
 	.search-input {
-		padding: 0.5rem 0.75rem;
+		padding: 0.625rem 0.875rem;
 		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		background: var(--bg);
-		font-size: 0.875rem;
-		width: 180px;
+		font-size: 1rem;
+		width: 200px;
 		max-width: 100%;
 	}
 
 	.channel-hint {
 		background: var(--bg);
-		padding: 0.75rem 1rem;
+		padding: 1rem 1.25rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
-		font-size: 0.85rem;
+		font-size: 1rem;
 	}
 
 	.channel-hint p {
@@ -690,7 +691,7 @@
 
 	.channel-hint ul {
 		margin: 0;
-		padding-left: 1.25rem;
+		padding-left: 1.5rem;
 		color: var(--text-muted);
 	}
 
@@ -708,77 +709,114 @@
 		padding-right: 0.25rem;
 	}
 
-	.source-item, .channel-item {
+	.source-item {
 		display: flex;
 		align-items: flex-start;
 		gap: 1rem;
-		padding: 1rem;
+		padding: 1.25rem;
 		background: var(--bg);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
-		flex-wrap: wrap;
 	}
 
 	.source-item.disabled {
 		opacity: 0.5;
 	}
 
-	.source-toggle {
-		padding-top: 0.25rem;
+	.source-main {
+		flex: 1;
+		min-width: 0;
 	}
 
-	.source-info {
-		flex: 1;
+	.source-header {
+		margin-bottom: 0.75rem;
+	}
+
+	.source-name-text {
+		font-weight: 600;
+		font-size: 1.1rem;
+		color: var(--text);
+	}
+
+	.source-fields {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		min-width: 200px;
+		gap: 0.625rem;
 	}
 
-	.source-name, .source-url {
-		padding: 0.5rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		background: var(--bg-card);
-		font-size: 0.875rem;
+	.field-row {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
 	}
 
-	.source-name {
-		font-weight: 500;
+	.field-row label {
+		min-width: 50px;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 0;
+	}
+
+	.field-row.checkbox-row {
+		margin-top: 0.25rem;
 	}
 
 	.source-url {
+		flex: 1;
+		padding: 0.625rem 0.875rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-card);
+		font-size: 0.9rem;
 		font-family: monospace;
-		font-size: 0.75rem;
 	}
 
-	.checkbox-label {
+	.checkbox-wrapper {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.75rem;
-		color: var(--text-muted);
+		gap: 0.625rem;
+		cursor: pointer;
+	}
+
+	.checkbox-wrapper input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		min-width: 20px;
+		cursor: pointer;
+		accent-color: var(--primary);
+	}
+
+	.checkbox-wrapper span {
+		font-size: 1rem;
+		color: var(--text);
+		user-select: none;
 	}
 
 	.channel-item {
+		display: flex;
 		align-items: center;
+		gap: 1rem;
+		padding: 1rem 1.25rem;
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
 	}
 
 	.channel-main {
 		display: flex;
 		flex-direction: column;
-		min-width: 100px;
+		min-width: 120px;
 	}
 
 	.channel-id {
 		font-family: monospace;
 		font-weight: 600;
 		color: var(--primary);
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 
 	.channel-name {
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 		color: var(--text-muted);
 	}
 
@@ -787,16 +825,16 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
-		font-size: 0.75rem;
+		font-size: 0.9rem;
 	}
 
 	.alias-group {
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
-		padding: 0.25rem 0.5rem;
+		padding: 0.375rem 0.625rem;
 		background: rgba(59, 130, 246, 0.1);
-		border-radius: 4px;
+		border-radius: 6px;
 		color: var(--text-muted);
 	}
 
@@ -819,7 +857,7 @@
 	}
 
 	.channel-editor {
-		padding: 1rem;
+		padding: 1.25rem;
 		background: var(--bg);
 		border: 2px solid var(--primary);
 		border-radius: var(--radius);
@@ -834,43 +872,43 @@
 	}
 
 	.editor-row label {
-		min-width: 70px;
-		padding-top: 0.5rem;
-		font-size: 0.85rem;
+		min-width: 80px;
+		padding-top: 0.625rem;
+		font-size: 1rem;
 		font-weight: 500;
 	}
 
 	.editor-input {
 		flex: 1;
-		min-width: 150px;
-		padding: 0.5rem;
+		min-width: 180px;
+		padding: 0.625rem 0.875rem;
 		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		background: var(--bg-card);
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 
 	.tags-input {
 		flex: 1;
-		min-width: 200px;
+		min-width: 220px;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.25rem;
-		padding: 0.375rem;
+		gap: 0.375rem;
+		padding: 0.5rem;
 		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		background: var(--bg-card);
-		min-height: 38px;
+		min-height: 46px;
 		align-items: center;
 	}
 
 	.tags-input input {
 		flex: 1;
-		min-width: 80px;
+		min-width: 100px;
 		border: none;
 		background: transparent;
 		padding: 0.25rem;
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 
 	.tags-input input:focus {
@@ -881,11 +919,11 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.25rem;
-		padding: 0.25rem 0.5rem;
+		padding: 0.375rem 0.625rem;
 		background: var(--primary);
 		color: white;
-		border-radius: 4px;
-		font-size: 0.75rem;
+		border-radius: 6px;
+		font-size: 0.9rem;
 	}
 
 	.tag button {
@@ -894,7 +932,7 @@
 		color: white;
 		cursor: pointer;
 		padding: 0;
-		font-size: 1rem;
+		font-size: 1.1rem;
 		line-height: 1;
 	}
 
@@ -907,10 +945,10 @@
 	}
 
 	.btn-icon {
-		padding: 0.5rem;
+		padding: 0.625rem;
 		background: none;
 		border: none;
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		color: var(--text-muted);
 		cursor: pointer;
 		transition: all 0.2s;
@@ -926,8 +964,8 @@
 	}
 
 	.btn-sm {
-		padding: 0.375rem 0.75rem;
-		font-size: 0.75rem;
+		padding: 0.5rem 1rem;
+		font-size: 0.9rem;
 	}
 
 	.btn-danger {
@@ -943,7 +981,7 @@
 		width: 100%;
 		min-height: 400px;
 		font-family: 'Fira Code', 'Consolas', monospace;
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 		line-height: 1.5;
 		background: var(--bg);
 		border: 1px solid var(--border);
@@ -960,10 +998,10 @@
 	}
 
 	.alert {
-		padding: 0.75rem 1rem;
+		padding: 0.875rem 1.25rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
-		font-size: 0.875rem;
+		font-size: 1rem;
 	}
 
 	.alert.success {
@@ -1029,7 +1067,7 @@
 		background: var(--bg-card);
 		border-radius: var(--radius);
 		width: 100%;
-		max-width: 450px;
+		max-width: 500px;
 		max-height: 90vh;
 		overflow-y: auto;
 		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -1039,12 +1077,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1rem 1.25rem;
+		padding: 1.25rem 1.5rem;
 		border-bottom: 1px solid var(--border);
 	}
 
 	.modal-header h3 {
-		font-size: 1rem;
+		font-size: 1.25rem;
 		font-weight: 600;
 	}
 
@@ -1063,16 +1101,16 @@
 	}
 
 	.modal-body {
-		padding: 1.25rem;
+		padding: 1.5rem;
 	}
 
 	.form-group {
-		margin-bottom: 1rem;
+		margin-bottom: 1.25rem;
 	}
 
 	.form-group label {
 		display: block;
-		font-size: 0.875rem;
+		font-size: 1rem;
 		font-weight: 500;
 		margin-bottom: 0.5rem;
 	}
@@ -1083,11 +1121,11 @@
 
 	.form-input {
 		width: 100%;
-		padding: 0.625rem 0.75rem;
+		padding: 0.75rem 1rem;
 		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		background: var(--bg);
-		font-size: 0.875rem;
+		font-size: 1rem;
 		box-sizing: border-box;
 	}
 
@@ -1100,7 +1138,7 @@
 		display: flex;
 		gap: 0.75rem;
 		justify-content: flex-end;
-		padding: 1rem 1.25rem;
+		padding: 1rem 1.5rem;
 		border-top: 1px solid var(--border);
 	}
 
@@ -1117,8 +1155,21 @@
 			flex-direction: column;
 		}
 
-		.source-toggle {
-			order: -1;
+		.source-fields {
+			width: 100%;
+		}
+
+		.field-row {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.field-row label {
+			min-width: auto;
+		}
+
+		.source-url {
+			width: 100%;
 		}
 
 		.channel-item {
@@ -1145,4 +1196,3 @@
 		}
 	}
 </style>
-

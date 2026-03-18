@@ -113,7 +113,7 @@
 				<h2>全局设置</h2>
 			</div>
 			<div class="settings-row">
-				<label class="checkbox-label">
+				<label class="checkbox-wrapper">
 					<input type="checkbox" bind:checked={config.accumulate} />
 					<span>累积模式 (保留已有描述)</span>
 				</label>
@@ -137,25 +137,35 @@
 			<div class="sources-list">
 				{#each config.desc_sources as source, index (index)}
 					<div class="source-item">
-						<div class="source-info">
-							<input 
-								type="text" 
-								class="source-name"
-								bind:value={source.name}
-								placeholder="数据源名称"
-								disabled={!$authStore.isLoggedIn}
-							/>
-							<input 
-								type="text" 
-								class="source-url"
-								bind:value={source.url}
-								placeholder="描述数据 URL"
-								disabled={!$authStore.isLoggedIn}
-							/>
-							<label class="checkbox-label">
-								<input type="checkbox" bind:checked={source.compressed} disabled={!$authStore.isLoggedIn} />
-								<span>压缩文件 (.gz)</span>
-							</label>
+						<div class="source-main">
+							<div class="source-fields">
+								<div class="field-row">
+									<label>名称:</label>
+									<input 
+										type="text" 
+										class="source-name"
+										bind:value={source.name}
+										placeholder="数据源名称"
+										disabled={!$authStore.isLoggedIn}
+									/>
+								</div>
+								<div class="field-row">
+									<label>URL:</label>
+									<input 
+										type="text" 
+										class="source-url"
+										bind:value={source.url}
+										placeholder="描述数据 URL"
+										disabled={!$authStore.isLoggedIn}
+									/>
+								</div>
+								<div class="field-row checkbox-row">
+									<label class="checkbox-wrapper">
+										<input type="checkbox" bind:checked={source.compressed} disabled={!$authStore.isLoggedIn} />
+										<span>压缩文件 (.gz)</span>
+									</label>
+								</div>
+							</div>
 						</div>
 						{#if $authStore.isLoggedIn}
 							<button class="btn-icon danger" onclick={() => removeSource(index)}>
@@ -202,10 +212,12 @@
 	.page {
 		max-width: 900px;
 		margin: 0 auto;
+		padding: 0 1rem;
 	}
 
 	.page-header {
 		margin-bottom: 1.5rem;
+		padding-top: 1rem;
 	}
 
 	.back-link {
@@ -213,7 +225,7 @@
 		align-items: center;
 		gap: 0.25rem;
 		color: var(--text-muted);
-		font-size: 0.875rem;
+		font-size: 1rem;
 		margin-bottom: 0.75rem;
 	}
 
@@ -223,13 +235,13 @@
 	}
 
 	.page-header h1 {
-		font-size: 1.5rem;
+		font-size: clamp(1.5rem, 4vw, 1.75rem);
 		font-weight: 600;
 		margin-bottom: 0.25rem;
 	}
 
 	.repo-hint {
-		font-size: 0.75rem;
+		font-size: 0.875rem;
 		color: var(--text-muted);
 		font-family: monospace;
 	}
@@ -244,12 +256,12 @@
 	}
 
 	.card-header h2 {
-		font-size: 1rem;
+		font-size: 1.25rem;
 		font-weight: 600;
 	}
 
 	.settings-row {
-		padding: 0.5rem 0;
+		padding: 0.75rem 0;
 	}
 
 	.sources-list {
@@ -263,40 +275,86 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 1rem;
-		padding: 1rem;
+		padding: 1.25rem;
 		background: var(--bg);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 	}
 
-	.source-info {
+	.source-main {
 		flex: 1;
+		min-width: 0;
+	}
+
+	.source-fields {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.625rem;
+	}
+
+	.field-row {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.field-row label {
+		min-width: 50px;
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 0;
+	}
+
+	.field-row.checkbox-row {
+		margin-top: 0.25rem;
 	}
 
 	.source-name {
+		flex: 1;
+		padding: 0.625rem 0.875rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-card);
+		font-size: 1rem;
 		font-weight: 500;
 	}
 
 	.source-url {
+		flex: 1;
+		padding: 0.625rem 0.875rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-card);
+		font-size: 0.9rem;
 		font-family: monospace;
-		font-size: 0.75rem;
 	}
 
-	.checkbox-label {
+	.checkbox-wrapper {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.875rem;
+		gap: 0.625rem;
+		cursor: pointer;
+	}
+
+	.checkbox-wrapper input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+		min-width: 20px;
+		cursor: pointer;
+		accent-color: var(--primary);
+	}
+
+	.checkbox-wrapper span {
+		font-size: 1rem;
+		color: var(--text);
+		user-select: none;
 	}
 
 	.btn-icon {
-		padding: 0.5rem;
+		padding: 0.625rem;
 		background: none;
 		border: none;
-		border-radius: var(--radius);
+		border-radius: var(--radius-sm);
 		color: var(--text-muted);
 		cursor: pointer;
 		transition: all 0.2s;
@@ -317,9 +375,10 @@
 	}
 
 	.alert {
-		padding: 0.75rem 1rem;
+		padding: 0.875rem 1.25rem;
 		border-radius: var(--radius);
 		margin-bottom: 1rem;
+		font-size: 1rem;
 	}
 
 	.alert.success {
@@ -344,6 +403,7 @@
 
 	.login-hint p {
 		color: var(--text-muted);
+		font-size: 1rem;
 	}
 
 	.error-card {
@@ -354,5 +414,29 @@
 	.error-card p {
 		color: var(--danger);
 		margin-bottom: 1rem;
+	}
+
+	@media (max-width: 600px) {
+		.source-item {
+			flex-direction: column;
+		}
+
+		.source-fields {
+			width: 100%;
+		}
+
+		.field-row {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.field-row label {
+			min-width: auto;
+		}
+
+		.source-name,
+		.source-url {
+			width: 100%;
+		}
 	}
 </style>

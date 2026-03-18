@@ -255,20 +255,23 @@
 							<div class="entries-list">
 								{#each getPaginatedEntries() as entry}
 									<div class="entry-item">
-										<div class="entry-header" onclick={() => toggleExpand(entry.channel)}>
+										<div 
+											class="entry-header" 
+											onclick={() => toggleExpand(entry.channel)}
+										>
 											<div class="entry-info">
 												<span class="entry-channel">{entry.channel}</span>
 												<span class="entry-count">{entry.programCount} 个节目</span>
 											</div>
 											<svg 
 												class="entry-arrow" 
+												class:expanded={expandedItems.has(entry.channel)}
 												width="14" 
 												height="14" 
 												viewBox="0 0 24 24" 
 												fill="none" 
 												stroke="currentColor" 
 												stroke-width="2"
-												class:expanded={expandedItems.has(entry.channel)}
 											>
 												<polyline points="6 9 12 15 18 9"/>
 											</svg>
@@ -276,10 +279,12 @@
 										
 										{#if expandedItems.has(entry.channel) && entry.programs}
 											<div class="programs-list">
-												{#each getFilteredPrograms(entry.programs) as [name, desc]}
+												{#each getFilteredPrograms(entry.programs) as [name, info]}
 													<div class="program-item">
 														<span class="program-name">{name}</span>
-														<span class="program-desc">{desc}</span>
+														{#if info?.desc}
+															<span class="program-desc">{info.desc}</span>
+														{/if}
 													</div>
 												{/each}
 												{#if Object.keys(entry.programs).length > 10}
@@ -295,7 +300,7 @@
 								<div class="pagination">
 									<button 
 										class="page-btn" 
-										disabled={currentPage === 1}
+										disabled={currentPage <= 1}
 										onclick={() => currentPage--}
 									>
 										上一页
@@ -432,7 +437,6 @@
 		display: grid;
 		grid-template-columns: 260px 1fr;
 		gap: 1rem;
-		min-height: 500px;
 	}
 
 	.card {
@@ -443,10 +447,10 @@
 	}
 
 	.card h3 {
-		font-size: 0.9rem;
+		font-size: 1rem;
 		font-weight: 600;
-		color: var(--text);
 		margin-bottom: 0.75rem;
+		color: var(--text);
 	}
 
 	.db-items {
