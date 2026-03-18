@@ -3,8 +3,6 @@ name: Deploy Dashboard
 on:
   push:
     branches: [main]
-    paths:
-      - 'dashboard/**'
   workflow_dispatch:
 
 permissions:
@@ -35,8 +33,11 @@ jobs:
         working-directory: dashboard
         env:
           NODE_ENV: production
-          VITE_OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
         run: npm run build
+      
+      - name: List build output
+        working-directory: dashboard
+        run: ls -la build/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
