@@ -18,7 +18,7 @@ const config = {
 			handleHttpError: 'ignore',
 			handleMissingId: 'ignore',
 			handleUnseenRoutes: 'ignore',
-			entries: ['*', '/epg-config', '/desc-config', '/database', '/config', '/logs']
+			entries: ['/', '/epg-config', '/desc-config', '/database', '/config', '/logs']
 		}
 	}
 };
