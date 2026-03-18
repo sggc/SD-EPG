@@ -9,14 +9,14 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html',
 			precompress: false,
-			strict: true
+			strict: false
 		}),
 		paths: {
 			base: process.env.NODE_ENV === 'production' ? '/SD-EPG' : ''
 		},
 		prerender: {
 			handleHttpError: 'ignore',
-			entries: ['*', '/auth/callback']
+			entries: ['/', '/epg-config', '/desc-config', '/database', '/auth/callback']
 		}
 	}
 };

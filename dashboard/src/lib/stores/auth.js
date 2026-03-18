@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { CONFIG } from '$lib/config.js';
+import { browser } from '$app/environment';
 
 function createAuthStore() {
 	const { subscribe, set, update } = writable({
@@ -14,6 +14,8 @@ function createAuthStore() {
 		subscribe,
 		
 		init() {
+			if (!browser) return;
+			
 			const stored = localStorage.getItem('github_token');
 			const userStored = localStorage.getItem('github_user');
 			
@@ -28,17 +30,47 @@ function createAuthStore() {
 		},
 		
 		async login() {
-			if (!CONFIG.OAUTH_CLIENT_ID) {
-				update(s => ({ ...s, error: '未配置 OAuth Client ID' }));
+			if (!browser) return;
+			
+			const clientId = import.meta.env.VITE_OAUTH_CLIENT_ID;
+			if (!clientId) {
+				const token = prompt('请输入 GitHub Personal Access Token (用于测试):');
+				if (token) {
+					try {
+						const userResponse = await fetch('https://api.github.com/user', {
+							headers: { Authorization: `Bearer ${token}` }
+						});
+						
+						if (!userResponse.ok) throw new Error('Token 无效');
+						
+						const user = await userResponse.json();
+						
+						localStorage.setItem('github_token', token);
+						localStorage.setItem('github_user', JSON.stringify(user));
+						
+						set({
+							isLoggedIn: true,
+							token: token,
+							user: user,
+							loading: false,
+							error: null
+						});
+					} catch (e) {
+						alert('Token 验证失败: ' + e.message);
+					}
+				}
 				return;
 			}
+			
+			const basePath = import.meta.env.BASE_URL || '/SD-EPG';
+			const redirectUri = `${window.location.origin}${basePath}/auth/callback`;
 			
 			const state = Math.random().toString(36).substring(7);
 			sessionStorage.setItem('oauth_state', state);
 			
 			const params = new URLSearchParams({
-				client_id: CONFIG.OAUTH_CLIENT_ID,
-				redirect_uri: CONFIG.OAUTH_REDIRECT_URI,
+				client_id: clientId,
+				redirect_uri: redirectUri,
 				scope: 'repo read:user',
 				state: state
 			});
@@ -47,6 +79,8 @@ function createAuthStore() {
 		},
 		
 		async handleCallback(code, state) {
+			if (!browser) return false;
+			
 			const storedState = sessionStorage.getItem('oauth_state');
 			if (state !== storedState) {
 				update(s => ({ ...s, error: '无效的 OAuth 状态' }));
@@ -56,7 +90,8 @@ function createAuthStore() {
 			update(s => ({ ...s, loading: true }));
 			
 			try {
-				const response = await fetch('/api/auth', {
+				const basePath = import.meta.env.BASE_URL || '/SD-EPG';
+				const response = await fetch(`${basePath}/api/auth`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ code })
@@ -93,6 +128,7 @@ function createAuthStore() {
 		},
 		
 		logout() {
+			if (!browser) return;
 			localStorage.removeItem('github_token');
 			localStorage.removeItem('github_user');
 			set({
