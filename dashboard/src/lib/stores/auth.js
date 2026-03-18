@@ -34,36 +34,11 @@ function createAuthStore() {
 			
 			const clientId = import.meta.env.VITE_OAUTH_CLIENT_ID;
 			if (!clientId) {
-				const token = prompt('请输入 GitHub Personal Access Token (用于测试):');
-				if (token) {
-					try {
-						const userResponse = await fetch('https://api.github.com/user', {
-							headers: { Authorization: `Bearer ${token}` }
-						});
-						
-						if (!userResponse.ok) throw new Error('Token 无效');
-						
-						const user = await userResponse.json();
-						
-						localStorage.setItem('github_token', token);
-						localStorage.setItem('github_user', JSON.stringify(user));
-						
-						set({
-							isLoggedIn: true,
-							token: token,
-							user: user,
-							loading: false,
-							error: null
-						});
-					} catch (e) {
-						alert('Token 验证失败: ' + e.message);
-					}
-				}
+				this.loginWithToken();
 				return;
 			}
 			
-			const basePath = import.meta.env.BASE_URL || '/SD-EPG';
-			const redirectUri = `${window.location.origin}${basePath}/auth/callback`;
+			const redirectUri = 'https://sggc.github.io/SD-EPG/auth/callback';
 			
 			const state = Math.random().toString(36).substring(7);
 			sessionStorage.setItem('oauth_state', state);
@@ -76,6 +51,34 @@ function createAuthStore() {
 			});
 			
 			window.location.href = `https://github.com/login/oauth/authorize?${params}`;
+		},
+		
+		async loginWithToken() {
+			const token = prompt('请输入 GitHub Personal Access Token (用于测试):');
+			if (token) {
+				try {
+					const userResponse = await fetch('https://api.github.com/user', {
+						headers: { Authorization: `Bearer ${token}` }
+					});
+					
+					if (!userResponse.ok) throw new Error('Token 无效');
+					
+					const user = await userResponse.json();
+					
+					localStorage.setItem('github_token', token);
+					localStorage.setItem('github_user', JSON.stringify(user));
+					
+					set({
+						isLoggedIn: true,
+						token: token,
+						user: user,
+						loading: false,
+						error: null
+					});
+				} catch (e) {
+					alert('Token 验证失败: ' + e.message);
+				}
+			}
 		},
 		
 		async handleCallback(code, state) {
