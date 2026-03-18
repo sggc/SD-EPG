@@ -16,7 +16,9 @@
 		unmatchedList: [],
 		lowProgramChannels: [],
 		gapChannels: [],
-		aliasCount: 0
+		aliasCount: 0,
+		allChannels: [],
+		descMatchRate: 0
 	});
 
 	let descSources = $state(0);
@@ -24,6 +26,8 @@
 	let error = $state(null);
 	let showAllLowPrograms = $state(false);
 	let showAllGaps = $state(false);
+	let showAllChannels = $state(false);
+	let copiedLink = $state('');
 
 	onMount(async () => {
 		await loadData();
@@ -105,71 +109,71 @@
 						programs: programMatch ? parseInt(programMatch[1].replace(/,/g, '')) : 0,
 						matched: matchedMatch ? parseInt(matchedMatch[1]) : 0
 					};
-				}
-				return null;
-			}).filter(Boolean);
-		}
+                }
+                return null;
+            }).filter(Boolean);
+        }
 
 		const unmatchedSection = content.match(/⚠ 未匹配的白名单频道[\s\S]*?(?=📉|$)/);
 		if (unmatchedSection) {
-			const unmatchedLines = unmatchedSection[0].split('\n').filter(l => l.startsWith('•'));
-			stats.unmatchedList = unmatchedLines.map(line => {
-				const match = line.match(/•\s*\[([^\]]+)\]\s*(.+)/);
-				return match ? { id: match[1], name: match[2].trim() } : null;
-			}).filter(Boolean);
-		}
+            const unmatchedLines = unmatchedSection[0].split('\n').filter(l => l.startsWith('•'));
+            stats.unmatchedList = unmatchedLines.map(line => {
+                const match = line.match(/•\s*\[([^\]]+)\]\s*(.+)/);
+                return match ? { id: match[1], name: match[2].trim() } : null;
+            }).filter(Boolean);
+        }
 
 		const lowSection = content.match(/📉 今日节目过少的频道[\s\S]*?(?=⏰|$)/);
 		if (lowSection) {
-			const lowLines = lowSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
-			stats.lowProgramChannels = lowLines.map(line => {
-				const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\].*?今日:\s*(\d+)/);
-				return match ? { 
-					index: parseInt(match[1]), 
-					name: match[2].trim(), 
-					id: match[3],
-					todayPrograms: parseInt(match[4])
-				} : null;
-			}).filter(Boolean);
-		}
+            const lowLines = lowSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
+            stats.lowProgramChannels = lowLines.map(line => {
+                const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\].*?今日:\s*(\d+)/);
+                return match ? { 
+                    index: parseInt(match[1]), 
+                    name: match[2].trim(), 
+                    id: match[3],
+                    todayPrograms: parseInt(match[4])
+                } : null;
+            }).filter(Boolean);
+        }
 
 		const gapSection = content.match(/⏰ 今日含有断层的频道[\s\S]*?(?=📺|$)/);
 		if (gapSection) {
-			const gapLines = gapSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
-			const gaps = [];
-			let currentGap = null;
-			
-			for (const line of gapLines) {
-				const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\]/);
-				if (match) {
-					if (currentGap) gaps.push(currentGap);
-					currentGap = {
-						index: parseInt(match[1]),
-						name: match[2].trim(),
-						id: match[3],
-						gaps: []
-					};
-				} else if (currentGap) {
-					const gapMatch = line.match(/断层:\s*(.+)/);
-					if (gapMatch) {
-						currentGap.gaps.push(gapMatch[1].trim());
-					}
-				}
-			}
-			if (currentGap) gaps.push(currentGap);
-			stats.gapChannels = gaps;
-		}
+            const gapLines = gapSection[0].split('\n').filter(l => /^\[\d+\]/.test(l.trim()));
+            const gaps = [];
+            let currentGap = null;
+            
+            for (const line of gapLines) {
+                const match = line.match(/\[(\d+)\]\s*([^\[]+)\s*\[([^\]]+)\]/);
+                if (match) {
+                    if (currentGap) gaps.push(currentGap);
+                    currentGap = {
+                        index: parseInt(match[1]),
+                        name: match[2].trim(),
+                        id: match[3],
+                        gaps: []
+                    };
+                } else if (currentGap) {
+                    const gapMatch = line.match(/断层:\s*(.+)/);
+                    if (gapMatch) {
+                        currentGap.gaps.push(gapMatch[1].trim());
+                    }
+                }
+            }
+            if (currentGap) gaps.push(currentGap);
+            stats.gapChannels = gaps;
+        }
 
 		const aliasSection = content.match(/🏷 别名表[\s\S]*$/);
 		if (aliasSection) {
-			const aliasBlocks = aliasSection[0].split('\n\n');
-			let aliasCount = 0;
-			for (const block of aliasBlocks) {
-				const aliases = block.match(/^[ \t]+.+/gm);
-				if (aliases) aliasCount += aliases.length;
-			}
-			stats.aliasCount = aliasCount;
-		}
+            const aliasBlocks = aliasSection[0].split('\n\n');
+            let aliasCount = 0;
+            for (const block of aliasBlocks) {
+                const aliases = block.match(/^[ \t]+.+/gm);
+                if (aliases) aliasCount += aliases.length;
+            }
+            stats.aliasCount = aliasCount;
+        }
 	}
 
 	function formatDate(dateStr) {
@@ -187,8 +191,22 @@
 		});
 	}
 
+	async function copyToClipboard(text) {
+		try {
+			await navigator.clipboard.writeText(text);
+			copiedLink = text;
+			setTimeout(() => copiedLink = '', 2000);
+		} catch (e) {
+			console.error('复制失败:', e);
+		}
+	}
+
 	let displayedLowPrograms = $derived(showAllLowPrograms ? stats.lowProgramChannels : stats.lowProgramChannels.slice(0, 5));
 	let displayedGaps = $derived(showAllGaps ? stats.gapChannels : stats.gapChannels.slice(0, 6));
+	let displayedChannels = $derived(showAllChannels ? stats.allChannels : stats.allChannels.slice(0, 20));
+
+	const epgUrl = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc.xml.gz';
+	const epgDescUrl = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc-desc.xml.gz';
 </script>
 
 <svelte:head>
@@ -261,7 +279,7 @@
 					<span class="stat-value">{stats.whitelistChannels.toLocaleString()}</span>
 					<span class="stat-label">白名单频道</span>
 				</div>
-			</div>
+		 </div>
 
 			<div class="stat-card">
 				<div class="stat-icon matched">
@@ -274,7 +292,7 @@
 					<span class="stat-value">{stats.matchedChannels.toLocaleString()}</span>
 					<span class="stat-label">成功匹配</span>
 				</div>
-			</div>
+		 </div>
 
 			<div class="stat-card">
 				<div class="stat-icon programs">
@@ -283,13 +301,13 @@
 						<polyline points="14 2 14 8 20 8"/>
 						<line x1="16" y1="13" x2="8" y2="13"/>
 						<line x1="16" y1="17" x2="8" y2="17"/>
-					</svg>
-				</div>
+                   	</svg>
+               	</div>
 				<div class="stat-content">
 					<span class="stat-value">{stats.totalPrograms.toLocaleString()}</span>
 					<span class="stat-label">总节目数</span>
-				</div>
-			</div>
+               	</div>
+            </div>
 
 			<div class="stat-card">
 				<div class="stat-icon sources">
@@ -297,13 +315,13 @@
 						<circle cx="12" cy="12" r="10"/>
 						<line x1="2" y1="12" x2="22" y2="12"/>
 						<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-					</svg>
-				</div>
+                   	</svg>
+               	</div>
 				<div class="stat-content">
 					<span class="stat-value">{stats.epgSources.filter(s => !s.disabled).length}</span>
 					<span class="stat-label">EPG 数据源</span>
-				</div>
-			</div>
+               	</div>
+            </div>
 
 			<div class="stat-card">
 				<div class="stat-icon alias">
@@ -312,13 +330,13 @@
 						<circle cx="9" cy="7" r="4"/>
 						<path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
 						<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-					</svg>
-				</div>
+                   	</svg>
+               	</div>
 				<div class="stat-content">
 					<span class="stat-value">{stats.aliasCount.toLocaleString()}</span>
 					<span class="stat-label">别名映射</span>
-				</div>
-			</div>
+               	</div>
+            </div>
 
 			<div class="stat-card">
 				<div class="stat-icon date">
@@ -327,13 +345,13 @@
 						<line x1="16" y1="2" x2="16" y2="6"/>
 						<line x1="8" y1="2" x2="8" y2="6"/>
 						<line x1="3" y1="10" x2="21" y2="10"/>
-					</svg>
-				</div>
-				<div class="stat-content">
-					<span class="stat-value">{stats.dateRange.split(' ~ ')[1] || '-'}</span>
-					<span class="stat-label">数据截止日期</span>
-				</div>
-			</div>
+                   	</svg>
+               	</div>
+               	<div class="stat-content">
+                   	<span class="stat-value">{stats.dateRange.split(' ~ ')[1] || '-'}</span>
+                   	<span class="stat-label">数据截止日期</span>
+                </div>
+            </div>
 		</section>
 
 		{#if stats.unmatchedChannels > 0 || stats.lowProgramChannels.length > 0}
@@ -346,50 +364,50 @@
 									<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
 									<line x1="12" y1="9" x2="12" y2="13"/>
 									<line x1="12" y1="17" x2="12.01" y2="17"/>
-								</svg>
-							</div>
-							<span class="alert-title">未匹配频道</span>
-							<span class="alert-count-badge warning">{stats.unmatchedChannels}</span>
-						</div>
-						<div class="alert-list">
-							{#each stats.unmatchedList as item}
-								<div class="alert-row">
-									<code class="alert-id">{item.id}</code>
-									<span class="alert-name">{item.name}</span>
-								</div>
-							{/each}
-						</div>
-					</div>
-				{/if}
+                                </svg>
+                            </div>
+                           	<span class="alert-title">未匹配频道</span>
+                           	<span class="alert-count-badge warning">{stats.unmatchedChannels}</span>
+                        </div>
+                       	<div class="alert-list">
+                            {#each stats.unmatchedList as item}
+                                <div class="alert-row">
+                                   	<code class="alert-id">{item.id}</code>
+                                   	<span class="alert-name">{item.name}</span>
+                                </div>
+                            {/each}
+                        </div>
+                    </div>
+               	{/if}
 
-				{#if stats.lowProgramChannels.length > 0}
-					<div class="alert-card danger">
-						<div class="alert-header">
-							<div class="alert-icon-wrap danger">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-								</svg>
-							</div>
-							<span class="alert-title">今日节目过少</span>
-							<span class="alert-count-badge danger">{stats.lowProgramChannels.length}</span>
-						</div>
-						<div class="alert-list">
-							{#each displayedLowPrograms as item}
-								<div class="alert-row">
-									<span class="alert-name">{item.name}</span>
-									<span class="alert-count">{item.todayPrograms} 个节目</span>
-								</div>
-							{/each}
-							{#if stats.lowProgramChannels.length > 5}
-								<button class="toggle-btn" onclick={() => showAllLowPrograms = !showAllLowPrograms}>
-									{showAllLowPrograms ? '收起' : `显示全部 ${stats.lowProgramChannels.length} 个`}
-								</button>
-							{/if}
-						</div>
-					</div>
-				{/if}
-			</section>
-		{/if}
+               	{#if stats.lowProgramChannels.length > 0}
+                   	<div class="alert-card danger">
+                       	<div class="alert-header">
+                           	<div class="alert-icon-wrap danger">
+                               	<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                </svg>
+                            </div>
+                           	<span class="alert-title">今日节目过少</span>
+                           	<span class="alert-count-badge danger">{stats.lowProgramChannels.length}</span>
+                        </div>
+                       	<div class="alert-list">
+                            {#each displayedLowPrograms as item}
+                                <div class="alert-row">
+                                   	<span class="alert-name">{item.name}</span>
+                                   	<span class="alert-count">{item.todayPrograms} 个节目</span>
+                                </div>
+                            {/each}
+                            {#if stats.lowProgramChannels.length > 5}
+                                <button class="toggle-btn" onclick={() => showAllLowPrograms = !showAllLowPrograms}>
+                                    {showAllLowPrograms ? '收起' : `显示全部 ${stats.lowProgramChannels.length} 个`}
+                                </button>
+                            {/if}
+                        </div>
+                    </div>
+               	{/if}
+            </section>
+        {/if}
 
 		<section class="main-grid">
 			<div class="card">
@@ -432,6 +450,34 @@
 						</div>
 					{/each}
 				</div>
+
+				{#if stats.allChannels && stats.allChannels.length > 0}
+					<div class="card-header" style="margin-top: 1rem;">
+						<h2>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+								<line x1="8" y1="21" x2="16" y2="21"/>
+								<line x1="12" y1="17" x2="12" y2="21"/>
+							</svg>
+							所有频道
+						</h2>
+						<span class="badge">{stats.allChannels.length} 个</span>
+					</div>
+					<div class="channels-list">
+						{#each displayedChannels as ch}
+							<div class="channel-row">
+								<span class="channel-id">{ch.id}</span>
+								<span class="channel-name">{ch.name}</span>
+								<span class="channel-programs">{ch.todayPrograms || 0} 节目</span>
+							</div>
+						{/each}
+					</div>
+					{#if stats.allChannels.length > 20}
+						<button class="toggle-btn" onclick={() => showAllChannels = !showAllChannels}>
+							{showAllChannels ? '收起' : `显示全部 ${stats.allChannels.length} 个频道`}
+						</button>
+					{/if}
+				{/if}
 			</div>
 
 			<div class="card">
@@ -507,7 +553,7 @@
 					</h2>
 				</div>
 				<div class="download-links">
-					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc.xml.gz" class="download-link" target="_blank">
+					<div class="download-link">
 						<div class="download-icon">
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -519,8 +565,20 @@
 							<span class="download-name">sggc.xml.gz</span>
 							<span class="download-desc">聚合 EPG 数据</span>
 						</div>
-					</a>
-					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc-desc.xml.gz" class="download-link" target="_blank">
+						<button class="copy-btn" onclick={() => copyToClipboard(epgUrl)}>
+							{#if copiedLink === epgUrl}
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<polyline points="20 6 9 17 4 2"/>
+								</svg>
+							{:else}
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+									<path d="M9 12l2 2 3 3 3"/>
+								</svg>
+							{/if}
+						</button>
+					</div>
+					<div class="download-link">
 						<div class="download-icon">
 							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -532,8 +590,27 @@
 							<span class="download-name">sggc-desc.xml.gz</span>
 							<span class="download-desc">带描述的 EPG 数据</span>
 						</div>
-					</a>
+						<button class="copy-btn" onclick={() => copyToClipboard(epgDescUrl)}>
+							{#if copiedLink === epgDescUrl}
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<polyline points="20 6 9 17 4 2"/>
+								</svg>
+							{:else}
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+									<path d="M9 12l2 2 3 3 3"/>
+								</svg>
+							{/if}
+						</button>
+					</div>
 				</div>
+
+				{#if stats.descMatchRate !== undefined}
+					<div class="desc-stats">
+						<span class="desc-label">Desc 匹配率</span>
+						<span class="desc-value">{stats.descMatchRate}%</span>
+					</div>
+				{/if}
 			</div>
 		</section>
 
@@ -550,49 +627,49 @@
 						</h2>
 						<span class="badge warn">{stats.gapChannels.length} 个频道</span>
 					</div>
-					<div class="gap-list">
-						{#each displayedGaps as item}
-							<div class="gap-row">
-								<span class="gap-name">{item.name}</span>
-								<span class="gap-time">{item.gaps?.[0] || '-'}</span>
-							</div>
-						{/each}
-					</div>
-					{#if stats.gapChannels.length > 6}
-						<button class="toggle-btn" onclick={() => showAllGaps = !showAllGaps}>
-							{showAllGaps ? '收起' : `显示全部 ${stats.gapChannels.length} 个`}
-						</button>
-					{/if}
-				</div>
-			</section>
-		{/if}
+                    <div class="gap-list">
+                        {#each displayedGaps as item}
+                            <div class="gap-row">
+                                <span class="gap-name">{item.name}</span>
+                                <span class="gap-time">{item.gaps?.[0] || '-'}</span>
+                            </div>
+                        {/each}
+                    </div>
+                    {#if stats.gapChannels.length > 6}
+                        <button class="toggle-btn" onclick={() => showAllGaps = !showAllGaps}>
+                            {showAllGaps ? '收起' : `显示全部 ${stats.gapChannels.length} 个`}
+                        </button>
+                    {/if}
+                </div>
+            </section>
+        {/if}
 
 		{#if !$authStore.isLoggedIn}
 			<section class="login-section">
-				<div class="login-banner">
-					<div class="login-content">
-						<div class="login-icon">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-								<polyline points="10 17 15 12 10 7"/>
-								<line x1="15" y1="12" x2="3" y2="12"/>
-							</svg>
-						</div>
-						<div class="login-text">
-							<h3>登录以管理配置</h3>
-							<p>登录 GitHub 后可以在线编辑 EPG 配置文件</p>
-						</div>
-					</div>
-					<button class="btn btn-primary" onclick={() => authStore.login()}>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-						</svg>
-						登录 GitHub
-					</button>
-				</div>
-			</section>
-		{/if}
-	{/if}
+                <div class="login-banner">
+                    <div class="login-content">
+                        <div class="login-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                <polyline points="10 17 15 12 10 7"/>
+                                <line x1="15" y1="12" x2="3" y2="12"/>
+                            </svg>
+                        </div>
+                        <div class="login-text">
+                            <h3>登录以管理配置</h3>
+                            <p>登录 GitHub 后可以在线编辑 EPG 配置文件</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick={() => authStore.login()}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        登录 GitHub
+                    </button>
+                </div>
+            </section>
+        {/if}
+    {/if}
 </div>
 
 <style>
@@ -1078,6 +1155,45 @@
 		color: var(--success);
 	}
 
+	.channels-list {
+		max-height: 200px;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.channel-row {
+		display: flex;
+		align-items: center;
+		padding: 0.4rem 0.5rem;
+		background: var(--bg-elevated);
+		border-radius: 6px;
+		gap: 0.5rem;
+		font-size: 0.75rem;
+	}
+
+	.channel-id {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.65rem;
+		color: var(--text-muted);
+		flex-shrink: 0;
+	}
+
+	.channel-name {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: var(--text);
+	}
+
+	.channel-programs {
+		font-size: 0.65rem;
+		color: var(--text-muted);
+		flex-shrink: 0;
+	}
+
 	.quick-links {
 		display: flex;
 		flex-direction: column;
@@ -1213,6 +1329,47 @@
 		font-size: 0.7rem;
 		color: var(--text-muted);
 		margin-top: 0.125rem;
+	}
+
+	.copy-btn {
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(37, 99, 235, 0.1);
+		border: none;
+		border-radius: 6px;
+		color: var(--primary);
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.copy-btn:hover {
+		background: rgba(37, 99, 235, 0.2);
+	}
+
+	.desc-stats {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.75rem;
+		margin-top: 1rem;
+		background: rgba(139, 92, 246, 0.1);
+		border-radius: 8px;
+	}
+
+	.desc-label {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.desc-value {
+		font-size: 1rem;
+		font-weight: 700;
+		color: #7c3aed;
 	}
 
 	.gap-section {
@@ -1378,10 +1535,6 @@
 
 		.source-stats {
 			gap: 0.75rem;
-		}
-
-		.stat-item {
-			min-width: 36px;
 		}
 	}
 </style>

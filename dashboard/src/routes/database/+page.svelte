@@ -9,6 +9,9 @@
 	let searchQuery = $state('');
 	let loading = $state(true);
 	let error = $state(null);
+	let currentPage = $state(1);
+	let pageSize = $state(20);
+	let expandedItems = $state(new Set());
 
 	const dbFiles = [
 		{ name: 'desc_database.json', path: 'database/desc_database.json', description: '节目描述数据库' },
@@ -32,6 +35,8 @@
 		selectedDb = db;
 		dbContent = null;
 		error = null;
+		currentPage = 1;
+		expandedItems = new Set();
 		
 		try {
 			const content = await github.getPublicFile(db.path);
@@ -68,35 +73,66 @@
 		return null;
 	}
 
-	function filterContent() {
-		if (!dbContent || !searchQuery) return dbContent;
+	function getEntries() {
+		if (!dbContent) return [];
 		
-		const query = searchQuery.toLowerCase();
+		let entries = [];
 		
 		if (typeof dbContent === 'object' && !Array.isArray(dbContent)) {
-			const filtered = {};
 			for (const channel in dbContent) {
-				if (channel.toLowerCase().includes(query)) {
-					filtered[channel] = dbContent[channel];
-					continue;
+				if (searchQuery && !channel.toLowerCase().includes(searchQuery.toLowerCase())) {
+					const programs = dbContent[channel];
+					if (typeof programs === 'object') {
+						let hasMatch = false;
+						for (const program in programs) {
+							if (program.toLowerCase().includes(searchQuery.toLowerCase())) {
+								hasMatch = true;
+								break;
+							}
+						}
+						if (!hasMatch) continue;
+					}
 				}
 				
-				if (typeof dbContent[channel] === 'object') {
-					const programs = {};
-					for (const program in dbContent[channel]) {
-						if (program.toLowerCase().includes(query)) {
-							programs[program] = dbContent[channel][program];
-						}
-					}
-					if (Object.keys(programs).length > 0) {
-						filtered[channel] = programs;
-					}
-				}
+				const programs = dbContent[channel];
+				const programCount = typeof programs === 'object' ? Object.keys(programs).length : 0;
+				
+				entries.push({
+					channel,
+					programCount,
+					programs: typeof programs === 'object' ? programs : null
+				});
 			}
-			return filtered;
 		}
 		
-		return dbContent;
+		return entries;
+	}
+
+	function getPaginatedEntries() {
+		const entries = getEntries();
+		const start = (currentPage - 1) * pageSize;
+		return entries.slice(start, start + pageSize);
+	}
+
+	function getTotalPages() {
+		return Math.ceil(getEntries().length / pageSize);
+	}
+
+	function toggleExpand(channel) {
+		const newExpanded = new Set(expandedItems);
+		if (newExpanded.has(channel)) {
+			newExpanded.delete(channel);
+		} else {
+			newExpanded.add(channel);
+		}
+		expandedItems = newExpanded;
+	}
+
+	function getFilteredPrograms(programs) {
+		if (!programs) return [];
+		const entries = Object.entries(programs);
+		if (!searchQuery) return entries.slice(0, 10);
+		return entries.filter(([name]) => name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 10);
 	}
 </script>
 
@@ -211,12 +247,76 @@
 								type="text" 
 								placeholder="搜索频道或节目..." 
 								bind:value={searchQuery}
+								oninput={() => { currentPage = 1; }}
 							/>
 						</div>
 
-						<div class="content-preview">
-							<pre>{JSON.stringify(filterContent(), null, 2)}</pre>
-						</div>
+						{#if stats?.type === 'database'}
+							<div class="entries-list">
+								{#each getPaginatedEntries() as entry}
+									<div class="entry-item">
+										<div class="entry-header" onclick={() => toggleExpand(entry.channel)}>
+											<div class="entry-info">
+												<span class="entry-channel">{entry.channel}</span>
+												<span class="entry-count">{entry.programCount} 个节目</span>
+											</div>
+											<svg 
+												class="entry-arrow" 
+												width="14" 
+												height="14" 
+												viewBox="0 0 24 24" 
+												fill="none" 
+												stroke="currentColor" 
+												stroke-width="2"
+												class:expanded={expandedItems.has(entry.channel)}
+											>
+												<polyline points="6 9 12 15 18 9"/>
+											</svg>
+										</div>
+										
+										{#if expandedItems.has(entry.channel) && entry.programs}
+											<div class="programs-list">
+												{#each getFilteredPrograms(entry.programs) as [name, desc]}
+													<div class="program-item">
+														<span class="program-name">{name}</span>
+														<span class="program-desc">{desc}</span>
+													</div>
+												{/each}
+												{#if Object.keys(entry.programs).length > 10}
+													<div class="more-hint">仅显示前 10 个节目</div>
+												{/if}
+											</div>
+										{/if}
+									</div>
+								{/each}
+							</div>
+
+							{#if getTotalPages() > 1}
+								<div class="pagination">
+									<button 
+										class="page-btn" 
+										disabled={currentPage === 1}
+										onclick={() => currentPage--}
+									>
+										上一页
+									</button>
+									<span class="page-info">
+										{currentPage} / {getTotalPages()}
+									</span>
+									<button 
+										class="page-btn" 
+										disabled={currentPage >= getTotalPages()}
+										onclick={() => currentPage++}
+									>
+										下一页
+									</button>
+								</div>
+							{/if}
+						{:else}
+							<div class="json-preview">
+								<pre>{JSON.stringify(dbContent, null, 2)}</pre>
+							</div>
+						{/if}
 					{:else}
 						<div class="loading-container">
 							<div class="loading-spinner"></div>
@@ -480,23 +580,162 @@
 		box-shadow: none;
 	}
 
-	.content-preview {
+	.entries-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		max-height: 400px;
+		overflow-y: auto;
+	}
+
+	.entry-item {
 		background: var(--bg-elevated);
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		max-height: 450px;
+		overflow: hidden;
+	}
+
+	.entry-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.625rem 0.75rem;
+		cursor: pointer;
+		transition: background 0.2s ease;
+	}
+
+	.entry-header:hover {
+		background: var(--bg-hover);
+	}
+
+	.entry-info {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.entry-channel {
+		font-weight: 500;
+		font-size: 0.8rem;
+		color: var(--text);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.entry-count {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		flex-shrink: 0;
+	}
+
+	.entry-arrow {
+		color: var(--text-muted);
+		flex-shrink: 0;
+		transition: transform 0.2s ease;
+	}
+
+	.entry-arrow.expanded {
+		transform: rotate(180deg);
+	}
+
+	.programs-list {
+		padding: 0.5rem 0.75rem 0.75rem;
+		border-top: 1px solid var(--border);
+		background: var(--bg-card);
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.program-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		padding: 0.375rem 0.5rem;
+		background: var(--bg-elevated);
+		border-radius: 4px;
+	}
+
+	.program-name {
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: var(--text);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.program-desc {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.more-hint {
+		font-size: 0.65rem;
+		color: var(--text-dim);
+		text-align: center;
+		padding: 0.25rem;
+	}
+
+	.pagination {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.75rem;
+		margin-top: 0.75rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.page-btn {
+		padding: 0.375rem 0.75rem;
+		background: var(--bg-elevated);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		font-size: 0.75rem;
+		color: var(--text);
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.page-btn:hover:not(:disabled) {
+		background: var(--bg-hover);
+		border-color: var(--primary);
+	}
+
+	.page-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.page-info {
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.json-preview {
+		background: var(--bg-elevated);
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		max-height: 400px;
 		overflow: auto;
 	}
 
-	.content-preview pre {
+	.json-preview pre {
 		margin: 0;
-		padding: 0.875rem;
+		padding: 0.75rem;
 		font-family: 'JetBrains Mono', monospace;
 		font-size: 0.7rem;
 		line-height: 1.5;
 		color: var(--text);
-		white-space: pre;
-		overflow-x: auto;
+		white-space: pre-wrap;
+		word-break: break-all;
 	}
 
 	.error-message {
