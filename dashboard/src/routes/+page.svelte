@@ -191,6 +191,19 @@
 		});
 	}
 
+	function formatDateRange(dateRange) {
+		if (!dateRange) return '-';
+		const parts = dateRange.split(' ~ ');
+		if (parts.length !== 2) return dateRange;
+		const formatPart = (p) => {
+			if (p.length === 8) {
+				return `${p.slice(0, 4)}-${p.slice(4, 6)}-${p.slice(6, 8)}`;
+			}
+			return p;
+		};
+		return `${formatPart(parts[0])} ~ ${formatPart(parts[1])}`;
+	}
+
 	async function copyToClipboard(text) {
 		try {
 			await navigator.clipboard.writeText(text);
@@ -348,8 +361,8 @@
                    	</svg>
                	</div>
                	<div class="stat-content">
-                   	<span class="stat-value">{stats.dateRange.split(' ~ ')[1] || '-'}</span>
-                   	<span class="stat-label">数据截止日期</span>
+                   	<span class="stat-value">{formatDateRange(stats.dateRange)}</span>
+                   	<span class="stat-label">数据日期范围</span>
                 </div>
             </div>
 		</section>

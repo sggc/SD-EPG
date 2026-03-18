@@ -14,11 +14,11 @@
 	let expandedItems = $state(new Set());
 
 	const dbFiles = [
-		{ name: 'desc_database.json', path: 'database/desc_database.json', description: '节目描述数据库' },
-		{ name: 'apidb.json', path: 'database/apidb.json', description: 'API 抓取数据库' },
-		{ name: 'man-made.json', path: 'database/man-made.json', description: '人工维护数据库' },
-		{ name: 'progress.json', path: 'database/progress.json', description: '处理进度' },
-		{ name: 'notfound.json', path: 'database/notfound.json', description: '未匹配记录' }
+		{ name: 'desc_database.json', path: 'database/desc_database.json', description: '节目描述数据库', repo: 'PUBLIC_REPO' },
+		{ name: 'apidb.json', path: 'database/apidb.json', description: 'API 抓取数据库', repo: 'PUBLIC_REPO' },
+		{ name: 'man-made.json', path: 'database/man-made.json', description: '人工维护数据库', repo: 'PUBLIC_REPO' },
+		{ name: 'progress.json', path: 'database/progress.json', description: '处理进度', repo: 'PUBLIC_REPO' },
+		{ name: 'notfound.json', path: 'database/notfound.json', description: '未匹配记录', repo: 'PUBLIC_REPO' }
 	];
 
 	onMount(async () => {
