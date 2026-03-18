@@ -15,7 +15,6 @@
 		unmatchedList: [],
 		lowProgramChannels: [],
 		gapChannels: [],
-		allChannels: [],
 		aliasCount: 0
 	});
 
@@ -24,7 +23,6 @@
 	let error = $state(null);
 	let showAllLowPrograms = $state(false);
 	let showAllGaps = $state(false);
-	let activeSection = $state('overview');
 
 	onMount(async () => {
 		await loadData();
@@ -159,35 +157,6 @@
 			}
 			if (currentGap) gaps.push(currentGap);
 			stats.gapChannels = gaps;
-		}
-
-		const allChannelsSection = content.match(/📺 所有频道信息[\s\S]*?(?=🏷|$)/);
-		if (allChannelsSection) {
-			const channelBlocks = allChannelsSection[0].split(/\[(\d+)\]/).slice(1);
-			const channels = [];
-			for (let i = 0; i < channelBlocks.length; i += 2) {
-				const index = parseInt(channelBlocks[i]);
-				const block = channelBlocks[i + 1];
-				if (block) {
-					const nameMatch = block.match(/^\s*([^\n]+)/);
-					const idMatch = block.match(/ID:([^\n]+)/);
-					const programMatch = block.match(/节目:\s*(\d+)/);
-					const todayMatch = block.match(/今日:\s*(\d+)/);
-					const sourceMatch = block.match(/📡(\w+)/);
-					
-					if (nameMatch) {
-						channels.push({
-							index,
-							name: nameMatch[1].trim(),
-							id: idMatch ? idMatch[1].trim() : '',
-							programs: programMatch ? parseInt(programMatch[1]) : 0,
-							todayPrograms: todayMatch ? parseInt(todayMatch[1]) : 0,
-							source: sourceMatch ? sourceMatch[1] : ''
-						});
-					}
-				}
-			}
-			stats.allChannels = channels;
 		}
 
 		const aliasSection = content.match(/🏷 别名表[\s\S]*$/);
@@ -334,22 +303,18 @@
 		</div>
 
 		{#if stats.unmatchedChannels > 0 || stats.lowProgramChannels.length > 0}
-			<div class="alert-grid">
+			<div class="alerts-section">
 				{#if stats.unmatchedChannels > 0}
 					<div class="alert-card warning">
 						<div class="alert-header">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-								<line x1="12" y1="9" x2="12" y2="13"/>
-								<line x1="12" y1="17" x2="12.01" y2="17"/>
-							</svg>
+							<span class="alert-icon">⚠️</span>
 							<span>未匹配频道 ({stats.unmatchedChannels})</span>
 						</div>
-						<div class="alert-content scrollable">
+						<div class="alert-list">
 							{#each stats.unmatchedList as item}
-								<div class="alert-item">
-									<span class="item-id">{item.id}</span>
-									<span class="item-name">{item.name}</span>
+								<div class="alert-row">
+									<span class="alert-id">{item.id}</span>
+									<span class="alert-name">{item.name}</span>
 								</div>
 							{/each}
 						</div>
@@ -359,23 +324,19 @@
 				{#if stats.lowProgramChannels.length > 0}
 					<div class="alert-card danger">
 						<div class="alert-header">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<circle cx="12" cy="12" r="10"/>
-								<line x1="12" y1="8" x2="12" y2="12"/>
-								<line x1="12" y1="16" x2="12.01" y2="16"/>
-							</svg>
+							<span class="alert-icon">📉</span>
 							<span>今日节目过少 ({stats.lowProgramChannels.length})</span>
 						</div>
-						<div class="alert-content scrollable">
+						<div class="alert-list">
 							{#each displayedLowPrograms as item}
-								<div class="alert-item">
-									<span class="item-name">{item.name}</span>
-									<span class="item-count">{item.todayPrograms} 个节目</span>
+								<div class="alert-row">
+									<span class="alert-name">{item.name}</span>
+									<span class="alert-count">{item.todayPrograms} 个节目</span>
 								</div>
 							{/each}
 							{#if stats.lowProgramChannels.length > 5}
-								<button class="show-more-btn" onclick={() => showAllLowPrograms = !showAllLowPrograms}>
-									{showAllLowPrograms ? '收起' : `显示全部 ${stats.lowProgramChannels.length} 个频道`}
+								<button class="toggle-btn" onclick={() => showAllLowPrograms = !showAllLowPrograms}>
+									{showAllLowPrograms ? '收起' : `显示全部 ${stats.lowProgramChannels.length} 个`}
 								</button>
 							{/if}
 						</div>
@@ -384,27 +345,27 @@
 			</div>
 		{/if}
 
-		<div class="content-grid">
+		<div class="main-grid">
 			<div class="card">
 				<div class="card-header">
 					<h2>EPG 源状态</h2>
-					<span class="card-badge">共 {stats.epgSources.length} 个源</span>
+					<span class="badge">共 {stats.epgSources.length} 个源</span>
 				</div>
-				<div class="sources-list scrollable">
+				<div class="source-list">
 					{#each stats.epgSources as source}
-						<div class="source-item" class:disabled={source.disabled}>
-							<div class="source-name">
+						<div class="source-row" class:disabled={source.disabled}>
+							<span class="source-name">
 								{source.name}
 								{#if source.disabled}
-									<span class="disabled-badge">已禁用</span>
+									<span class="disabled-tag">已禁用</span>
 								{/if}
-							</div>
+							</span>
 							{#if !source.disabled}
-								<div class="source-stats">
-									<span class="stat"><span class="num">{source.channels.toLocaleString()}</span> 频道</span>
-									<span class="stat"><span class="num">{source.programs.toLocaleString()}</span> 节目</span>
-									<span class="stat highlight"><span class="num">{source.matched}</span> 匹配</span>
-								</div>
+								<span class="source-stats">
+									<span>{source.channels.toLocaleString()} 频道</span>
+									<span>{source.programs.toLocaleString()} 节目</span>
+									<span class="highlight">{source.matched} 匹配</span>
+								</span>
 							{/if}
 						</div>
 					{/each}
@@ -417,97 +378,67 @@
 				</div>
 				<div class="quick-links">
 					<a href="./epg-config" class="quick-link">
-						<div class="link-icon epg">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<circle cx="12" cy="12" r="3"/>
-								<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-							</svg>
-						</div>
-						<div class="link-content">
+						<span class="link-icon epg">⚙️</span>
+						<span class="link-text">
 							<span class="link-title">EPG 配置</span>
 							<span class="link-desc">管理数据源和频道映射</span>
-						</div>
+						</span>
 					</a>
-
 					<a href="./desc-config" class="quick-link">
-						<div class="link-icon desc">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-								<polyline points="14 2 14 8 20 8"/>
-							</svg>
-						</div>
-						<div class="link-content">
+						<span class="link-icon desc">📝</span>
+						<span class="link-text">
 							<span class="link-title">Desc 配置</span>
 							<span class="link-desc">{descSources} 个描述数据源</span>
-						</div>
+						</span>
 					</a>
-
 					<a href="./database" class="quick-link">
-						<div class="link-icon database">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<ellipse cx="12" cy="5" rx="9" ry="3"/>
-								<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-								<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-							</svg>
-						</div>
-						<div class="link-content">
+						<span class="link-icon database">🗄️</span>
+						<span class="link-text">
 							<span class="link-title">数据库浏览</span>
 							<span class="link-desc">查看节目描述数据库</span>
-						</div>
+						</span>
 					</a>
 				</div>
 
 				<div class="card-header" style="margin-top: 1.5rem;">
 					<h2>EPG 文件下载</h2>
 				</div>
-				<div class="download-list">
-					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc.xml.gz" class="download-item" target="_blank">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-							<polyline points="7 10 12 15 17 10"/>
-							<line x1="12" y1="15" x2="12" y2="3"/>
-						</svg>
-						<div class="download-info">
+				<div class="download-links">
+					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc.xml.gz" class="download-link" target="_blank">
+						<span class="download-icon">📥</span>
+						<span class="download-text">
 							<span class="download-name">sggc.xml.gz</span>
 							<span class="download-desc">聚合 EPG 数据</span>
-						</div>
+						</span>
 					</a>
-					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc-desc.xml.gz" class="download-item" target="_blank">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-							<polyline points="7 10 12 15 17 10"/>
-							<line x1="12" y1="15" x2="12" y2="3"/>
-						</svg>
-						<div class="download-info">
+					<a href="https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc-desc.xml.gz" class="download-link" target="_blank">
+						<span class="download-icon">📥</span>
+						<span class="download-text">
 							<span class="download-name">sggc-desc.xml.gz</span>
 							<span class="download-desc">带描述的 EPG 数据</span>
-						</div>
+						</span>
 					</a>
 				</div>
 			</div>
 		</div>
 
 		{#if stats.gapChannels.length > 0}
-			<div class="card" style="margin-top: 1.5rem;">
+			<div class="card gap-card">
 				<div class="card-header">
 					<h2>今日节目断层</h2>
-					<span class="card-badge warning">{stats.gapChannels.length} 个频道</span>
+					<span class="badge warn">{stats.gapChannels.length} 个频道</span>
 				</div>
-				<div class="gap-list scrollable">
+				<div class="gap-list">
 					{#each displayedGaps as item}
-						<div class="gap-item">
-							<div class="gap-channel">{item.name}</div>
-							<div class="gap-info">
-								{#each item.gaps.slice(0, 2) as gap}
-									<span class="gap-time">{gap}</span>
-								{/each}
-							</div>
+						<div class="gap-row">
+							<span class="gap-name">{item.name}</span>
+							<span class="gap-time">{item.gaps?.[0] || '-'}</span>
 						</div>
 					{/each}
 				</div>
 				{#if stats.gapChannels.length > 6}
-					<button class="show-more-btn" onclick={() => showAllGaps = !showAllGaps}>
-						{showAllGaps ? '收起' : `显示全部 ${stats.gapChannels.length} 个频道`}
+					<button class="toggle-btn" onclick={() => showAllGaps = !showAllGaps}>
+						{showAllGaps ? '收起' : `显示全部 ${stats.gapChannels.length} 个`}
 					</button>
 				{/if}
 			</div>
@@ -515,7 +446,7 @@
 
 		{#if !$authStore.isLoggedIn}
 			<div class="login-banner">
-				<div class="banner-content">
+				<div class="banner-text">
 					<h3>登录以管理配置</h3>
 					<p>登录 GitHub 后可以在线编辑 EPG 配置文件</p>
 				</div>
@@ -529,21 +460,21 @@
 
 <style>
 	.page {
-		max-width: 1000px;
+		max-width: 900px;
 		margin: 0 auto;
 		padding: 0 1rem;
 	}
 
 	.page-header {
 		text-align: center;
-		margin-bottom: 2rem;
+		margin-bottom: 1.5rem;
 		padding-top: 1rem;
 	}
 
 	.page-header h1 {
-		font-size: clamp(1.5rem, 5vw, 2rem);
+		font-size: clamp(1.25rem, 4vw, 1.75rem);
 		font-weight: 700;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.25rem;
 		background: linear-gradient(135deg, #3b82f6, #8b5cf6);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -552,40 +483,40 @@
 
 	.page-header p {
 		color: var(--text-muted);
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 	}
 
 	.update-time {
-		font-size: 0.8rem;
+		font-size: 0.75rem;
 		color: var(--text-muted);
-		margin-top: 0.5rem;
+		margin-top: 0.25rem;
 	}
 
 	.stats-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-		gap: 0.75rem;
-		margin-bottom: 1.5rem;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.5rem;
+		margin-bottom: 1rem;
 	}
 
 	.stat-card {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
-		padding: 1rem;
+		gap: 0.5rem;
+		padding: 0.75rem;
 		background: var(--bg-card);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 	}
 
 	.stat-icon {
-		width: 40px;
-		height: 40px;
-		min-width: 40px;
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: 10px;
+		border-radius: 8px;
 	}
 
 	.stat-icon.channels { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
@@ -602,38 +533,39 @@
 	}
 
 	.stat-value {
-		font-size: 1.25rem;
+		font-size: 1rem;
 		font-weight: 700;
 		line-height: 1.2;
 	}
 
 	.stat-label {
-		font-size: 0.7rem;
+		font-size: 0.65rem;
 		color: var(--text-muted);
 		white-space: nowrap;
 	}
 
-	.alert-grid {
+	.alerts-section {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: 1rem;
-		margin-bottom: 1.5rem;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75rem;
+		margin-bottom: 1rem;
 	}
 
 	.alert-card {
-		padding: 1rem;
+		padding: 0.75rem;
 		border-radius: var(--radius);
-		border: 1px solid;
+		border: 1px solid var(--border);
+		background: var(--bg-card);
 	}
 
 	.alert-card.warning {
-		background: #fef3c7;
-		border-color: #f59e0b;
+		border-left: 3px solid #f59e0b;
+		background: rgba(245, 158, 11, 0.08);
 	}
 
 	.alert-card.danger {
-		background: #fee2e2;
-		border-color: #ef4444;
+		border-left: 3px solid #ef4444;
+		background: rgba(239, 68, 68, 0.08);
 	}
 
 	.alert-header {
@@ -641,150 +573,145 @@
 		align-items: center;
 		gap: 0.5rem;
 		font-weight: 600;
-		margin-bottom: 0.75rem;
-	}
-
-	.alert-card.warning .alert-header { color: #b45309; }
-	.alert-card.danger .alert-header { color: #b91c1c; }
-
-	.alert-content {
 		font-size: 0.85rem;
+		margin-bottom: 0.5rem;
+		color: var(--text);
 	}
 
-	.alert-content.scrollable {
-		max-height: 200px;
+	.alert-icon {
+		font-size: 1rem;
+	}
+
+	.alert-list {
+		max-height: 150px;
 		overflow-y: auto;
-		padding-right: 0.5rem;
 	}
 
-	.alert-item {
+	.alert-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.5rem;
-		background: rgba(255, 255, 255, 0.7);
+		padding: 0.4rem 0.5rem;
+		background: var(--bg-card);
 		border-radius: 4px;
 		margin-bottom: 0.25rem;
+		font-size: 0.8rem;
 		gap: 0.5rem;
 	}
 
-	.item-id {
+	.alert-id {
 		font-family: monospace;
+		font-size: 0.7rem;
 		color: var(--text-muted);
-		font-size: 0.75rem;
+		flex-shrink: 0;
 	}
 
-	.item-name {
+	.alert-name {
 		flex: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		color: var(--text);
 	}
 
-	.item-count {
-		color: #dc2626;
+	.alert-count {
 		font-weight: 600;
-		font-size: 0.8rem;
+		color: #f87171;
+		font-size: 0.75rem;
 		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
-	.show-more-btn {
+	.toggle-btn {
 		width: 100%;
-		padding: 0.5rem;
-		margin-top: 0.5rem;
-		background: rgba(255, 255, 255, 0.5);
-		border: 1px dashed;
+		padding: 0.4rem;
+		margin-top: 0.25rem;
+		background: transparent;
+		border: 1px dashed var(--border);
 		border-radius: 4px;
-		font-size: 0.8rem;
+		font-size: 0.75rem;
+		color: var(--text-muted);
 		cursor: pointer;
-		transition: all 0.2s;
 	}
 
-	.alert-card.warning .show-more-btn {
-		border-color: #f59e0b;
-		color: #b45309;
+	.toggle-btn:hover {
+		background: var(--bg);
+		color: var(--text);
 	}
 
-	.alert-card.danger .show-more-btn {
-		border-color: #ef4444;
-		color: #b91c1c;
-	}
-
-	.show-more-btn:hover {
-		background: rgba(255, 255, 255, 0.8);
-	}
-
-	.content-grid {
+	.main-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.card {
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1rem;
 	}
 
 	.card-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 1rem;
-		padding-bottom: 0.75rem;
+		margin-bottom: 0.75rem;
+		padding-bottom: 0.5rem;
 		border-bottom: 1px solid var(--border);
 	}
 
 	.card-header h2 {
-		font-size: 1rem;
+		font-size: 0.9rem;
 		font-weight: 600;
 	}
 
-	.card-badge {
-		font-size: 0.7rem;
-		padding: 0.2rem 0.5rem;
+	.badge {
+		font-size: 0.65rem;
+		padding: 0.15rem 0.4rem;
 		background: rgba(34, 197, 94, 0.15);
 		color: var(--success);
 		border-radius: 9999px;
 	}
 
-	.card-badge.warning {
+	.badge.warn {
 		background: rgba(245, 158, 11, 0.15);
 		color: #f59e0b;
 	}
 
-	.scrollable {
+	.source-list {
+		max-height: 250px;
 		overflow-y: auto;
-		padding-right: 0.25rem;
 	}
 
-	.sources-list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		max-height: 350px;
-	}
-
-	.source-item {
+	.source-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.75rem;
+		padding: 0.5rem;
 		background: var(--bg);
-		border-radius: var(--radius);
-		font-size: 0.85rem;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+		border-radius: 4px;
+		margin-bottom: 0.25rem;
+		font-size: 0.8rem;
 	}
 
-	.source-item.disabled { opacity: 0.5; }
+	.source-row.disabled {
+		opacity: 0.5;
+	}
 
 	.source-name {
 		font-family: monospace;
 		font-weight: 500;
 	}
 
-	.disabled-badge {
+	.disabled-tag {
 		font-size: 0.6rem;
-		padding: 0.1rem 0.35rem;
+		padding: 0.1rem 0.3rem;
 		background: rgba(239, 68, 68, 0.15);
 		color: #ef4444;
-		border-radius: 4px;
-		margin-left: 0.5rem;
+		border-radius: 3px;
+		margin-left: 0.25rem;
 	}
 
 	.source-stats {
@@ -792,15 +719,12 @@
 		gap: 0.5rem;
 		font-size: 0.7rem;
 		color: var(--text-muted);
-		flex-wrap: wrap;
 	}
 
-	.source-stats .num {
-		font-weight: 600;
-		color: var(--text);
+	.source-stats .highlight {
+		color: var(--success);
+		font-weight: 500;
 	}
-
-	.source-stats .stat.highlight .num { color: var(--success); }
 
 	.quick-links {
 		display: flex;
@@ -823,39 +747,34 @@
 
 	.quick-link:hover {
 		border-color: var(--primary);
-		transform: translateX(4px);
 	}
 
 	.link-icon {
-		width: 36px;
-		height: 36px;
-		min-width: 36px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 8px;
+		font-size: 1.25rem;
 	}
 
-	.link-icon.epg { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-	.link-icon.desc { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
-	.link-icon.database { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
-
-	.link-content {
+	.link-text {
 		display: flex;
 		flex-direction: column;
-		min-width: 0;
 	}
 
-	.link-title { font-weight: 500; }
-	.link-desc { font-size: 0.75rem; color: var(--text-muted); }
+	.link-title {
+		font-weight: 500;
+		font-size: 0.85rem;
+	}
 
-	.download-list {
+	.link-desc {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+	}
+
+	.download-links {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
 	}
 
-	.download-item {
+	.download-link {
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
@@ -868,74 +787,101 @@
 		transition: all 0.2s;
 	}
 
-	.download-item:hover {
+	.download-link:hover {
 		border-color: var(--success);
-		color: var(--success);
 	}
 
-	.download-info { display: flex; flex-direction: column; }
-	.download-name { font-family: monospace; font-weight: 500; }
-	.download-desc { font-size: 0.75rem; color: var(--text-muted); }
+	.download-icon {
+		font-size: 1.25rem;
+	}
 
-	.gap-list {
+	.download-text {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		max-height: 300px;
 	}
 
-	.gap-item {
+	.download-name {
+		font-family: monospace;
+		font-weight: 500;
+		font-size: 0.85rem;
+	}
+
+	.download-desc {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+	}
+
+	.gap-card {
+		margin-bottom: 1rem;
+	}
+
+	.gap-list {
+		max-height: 200px;
+		overflow-y: auto;
+	}
+
+	.gap-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.75rem;
+		padding: 0.5rem;
 		background: var(--bg);
-		border-radius: var(--radius);
-		font-size: 0.85rem;
-		gap: 1rem;
+		border-radius: 4px;
+		margin-bottom: 0.25rem;
+		font-size: 0.8rem;
 	}
 
-	.gap-channel { font-weight: 500; }
+	.gap-name {
+		font-weight: 500;
+	}
 
-	.gap-info {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-end;
+	.gap-time {
+		font-family: monospace;
 		font-size: 0.75rem;
 		color: #f59e0b;
 	}
-
-	.gap-time { font-family: monospace; }
 
 	.login-banner {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 1.25rem;
-		margin-top: 1.5rem;
+		padding: 1rem;
 		background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
 		border: 1px solid var(--primary);
 		border-radius: var(--radius);
 		gap: 1rem;
-		flex-wrap: wrap;
 	}
 
-	.banner-content h3 { font-size: 1rem; margin-bottom: 0.25rem; }
-	.banner-content p { font-size: 0.85rem; color: var(--text-muted); }
+	.banner-text h3 {
+		font-size: 0.9rem;
+		margin-bottom: 0.125rem;
+	}
 
-	.error-card { text-align: center; padding: 2rem; }
-	.error-card p { color: var(--danger); margin-bottom: 1rem; }
+	.banner-text p {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.error-card {
+		text-align: center;
+		padding: 2rem;
+	}
+
+	.error-card p {
+		color: var(--danger);
+		margin-bottom: 1rem;
+	}
 
 	@media (max-width: 600px) {
 		.stats-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 
-		.alert-grid {
+		.alerts-section {
 			grid-template-columns: 1fr;
 		}
 
-		.content-grid {
+		.main-grid {
 			grid-template-columns: 1fr;
 		}
 
@@ -944,13 +890,50 @@
 			text-align: center;
 		}
 
-		.gap-item {
-			flex-direction: column;
+		.alert-row {
+			flex-wrap: wrap;
 			align-items: flex-start;
-			gap: 0.5rem;
+			gap: 0.25rem;
 		}
 
-		.gap-info { align-items: flex-start; }
+		.alert-row .alert-id {
+			order: 1;
+			width: auto;
+		}
+
+		.alert-row .alert-name {
+			order: 2;
+			flex: 1;
+			min-width: 0;
+		}
+
+		.alert-row .alert-count {
+			order: 3;
+			width: 100%;
+			text-align: right;
+		}
+
+		.gap-row {
+			flex-wrap: wrap;
+			align-items: flex-start;
+			gap: 0.25rem;
+		}
+
+		.gap-name {
+			flex: 1;
+			min-width: 0;
+		}
+
+		.gap-time {
+			width: 100%;
+			text-align: left;
+			margin-top: 0.25rem;
+		}
+
+		.source-row {
+			flex-wrap: wrap;
+			gap: 0.5rem;
+		}
 
 		.source-stats {
 			width: 100%;

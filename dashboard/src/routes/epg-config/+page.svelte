@@ -221,7 +221,9 @@
 			返回首页
 		</a>
 		<h1>EPG 数据源配置</h1>
-		<p class="repo-hint">私有仓库: SDU-IPTV-NEW/config/epg_config.json</p>
+		{#if $authStore.isLoggedIn}
+			<p class="repo-hint">私有仓库: SDU-IPTV-NEW/config/epg_config.json</p>
+		{/if}
 	</header>
 
 	{#if !$authStore.isLoggedIn}
