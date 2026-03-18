@@ -16,7 +16,9 @@ const config = {
 		},
 		prerender: {
 			handleHttpError: 'ignore',
-			entries: ['/', '/epg-config', '/desc-config', '/database', '/auth/callback']
+			handleMissingId: 'ignore',
+			handleUnseenRoutes: 'ignore',
+			entries: ['*', '/epg-config', '/desc-config', '/database', '/config', '/logs']
 		}
 	}
 };
