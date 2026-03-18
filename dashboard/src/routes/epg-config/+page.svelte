@@ -11,6 +11,11 @@
 	let error = $state(null);
 	let success = $state(null);
 	let activeTab = $state('sources');
+	let searchChannel = $state('');
+	let editingChannel = $state(null);
+	let editData = $state({ id: '', n: '', a: [], x: [] });
+	let newAlias = $state('');
+	let newExtend = $state('');
 
 	onMount(async () => {
 		await loadConfig();
@@ -86,6 +91,100 @@
 		config.epg_sources.splice(index, 1);
 	}
 
+	function getChannelList() {
+		if (!config?.channels) return [];
+		const channels = Object.entries(config.channels).map(([id, data]) => ({
+			id,
+			...data
+		}));
+		
+		if (searchChannel) {
+			return channels.filter(c => 
+				c.id.toLowerCase().includes(searchChannel.toLowerCase()) ||
+				c.n?.toLowerCase().includes(searchChannel.toLowerCase()) ||
+				c.a?.some(a => a.toLowerCase().includes(searchChannel.toLowerCase())) ||
+				c.x?.some(x => x.toLowerCase().includes(searchChannel.toLowerCase()))
+			);
+		}
+		return channels;
+	}
+
+	function addChannel() {
+		if (!config.channels) config.channels = {};
+		const newId = 'NEW_CHANNEL_' + Date.now();
+		config.channels[newId] = {
+			n: newId,
+			a: [],
+			x: []
+		};
+		startEditChannel(newId);
+	}
+
+	function removeChannel(id) {
+		delete config.channels[id];
+		if (editingChannel === id) editingChannel = null;
+	}
+
+	function startEditChannel(id) {
+		const channel = config.channels[id];
+		editingChannel = id;
+		editData = {
+			id: id,
+			n: channel?.n || '',
+			a: [...(channel?.a || [])],
+			x: [...(channel?.x || [])]
+		};
+		newAlias = '';
+		newExtend = '';
+	}
+
+	function cancelEditChannel() {
+		editingChannel = null;
+		editData = { id: '', n: '', a: [], x: [] };
+	}
+
+	function saveChannelEdit() {
+		if (!editData.id.trim()) return;
+		
+		const oldId = editingChannel;
+		const newId = editData.id.trim();
+		
+		if (oldId !== newId) {
+			delete config.channels[oldId];
+		}
+		
+		config.channels[newId] = {
+			n: editData.n.trim() || newId,
+			a: editData.a.filter(a => a.trim()),
+			x: editData.x.filter(x => x.trim())
+		};
+		
+		editingChannel = null;
+		editData = { id: '', n: '', a: [], x: [] };
+	}
+
+	function addAlias() {
+		if (newAlias.trim()) {
+			editData.a = [...editData.a, newAlias.trim()];
+			newAlias = '';
+		}
+	}
+
+	function removeAlias(index) {
+		editData.a = editData.a.filter((_, i) => i !== index);
+	}
+
+	function addExtend() {
+		if (newExtend.trim()) {
+			editData.x = [...editData.x, newExtend.trim()];
+			newExtend = '';
+		}
+	}
+
+	function removeExtend(index) {
+		editData.x = editData.x.filter((_, i) => i !== index);
+	}
+
 	function hasChanges() {
 		return JSON.stringify(config) !== JSON.stringify(originalConfig);
 	}
@@ -99,7 +198,7 @@
 
 <div class="page">
 	<header class="page-header">
-		<a href="../" class="back-link">
+		<a href="./" class="back-link">
 			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 				<polyline points="15 18 9 12 15 6"/>
 			</svg>
@@ -139,6 +238,13 @@
 				onclick={() => activeTab = 'sources'}
 			>
 				数据源管理
+			</button>
+			<button 
+				class="tab" 
+				class:active={activeTab === 'channels'}
+				onclick={() => activeTab = 'channels'}
+			>
+				频道管理
 			</button>
 			<button 
 				class="tab" 
@@ -208,6 +314,148 @@
 								</svg>
 							</button>
 						</div>
+					{/each}
+				</div>
+
+				<div class="actions">
+					<button 
+						class="btn btn-primary" 
+						onclick={saveConfig}
+						disabled={saving || !hasChanges()}
+					>
+						{saving ? '保存中...' : '保存更改'}
+					</button>
+					<button 
+						class="btn btn-secondary" 
+						onclick={loadConfig}
+						disabled={saving}
+					>
+						重置
+					</button>
+				</div>
+			</div>
+		{:else if activeTab === 'channels'}
+			<div class="card">
+				<div class="card-header">
+					<h2>频道配置 ({Object.keys(config.channels || {}).length})</h2>
+					<div class="header-actions">
+						<input 
+							type="text" 
+							class="search-input"
+							placeholder="搜索频道..."
+							bind:value={searchChannel}
+						/>
+						<button class="btn btn-secondary" onclick={addChannel}>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<line x1="12" y1="5" x2="12" y2="19"/>
+								<line x1="5" y1="12" x2="19" y2="12"/>
+							</svg>
+							添加频道
+						</button>
+					</div>
+				</div>
+
+				<div class="channel-hint">
+					<p><strong>字段说明：</strong></p>
+					<ul>
+						<li><strong>频道 ID</strong>：频道的唯一标识符</li>
+						<li><strong>n (name)</strong>：频道主名称</li>
+						<li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称</li>
+						<li><strong>x (extend)</strong>：扩展别名，适应不同名称变体</li>
+					</ul>
+				</div>
+
+				<div class="channels-list">
+					{#each getChannelList() as channel (channel.id)}
+						{#if editingChannel === channel.id}
+							<div class="channel-editor">
+								<div class="editor-row">
+									<label>频道 ID:</label>
+									<input type="text" class="editor-input" bind:value={editData.id} />
+								</div>
+								<div class="editor-row">
+									<label>名称:</label>
+									<input type="text" class="editor-input" bind:value={editData.n} />
+								</div>
+								<div class="editor-row">
+									<label>别名:</label>
+									<div class="tags-input">
+										{#each editData.a as alias, i}
+											<span class="tag">
+												{alias}
+												<button onclick={() => removeAlias(i)}>&times;</button>
+											</span>
+										{/each}
+										<input 
+											type="text" 
+											bind:value={newAlias}
+											placeholder="添加别名..."
+											onkeydown={(e) => e.key === 'Enter' && (e.preventDefault(), addAlias())}
+										/>
+									</div>
+								</div>
+								<div class="editor-row">
+									<label>扩展:</label>
+									<div class="tags-input">
+										{#each editData.x as ext, i}
+											<span class="tag">
+												{ext}
+												<button onclick={() => removeExtend(i)}>&times;</button>
+											</span>
+										{/each}
+										<input 
+											type="text" 
+											bind:value={newExtend}
+											placeholder="添加扩展..."
+											onkeydown={(e) => e.key === 'Enter' && (e.preventDefault(), addExtend())}
+										/>
+									</div>
+								</div>
+								<div class="editor-actions">
+									<button class="btn btn-primary btn-sm" onclick={saveChannelEdit}>保存</button>
+									<button class="btn btn-secondary btn-sm" onclick={cancelEditChannel}>取消</button>
+									<button class="btn btn-danger btn-sm" onclick={() => removeChannel(editingChannel)}>删除</button>
+								</div>
+							</div>
+						{:else}
+							<div class="channel-item">
+								<div class="channel-main">
+									<span class="channel-id">{channel.id}</span>
+									<span class="channel-name">{channel.n}</span>
+								</div>
+								<div class="channel-aliases">
+									{#if channel.a?.length}
+										<span class="alias-group">
+											<span class="alias-label">a:</span>
+											{channel.a.join(', ')}
+										</span>
+									{/if}
+									{#if channel.x?.length}
+										<span class="alias-group extend">
+											<span class="alias-label">x:</span>
+											{channel.x.slice(0, 3).join(', ')}
+											{#if channel.x.length > 3}
+												<span class="more">+{channel.x.length - 3}</span>
+											{/if}
+										</span>
+									{/if}
+								</div>
+								<div class="channel-actions">
+									<button class="btn-icon" onclick={() => startEditChannel(channel.id)}>
+										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+											<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+										</svg>
+									</button>
+									<button class="btn-icon danger" onclick={() => removeChannel(channel.id)}>
+										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<polyline points="3 6 5 6 21 6"/>
+											<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+										</svg>
+									</button>
+								</div>
+							</div>
+						{/if}
 					{/each}
 				</div>
 
@@ -328,14 +576,53 @@
 		font-weight: 600;
 	}
 
-	.sources-list {
+	.header-actions {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.search-input {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg);
+		font-size: 0.875rem;
+		width: 200px;
+	}
+
+	.channel-hint {
+		background: var(--bg);
+		padding: 0.75rem 1rem;
+		border-radius: var(--radius);
+		margin-bottom: 1rem;
+		font-size: 0.875rem;
+	}
+
+	.channel-hint p {
+		margin-bottom: 0.5rem;
+	}
+
+	.channel-hint ul {
+		margin: 0;
+		padding-left: 1.25rem;
+		color: var(--text-muted);
+	}
+
+	.channel-hint li {
+		margin-bottom: 0.25rem;
+	}
+
+	.sources-list, .channels-list {
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
 		margin-bottom: 1.5rem;
+		max-height: 500px;
+		overflow-y: auto;
 	}
 
-	.source-item {
+	.source-item, .channel-item {
 		display: flex;
 		align-items: flex-start;
 		gap: 1rem;
@@ -360,6 +647,13 @@
 		gap: 0.5rem;
 	}
 
+	.source-name, .source-url {
+		padding: 0.5rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-card);
+	}
+
 	.source-name {
 		font-weight: 500;
 	}
@@ -375,6 +669,146 @@
 		gap: 0.5rem;
 		font-size: 0.75rem;
 		color: var(--text-muted);
+	}
+
+	.channel-item {
+		align-items: center;
+	}
+
+	.channel-main {
+		display: flex;
+		flex-direction: column;
+		min-width: 120px;
+	}
+
+	.channel-id {
+		font-family: monospace;
+		font-weight: 600;
+		color: var(--primary);
+	}
+
+	.channel-name {
+		font-size: 0.875rem;
+		color: var(--text-muted);
+	}
+
+	.channel-aliases {
+		flex: 1;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		font-size: 0.75rem;
+	}
+
+	.alias-group {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.25rem 0.5rem;
+		background: rgba(59, 130, 246, 0.1);
+		border-radius: 4px;
+		color: var(--text-muted);
+	}
+
+	.alias-group.extend {
+		background: rgba(139, 92, 246, 0.1);
+	}
+
+	.alias-label {
+		font-weight: 600;
+		color: var(--text);
+	}
+
+	.more {
+		color: var(--text-muted);
+	}
+
+	.channel-actions {
+		display: flex;
+		gap: 0.25rem;
+	}
+
+	.channel-editor {
+		padding: 1rem;
+		background: var(--bg);
+		border: 2px solid var(--primary);
+		border-radius: var(--radius);
+	}
+
+	.editor-row {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.editor-row label {
+		min-width: 80px;
+		padding-top: 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+	}
+
+	.editor-input {
+		flex: 1;
+		padding: 0.5rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-card);
+	}
+
+	.tags-input {
+		flex: 1;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+		padding: 0.375rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-card);
+		min-height: 38px;
+		align-items: center;
+	}
+
+	.tags-input input {
+		flex: 1;
+		min-width: 100px;
+		border: none;
+		background: transparent;
+		padding: 0.25rem;
+		font-size: 0.875rem;
+	}
+
+	.tags-input input:focus {
+		outline: none;
+	}
+
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.25rem 0.5rem;
+		background: var(--primary);
+		color: white;
+		border-radius: 4px;
+		font-size: 0.75rem;
+	}
+
+	.tag button {
+		background: none;
+		border: none;
+		color: white;
+		cursor: pointer;
+		padding: 0;
+		font-size: 1rem;
+		line-height: 1;
+	}
+
+	.editor-actions {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: flex-end;
+		margin-top: 1rem;
 	}
 
 	.btn-icon {
@@ -394,6 +828,20 @@
 	.btn-icon.danger:hover {
 		background: rgba(239, 68, 68, 0.1);
 		color: var(--danger);
+	}
+
+	.btn-sm {
+		padding: 0.375rem 0.75rem;
+		font-size: 0.75rem;
+	}
+
+	.btn-danger {
+		background: var(--danger);
+		color: white;
+	}
+
+	.btn-danger:hover {
+		background: #dc2626;
 	}
 
 	.json-editor {

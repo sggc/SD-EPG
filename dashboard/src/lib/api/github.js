@@ -51,8 +51,9 @@ export const github = {
 		const url = `${CONFIG.API_BASE}/repos/${CONFIG.GITHUB_USER}/${repo}/contents/${path}`;
 		const response = await fetchWithAuth(url);
 		const data = await response.json();
+		const content = decodeURIComponent(escape(atob(data.content)));
 		return {
-			content: atob(data.content),
+			content: content,
 			sha: data.sha,
 			path: data.path
 		};
