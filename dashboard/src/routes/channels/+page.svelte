@@ -3,6 +3,7 @@
 	import { themeStore } from '$lib/stores/theme.js';
 
 	let data = $state(null);
+	let descMatchLog = $state(null);
 	let loading = $state(true);
 	let error = $state(null);
 	let searchQuery = $state('');
@@ -17,14 +18,54 @@
 	async function loadData() {
 		loading = true;
 		try {
-			const response = await fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json');
-			if (!response.ok) throw new Error('加载失败');
-			data = await response.json();
+			const [dashboardResponse, descMatchResponse] = await Promise.all([
+				fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json'),
+				fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/desc_match_log.txt')
+			]);
+			
+			if (!dashboardResponse.ok) throw new Error('加载数据失败');
+			data = await dashboardResponse.json();
+			
+			if (descMatchResponse.ok) {
+				const descMatchContent = await descMatchResponse.text();
+				descMatchLog = parseDescMatchLog(descMatchContent);
+			}
 		} catch (e) {
 			error = e.message;
 		} finally {
 			loading = false;
 		}
+	}
+
+	function parseDescMatchLog(content) {
+		if (!content) return null;
+
+		const result = {
+			channelStats: []
+		};
+
+		const channelStatsSection = content.match(/📈 频道匹配统计[\s\S]*?(?=={50,}|$)/);
+		if (channelStatsSection) {
+			const channelLines = channelStatsSection[0].split('\n').filter(l => l.trim().startsWith('  '));
+			for (const line of channelLines) {
+				const match = line.match(/(\S.+?):\s*(\d+)\/(\d+)\s*\(([\d.]+)%\)/);
+				if (match) {
+					result.channelStats.push({
+						name: match[1],
+						matched: parseInt(match[2]),
+						total: parseInt(match[3]),
+						rate: parseFloat(match[4])
+					});
+				}
+			}
+		}
+
+		return result;
+	}
+
+	function getChannelDescStats(channelName) {
+		if (!descMatchLog?.channelStats) return null;
+		return descMatchLog.channelStats.find(cs => cs.name === channelName);
 	}
 
 	function getSources() {
@@ -198,6 +239,17 @@
 							<span class="num">{channel.todayPrograms}</span>
 							<span class="label">今日</span>
 						</div>
+						{#const descStats = getChannelDescStats(channel.name)}
+							{#if descStats}
+								<div class="stat desc">
+									<span class="num">{descStats.matched}/{descStats.total}</span>
+									<span class="label">Desc</span>
+									<div class="desc-rate" style="--rate: {descStats.rate}%">
+										<div class="desc-rate-fill" style="width: {descStats.rate}%"></div>
+									</div>
+								</div>
+							{/if}
+						{/const}
 					</div>
 					{#if channel.aliases?.length > 0}
 						<div class="aliases">
@@ -530,6 +582,26 @@
 	.channel-stats .label {
 		font-size: 0.6rem;
 		color: var(--text-muted);
+	}
+
+	.channel-stats .stat.desc {
+		position: relative;
+	}
+
+	.desc-rate {
+		width: 100%;
+		height: 4px;
+		background: var(--bg-hover);
+		border-radius: 2px;
+		margin-top: 2px;
+		overflow: hidden;
+	}
+
+	.desc-rate-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #7c3aed, #a78bfa);
+		border-radius: 2px;
+		transition: width 0.3s ease;
 	}
 
 	.aliases {

@@ -87,7 +87,8 @@
 			crossChannelMatch: 0,
 			unmatched: 0,
 			matchRate: 0,
-			sources: []
+			sources: [],
+			channelStats: []
 		};
 
 		const totalMatch = content.match(/节目总数:\s*([\d,]+)/);
@@ -120,6 +121,22 @@
 					result.sources.push({
 						name: match[1],
 						count: parseInt(match[2].replace(/,/g, ''))
+					});
+				}
+			}
+		}
+
+		const channelStatsSection = content.match(/📈 频道匹配统计[\s\S]*?(?=={50,}|$)/);
+		if (channelStatsSection) {
+			const channelLines = channelStatsSection[0].split('\n').filter(l => l.trim().startsWith('  '));
+			for (const line of channelLines) {
+				const match = line.match(/(\S.+?):\s*(\d+)\/(\d+)\s*\(([\d.]+)%\)/);
+				if (match) {
+					result.channelStats.push({
+						name: match[1],
+						matched: parseInt(match[2]),
+						total: parseInt(match[3]),
+						rate: parseFloat(match[4])
 					});
 				}
 			}
