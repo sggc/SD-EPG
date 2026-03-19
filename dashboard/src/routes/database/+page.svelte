@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import { github } from '$lib/api/github.js';
 	import { themeStore } from '$lib/stores/theme.js';
 
 	let databases = $state([]);
@@ -81,8 +80,9 @@
 			let channels = Object.keys(dbContent).length;
 			
 			for (const channel in dbContent) {
-				if (typeof dbContent[channel] === 'object') {
-					totalPrograms += Object.keys(dbContent[channel]).length;
+				const channelData = dbContent[channel];
+				if (typeof channelData === 'object') {
+					totalPrograms += Object.keys(channelData).length;
 				}
 			}
 			
@@ -152,6 +152,13 @@
 		const entries = Object.entries(programs);
 		if (!searchQuery) return entries.slice(0, 10);
 		return entries.filter(([name]) => name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 10);
+	}
+
+	function getDescPreview(info) {
+		if (!info) return '';
+		if (typeof info === 'string') return info.slice(0, 80) + (info.length > 80 ? '...' : '');
+		if (info.desc) return info.desc.slice(0, 80) + (info.desc.length > 80 ? '...' : '');
+		return '';
 	}
 </script>
 
@@ -314,10 +321,8 @@
 											<div class="programs-list">
 												{#each getFilteredPrograms(entry.programs) as [name, info]}
 													<div class="program-item">
-														<span class="program-name">{name}</span>
-														{#if info?.desc}
-															<span class="program-desc">{info.desc}</span>
-														{/if}
+														<div class="program-name">{name}</div>
+														<div class="program-desc">{getDescPreview(info)}</div>
 													</div>
 												{/each}
 												{#if Object.keys(entry.programs).length > 10}
@@ -685,33 +690,29 @@
 		background: var(--bg-card);
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.5rem;
 	}
 
 	.program-item {
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
-		padding: 0.375rem 0.5rem;
+		padding: 0.5rem;
 		background: var(--bg-elevated);
-		border-radius: 4px;
+		border-radius: 6px;
 	}
 
 	.program-name {
 		font-size: 0.75rem;
-		font-weight: 500;
+		font-weight: 600;
 		color: var(--text);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		margin-bottom: 0.25rem;
+		word-break: break-word;
 	}
 
 	.program-desc {
 		font-size: 0.7rem;
 		color: var(--text-muted);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		line-height: 1.4;
+		word-break: break-word;
+		white-space: normal;
 	}
 
 	.more-hint {
