@@ -883,6 +883,9 @@
 		flex-direction: column;
 		min-width: 0;
 		flex: 1;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
 	}
 
 	.stat-value {

@@ -8,17 +8,18 @@
 	let dbContent = $state(null);
 	let searchQuery = $state('');
 	let loading = $state(true);
+	let loadingDb = $state(false);
 	let error = $state(null);
 	let currentPage = $state(1);
 	let pageSize = $state(20);
 	let expandedItems = $state(new Set());
 
 	const dbFiles = [
-		{ name: 'desc_database.json', path: 'database/desc_database.json', description: '节目描述数据库', repo: 'PUBLIC_REPO' },
-		{ name: 'apidb.json', path: 'database/apidb.json', description: 'API 抓取数据库', repo: 'PUBLIC_REPO' },
-		{ name: 'man-made.json', path: 'database/man-made.json', description: '人工维护数据库', repo: 'PUBLIC_REPO' },
-		{ name: 'progress.json', path: 'database/progress.json', description: '处理进度', repo: 'PUBLIC_REPO' },
-		{ name: 'notfound.json', path: 'database/notfound.json', description: '未匹配记录', repo: 'PUBLIC_REPO' }
+		{ name: 'desc_database.json', path: 'database/desc_database.json', description: '节目描述数据库', size: '~6MB' },
+		{ name: 'apidb.json', path: 'database/apidb.json', description: 'API 抓取数据库', size: '~330KB' },
+		{ name: 'man-made.json', path: 'database/man-made.json', description: '人工维护数据库', size: '~60KB' },
+		{ name: 'progress.json', path: 'database/progress.json', description: '处理进度', size: '~90KB' },
+		{ name: 'notfound.json', path: 'database/notfound.json', description: '未匹配记录', size: '~50KB' }
 	];
 
 	onMount(async () => {
@@ -37,12 +38,30 @@
 		error = null;
 		currentPage = 1;
 		expandedItems = new Set();
+		loadingDb = true;
 		
 		try {
-			const content = await github.getPublicFile(db.path);
-			dbContent = content;
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 30000);
+			
+			const url = `https://raw.githubusercontent.com/sggc/SD-EPG/main/${db.path}`;
+			const response = await fetch(url, { signal: controller.signal });
+			clearTimeout(timeoutId);
+			
+			if (!response.ok) {
+				throw new Error(`HTTP ${response.status}`);
+			}
+			
+			const text = await response.text();
+			dbContent = JSON.parse(text);
 		} catch (e) {
-			error = `加载失败: ${e.message}`;
+			if (e.name === 'AbortError') {
+				error = `加载超时: 文件较大(${db.size})，请稍后重试`;
+			} else {
+				error = `加载失败: ${e.message}`;
+			}
+		} finally {
+			loadingDb = false;
 		}
 	}
 
@@ -198,6 +217,7 @@
 							<div class="db-item-info">
 								<span class="db-name">{db.name}</span>
 								<span class="db-desc">{db.description}</span>
+								<span class="db-size">{db.size}</span>
 							</div>
 						</button>
 					{/each}
@@ -211,7 +231,7 @@
 					<div class="content-header">
 						<div class="content-title">
 							<h3>{selectedDb.name}</h3>
-							<p class="content-desc">{selectedDb.description}</p>
+							<p class="content-desc">{selectedDb.description} ({selectedDb.size})</p>
 						</div>
 						
 						{#if stats}
@@ -235,8 +255,21 @@
 						{/if}
 					</div>
 
-					{#if error}
-						<div class="error-message">{error}</div>
+					{#if loadingDb}
+						<div class="loading-container">
+							<div class="loading-spinner"></div>
+							<span class="loading-text">正在加载 {selectedDb.name}...</span>
+						</div>
+					{:else if error}
+						<div class="error-message">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="10"/>
+								<line x1="12" y1="8" x2="12" y2="12"/>
+								<line x1="12" y1="16" x2="12.01" y2="16"/>
+							</svg>
+							<span>{error}</span>
+						</div>
+						<button class="btn btn-secondary" onclick={() => selectDatabase(selectedDb)}>重试</button>
 					{:else if dbContent}
 						<div class="search-box">
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -322,10 +355,6 @@
 								<pre>{JSON.stringify(dbContent, null, 2)}</pre>
 							</div>
 						{/if}
-					{:else}
-						<div class="loading-container">
-							<div class="loading-spinner"></div>
-						</div>
 					{/if}
 				{:else}
 					<div class="empty-state">
@@ -509,6 +538,11 @@
 	.db-desc {
 		font-size: 0.7rem;
 		color: var(--text-muted);
+	}
+
+	.db-size {
+		font-size: 0.65rem;
+		color: var(--text-dim);
 	}
 
 	.content-header {
@@ -743,12 +777,16 @@
 	}
 
 	.error-message {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 		background: rgba(220, 38, 38, 0.1);
 		border: 1px solid var(--danger);
 		color: var(--danger);
-		padding: 0.625rem 0.875rem;
+		padding: 0.75rem 1rem;
 		border-radius: 8px;
 		font-size: 0.85rem;
+		margin-bottom: 1rem;
 	}
 
 	.empty-state {
@@ -763,6 +801,31 @@
 
 	.empty-state p {
 		font-size: 0.85rem;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border: none;
+		border-radius: var(--radius-sm);
+		font-size: 0.85rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.btn-secondary {
+		background: var(--bg-elevated);
+		color: var(--text);
+		border: 1px solid var(--border);
+	}
+
+	.btn-secondary:hover {
+		background: var(--bg-hover);
+		border-color: var(--primary);
 	}
 
 	@media (max-width: 768px) {
