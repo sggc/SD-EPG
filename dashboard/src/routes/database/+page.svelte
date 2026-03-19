@@ -626,7 +626,7 @@
 	.entries-list {
 		display: flex;
 		flex-direction: column;
-		gap: 0.375rem;
+		gap: 0.75rem;
 		max-height: 400px;
 		overflow-y: auto;
 	}
@@ -642,7 +642,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.625rem 0.75rem;
+		padding: 0.875rem 0.875rem;
 		cursor: pointer;
 		transition: background 0.2s ease;
 	}

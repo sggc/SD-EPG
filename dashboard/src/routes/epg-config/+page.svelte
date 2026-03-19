@@ -596,6 +596,96 @@
 		max-width: 900px;
 		margin: 0 auto;
 		padding: 0 1rem;
+		font-size: 0.875rem;
+	}
+
+	.page h1,
+	.page h2,
+	.page h3,
+	.page p,
+	.page span,
+	.page input,
+	.page select,
+	.page textarea,
+	.page button,
+	.page label {
+		font-size: inherit;
+	}
+
+	.page .card {
+		padding: 1rem;
+	}
+
+	.page .card-header {
+		padding-bottom: 0.75rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.page .card-header h2 {
+		font-size: 1.125rem;
+	}
+
+	.page .source-item,
+	.page .channel-item {
+		padding: 0.875rem;
+	}
+
+	.page .field-row label {
+		font-size: 0.8125rem;
+	}
+
+	.page .source-url,
+	.page .source-name,
+	.page .form-input {
+		padding: 0.5rem 0.75rem;
+		font-size: 0.875rem;
+	}
+
+	.page .btn {
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
+	}
+
+	.page .tab {
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
+	}
+
+	.page .page-header h1 {
+		font-size: 1.375rem;
+	}
+
+	.page .repo-hint {
+		font-size: 0.75rem;
+	}
+
+	.page .back-link {
+		font-size: 0.8125rem;
+	}
+
+	.page .channel-id,
+	.page .channel-name {
+		font-size: 0.875rem;
+	}
+
+	.page .editor-row label {
+		font-size: 0.8125rem;
+	}
+
+	.page .tags-input input {
+		font-size: 0.8125rem;
+	}
+
+	.page .tag {
+		font-size: 0.75rem;
+	}
+
+	.page .modal-header h3 {
+		font-size: 1.125rem;
+	}
+
+	.page .form-group label {
+		font-size: 0.875rem;
 	}
 
 	.page-header {
