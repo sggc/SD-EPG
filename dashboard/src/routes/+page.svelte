@@ -21,6 +21,11 @@
 		descMatchRate: 0
 	});
 
+	let descStats = $state({
+		matchLog: null,
+		databaseLog: null
+	});
+
 	let descSources = $state(0);
 	let loading = $state(true);
 	let error = $state(null);
@@ -38,10 +43,12 @@
 		error = null;
 
 		try {
-			const [logContent, descConfig, dashboardLog] = await Promise.all([
+			const [logContent, descConfig, dashboardLog, descMatchLog, descDatabaseLog] = await Promise.all([
 				github.getPublicFileRaw('log/aggregation_log.txt').catch(() => null),
 				github.getPublicFile('config/desc_config.json').catch(() => null),
-				github.getPublicFile('log/dashboard_data.json').catch(() => null)
+				github.getPublicFile('log/dashboard_data.json').catch(() => null),
+				github.getPublicFileRaw('log/desc_match_log.txt').catch(() => null),
+				github.getPublicFileRaw('log/desc_database_log.txt').catch(() => null)
 			]);
 
 			if (descConfig) {
@@ -54,11 +61,127 @@
 				parseAggregationLog(logContent);
 			}
 
+			if (descMatchLog) {
+				descStats.matchLog = parseDescMatchLog(descMatchLog);
+			}
+
+			if (descDatabaseLog) {
+				descStats.databaseLog = parseDescDatabaseLog(descDatabaseLog);
+			}
+
 		} catch (e) {
 			error = e.message;
 		} finally {
 			loading = false;
 		}
+	}
+
+	function parseDescMatchLog(content) {
+		if (!content) return null;
+
+		const result = {
+			totalPrograms: 0,
+			existingDesc: 0,
+			manMadeMatch: 0,
+			sameChannelMatch: 0,
+			crossChannelMatch: 0,
+			unmatched: 0,
+			matchRate: 0,
+			sources: []
+		};
+
+		const totalMatch = content.match(/节目总数:\s*([\d,]+)/);
+		if (totalMatch) result.totalPrograms = parseInt(totalMatch[1].replace(/,/g, ''));
+
+		const existingMatch = content.match(/已有desc:\s*([\d,]+)/);
+		if (existingMatch) result.existingDesc = parseInt(existingMatch[1].replace(/,/g, ''));
+
+		const manMadeMatch = content.match(/人工手搓匹配:\s*([\d,]+)/);
+		if (manMadeMatch) result.manMadeMatch = parseInt(manMadeMatch[1].replace(/,/g, ''));
+
+		const sameChannelMatch = content.match(/同频道匹配:\s*([\d,]+)/);
+		if (sameChannelMatch) result.sameChannelMatch = parseInt(sameChannelMatch[1].replace(/,/g, ''));
+
+		const crossChannelMatch = content.match(/跨频道匹配:\s*([\d,]+)/);
+		if (crossChannelMatch) result.crossChannelMatch = parseInt(crossChannelMatch[1].replace(/,/g, ''));
+
+		const unmatchedMatch = content.match(/未匹配:\s*([\d,]+)/);
+		if (unmatchedMatch) result.unmatched = parseInt(unmatchedMatch[1].replace(/,/g, ''));
+
+		const rateMatch = content.match(/匹配率:\s*([\d.]+)%/);
+		if (rateMatch) result.matchRate = parseFloat(rateMatch[1]);
+
+		const sourcesSection = content.match(/📦 各数据源贡献[\s\S]*?(?=={50,}|$)/);
+		if (sourcesSection) {
+			const sourceLines = sourcesSection[0].split('\n').filter(l => l.trim().startsWith('  '));
+			for (const line of sourceLines) {
+				const match = line.match(/(\S+):\s*([\d,]+)\s*条/);
+				if (match) {
+					result.sources.push({
+						name: match[1],
+						count: parseInt(match[2].replace(/,/g, ''))
+					});
+				}
+			}
+		}
+
+		return result;
+	}
+
+	function parseDescDatabaseLog(content) {
+		if (!content) return null;
+
+		const result = {
+			targetChannels: 0,
+			processedSources: 0,
+			newDesc: 0,
+			deduplicated: 0,
+			htmlFixed: 0,
+			invalidFiltered: 0,
+			totalDesc: 0,
+			coveredChannels: 0,
+			channels: []
+		};
+
+		const targetMatch = content.match(/目标频道数:\s*(\d+)/);
+		if (targetMatch) result.targetChannels = parseInt(targetMatch[1]);
+
+		const sourcesMatch = content.match(/处理EPG源数:\s*(\d+)/);
+		if (sourcesMatch) result.processedSources = parseInt(sourcesMatch[1]);
+
+		const newDescMatch = content.match(/新增desc数:\s*(\d+)/);
+		if (newDescMatch) result.newDesc = parseInt(newDescMatch[1]);
+
+		const dedupMatch = content.match(/去重节目数:\s*(\d+)/);
+		if (dedupMatch) result.deduplicated = parseInt(dedupMatch[1]);
+
+		const htmlMatch = content.match(/HTML修复数:\s*(\d+)/);
+		if (htmlMatch) result.htmlFixed = parseInt(htmlMatch[1]);
+
+		const invalidMatch = content.match(/无效过滤数:\s*(\d+)/);
+		if (invalidMatch) result.invalidFiltered = parseInt(invalidMatch[1]);
+
+		const totalDescMatch = content.match(/总desc数:\s*(\d+)/);
+		if (totalDescMatch) result.totalDesc = parseInt(totalDescMatch[1]);
+
+		const coveredMatch = content.match(/覆盖频道数:\s*(\d+)/);
+		if (coveredMatch) result.coveredChannels = parseInt(coveredMatch[1]);
+
+		const channelsSection = content.match(/📺 各频道desc数量[\s\S]*?(?=={50,}|$)/);
+		if (channelsSection) {
+			const channelLines = channelsSection[0].split('\n').filter(l => l.trim() && !l.includes('各频道desc数量'));
+			for (const line of channelLines.slice(0, 10)) {
+				const match = line.match(/(\S.+?):\s*(\d+)/);
+				if (match) {
+					result.channels.push({
+						name: match[1],
+						count: parseInt(match[2])
+					});
+				}
+			}
+		}
+
+		return result;
 	}
 
 	function parseAggregationLog(content) {
@@ -626,6 +749,113 @@
 				{/if}
 			</div>
 		</section>
+
+		{#if descStats.matchLog || descStats.databaseLog}
+			<section class="desc-log-section">
+				{#if descStats.matchLog}
+					<div class="card">
+						<div class="card-header">
+							<h2>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+									<polyline points="14 2 14 8 20 8"/>
+									<line x1="16" y1="13" x2="8" y2="13"/>
+									<line x1="16" y1="17" x2="8" y2="17"/>
+								</svg>
+								Desc 注入统计
+							</h2>
+							<span class="badge">{descStats.matchLog.matchRate}%</span>
+						</div>
+						<div class="desc-stats-grid">
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.matchLog.totalPrograms.toLocaleString()}</span>
+								<span class="desc-stat-label">节目总数</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.matchLog.existingDesc.toLocaleString()}</span>
+								<span class="desc-stat-label">已有desc</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.matchLog.manMadeMatch.toLocaleString()}</span>
+								<span class="desc-stat-label">人工匹配</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.matchLog.crossChannelMatch.toLocaleString()}</span>
+								<span class="desc-stat-label">跨频道匹配</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.matchLog.unmatched.toLocaleString()}</span>
+								<span class="desc-stat-label">未匹配</span>
+							</div>
+						</div>
+						{#if descStats.matchLog.sources.length > 0}
+							<div class="desc-sources">
+								<div class="desc-sources-title">数据源贡献</div>
+								<div class="desc-sources-list">
+									{#each descStats.matchLog.sources as source}
+										<div class="desc-source-item">
+											<span class="desc-source-name">{source.name}</span>
+											<span class="desc-source-count">{source.count.toLocaleString()} 条</span>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/if}
+					</div>
+				{/if}
+
+				{#if descStats.databaseLog}
+					<div class="card">
+						<div class="card-header">
+							<h2>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<ellipse cx="12" cy="5" rx="9" ry="3"/>
+									<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+									<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+								</svg>
+								Desc 数据库统计
+							</h2>
+							<span class="badge">{descStats.databaseLog.totalDesc.toLocaleString()}</span>
+						</div>
+						<div class="desc-stats-grid">
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.databaseLog.targetChannels}</span>
+								<span class="desc-stat-label">目标频道</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.databaseLog.newDesc}</span>
+								<span class="desc-stat-label">新增desc</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.databaseLog.deduplicated.toLocaleString()}</span>
+								<span class="desc-stat-label">去重节目</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.databaseLog.htmlFixed}</span>
+								<span class="desc-stat-label">HTML修复</span>
+							</div>
+							<div class="desc-stat-item">
+								<span class="desc-stat-value">{descStats.databaseLog.coveredChannels}</span>
+								<span class="desc-stat-label">覆盖频道</span>
+							</div>
+						</div>
+						{#if descStats.databaseLog.channels.length > 0}
+							<div class="desc-sources">
+								<div class="desc-sources-title">Top 10 频道</div>
+								<div class="desc-sources-list">
+									{#each descStats.databaseLog.channels as ch}
+										<div class="desc-source-item">
+											<span class="desc-source-name">{ch.name}</span>
+											<span class="desc-source-count">{ch.count} 条</span>
+										</div>
+									{/each}
+								</div>
+							</div>
+						{/if}
+					</div>
+				{/if}
+			</section>
+		{/if}
 
 		{#if stats.gapChannels.length > 0}
 			<section class="gap-section">
@@ -1388,6 +1618,80 @@
 		color: #7c3aed;
 	}
 
+	.desc-log-section {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.desc-stats-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.desc-stat-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0.625rem 0.375rem;
+		background: var(--bg-elevated);
+		border-radius: 6px;
+		text-align: center;
+	}
+
+	.desc-stat-value {
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--text);
+		line-height: 1.2;
+	}
+
+	.desc-stat-label {
+		font-size: 0.6rem;
+		color: var(--text-muted);
+		margin-top: 0.25rem;
+	}
+
+	.desc-sources {
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.desc-sources-title {
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		margin-bottom: 0.5rem;
+	}
+
+	.desc-sources-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem;
+	}
+
+	.desc-source-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.375rem 0.5rem;
+		background: var(--bg-elevated);
+		border-radius: 6px;
+		font-size: 0.7rem;
+	}
+
+	.desc-source-name {
+		font-weight: 600;
+		color: var(--text);
+	}
+
+	.desc-source-count {
+		color: var(--text-muted);
+	}
+
 	.gap-section {
 		margin-bottom: 1rem;
 	}
@@ -1488,6 +1792,14 @@
 			grid-template-columns: 1fr;
 		}
 
+		.desc-log-section {
+			grid-template-columns: 1fr;
+		}
+
+		.desc-stats-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
 		.login-banner {
 			flex-direction: column;
 			text-align: center;
@@ -1551,6 +1863,10 @@
 
 		.source-stats {
 			gap: 0.75rem;
+		}
+
+		.desc-stats-grid {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 </style>
