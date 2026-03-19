@@ -239,17 +239,15 @@
 							<span class="num">{channel.todayPrograms}</span>
 							<span class="label">今日</span>
 						</div>
-						{#const descStats = getChannelDescStats(channel.name)}
-							{#if descStats}
-								<div class="stat desc">
-									<span class="num">{descStats.matched}/{descStats.total}</span>
-									<span class="label">Desc</span>
-									<div class="desc-rate" style="--rate: {descStats.rate}%">
-										<div class="desc-rate-fill" style="width: {descStats.rate}%"></div>
-									</div>
+						{#if getChannelDescStats(channel.name)}
+							<div class="stat desc">
+								<span class="num">{getChannelDescStats(channel.name).matched}/{getChannelDescStats(channel.name).total}</span>
+								<span class="label">Desc</span>
+								<div class="desc-rate">
+									<div class="desc-rate-fill" style="width: {getChannelDescStats(channel.name).rate}%"></div>
 								</div>
-							{/if}
-						{/const}
+							</div>
+						{/if}
 					</div>
 					{#if channel.aliases?.length > 0}
 						<div class="aliases">
