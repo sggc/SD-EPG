@@ -39,6 +39,7 @@
 
 		<nav class="nav">
 			<a href="./" class="nav-link" class:active={isActive('/') && currentPath === '/'}>首页</a>
+			<a href="./channels" class="nav-link" class:active={isActive('/channels')}>频道列表</a>
 			<a href="./epg-config" class="nav-link" class:active={isActive('/epg-config')}>EPG配置</a>
 			<a href="./desc-config" class="nav-link" class:active={isActive('/desc-config')}>Desc配置</a>
 			<a href="./database" class="nav-link" class:active={isActive('/database')}>数据库</a>

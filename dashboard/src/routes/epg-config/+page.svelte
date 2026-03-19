@@ -18,10 +18,23 @@
 	let newExtend = $state('');
 	let showAddChannelModal = $state(false);
 	let newChannelInput = $state({ id: '', n: '', a: '', x: '' });
+	let authInitialized = $state(false);
 
 	onMount(async () => {
-		await loadConfig();
+		await waitForAuthAndLoad();
 	});
+
+	async function waitForAuthAndLoad() {
+		for (let i = 0; i < 50; i++) {
+			if ($authStore.token !== null || $authStore.isLoggedIn) {
+				authInitialized = true;
+				break;
+			}
+			await new Promise(r => setTimeout(r, 50));
+		}
+		authInitialized = true;
+		await loadConfig();
+	}
 
 	async function loadConfig() {
 		if (!$authStore.isLoggedIn) {
