@@ -27,13 +27,14 @@ jobs:
         python scripts/extract_desc.py \
           --config config/desc_config.json \
           --output database/desc_database.json \
-          --log-dir log
+          --log-dir log \
+          --debug-dir Debug
     
     - name: Commit and push
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add database/desc_database.json log/desc_database_log.txt
+        git add database/desc_database.json log/desc_database_log.txt Debug/
         
         if git diff --staged --quiet; then
           echo "No changes"
