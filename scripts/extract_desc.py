@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-EPG Desc 提取器
+EPG Desc 提取器 (Debug版)
 优化：
 1. 修复HTML实体乱码
 2. 只过滤明确的"暂无描述"类占位文本
-3. 智能清洗节目名
+3. 智能清洗节目名 - 统一规则
+4. 增加详细调试日志
 """
 import os
 import sys
@@ -27,17 +28,121 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+class DebugLogger:
+    def __init__(self, debug_dir='Debug'):
+        self.debug_dir = debug_dir
+        self.normalize_examples = []
+        self.clean_examples = []
+        self.channel_mapping = []
+        self.extraction_stats = {}
+        self.title_transformations = []
+        
+    def add_normalize_example(self, original, normalized):
+        if len(self.normalize_examples) < 200:
+            self.normalize_examples.append({
+                'original': original,
+                'normalized': normalized
+            })
+    
+    def add_clean_example(self, original, cleaned, was_cleaned):
+        if len(self.clean_examples) < 200 and was_cleaned:
+            self.clean_examples.append({
+                'original': original,
+                'cleaned': cleaned
+            })
+    
+    def add_channel_mapping(self, source_channel, canonical_name, norm_key):
+        if len(self.channel_mapping) < 500:
+            self.channel_mapping.append({
+                'source': source_channel,
+                'canonical': canonical_name,
+                'norm_key': norm_key
+            })
+    
+    def add_extraction_stat(self, source_name, total, extracted, deduped):
+        self.extraction_stats[source_name] = {
+            'total_programs': total,
+            'extracted': extracted,
+            'deduplicated': deduped
+        }
+    
+    def add_title_transformation(self, original, cleaned, norm_title, channel):
+        if len(self.title_transformations) < 300:
+            self.title_transformations.append({
+                'channel': channel,
+                'original': original,
+                'cleaned': cleaned,
+                'norm_title': norm_title
+            })
+    
+    def save(self):
+        os.makedirs(self.debug_dir, exist_ok=True)
+        
+        debug_file = os.path.join(self.debug_dir, 'extract_desc_debug.json')
+        debug_data = {
+            'generated_at': datetime.now(BEIJING_TZ).strftime('%Y-%m-%d %H:%M:%S'),
+            'normalize_examples': self.normalize_examples[:100],
+            'clean_examples': self.clean_examples[:100],
+            'channel_mapping': self.channel_mapping[:200],
+            'extraction_stats': self.extraction_stats,
+            'title_transformations': self.title_transformations[:100]
+        }
+        
+        with open(debug_file, 'w', encoding='utf-8') as f:
+            json.dump(debug_data, f, ensure_ascii=False, indent=2)
+        
+        debug_txt = os.path.join(self.debug_dir, 'extract_desc_debug.txt')
+        with open(debug_txt, 'w', encoding='utf-8') as f:
+            f.write(f"EPG Desc 提取调试日志 - {datetime.now(BEIJING_TZ).strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("=" * 80 + "\n\n")
+            
+            f.write("📝 标准化示例 (normalize)\n")
+            f.write("-" * 60 + "\n")
+            for ex in self.normalize_examples[:50]:
+                f.write(f"  '{ex['original']}' -> '{ex['normalized']}'\n")
+            
+            f.write("\n📝 清洗示例 (clean_program_title)\n")
+            f.write("-" * 60 + "\n")
+            for ex in self.clean_examples[:50]:
+                f.write(f"  '{ex['original']}' -> '{ex['cleaned']}'\n")
+            
+            f.write("\n📺 频道映射示例\n")
+            f.write("-" * 60 + "\n")
+            for m in self.channel_mapping[:50]:
+                f.write(f"  '{m['source']}' -> '{m['canonical']}' (key: {m['norm_key']})\n")
+            
+            f.write("\n📊 各源提取统计\n")
+            f.write("-" * 60 + "\n")
+            for source, stats in self.extraction_stats.items():
+                f.write(f"  {source}:\n")
+                f.write(f"    总节目数: {stats['total_programs']}\n")
+                f.write(f"    提取数: {stats['extracted']}\n")
+                f.write(f"    去重数: {stats['deduplicated']}\n")
+            
+            f.write("\n📝 标题转换示例\n")
+            f.write("-" * 60 + "\n")
+            for t in self.title_transformations[:50]:
+                f.write(f"  频道: {t['channel']}\n")
+                f.write(f"    原标题: {t['original']}\n")
+                f.write(f"    清洗后: {t['cleaned']}\n")
+                f.write(f"    标准化: {t['norm_title']}\n\n")
+        
+        logger.info(f"Debug日志已保存: {debug_file}")
+
+
 class DescExtractor:
-    def __init__(self, config_path, output_path, log_dir='log'):
+    def __init__(self, config_path, output_path, log_dir='log', debug_dir='Debug'):
         self.config_path = config_path
         self.output_path = output_path
         self.log_dir = log_dir
+        self.debug_dir = debug_dir
         self.config = None
+        
+        self.debug_logger = DebugLogger(debug_dir)
         
         self.target_channels = {}
         self.desc_db = {}
         
-        # 无效desc - 只过滤明确的占位文本
         self.invalid_desc_patterns = [
             r'^暂无节目描述',
             r'^暂无描述',
@@ -59,31 +164,28 @@ class DescExtractor:
         }
     
     def normalize(self, text):
-        """标准化文本用于索引key"""
         if not text:
             return ""
-        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：]', '', text)
-        return text.lower()
+        original = text
+        text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：·""\'Mo\-—～~]', '', text)
+        result = text.lower()
+        if original != result:
+            self.debug_logger.add_normalize_example(original, result)
+        return result
     
     def fix_html_entities(self, text):
-        """
-        修复HTML实体乱码
-        如: &amp;amp;amp;lt;xxx&amp;amp;amp;gt; -> 《xxx》
-        """
         if not text:
             return text
         
         original = text
         fixed = text
         
-        # 多次解码，处理多层转义
         for _ in range(10):
             decoded = html.unescape(fixed)
             if decoded == fixed:
                 break
             fixed = decoded
         
-        # 替换常见的HTML标签残留为中文符号
         replacements = [
             ('<', '《'),
             ('>', '》'),
@@ -98,7 +200,6 @@ class DescExtractor:
         for old, new in replacements:
             fixed = fixed.replace(old, new)
         
-        # 清理多余的空白
         fixed = re.sub(r'\s+', ' ', fixed).strip()
         
         if fixed != original:
@@ -107,20 +208,14 @@ class DescExtractor:
         return fixed
     
     def is_valid_desc(self, desc):
-        """
-        检查desc是否有效
-        只过滤明确的"暂无描述"类占位文本
-        """
         if not desc:
             return False
         
         desc_clean = desc.strip()
         
-        # 太短的不要（少于5个字符）
         if len(desc_clean) < 5:
             return False
         
-        # 检查是否为明确的占位文本
         for pattern in self.invalid_desc_patterns:
             if re.match(pattern, desc_clean, re.IGNORECASE):
                 self.stats['invalid_filtered'] += 1
@@ -129,14 +224,12 @@ class DescExtractor:
         return True
     
     def clean_program_title(self, title):
-        """清洗节目名称"""
         if not title:
             return "", "", False
         
         original = title.strip()
         cleaned = original
         
-        # 1. 去除末尾的日期格式
         date_patterns = [
             r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*$',
             r'\s*[\(（]?\d{8}[\)）]?\s*$',
@@ -146,7 +239,6 @@ class DescExtractor:
         for pattern in date_patterns:
             cleaned = re.sub(pattern, '', cleaned)
         
-        # 2. 去除期数/集数
         episode_patterns = [
             r'\s*第?\d{6,}期?\s*$',
             r'\s*[\(（]\d{6,}[\)）]\s*$',
@@ -160,18 +252,18 @@ class DescExtractor:
         for pattern in episode_patterns:
             cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
         
-        # 3. 去除末尾年份
         cleaned = re.sub(r'\s*\d{4}\s*$', '', cleaned)
         
-        # 4. 去除重播/首播标记
         cleaned = re.sub(r'\s*[\(（]?重播[\)）]?\s*$', '', cleaned)
         cleaned = re.sub(r'\s*[\(（]?首播[\)）]?\s*$', '', cleaned)
         cleaned = re.sub(r'\s*[\(（]?直播[\)）]?\s*$', '', cleaned)
         
-        # 5. 去除末尾1-2位数字
         new_cleaned = re.sub(r'\s*\d{1,2}\s*$', '', cleaned)
         if new_cleaned.strip() and len(new_cleaned) >= 2:
             cleaned = new_cleaned
+        
+        cleaned = re.sub(r'[-—_·\s]+$', '', cleaned)
+        cleaned = re.sub(r'^[-—_·\s]+', '', cleaned)
         
         cleaned = cleaned.strip()
         
@@ -179,6 +271,8 @@ class DescExtractor:
             cleaned = original
         
         is_cleaned = (cleaned != original)
+        
+        self.debug_logger.add_clean_example(original, cleaned, is_cleaned)
         
         return cleaned, original, is_cleaned
     
@@ -238,6 +332,7 @@ class DescExtractor:
                         alias = dn.text.strip()
                         norm_alias = self.normalize(alias)
                         self.target_channels[norm_alias] = first_name
+                        self.debug_logger.add_channel_mapping(alias, first_name, norm_alias)
             
             unique_channels = len(set(self.target_channels.values()))
             logger.info(f"目标频道数: {unique_channels}, 别名总数: {len(self.target_channels)}")
@@ -270,6 +365,7 @@ class DescExtractor:
             
             count = 0
             dedup_count = 0
+            total_programs = 0
             
             for prog in root.findall('.//programme'):
                 cid = prog.get('channel')
@@ -287,17 +383,15 @@ class DescExtractor:
                 if desc_elem is None or not desc_elem.text:
                     continue
                 
+                total_programs += 1
                 original_title = title_elem.text.strip()
                 raw_desc = desc_elem.text.strip()
                 
-                # 修复HTML实体乱码
                 desc = self.fix_html_entities(raw_desc)
                 
-                # 检查是否有效
                 if not self.is_valid_desc(desc):
                     continue
                 
-                # 清洗节目名称
                 cleaned_title, _, was_cleaned = self.clean_program_title(original_title)
                 
                 if was_cleaned:
@@ -305,6 +399,10 @@ class DescExtractor:
                 
                 norm_channel = self.normalize(canonical_name)
                 norm_title = self.normalize(cleaned_title)
+                
+                self.debug_logger.add_title_transformation(
+                    original_title, cleaned_title, norm_title, canonical_name
+                )
                 
                 if norm_channel not in self.desc_db:
                     self.desc_db[norm_channel] = {}
@@ -323,6 +421,8 @@ class DescExtractor:
             self.stats['deduplicated'] += dedup_count
             logger.info(f"{source_name}: 提取 {count} 条, 去重 {dedup_count} 条")
             self.stats['sources_processed'] += 1
+            
+            self.debug_logger.add_extraction_stat(source_name, total_programs, count, dedup_count)
             
         except Exception as e:
             logger.error(f"解析失败 {source_name}: {e}")
@@ -361,7 +461,7 @@ class DescExtractor:
         self.stats['total_descs'] = sum(len(v) for v in self.desc_db.values())
     
         with open(self.output_path, 'w', encoding='utf-8') as f:
-            json.dump(self.desc_db, f, ensure_ascii=False, indent=2)  # ← 改这里
+            json.dump(self.desc_db, f, ensure_ascii=False, indent=2)
     
         file_size = os.path.getsize(self.output_path)
         size_str = f"{file_size / 1024:.1f}KB" if file_size < 1024*1024 else f"{file_size / 1024 / 1024:.1f}MB"
@@ -422,20 +522,22 @@ class DescExtractor:
         
         self.save_database()
         self.save_log()
+        self.debug_logger.save()
         
         logger.info("Desc提取完成")
         return True
 
 
 def main():
-    parser = argparse.ArgumentParser(description='EPG Desc提取器')
+    parser = argparse.ArgumentParser(description='EPG Desc提取器 (Debug版)')
     parser.add_argument('--config', required=True, help='配置文件路径')
     parser.add_argument('--output', required=True, help='输出文件路径')
     parser.add_argument('--log-dir', default='log', help='日志目录 (默认: log)')
+    parser.add_argument('--debug-dir', default='Debug', help='调试日志目录 (默认: Debug)')
     
     args = parser.parse_args()
     
-    extractor = DescExtractor(args.config, args.output, args.log_dir)
+    extractor = DescExtractor(args.config, args.output, args.log_dir, args.debug_dir)
     success = extractor.run()
     sys.exit(0 if success else 1)
 
