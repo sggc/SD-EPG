@@ -49,7 +49,7 @@ jobs:
         run: pip install requests lxml
 
       - name: Create EPG directory
-        run: mkdir -p EPG
+        run: mkdir -p EPG Debug database
 
       - name: Run fetch script
         env:
@@ -67,7 +67,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add EPG/
+          git add EPG/ database/ Debug/
           git diff --staged --quiet || git commit -m "Update EPG - $(date '+%Y-%m-%d %H:%M:%S')"
           git push
 
@@ -76,5 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: epg-backup-${{ github.run_id }}
-          path: EPG/
+          path: |
+            EPG/
+            Debug/
           retention-days: 7
