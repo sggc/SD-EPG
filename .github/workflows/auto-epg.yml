@@ -2,13 +2,9 @@ name: EPG Aggregation
 
 on:
   schedule:
-    # 北京时间 03:20 → UTC 19:20
     - cron: '20 19 * * *'
-    # 北京时间 04:50 → UTC 20:50
     - cron: '50 20 * * *'
-    # 北京时间 10:20 → UTC 02:20
     - cron: '20 2 * * *'
-    # 北京时间 16:20 → UTC 08:20
     - cron: '20 8 * * *'
   workflow_dispatch:
     inputs:
@@ -55,7 +51,6 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
     
-    # ========== 第一步：聚合EPG ==========
     - name: Run EPG aggregation script
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
@@ -65,7 +60,6 @@ jobs:
           --output-dir ./EPG \
           --log-dir ./log
     
-    # ========== 第二步：提交聚合结果 ==========
     - name: Commit aggregated EPG
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
@@ -79,7 +73,6 @@ jobs:
           git push
         fi
     
-    # ========== 第三步：注入Desc ==========
     - name: Inject Desc to EPG
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
@@ -89,15 +82,15 @@ jobs:
           --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/desc_database.json,https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/apidb.json" \
           --man-made-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/man-made.json" \
           --output ./EPG/sggc-desc.xml.gz \
-          --log ./log/desc_match_log.txt
+          --log ./log/desc_match_log.txt \
+          --debug-dir ./Debug
       continue-on-error: true
     
-    # ========== 第四步：提交带Desc的EPG ==========
     - name: Commit EPG with Desc
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
         cd public_repo
-        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_database_log.txt 2>/dev/null || true
+        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_database_log.txt Debug/ 2>/dev/null || true
         
         if git diff --staged --quiet; then
           echo "No desc changes"
