@@ -2,18 +2,31 @@
 # -*- coding: utf-8 -*-
 """
 节目名清洗模块 - 支持频道专属规则
-修复了 normalize 和 clean_program_title 的问题
+优化版本：使用缓存提高性能
 """
 import re
 import json
 import html
 from pathlib import Path
 
+_normalize_cache = {}
+
+def normalize(text):
+    if not text:
+        return ""
+    if text in _normalize_cache:
+        return _normalize_cache[text]
+    result = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：·""\'\-—～~]', '', text).lower()
+    _normalize_cache[text] = result
+    return result
+
 
 class ChannelCleanRuleManager:
     def __init__(self, config_path):
         self.config_path = Path(config_path)
         self.config = None
+        self._rule_cache = {}
+        self._normalized_channel_index = {}
         self.load_config()
     
     def load_config(self):
@@ -29,27 +42,31 @@ class ChannelCleanRuleManager:
                     ]
                 }
             }
+        
+        if self.config and "channel_rules" in self.config:
+            for ch_name, rule in self.config["channel_rules"].items():
+                norm_ch = normalize(ch_name)
+                self._normalized_channel_index[norm_ch] = rule
     
     def get_rule(self, channel_name):
         norm_channel = normalize(channel_name)
         
-        if self.config and "channel_rules" in self.config:
-            for ch_name, rule in self.config["channel_rules"].items():
-                if normalize(ch_name) == norm_channel:
-                    if rule.get("inherit_from"):
-                        return self.get_rule(rule["inherit_from"])
-                    if rule.get("use_default"):
-                        return self.config.get("default", {})
-                    return rule
+        if norm_channel in self._rule_cache:
+            return self._rule_cache[norm_channel]
         
-        return self.config.get("default", {}) if self.config else {}
-
-
-def normalize(text):
-    if not text:
-        return ""
-    text = re.sub(r'[\s\-_\+\|\(\)（）\[\]【】《》:：·""\'\-—～~]', '', text)
-    return text.lower()
+        if norm_channel in self._normalized_channel_index:
+            rule = self._normalized_channel_index[norm_channel]
+            if rule.get("inherit_from"):
+                result = self.get_rule(rule["inherit_from"])
+            elif rule.get("use_default"):
+                result = self.config.get("default", {})
+            else:
+                result = rule
+        else:
+            result = self.config.get("default", {}) if self.config else {}
+        
+        self._rule_cache[norm_channel] = result
+        return result
 
 
 def fix_html_entities(text):
