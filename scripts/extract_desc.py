@@ -18,6 +18,9 @@ import html
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 import requests
+from pathlib import Path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from clean_utils import ChannelCleanRuleManager, clean_program_title_with_rule, normalize
 
 BEIJING_TZ = timezone(timedelta(hours=8))
 
@@ -143,6 +146,10 @@ class DescExtractor:
         self.target_channels = {}
         self.desc_db = {}
         
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        rules_path = os.path.join(script_dir, '..', 'config', 'channel_clean_rules.json')
+        self.rule_manager = ChannelCleanRuleManager(rules_path)
+        
         self.invalid_desc_patterns = [
             r'^暂无节目描述',
             r'^暂无描述',
@@ -223,52 +230,12 @@ class DescExtractor:
         
         return True
     
-    def clean_program_title(self, title):
+    def clean_program_title(self, title, channel_name):
         if not title:
             return "", "", False
         
         original = title.strip()
-        cleaned = original
-        
-        date_patterns = [
-            r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*$',
-            r'\s*[\(（]?\d{8}[\)）]?\s*$',
-            r'\s*[\(（]?\d{4}[-./]\d{1,2}[-./]\d{1,2}[\)）]?\s*$',
-            r'\s*\d{1,2}[-./月]\d{1,2}[日]?\s*$',
-        ]
-        for pattern in date_patterns:
-            cleaned = re.sub(pattern, '', cleaned)
-        
-        episode_patterns = [
-            r'\s*第?\d{6,}期?\s*$',
-            r'\s*[\(（]\d{6,}[\)）]\s*$',
-            r'\s*第\d{1,4}期\s*$',
-            r'\s*第\d{1,4}集\s*$',
-            r'\s*EP?\d{1,4}\s*$',
-            r'\s*\(\d{1,4}\)\s*$',
-            r'\s*[\(（]\d{1,3}[\)）]\s*$',
-            r'\s*第\d{1,3}回\s*$',
-        ]
-        for pattern in episode_patterns:
-            cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
-        
-        cleaned = re.sub(r'\s*\d{4}\s*$', '', cleaned)
-        
-        cleaned = re.sub(r'\s*[\(（]?重播[\)）]?\s*$', '', cleaned)
-        cleaned = re.sub(r'\s*[\(（]?首播[\)）]?\s*$', '', cleaned)
-        cleaned = re.sub(r'\s*[\(（]?直播[\)）]?\s*$', '', cleaned)
-        
-        new_cleaned = re.sub(r'\s*\d{1,2}\s*$', '', cleaned)
-        if new_cleaned.strip() and len(new_cleaned) >= 2:
-            cleaned = new_cleaned
-        
-        cleaned = re.sub(r'[-—_·\s]+$', '', cleaned)
-        cleaned = re.sub(r'^[-—_·\s]+', '', cleaned)
-        
-        cleaned = cleaned.strip()
-        
-        if len(cleaned) < 2:
-            cleaned = original
+        cleaned = clean_program_title_with_rule(original, channel_name, self.rule_manager)
         
         is_cleaned = (cleaned != original)
         
@@ -392,7 +359,7 @@ class DescExtractor:
                 if not self.is_valid_desc(desc):
                     continue
                 
-                cleaned_title, _, was_cleaned = self.clean_program_title(original_title)
+                cleaned_title, _, was_cleaned = self.clean_program_title(original_title, canonical_name)
                 
                 if was_cleaned:
                     dedup_count += 1
