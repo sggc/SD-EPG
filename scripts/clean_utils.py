@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 节目名清洗模块 - 支持频道专属规则
-优化版本：使用缓存提高性能
+优化版本：使用缓存提高性能，修复递归问题
 """
 import re
 import json
@@ -27,6 +27,7 @@ class ChannelCleanRuleManager:
         self.config = None
         self._rule_cache = {}
         self._normalized_channel_index = {}
+        self._resolving = set()
         self.load_config()
     
     def load_config(self):
@@ -48,16 +49,28 @@ class ChannelCleanRuleManager:
                 norm_ch = normalize(ch_name)
                 self._normalized_channel_index[norm_ch] = rule
     
-    def get_rule(self, channel_name):
+    def get_rule(self, channel_name, _depth=0):
+        if _depth > 10:
+            return self.config.get("default", {}) if self.config else {}
+        
         norm_channel = normalize(channel_name)
         
         if norm_channel in self._rule_cache:
             return self._rule_cache[norm_channel]
         
+        if norm_channel in self._resolving:
+            return self.config.get("default", {}) if self.config else {}
+        
         if norm_channel in self._normalized_channel_index:
             rule = self._normalized_channel_index[norm_channel]
             if rule.get("inherit_from"):
-                result = self.get_rule(rule["inherit_from"])
+                self._resolving.add(norm_channel)
+                try:
+                    result = self.get_rule(rule["inherit_from"], _depth + 1)
+                finally:
+                    self._resolving.discard(norm_channel)
+                if rule.get("use_default"):
+                    result = self.config.get("default", {})
             elif rule.get("use_default"):
                 result = self.config.get("default", {})
             else:
