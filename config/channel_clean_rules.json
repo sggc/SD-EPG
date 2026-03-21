@@ -1,0 +1,2812 @@
+{
+  "version": "1.0",
+  "description": "频道专属节目名清洗规则配置",
+  "last_updated": "2026-03-21",
+  
+  "channel_rules": {
+    
+    "Astro AEC": {
+      "rule_name": "Astro AEC 规则",
+      "note": "英文节目，去掉 EpXX、Sxx EpXX 等集数标记",
+      
+      "title_transform": [
+        {"from": "^\\(L\\)\\s+", "to": ""},
+        {"from": "\\s+S\\d+\\s+Special\\s+Highlights\\s+Ep\\d+\\s*$", "to": ""},
+        {"from": "\\s+Special\\s+Highlights\\s+Ep\\d+\\s*$", "to": ""},
+        {"from": "\\s+S\\d+\\s+Ep\\d+\\s*$", "to": ""},
+        {"from": "\\s+Ep\\d+\\s*$", "to": ""}
+      ]
+    },
+    
+    "Astro AOD": {
+      "rule_name": "Astro AOD 规则",
+      "note": "英文节目，去掉 EpXX 集数标记",
+      
+      "title_transform": [
+        {"from": "\\s+S\\d+\\s+Ep\\d+\\s*$", "to": ""},
+        {"from": "\\s+Ep\\d+\\s*$", "to": ""}
+      ]
+    },
+    
+    "Astro QJ": {
+      "rule_name": "Astro QJ 规则",
+      "note": "英文节目，去掉 EpXX、Sxx EpXX 等集数标记",
+      
+      "title_transform": [
+        {"from": "\\s+S\\d+\\s+Ep\\d+\\s*$", "to": ""},
+        {"from": "\\s+Ep\\d+\\s*$", "to": ""}
+      ]
+    },
+    
+    "Channel 5": {
+      "rule_name": "Channel 5 规则",
+      "note": "去掉 **Visually Signed** 和 New: 等前缀",
+      
+      "title_transform": [
+        {"from": "^\\*\\*Visually Signed\\*\\*\\s*", "to": ""},
+        {"from": "^\\*\\*Visually Signed\\*\\*", "to": ""},
+        {"from": "^New:\\s+", "to": ""}
+      ]
+    },
+    
+    "Channel 8": {
+      "rule_name": "Channel 8 规则",
+      "note": "去掉 (Live) 前缀、- EP XX 后缀，优先保留 / 后面的中文名",
+      
+      "title_transform": [
+        {"from": "^\\(Live\\)\\s+", "to": ""},
+        {"from": "^.*\\/\\s*(.+)$", "to": "\\1"},
+        {"from": "\\s+-\\s+EP\\s+\\d+", "to": ""}
+      ]
+    },
+    
+    "Channel U": {
+      "rule_name": "Channel U 规则",
+      "note": "去掉 - EP XX 后缀，优先保留 / 后面的中文名",
+      
+      "title_transform": [
+        {"from": "^.*\\/\\s*(.+)$", "to": "\\1"},
+        {"from": "\\s+-\\s+EP\\s+\\d+", "to": ""}
+      ]
+    },
+    
+    "HOY77": {
+      "rule_name": "HOY77 规则",
+      "note": "去掉特约、呈献等赞助商标记",
+      
+      "title_transform": [
+        {"from": "^.*特约", "to": ""},
+        {"from": "^.*呈献", "to": ""}
+      ]
+    },
+    
+    "HOY78": {
+      "rule_name": "HOY78 规则",
+      "note": "去掉特约、呈献等赞助商标记",
+      
+      "title_transform": [
+        {"from": "^.*特约", "to": ""},
+        {"from": "^.*呈献", "to": ""}
+      ]
+    },
+    
+    "Love Nature 4K": {
+      "rule_name": "Love Nature 4K 规则",
+      "note": "去掉第X季第X集等标记",
+      
+      "title_transform": [
+        {"from": "\\s+第\\d+季第\\d+集", "to": ""}
+      ]
+    },
+    
+    "NOW新闻": {
+      "rule_name": "NOW新闻 规则",
+      "note": "去掉 [直播] 和 第X集 标记",
+      
+      "title_transform": [
+        {"from": "\\[直播\\]", "to": ""},
+        {"from": "\\s+第\\d+集", "to": ""}
+      ]
+    },
+    
+    "RTHK31": {
+      "rule_name": "RTHK31 规则",
+      "note": "去掉第X集、(第X集)、(第X季)(第X集)等标记",
+      
+      "title_transform": [
+        {"from": "\\(第[零一二三四五六七八九十百千]+集\\)", "to": ""},
+        {"from": "\\(第\\d+集\\)", "to": ""},
+        {"from": "\\(第\\d+季\\)\\(第\\d+集\\)", "to": ""},
+        {"from": "\\s+第\\d+集", "to": ""}
+      ]
+    },
+    
+    "RTHK32": {
+      "rule_name": "RTHK32 规则",
+      "note": "暂时保持原样",
+      "use_default": false
+    },
+    
+    "TVB PLUS": {
+      "rule_name": "TVB PLUS 规则",
+      "note": "去掉粤、粤普、粤日、粤英、粤韩、马会、PG、特约、呈献、集数等标记",
+      
+      "title_transform": [
+        {"from": "^.*特约", "to": ""},
+        {"from": "^.*呈献", "to": ""},
+        {"from": "粤普", "to": ""},
+        {"from": "粤日", "to": ""},
+        {"from": "粤英", "to": ""},
+        {"from": "粤韩", "to": ""},
+        {"from": "粤", "to": ""},
+        {"from": "马会", "to": ""},
+        {"from": "PG", "to": ""},
+        {"from": "M", "to": ""},
+        {"from": "英马会", "to": ""},
+        {"from": "普PG", "to": ""},
+        {"from": "日PG", "to": ""}
+      ]
+    },
+    
+    "TVB星河": {
+      "rule_name": "TVB星河 规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+    
+    "ViuTV": {
+      "rule_name": "ViuTV 规则",
+      "note": "去掉特约、呈献、第X集等标记",
+      
+      "title_transform": [
+        {"from": "^.*特约", "to": ""},
+        {"from": "^.*呈献:", "to": ""},
+        {"from": "^.*呈献", "to": ""},
+        {"from": "^:\\s*", "to": ""},
+        {"from": "\\s+第\\d+集", "to": ""},
+        {"from": "\\s+\\(手语新闻\\)", "to": ""}
+      ]
+    },
+    
+    "安多卫视": {
+      "rule_name": "安多卫视 规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+    
+    "凤凰卫视中文台": {
+      "rule_name": "凤凰卫视中文台 规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+    
+    "凤凰卫视资讯台": {
+      "rule_name": "凤凰卫视资讯台 规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+    
+    "凤凰卫视香港台": {
+      "rule_name": "凤凰卫视香港台 规则",
+      "note": "去掉赞助商标记和(数字)后缀",
+      
+      "title_transform": [
+        {"from": "^.*特约", "to": ""},
+        {"from": "^.*呈献", "to": ""},
+        {"from": "^.*直达", "to": ""},
+        {"from": "^中国银行\\(香港\\)", "to": ""},
+        {"from": "^以岭药业", "to": ""},
+        {"from": "^华润", "to": ""},
+        {"from": "\\(\\d+\\)$", "to": ""},
+        {"from": "\\(\\d+\\)", "to": ""}
+      ]
+    },
+    
+    "公视": {
+      "rule_name": "公视 规则",
+      "note": "去掉(数字)(普)、(数字)(护)、(数字)(辅12)、(数字)(辅15)等后缀",
+      
+      "title_transform": [
+        {"from": "\\(\\d+\\)\\(辅12\\)$", "to": ""},
+        {"from": "\\(\\d+\\)\\(辅15\\)$", "to": ""},
+        {"from": "\\(\\d+\\)\\(护\\)$", "to": ""},
+        {"from": "\\(\\d+\\)\\(普\\)$", "to": ""},
+        {"from": "\\(\\d+\\)\\(普\\)", "to": ""},
+        {"from": "\\(\\d+\\)\\(护\\)", "to": ""},
+        {"from": "\\(\\d+\\)\\(辅12\\)", "to": ""},
+        {"from": "\\(\\d+\\)\\(辅15\\)", "to": ""}
+      ]
+    },
+    
+    "CCTV1": {
+      "rule_name": "央视综合频道规则",
+      "note": "保留罗马数字Ⅱ、Ⅲ，去除末尾连字符，处理特殊标记",
+      
+      "episode_patterns": [
+        "\\((\\d+)\\)$",
+        "-(\\d+)-(\\d+)$"
+      ],
+      
+      "remove_suffix": ["-"],
+      "keep_suffix": ["Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ", "Ⅷ", "Ⅸ", "Ⅹ"],
+      
+      "title_transform": [
+        {"from": "^《([^》]+)》宣传片$", "to": "$1"},
+        {"from": "^《([^》]+)》MV$", "to": "$1"}
+      ]
+    },
+    
+    "CCTV2": {
+      "rule_name": "央视财经频道规则",
+      "note": "有前缀'精品财经纪录：'",
+      
+      "episode_patterns": [
+        "\\((\\d+)\\)$"
+      ],
+      
+      "remove_prefix": ["精品财经纪录："]
+    },
+    
+    "CCTV4": {
+      "rule_name": "央视中文国际频道规则",
+      "note": "《记住乡愁》片段展播等",
+      
+      "episode_patterns": [
+        "\\((\\d+)\\)$"
+      ],
+      
+      "title_transform": [
+        {"from": "^《([^》]+)》片段展播$", "to": "$1"},
+        {"from": "^《([^》]+)》精彩片段$", "to": "$1"}
+      ]
+    },
+    
+    "CCTV4美洲": {
+      "rule_name": "央视中文国际美洲频道规则",
+      "note": "同CCTV4规则",
+      "inherit_from": "CCTV4"
+    },
+    
+    "CCTV4欧洲": {
+      "rule_name": "央视中文国际欧洲频道规则",
+      "note": "同CCTV4规则",
+      "inherit_from": "CCTV4"
+    },
+    
+    "CCTV6": {
+      "rule_name": "电影频道规则",
+      "note": "电影频道通常没有集数，保留原名",
+      "clean_episode": false,
+      "keep_original": true
+    },
+    
+    "CCTV8": {
+      "rule_name": "电视剧频道规则",
+      "note": "可能有分数格式 12/56",
+      
+      "episode_patterns": [
+        "\\((\\d+)/(\\d+)\\)$",
+        "\\((\\d+)\\)$"
+      ],
+      
+      "fraction_to_single": true
+    },
+    
+    "青海卫视": {
+      "rule_name": "青海卫视规则",
+      "note": "有'昆仑剧场:'、'第一挑战剧场:'等前缀",
+      
+      "episode_patterns": [
+        "\\((\\d+)\\)$",
+        "\\d+$"
+      ],
+      
+      "remove_prefix": ["昆仑剧场:", "第一挑战剧场:"]
+    },
+    
+    "黑龙江卫视": {
+      "rule_name": "黑龙江卫视规则",
+      "note": "有'中国龙剧场:'前缀",
+      
+      "episode_patterns": [
+        "\\((\\d+)\\)$",
+        "\\d+$"
+      ],
+      
+      "remove_prefix": ["中国龙剧场:", "阳光剧场:"]
+    },
+    
+    "齐河综合": {
+      "rule_name": "齐河综合规则",
+      "note": "使用中文括号（）",
+
+      "episode_patterns": [
+        "（(\\d+)）$"
+      ]
+    },
+
+    "山东卫视": {
+      "rule_name": "山东卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "广东卫视": {
+      "rule_name": "广东卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "深圳卫视": {
+      "rule_name": "深圳卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "湖南卫视": {
+      "rule_name": "湖南卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "四川卫视": {
+      "rule_name": "四川卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "河南卫视": {
+      "rule_name": "河南卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "浙江卫视": {
+      "rule_name": "浙江卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "江苏卫视": {
+      "rule_name": "江苏卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "东方卫视": {
+      "rule_name": "东方卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "北京卫视": {
+      "rule_name": "北京卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "云南卫视": {
+      "rule_name": "云南卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "内蒙古卫视": {
+      "rule_name": "内蒙古卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "吉林卫视": {
+      "rule_name": "吉林卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "天津卫视": {
+      "rule_name": "天津卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "宁夏卫视": {
+      "rule_name": "宁夏卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "安徽卫视": {
+      "rule_name": "安徽卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "山西卫视": {
+      "rule_name": "山西卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "广西卫视": {
+      "rule_name": "广西卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "新疆卫视": {
+      "rule_name": "新疆卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "江西卫视": {
+      "rule_name": "江西卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "河北卫视": {
+      "rule_name": "河北卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "湖北卫视": {
+      "rule_name": "湖北卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "甘肃卫视": {
+      "rule_name": "甘肃卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "贵州卫视": {
+      "rule_name": "贵州卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "辽宁卫视": {
+      "rule_name": "辽宁卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "重庆卫视": {
+      "rule_name": "重庆卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "陕西卫视": {
+      "rule_name": "陕西卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "海南卫视": {
+      "rule_name": "海南卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "三沙卫视": {
+      "rule_name": "三沙卫视规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "东南卫视": {
+      "rule_name": "东南卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "厦门卫视": {
+      "rule_name": "厦门卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "兵团卫视": {
+      "rule_name": "兵团卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "康巴卫视": {
+      "rule_name": "康巴卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "延边卫视": {
+      "rule_name": "延边卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "西藏卫视": {
+      "rule_name": "西藏卫视规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "\\（(\\d+)\\）$", "to": ""}
+      ]
+    },
+
+    "音乐现场": {
+      "rule_name": "音乐现场规则",
+      "note": "提取书名号内的节目名，去掉日期、HD等后缀",
+      
+      "title_transform": [
+        {"from": "^《([^》]+)》.*$", "to": "\\1"}
+      ]
+    },
+    
+    "陵城综合": {
+      "rule_name": "陵城综合规则",
+      "note": "提取书名号内的节目名，去掉专题节目等前缀",
+      
+      "title_transform": [
+        {"from": "^.*《([^》]+)》.*$", "to": "\\1"}
+      ]
+    },
+    
+    "魅力时尚": {
+      "rule_name": "魅力时尚规则",
+      "note": "提取书名号内的节目名",
+      
+      "title_transform": [
+        {"from": "^.*《([^》]+)》.*$", "to": "\\1"}
+      ]
+    },
+    
+    "鱼台生活": {
+      "rule_name": "鱼台生活规则",
+      "note": "提取书名号内的节目名，去掉电视剧等前缀",
+      
+      "title_transform": [
+        {"from": "^.*《([^》]+)》.*$", "to": "\\1"}
+      ]
+    },
+    
+    "龙华偶像": {
+      "rule_name": "龙华偶像规则",
+      "note": "提取剧名，去掉括号内的标记",
+      
+      "title_transform": [
+        {"from": "^([^\\(（]+).*$", "to": "\\1"}
+      ]
+    },
+    
+    "香港卫视": {
+      "rule_name": "香港卫视规则",
+      "note": "暂时使用默认规则，但避免过度清洗",
+      "use_default": false
+    },
+
+    "公视台语台": {
+      "rule_name": "公视台语台规则",
+      "note": "去掉冒号后的集数、(台)、(台语版)等标记",
+
+      "title_transform": [
+        {"from": ":\\d+$", "to": ""},
+        {"from": "\\(台\\)$", "to": ""},
+        {"from": "\\(台语版\\)$", "to": ""},
+        {"from": "\\(台语版\\):\\d+$", "to": ""},
+        {"from": "\\(台文字幕版\\)$", "to": ""}
+      ]
+    },
+
+    "华视": {
+      "rule_name": "华视规则",
+      "note": "去掉第X集标记",
+
+      "title_transform": [
+        {"from": "第\\d+集$", "to": ""}
+      ]
+    },
+
+    "华视新闻资讯": {
+      "rule_name": "华视新闻资讯规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "华视"
+    },
+
+    "华视教育体育文化": {
+      "rule_name": "华视教育体育文化规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "华视"
+    },
+
+    "中视": {
+      "rule_name": "中视规则",
+      "note": "去掉第X集标记",
+
+      "title_transform": [
+        {"from": "第\\d+集$", "to": ""}
+      ]
+    },
+
+    "中视新闻": {
+      "rule_name": "中视新闻规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "中视"
+    },
+
+    "中视经典": {
+      "rule_name": "中视经典规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "中视"
+    },
+
+    "中视菁采": {
+      "rule_name": "中视菁采规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "中视"
+    },
+
+    "民视": {
+      "rule_name": "民视规则",
+      "note": "去掉第X集标记",
+
+      "title_transform": [
+        {"from": "第\\d+集$", "to": ""}
+      ]
+    },
+
+    "民视台湾台": {
+      "rule_name": "民视台湾台规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "民视"
+    },
+
+    "民视新闻台": {
+      "rule_name": "民视新闻台规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "民视"
+    },
+
+    "民视第一台": {
+      "rule_name": "民视第一台规则",
+      "note": "去掉第X集标记",
+      "inherit_from": "民视"
+    },
+
+    "台视": {
+      "rule_name": "台视规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "台视新闻": {
+      "rule_name": "台视新闻规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "台视综合": {
+      "rule_name": "台视综合规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "台视财经": {
+      "rule_name": "台视财经规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV3": {
+      "rule_name": "央视综艺频道规则",
+      "note": "去掉-数字后缀、综艺频道等标记",
+
+      "title_transform": [
+        {"from": "-\\d+$", "to": ""},
+        {"from": "-\\d+-\\d+$", "to": ""},
+        {"from": "-\\d{4}-\\d+$", "to": ""},
+        {"from": "综艺频道$", "to": ""}
+      ]
+    },
+
+    "CCTV5": {
+      "rule_name": "央视体育频道规则",
+      "note": "体育赛事节目名保持原样",
+      "use_default": false
+    },
+
+    "CCTV5+": {
+      "rule_name": "央视体育赛事频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "CCTV7": {
+      "rule_name": "央视国防军事频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV9": {
+      "rule_name": "央视纪录频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV10": {
+      "rule_name": "央视科教频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV11": {
+      "rule_name": "央视戏曲频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV12": {
+      "rule_name": "央视社会与法频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV13": {
+      "rule_name": "央视新闻频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV14": {
+      "rule_name": "央视少儿频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV15": {
+      "rule_name": "央视音乐频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV16": {
+      "rule_name": "央视奥林匹克频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "CCTV17": {
+      "rule_name": "央视农业农村频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV4K": {
+      "rule_name": "央视4K超高清频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV8K": {
+      "rule_name": "央视8K超高清频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV世界地理": {
+      "rule_name": "央视世界地理频道规则",
+      "note": "去掉末尾数字和(数字)数字格式",
+      
+      "title_transform": [
+        {"from": "\\d+$", "to": ""},
+        {"from": "\\((\\d+)\\)\\d+$", "to": ""}
+      ]
+    },
+
+    "CCTV兵器科技": {
+      "rule_name": "央视兵器科技频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV卫生健康": {
+      "rule_name": "央视卫生健康频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV央视台球": {
+      "rule_name": "央视台球频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV央视文化精品": {
+      "rule_name": "央视文化精品频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV女性时尚": {
+      "rule_name": "央视女性时尚频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV怀旧剧场": {
+      "rule_name": "央视怀旧剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV电视指南": {
+      "rule_name": "央视电视指南频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV第一剧场": {
+      "rule_name": "央视第一剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV风云剧场": {
+      "rule_name": "央视风云剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CCTV风云足球": {
+      "rule_name": "央视风云足球频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "CCTV风云音乐": {
+      "rule_name": "央视风云音乐频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "CCTV高尔夫网球": {
+      "rule_name": "央视高尔夫网球频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "CETV早期教育": {
+      "rule_name": "CETV早期教育频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "CGTN": {
+      "rule_name": "CGTN规则",
+      "note": "英文节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CGTN俄语": {
+      "rule_name": "CGTN俄语规则",
+      "note": "俄语节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CGTN法语": {
+      "rule_name": "CGTN法语规则",
+      "note": "法语节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CGTN纪录": {
+      "rule_name": "CGTN纪录规则",
+      "note": "英文节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CGTN西语": {
+      "rule_name": "CGTN西语规则",
+      "note": "西班牙语节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CGTN阿语": {
+      "rule_name": "CGTN阿语规则",
+      "note": "阿拉伯语节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "CHC动作电影": {
+      "rule_name": "CHC动作电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "CHC家庭影院": {
+      "rule_name": "CHC家庭影院频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "CHC影迷电影": {
+      "rule_name": "CHC影迷电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "IPTV法治": {
+      "rule_name": "IPTV法治频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "IPTV野外": {
+      "rule_name": "IPTV野外频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "山东体育": {
+      "rule_name": "山东体育频道规则",
+      "note": "去掉(数字)格式、绿茵剧场：前缀",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""},
+        {"from": "^绿茵剧场：", "to": ""}
+      ]
+    },
+
+    "广东体育": {
+      "rule_name": "广东体育频道规则",
+      "note": "去掉直播、重播、实况延播等前缀",
+      
+      "title_transform": [
+        {"from": "^直播", "to": ""},
+        {"from": "^重播", "to": ""},
+        {"from": "^实况延播", "to": ""},
+        {"from": "^：", "to": ""}
+      ]
+    },
+
+    "东方财经": {
+      "rule_name": "东方财经频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "中国教育1": {
+      "rule_name": "中国教育1频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "中国教育2": {
+      "rule_name": "中国教育2频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "中国教育3": {
+      "rule_name": "中国教育3频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "中国教育4": {
+      "rule_name": "中国教育4频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV中国功夫": {
+      "rule_name": "NewTV中国功夫频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV军事评论": {
+      "rule_name": "NewTV军事评论频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV军旅剧场": {
+      "rule_name": "NewTV军旅剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV农业致富": {
+      "rule_name": "NewTV农业致富频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV动作电影": {
+      "rule_name": "NewTV动作电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "NewTV古装剧场": {
+      "rule_name": "NewTV古装剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV家庭剧场": {
+      "rule_name": "NewTV家庭剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV怡伴健康": {
+      "rule_name": "NewTV怡伴健康频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV惊悚悬疑": {
+      "rule_name": "NewTV惊悚悬疑频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV明星大片": {
+      "rule_name": "NewTV明星大片频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "NewTV海外剧场": {
+      "rule_name": "NewTV海外剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV潮妈辣婆": {
+      "rule_name": "NewTV潮妈辣婆频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV炫舞未来": {
+      "rule_name": "NewTV炫舞未来频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV热播精选": {
+      "rule_name": "NewTV热播精选频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV烽烟剧场": {
+      "rule_name": "NewTV烽烟剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV爱情喜剧": {
+      "rule_name": "NewTV爱情喜剧频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV精品体育": {
+      "rule_name": "NewTV精品体育频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "NewTV精品大剧": {
+      "rule_name": "NewTV精品大剧频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "NewTV精品萌宠": {
+      "rule_name": "NewTV精品萌宠频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "NewTV谍战大剧": {
+      "rule_name": "NewTV谍战大剧频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "东方卫视4K": {
+      "rule_name": "东方卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "东方卫视"
+    },
+
+    "东营公共": {
+      "rule_name": "东营公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "东营新闻": {
+      "rule_name": "东营新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "中华特产": {
+      "rule_name": "中华特产频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "中国交通": {
+      "rule_name": "中国交通频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "中学生": {
+      "rule_name": "中学生频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "临沂综合": {
+      "rule_name": "临沂综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "乐游": {
+      "rule_name": "乐游频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "书画": {
+      "rule_name": "书画频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "优优宝贝": {
+      "rule_name": "优优宝贝频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "优漫卡通": {
+      "rule_name": "优漫卡通频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "光影": {
+      "rule_name": "光影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "兖州新闻": {
+      "rule_name": "兖州新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "军事": {
+      "rule_name": "军事频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "农林卫视": {
+      "rule_name": "农林卫视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "动作影院": {
+      "rule_name": "动作影院频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "动漫秀场": {
+      "rule_name": "动漫秀场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "动画": {
+      "rule_name": "动画频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "劲爆体育": {
+      "rule_name": "劲爆体育频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "北京IPTV4K": {
+      "rule_name": "北京IPTV4K频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京IPTV淘BABY": {
+      "rule_name": "北京IPTV淘BABY频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京IPTV淘剧场": {
+      "rule_name": "北京IPTV淘剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "北京IPTV淘娱乐": {
+      "rule_name": "北京IPTV淘娱乐频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京IPTV淘电影": {
+      "rule_name": "北京IPTV淘电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "北京IPTV萌宠TV": {
+      "rule_name": "北京IPTV萌宠TV频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京体育休闲": {
+      "rule_name": "北京体育休闲频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "北京卫视4K": {
+      "rule_name": "北京卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "北京卫视"
+    },
+
+    "北京国际": {
+      "rule_name": "北京国际频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京影视": {
+      "rule_name": "北京影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "北京文艺": {
+      "rule_name": "北京文艺频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "北京新闻": {
+      "rule_name": "北京新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京生活": {
+      "rule_name": "北京生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "北京纪实科教": {
+      "rule_name": "北京纪实科教频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "北京财经": {
+      "rule_name": "北京财经频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "千禧经典台": {
+      "rule_name": "千禧经典台频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "南国都市": {
+      "rule_name": "南国都市频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "卡酷少儿": {
+      "rule_name": "卡酷少儿频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "发现之旅": {
+      "rule_name": "发现之旅频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "哈哈炫动": {
+      "rule_name": "哈哈炫动频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "哒啵赛事": {
+      "rule_name": "哒啵赛事频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "喜剧影院": {
+      "rule_name": "喜剧影院频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "嘉佳卡通": {
+      "rule_name": "嘉佳卡通频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "四川卫视4K": {
+      "rule_name": "四川卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "四川卫视"
+    },
+
+    "四海钓鱼": {
+      "rule_name": "四海钓鱼频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "国学": {
+      "rule_name": "国学频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "地理": {
+      "rule_name": "地理频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "城市剧场": {
+      "rule_name": "城市剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "墨宝": {
+      "rule_name": "墨宝频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "大湾区卫视": {
+      "rule_name": "大湾区卫视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "天元围棋": {
+      "rule_name": "天元围棋频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "好学生": {
+      "rule_name": "好学生频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "威海新闻": {
+      "rule_name": "威海新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "威海海洋生活": {
+      "rule_name": "威海海洋生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "定陶综合": {
+      "rule_name": "定陶综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "家庭影院": {
+      "rule_name": "家庭影院频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "少儿动画": {
+      "rule_name": "少儿动画频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "山东农科": {
+      "rule_name": "山东农科频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "山东卫视4K": {
+      "rule_name": "山东卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "山东卫视"
+    },
+
+    "山东少儿": {
+      "rule_name": "山东少儿频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "山东教育": {
+      "rule_name": "山东教育频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "山东文旅": {
+      "rule_name": "山东文旅频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "山东新闻": {
+      "rule_name": "山东新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "山东生活": {
+      "rule_name": "山东生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "山东综艺": {
+      "rule_name": "山东综艺频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "山东齐鲁": {
+      "rule_name": "山东齐鲁频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "岭南戏曲": {
+      "rule_name": "岭南戏曲频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "岱岳综合": {
+      "rule_name": "岱岳综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "崂山综合": {
+      "rule_name": "崂山综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "平度综合": {
+      "rule_name": "平度综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广东卫视4K": {
+      "rule_name": "广东卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "广东卫视"
+    },
+
+    "广东少儿": {
+      "rule_name": "广东少儿频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广东影视": {
+      "rule_name": "广东影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "广东新闻": {
+      "rule_name": "广东新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广东民生": {
+      "rule_name": "广东民生频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广东珠江": {
+      "rule_name": "广东珠江频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "广东经济": {
+      "rule_name": "广东经济频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广州新闻": {
+      "rule_name": "广州新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "广州综合": {
+      "rule_name": "广州综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "张店综合": {
+      "rule_name": "张店综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "德州新闻": {
+      "rule_name": "德州新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "德州生活": {
+      "rule_name": "德州生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "快乐垂钓": {
+      "rule_name": "快乐垂钓频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "惠民综合": {
+      "rule_name": "惠民综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "戏曲": {
+      "rule_name": "戏曲频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "招远综合": {
+      "rule_name": "招远综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "收视指南": {
+      "rule_name": "收视指南频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "文物宝库": {
+      "rule_name": "文物宝库频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "新动漫": {
+      "rule_name": "新动漫频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "无线新闻台": {
+      "rule_name": "无线新闻台频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "日照公共": {
+      "rule_name": "日照公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "日照新闻": {
+      "rule_name": "日照新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "日照科教": {
+      "rule_name": "日照科教频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "早教": {
+      "rule_name": "早教频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "昌乐综合": {
+      "rule_name": "昌乐综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "明珠台": {
+      "rule_name": "明珠台频道规则",
+      "note": "英文节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "星影": {
+      "rule_name": "星影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "曲阜综合": {
+      "rule_name": "曲阜综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "桓台综合": {
+      "rule_name": "桓台综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "梨园": {
+      "rule_name": "梨园频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "欢笑剧场": {
+      "rule_name": "欢笑剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "武侠剧场": {
+      "rule_name": "武侠剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "武城综合": {
+      "rule_name": "武城综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "武术": {
+      "rule_name": "武术频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "武术世界": {
+      "rule_name": "武术世界频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "求索纪录": {
+      "rule_name": "求索纪录频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "江苏体育休闲": {
+      "rule_name": "江苏体育休闲频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "江苏卫视4K": {
+      "rule_name": "江苏卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "江苏卫视"
+    },
+
+    "江苏城市": {
+      "rule_name": "江苏城市频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "江苏影视": {
+      "rule_name": "江苏影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "江苏教育": {
+      "rule_name": "江苏教育频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "江苏新闻": {
+      "rule_name": "江苏新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "江苏综艺": {
+      "rule_name": "江苏综艺频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "汽摩": {
+      "rule_name": "汽摩频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "沂水生活": {
+      "rule_name": "沂水生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "沂水综合": {
+      "rule_name": "沂水综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "河东综合": {
+      "rule_name": "河东综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "河北三农": {
+      "rule_name": "河北三农频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "河北少儿科教": {
+      "rule_name": "河北少儿科教频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "河北影视": {
+      "rule_name": "河北影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "河北文旅公共": {
+      "rule_name": "河北文旅公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "河北经济生活": {
+      "rule_name": "河北经济生活频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "河北都市": {
+      "rule_name": "河北都市频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "沾化综合": {
+      "rule_name": "沾化综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "法治天地": {
+      "rule_name": "法治天地频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "泰安经济生活": {
+      "rule_name": "泰安经济生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "泰安综合": {
+      "rule_name": "泰安综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "泰山电视频道": {
+      "rule_name": "泰山电视频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "泰山综合": {
+      "rule_name": "泰山综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济南体育": {
+      "rule_name": "济南体育频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "济南娱乐": {
+      "rule_name": "济南娱乐频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "济南少儿": {
+      "rule_name": "济南少儿频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济南教育": {
+      "rule_name": "济南教育频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "济南新闻": {
+      "rule_name": "济南新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济南生活": {
+      "rule_name": "济南生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济南都市": {
+      "rule_name": "济南都市频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济南鲁中": {
+      "rule_name": "济南鲁中频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济宁公共": {
+      "rule_name": "济宁公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济宁生活": {
+      "rule_name": "济宁生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济宁综合": {
+      "rule_name": "济宁综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "济阳综合": {
+      "rule_name": "济阳综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "浙江卫视4K": {
+      "rule_name": "浙江卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "浙江卫视"
+    },
+
+    "淄博影视": {
+      "rule_name": "淄博影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "淄博文旅": {
+      "rule_name": "淄博文旅频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "淄博新闻综合": {
+      "rule_name": "淄博新闻综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "淄博民生": {
+      "rule_name": "淄博民生频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "深圳卫视4K": {
+      "rule_name": "深圳卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "深圳卫视"
+    },
+
+    "游戏风云": {
+      "rule_name": "游戏风云频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "湖南卫视4K": {
+      "rule_name": "湖南卫视4K频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      "inherit_from": "湖南卫视"
+    },
+
+    "滨州新闻": {
+      "rule_name": "滨州新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "滨州民生": {
+      "rule_name": "滨州民生频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "潍坊公共": {
+      "rule_name": "潍坊公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "潍坊新闻综合": {
+      "rule_name": "潍坊新闻综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "潍坊科教文化": {
+      "rule_name": "潍坊科教文化频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "潍坊经济生活": {
+      "rule_name": "潍坊经济生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "烟台公共": {
+      "rule_name": "烟台公共频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "烟台影视": {
+      "rule_name": "烟台影视频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "烟台新闻": {
+      "rule_name": "烟台新闻频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "烟台经济": {
+      "rule_name": "烟台经济频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "热播剧场": {
+      "rule_name": "热播剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "爱上4K测试体验": {
+      "rule_name": "爱上4K测试体验频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "爱体育": {
+      "rule_name": "爱体育频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "爱大剧": {
+      "rule_name": "爱大剧频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "爱生活": {
+      "rule_name": "爱生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "爱电影": {
+      "rule_name": "爱电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "爱综艺": {
+      "rule_name": "爱综艺频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "环球奇观": {
+      "rule_name": "环球奇观频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "环球旅游": {
+      "rule_name": "环球旅游频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "生态环境": {
+      "rule_name": "生态环境频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "生活时尚": {
+      "rule_name": "生活时尚频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "相声小品": {
+      "rule_name": "相声小品频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "睛彩广场舞": {
+      "rule_name": "睛彩广场舞频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "睛彩竞技": {
+      "rule_name": "睛彩竞技频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "睛彩篮球": {
+      "rule_name": "睛彩篮球频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "睛彩青少": {
+      "rule_name": "睛彩青少频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "禹城综合": {
+      "rule_name": "禹城综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "禹城综艺": {
+      "rule_name": "禹城综艺频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "精彩影视": {
+      "rule_name": "精彩影视频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "精选": {
+      "rule_name": "精选频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "红色影院": {
+      "rule_name": "红色影院频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "纯享4K": {
+      "rule_name": "纯享4K频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "经典剧场": {
+      "rule_name": "经典剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "经典电影": {
+      "rule_name": "经典电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "美人": {
+      "rule_name": "美人频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "美妆": {
+      "rule_name": "美妆频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "翡翠台": {
+      "rule_name": "翡翠台频道规则",
+      "note": "粤语节目，暂时保持原样",
+      "use_default": false
+    },
+
+    "老故事": {
+      "rule_name": "老故事频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "聊城综合": {
+      "rule_name": "聊城综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "胶州综合": {
+      "rule_name": "胶州综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "茶": {
+      "rule_name": "茶频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "莘县综合": {
+      "rule_name": "莘县综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "莱西综合": {
+      "rule_name": "莱西综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "菏泽-1": {
+      "rule_name": "菏泽-1频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "菏泽-2": {
+      "rule_name": "菏泽-2频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "解密": {
+      "rule_name": "解密频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "谍战剧场": {
+      "rule_name": "谍战剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "财富天下": {
+      "rule_name": "财富天下频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "足球": {
+      "rule_name": "足球频道规则",
+      "note": "体育赛事节目名保持原样",
+      "inherit_from": "CCTV5"
+    },
+
+    "邹城综合": {
+      "rule_name": "邹城综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "都市剧场": {
+      "rule_name": "都市剧场频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "重温经典": {
+      "rule_name": "重温经典频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "金色学堂": {
+      "rule_name": "金色学堂频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "金鹰卡通": {
+      "rule_name": "金鹰卡通频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "金鹰纪实": {
+      "rule_name": "金鹰纪实频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "鉴赏": {
+      "rule_name": "鉴赏频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "长岛综合": {
+      "rule_name": "长岛综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-1": {
+      "rule_name": "青岛QTV-1频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-2": {
+      "rule_name": "青岛QTV-2频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-3": {
+      "rule_name": "青岛QTV-3频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-4": {
+      "rule_name": "青岛QTV-4频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-5": {
+      "rule_name": "青岛QTV-5频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-6": {
+      "rule_name": "青岛QTV-6频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "青岛QTV-7": {
+      "rule_name": "青岛QTV-7频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "鱼台综合": {
+      "rule_name": "鱼台综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "黄岛生活": {
+      "rule_name": "黄岛生活频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "黄岛综合": {
+      "rule_name": "黄岛综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    },
+
+    "黑莓动画": {
+      "rule_name": "黑莓动画频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "黑莓电影": {
+      "rule_name": "黑莓电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "龙华戏剧": {
+      "rule_name": "龙华戏剧频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "龙华电影": {
+      "rule_name": "龙华电影频道规则",
+      "note": "电影频道，保持原样",
+      "use_default": false
+    },
+
+    "龙华经典": {
+      "rule_name": "龙华经典频道规则",
+      "note": "只去掉(数字)格式，其他保持原样",
+      
+      "title_transform": [
+        {"from": "\\((\\d+)\\)$", "to": ""}
+      ]
+    },
+
+    "龙口综合": {
+      "rule_name": "龙口综合频道规则",
+      "note": "节目名都很干净，暂时保持原样",
+      "use_default": false
+    }
+  },
+  
+  "default": {
+    "rule_name": "默认规则",
+    "episode_patterns": [
+      "\\((\\d+)\\)$",
+      "\\s*-\\s*\\d+$"
+    ]
+  }
+}
