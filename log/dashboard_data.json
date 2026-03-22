@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-03-22 12:30:59",
+  "lastUpdate": "2026-03-22 12:46:02",
   "whitelistChannels": 378,
-  "matchedChannels": 376,
-  "unmatchedChannels": 2,
-  "totalPrograms": 92048,
-  "filteredPrograms": 11127,
+  "matchedChannels": 377,
+  "unmatchedChannels": 1,
+  "totalPrograms": 92112,
+  "filteredPrograms": 11657,
   "dateRange": "20260316 ~ 20260323",
-  "aliasCount": 420,
+  "aliasCount": 422,
   "epgSources": [
     {
       "name": "main",
@@ -61,7 +61,7 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1434,
-      "programs": 337542,
+      "programs": 364598,
       "matched": 18
     },
     {
@@ -73,10 +73,10 @@
     },
     {
       "name": "liliu",
-      "enabled": false,
-      "channels": 0,
-      "programs": 0,
-      "matched": 0
+      "enabled": true,
+      "channels": 454,
+      "programs": 18009,
+      "matched": 2
     },
     {
       "name": "loc",
@@ -87,14 +87,6 @@
     }
   ],
   "unmatchedList": [
-    {
-      "id": "凤凰卫视电影台",
-      "name": "凤凰卫视电影台",
-      "aliases": [
-        "凤凰电影",
-        "凤凰卫视电影"
-      ]
-    },
     {
       "id": "天映频道",
       "name": "天映频道",
@@ -1650,8 +1642,8 @@
     {
       "id": "公视",
       "name": "公视",
-      "programs": 210,
-      "todayPrograms": 31,
+      "programs": 232,
+      "todayPrograms": 47,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -1721,6 +1713,19 @@
         "凤凰中文",
         "凤凰卫视",
         "凤凰中文台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "凤凰卫视电影台",
+      "name": "凤凰卫视电影台",
+      "programs": 26,
+      "todayPrograms": 13,
+      "source": "liliu",
+      "aliases": [
+        "凤凰电影",
+        "凤凰电影台"
       ],
       "hasGap": false,
       "gaps": []
@@ -1995,8 +2000,8 @@
     {
       "id": "华视新闻资讯",
       "name": "华视新闻资讯",
-      "programs": 122,
-      "todayPrograms": 28,
+      "programs": 118,
+      "todayPrograms": 24,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2067,8 +2072,8 @@
     {
       "id": "台视综合",
       "name": "台视综合",
-      "programs": 162,
-      "todayPrograms": 31,
+      "programs": 156,
+      "todayPrograms": 25,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2077,8 +2082,8 @@
     {
       "id": "台视财经",
       "name": "台视财经",
-      "programs": 137,
-      "todayPrograms": 27,
+      "programs": 150,
+      "todayPrograms": 37,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -4670,7 +4675,7 @@
     {
       "id": "龙华电影",
       "name": "龙华电影",
-      "programs": 92,
+      "programs": 101,
       "todayPrograms": 20,
       "source": "mxdyeah",
       "aliases": [],
@@ -4680,8 +4685,8 @@
     {
       "id": "龙华经典",
       "name": "龙华经典",
-      "programs": 90,
-      "todayPrograms": 19,
+      "programs": 94,
+      "todayPrograms": 18,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
