@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-22 11:52:22",
-  "total_debug_entries": 60366,
-  "total_match_attempts": 87967,
+  "generated_at": "2026-03-22 12:31:27",
+  "total_debug_entries": 60432,
+  "total_match_attempts": 88037,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -1512,14 +1512,14 @@
       ]
     },
     "CCTV9": {
-      "total_programs": 227,
-      "matched": 222,
+      "total_programs": 228,
+      "matched": 223,
       "match_types": {
-        "man_made": 174,
+        "man_made": 175,
         "global": 48
       },
       "match_sources": {
-        "man-made": 174,
+        "man-made": 175,
         "source1": 48
       },
       "failed_titles": [
@@ -3498,15 +3498,15 @@
       ]
     },
     "北京卫视": {
-      "total_programs": 356,
-      "matched": 349,
+      "total_programs": 374,
+      "matched": 367,
       "match_types": {
-        "man_made": 124,
+        "man_made": 142,
         "same_channel": 223,
         "global": 2
       },
       "match_sources": {
-        "man-made": 124,
+        "man-made": 142,
         "source1": 225
       },
       "failed_titles": [
@@ -4328,20 +4328,23 @@
       ]
     },
     "江西卫视": {
-      "total_programs": 252,
-      "matched": 250,
+      "total_programs": 270,
+      "matched": 265,
       "match_types": {
-        "man_made": 21,
-        "same_channel": 225,
-        "global": 4
+        "man_made": 23,
+        "same_channel": 240,
+        "global": 2
       },
       "match_sources": {
-        "man-made": 21,
-        "source1": 229
+        "man-made": 23,
+        "source1": 242
       },
       "failed_titles": [
         "早餐",
-        "声声乐尔(4)"
+        "声声乐尔(4)",
+        "意外之美",
+        "文天祥",
+        "朱熹"
       ]
     },
     "康巴卫视": {
@@ -4697,16 +4700,16 @@
       "failed_titles": []
     },
     "西藏卫视": {
-      "total_programs": 759,
-      "matched": 703,
+      "total_programs": 761,
+      "matched": 705,
       "match_types": {
-        "same_channel": 381,
-        "man_made": 321,
+        "same_channel": 382,
+        "man_made": 322,
         "global": 1
       },
       "match_sources": {
-        "source1": 381,
-        "man-made": 321,
+        "source1": 382,
+        "man-made": 322,
         "source2": 1
       },
       "failed_titles": [
@@ -4754,7 +4757,7 @@
         "品牌广告",
         "品牌广告",
         "品牌广告",
-        "奔腾的心之盲（4）",
+        "奔腾的心之盲(4)",
         "品牌广告",
         "品牌广告",
         "品牌广告",
@@ -4963,15 +4966,15 @@
       ]
     },
     "北京卫视4K": {
-      "total_programs": 384,
-      "matched": 344,
+      "total_programs": 402,
+      "matched": 362,
       "match_types": {
         "global": 218,
-        "man_made": 126
+        "man_made": 144
       },
       "match_sources": {
         "source1": 218,
-        "man-made": 126
+        "man-made": 144
       },
       "failed_titles": [
         "《南来北往》预告版",
@@ -5005,11 +5008,11 @@
         "《我深深地爱着你》预告",
         "《熊猫奇遇记Ⅰ》特别节目（3）",
         "风味人间Ⅴ（3）",
-        "风味人间Ⅴ（3）",
+        "风味人间Ⅴ(3)",
         "《情满四合院》预告版",
         "《我深深地爱着你》预告",
-        "风味人间Ⅴ（4）",
-        "风味人间Ⅴ（4）",
+        "风味人间Ⅴ(4)",
+        "风味人间Ⅴ(4)",
         "《我深深地爱着你》预告版",
         "《情满四合院》预告版",
         "《我深深地爱着你》预告",
@@ -5686,37 +5689,11 @@
       ]
     },
     "Astro QJ": {
-      "total_programs": 61,
+      "total_programs": 53,
       "matched": 0,
       "match_types": {},
       "match_sources": {},
       "failed_titles": [
-        "Lu Yu You Yue",
-        "Macau Food's Time",
-        "The Last Cook",
-        "The Last Cook",
-        "How Dare You!?",
-        "A League of Nobleman",
-        "Breakfast In China",
-        "Go Go Goal",
-        "Hi Saturday 2025",
-        "How Dare You!?",
-        "Hi Saturday 2026",
-        "Hey Girls, Adventure",
-        "The Inn 2026",
-        "Craftsmanship and Ingenuity",
-        "How Dare You!?",
-        "Stellar Bites",
-        "Craftsmanship and Ingenuity",
-        "Kowloon My City",
-        "Wedding",
-        "The Pride Of Hunan Cuisine",
-        "Craftsmanship and Ingenuity",
-        "How Dare You!?",
-        "Stellar Bites",
-        "Craftsmanship and Ingenuity",
-        "Lu Yu You Yue",
-        "How Dare You!?",
         "Craftsmanship and Ingenuity",
         "Divas Hit The Road",
         "Craftsmanship and Ingenuity",
@@ -5751,7 +5728,25 @@
         "How Dare You!?",
         "Hey Girls, Adventure",
         "Twenty Your Life On 2",
-        "Hi Saturday 2025"
+        "Hi Saturday 2025",
+        "How Dare You!?",
+        "Lu Yu You Yue",
+        "The Pride Of Hunan Cuisine",
+        "Hi Saturday 2026",
+        "Atypical Family",
+        "Twenty Your Life On 2",
+        "How Dare You!?",
+        "Atypical Family",
+        "Underwater China",
+        "The Last Cook",
+        "The Last Cook",
+        "A League of Nobleman",
+        "Breakfast In China",
+        "How Dare You!?",
+        "Where You Pee",
+        "19th Floor",
+        "Workplace Newcomers·TCM Season",
+        "How Dare You!?"
       ]
     },
     "HOY77": {
@@ -17876,16 +17871,14 @@
       "failed_titles": []
     },
     "江苏城市": {
-      "total_programs": 160,
-      "matched": 153,
+      "total_programs": 159,
+      "matched": 152,
       "match_types": {
-        "same_channel": 131,
-        "global": 21,
-        "man_made": 1
+        "same_channel": 132,
+        "global": 20
       },
       "match_sources": {
-        "source1": 152,
-        "man-made": 1
+        "source1": 152
       },
       "failed_titles": [
         "非遗有新人",
@@ -17898,13 +17891,13 @@
       ]
     },
     "江苏教育": {
-      "total_programs": 216,
-      "matched": 74,
+      "total_programs": 226,
+      "matched": 84,
       "match_types": {
-        "global": 74
+        "global": 84
       },
       "match_sources": {
-        "source1": 74
+        "source1": 84
       },
       "failed_titles": [
         "江苏职教风采",
@@ -18028,39 +18021,39 @@
         "我们家",
         "领读江苏",
         "传承人",
-        "重温经典",
-        "传承人",
-        "教育周刊",
-        "重温经典励志版",
+        "缤纷校园",
         "微讲堂",
-        "重温经典青春版",
-        "领读江苏",
-        "今日科学",
-        "开放大学我的大学",
-        "重温经典青春版",
-        "健康江苏行",
-        "江苏职教风采",
-        "重温经典励志版",
-        "幸福新起点",
+        "传承人",
+        "重温经典",
+        "勇者大冲关",
+        "传承人精选",
+        "凭栏一片风云起(39)",
+        "凭栏一片风云起(40)",
+        "传承人精选",
+        "围猎(20)",
+        "围猎(21)",
+        "围猎(22)",
+        "围猎(23)",
+        "缤纷校园",
+        "教育周刊",
         "微讲堂",
         "勇者大冲关",
-        "未来科学家",
-        "凡事讲礼",
-        "江苏教育新闻",
-        "重温经典励志版",
-        "重温经典"
+        "江苏职教风采",
+        "开放大学",
+        "凭栏一片风云起(41)",
+        "凭栏一片风云起(42)"
       ]
     },
     "江苏体育休闲": {
-      "total_programs": 326,
-      "matched": 18,
+      "total_programs": 320,
+      "matched": 15,
       "match_types": {
-        "global": 15,
-        "man_made": 3
+        "global": 14,
+        "man_made": 1
       },
       "match_sources": {
-        "source1": 15,
-        "man-made": 3
+        "source1": 14,
+        "man-made": 1
       },
       "failed_titles": [
         "味解乡愁",
@@ -18328,6 +18321,7 @@
         "味解乡愁",
         "健康新7点",
         "味解乡愁",
+        "味解乡愁",
         "勇往直前乐拍拍",
         "荔枝健身",
         "健康新7点",
@@ -18345,7 +18339,7 @@
         "休闲物语",
         "挑战不可能(下)",
         "休闲物语",
-        "勇往直前乐拍拍",
+        "说走就走",
         "休闲物语",
         "民星斗地主",
         "江苏体育",
@@ -18353,38 +18347,33 @@
         "休闲物语",
         "味解乡愁",
         "休闲物语",
-        "耍大牌(上)",
-        "休闲物语",
-        "耍大牌(下)",
-        "休闲物语",
-        "挑战不可能",
+        "荔枝健身",
+        "2026年江苏省城市足球联赛热身赛",
         "休闲物语",
         "挑战不可能",
         "休闲物语",
         "耍大牌",
         "休闲物语",
-        "南京天之蓝青岛崂山啤酒",
+        "CBA江苏肯帝亚浙江浙商证券",
+        "快乐驾期",
         "江苏体育",
         "民星斗地主",
-        "健康新7点",
-        "荔枝健身",
         "味解乡愁",
         "健康新7点",
         "味解乡愁"
       ]
     },
     "江苏新闻": {
-      "total_programs": 315,
-      "matched": 264,
+      "total_programs": 316,
+      "matched": 261,
       "match_types": {
-        "same_channel": 182,
-        "global": 56,
-        "man_made": 26
+        "same_channel": 180,
+        "global": 58,
+        "man_made": 23
       },
       "match_sources": {
-        "source1": 234,
-        "man-made": 26,
-        "source2": 4
+        "source1": 238,
+        "man-made": 23
       },
       "failed_titles": [
         "你好江苏",
@@ -18436,22 +18425,24 @@
         "你好江苏",
         "早安江苏",
         "晚霞",
+        "光影世界",
+        "晚霞",
+        "纪录片专题片",
         "荔直播精编版",
-        "看头条"
+        "纪录片专题片",
+        "你好江苏"
       ]
     },
     "江苏影视": {
-      "total_programs": 178,
-      "matched": 168,
+      "total_programs": 200,
+      "matched": 189,
       "match_types": {
-        "same_channel": 129,
-        "man_made": 37,
-        "global": 2
+        "same_channel": 147,
+        "man_made": 42
       },
       "match_sources": {
-        "source1": 128,
-        "man-made": 37,
-        "source2": 3
+        "source1": 147,
+        "man-made": 42
       },
       "failed_titles": [
         "欢喜一家人",
@@ -18462,19 +18453,19 @@
         "欢喜一家人",
         "小剧星",
         "乡土江苏",
-        "荔枝小剧场",
-        "剧说那些事儿"
+        "欢喜一家人",
+        "小剧星",
+        "乡土江苏"
       ]
     },
     "江苏综艺": {
-      "total_programs": 109,
-      "matched": 50,
+      "total_programs": 105,
+      "matched": 49,
       "match_types": {
-        "same_channel": 47,
-        "global": 3
+        "same_channel": 49
       },
       "match_sources": {
-        "source1": 50
+        "source1": 49
       },
       "failed_titles": [
         "缘分进行时之桃花朵朵开",
@@ -18525,17 +18516,14 @@
         "缘分进行时之桃花朵朵开",
         "缘分进行时之桃花朵朵开",
         "缘分进行时之桃花朵朵开",
-        "综艺能量站",
-        "综艺能量站",
-        "情感驿站之等着我",
-        "综艺能量站",
-        "综艺能量站",
-        "美好生活荔枝帮",
-        "情感驿站之等着我",
-        "情感驿站之等着我",
-        "综艺能量站",
-        "美好生活荔枝帮",
-        "情感驿站之等着我"
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之非诚勿扰",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开"
       ]
     },
     "卡酷少儿": {
@@ -18904,13 +18892,11 @@
       "total_programs": 335,
       "matched": 294,
       "match_types": {
-        "man_made": 7,
-        "same_channel": 250,
+        "same_channel": 257,
         "global": 37
       },
       "match_sources": {
-        "man-made": 7,
-        "source1": 287
+        "source1": 294
       },
       "failed_titles": [
         "农产之美",
@@ -18957,15 +18943,13 @@
       ]
     },
     "山东齐鲁": {
-      "total_programs": 297,
-      "matched": 261,
+      "total_programs": 296,
+      "matched": 260,
       "match_types": {
-        "man_made": 7,
-        "same_channel": 254
+        "same_channel": 260
       },
       "match_sources": {
-        "man-made": 7,
-        "source1": 254
+        "source1": 260
       },
       "failed_titles": [
         "家乡味道",
@@ -19045,13 +19029,11 @@
       "total_programs": 277,
       "matched": 273,
       "match_types": {
-        "man_made": 7,
-        "same_channel": 248,
+        "same_channel": 255,
         "global": 18
       },
       "match_sources": {
-        "man-made": 7,
-        "source1": 266
+        "source1": 273
       },
       "failed_titles": [
         "医案",
@@ -19216,93 +19198,107 @@
     },
     "山东新闻": {
       "total_programs": 482,
-      "matched": 405,
+      "matched": 392,
       "match_types": {
-        "man_made": 7,
-        "same_channel": 398
+        "same_channel": 374,
+        "global": 3,
+        "man_made": 15
       },
       "match_sources": {
-        "man-made": 7,
-        "source1": 398
+        "source1": 377,
+        "man-made": 15
       },
       "failed_titles": [
         "大美齐鲁",
+        "光耀齐鲁（新闻频道80集）-27 陈若克",
+        "光耀齐鲁（新闻频道80集）-28 汪洋",
         "山东省海洋预报",
-        "大抗战(91)抗战时期的电影",
-        "长山列岛(1)",
+        "大抗战—90 抗战时期的美术和艺术思想",
+        "大抗战—91 抗战时期的电影",
+        "光耀齐鲁（新闻频道80集）-29 符竹庭",
         "2026年新春走基层",
         "关注",
         "山东省海洋预报",
         "2026年新春走基层",
         "美丽山东",
         "大美齐鲁",
+        "光耀齐鲁（新闻频道80集）-30 郑耀南",
+        "光耀齐鲁（新闻频道80集）-31 刘旭东",
         "山东省海洋预报",
-        "大抗战(95)开展整风运动",
-        "长山列岛(2)",
+        "大抗战—95 开展整风运动",
+        "光耀齐鲁（新闻频道80集）-32 马石山十勇士",
         "美丽山东",
         "关注",
         "山东省海洋预报",
         "大美齐鲁",
         "大德之州",
         "山东省海洋预报",
-        "大抗战(98)歪头崮85勇士",
-        "长山列岛(3)",
+        "大抗战—98 歪头崮85勇士",
         "山东教育新闻联播",
         "关注",
         "山东省海洋预报",
         "数字强省",
         "大德之州",
-        "大抗战苏联援华及空军援华作战",
+        "大抗战—100 苏联援华及空军援华作战",
+        "大抗战—101 美国援华及空军志愿队援华作战",
         "大美齐鲁",
+        "光耀齐鲁（新闻频道80集）-37 李念林",
+        "光耀齐鲁（新闻频道80集）-38 王换于",
         "天下潍观",
         "山东省海洋预报",
-        "大抗战(102)营救美国飞行员",
-        "大抗战重庆大轰炸及空中保卫战",
-        "邓恩铭(1)志在苍生",
-        "邓恩铭(2)大潮击水",
+        "大抗战—102 营救美国飞行员",
+        "大抗战—103 重庆大轰炸及空中保卫战",
+        "邓恩铭（2025版）3-1 志在苍生",
+        "邓恩铭（2025版）3-2 大潮击水",
+        "光耀齐鲁（新闻频道80集）-39 祖秀莲",
         "数字强省",
         "山东教育新闻联播",
         "关注",
         "山东省海洋预报",
         "天下潍观",
         "大美齐鲁",
+        "光耀齐鲁（新闻频道80集）-40 胶东红色乳娘",
+        "光耀齐鲁（新闻频道80集）-41 常大娘",
         "省会新观察",
         "山东省海洋预报",
-        "大抗战(106)中条山战役",
-        "大抗战(107)长沙战役(上)",
-        "邓恩铭(3)血荐轩辕",
-        "大汶口(1)",
+        "大抗战—106 中条山战役",
+        "大抗战—107 长沙战役（上）",
+        "邓恩铭（2025版）3-3 血荐轩辕",
+        "纪录片：大汶口",
         "关注",
         "山东省海洋预报",
         "国防有我",
         "市场监管在线",
         "省会新观察",
-        "大抗战(108)长沙战役(下)",
+        "大抗战—108 长沙战役（下）",
         "大美齐鲁",
         "直通荣成",
         "山东省海洋预报",
-        "大汶口(2)",
-        "大汶口(3)",
+        "纪录片：大汶口-2",
+        "纪录片：大汶口-3",
         "市场监管在线",
         "关注",
         "山东省海洋预报",
         "走进深蓝",
         "直通荣成",
-        "大抗战(112)中国远征军入缅作战",
-        "大抗战(113)缅北滇西反击战",
+        "大抗战-112中国远征军入缅作战",
+        "大抗战-113缅北滇西反击战",
         "大美齐鲁",
+        "光耀齐鲁（新闻频道80集）-46杨子荣",
+        "光耀齐鲁（新闻频道80集）-47陈金合",
         "东营新时空",
         "山东省海洋预报",
         "走进深蓝",
-        "大抗战(114)豫湘桂战役",
-        "大抗战(115)国民党的敌后游击战",
-        "大汶口(4)",
-        "大汶口(5)",
+        "大抗战-114豫湘桂战役",
+        "大抗战-115国民党的敌后游击战",
+        "纪录片：大汶口",
+        "纪录片：大汶口",
+        "光耀齐鲁（新闻频道80集）-48王克勤",
         "关注",
         "山东省海洋预报",
         "东营新时空",
-        "大抗战(116)美军观察组到延安",
-        "大抗战(117)营救犹太人"
+        "大抗战-116美军观察组到延安",
+        "大抗战-117营救犹太人"
       ]
     },
     "山东教育": {
@@ -19433,20 +19429,17 @@
     },
     "山东综艺": {
       "total_programs": 213,
-      "matched": 209,
+      "matched": 212,
       "match_types": {
-        "man_made": 21,
-        "same_channel": 188
+        "same_channel": 199,
+        "man_made": 13
       },
       "match_sources": {
-        "man-made": 21,
-        "source1": 188
+        "source1": 199,
+        "man-made": 13
       },
       "failed_titles": [
-        "典籍中国春秋(1)",
-        "典籍中国春秋(2)",
-        "典籍中国春秋(3)",
-        "典籍中国春秋(4)"
+        "典籍中国：春秋"
       ]
     },
     "优漫卡通": {
