@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-23 12:40:52",
-  "total_debug_entries": 67062,
-  "total_match_attempts": 87939,
+  "generated_at": "2026-03-23 17:14:44",
+  "total_debug_entries": 66741,
+  "total_match_attempts": 87674,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -1517,14 +1517,14 @@
     },
     "CCTV11": {
       "total_programs": 182,
-      "matched": 172,
+      "matched": 170,
       "match_types": {
-        "same_channel": 113,
+        "same_channel": 111,
         "global": 8,
         "man_made": 51
       },
       "match_sources": {
-        "source1": 121,
+        "source1": 119,
         "man-made": 51
       },
       "failed_titles": [
@@ -1535,7 +1535,9 @@
         "名家书场：曲苑流芳精编",
         "名家书场：曲苑流芳精编",
         "锡剧电影：珍珠塔",
+        "春班-粤韵新声",
         "名家书场：曲苑流芳精编",
+        "春班-粤韵新声",
         "名家书场：曲苑流芳精编",
         "扬剧电影：衣冠风流"
       ]
@@ -3432,15 +3434,15 @@
       ]
     },
     "北京卫视": {
-      "total_programs": 353,
-      "matched": 347,
+      "total_programs": 339,
+      "matched": 333,
       "match_types": {
-        "man_made": 118,
+        "man_made": 104,
         "same_channel": 227,
         "global": 2
       },
       "match_sources": {
-        "man-made": 118,
+        "man-made": 104,
         "source1": 228,
         "source2": 1
       },
@@ -3581,15 +3583,15 @@
       ]
     },
     "广西卫视": {
-      "total_programs": 223,
-      "matched": 221,
+      "total_programs": 224,
+      "matched": 222,
       "match_types": {
-        "same_channel": 156,
+        "same_channel": 157,
         "man_made": 59,
         "global": 6
       },
       "match_sources": {
-        "source1": 162,
+        "source1": 163,
         "man-made": 59
       },
       "failed_titles": [
@@ -3945,15 +3947,15 @@
       ]
     },
     "河南卫视": {
-      "total_programs": 345,
-      "matched": 335,
+      "total_programs": 346,
+      "matched": 336,
       "match_types": {
-        "man_made": 68,
+        "man_made": 69,
         "same_channel": 209,
         "global": 58
       },
       "match_sources": {
-        "man-made": 68,
+        "man-made": 69,
         "source1": 254,
         "source2": 13
       },
@@ -3971,17 +3973,17 @@
       ]
     },
     "黑龙江卫视": {
-      "total_programs": 261,
-      "matched": 250,
+      "total_programs": 264,
+      "matched": 247,
       "match_types": {
-        "global": 22,
-        "same_channel": 209,
-        "man_made": 19
+        "global": 25,
+        "same_channel": 204,
+        "man_made": 18
       },
       "match_sources": {
-        "source1": 216,
-        "source2": 15,
-        "man-made": 19
+        "source1": 213,
+        "source2": 16,
+        "man-made": 18
       },
       "failed_titles": [
         "百年巨匠:袁雪芬",
@@ -3994,6 +3996,12 @@
         "文学里的黑龙江:夜幕下的哈尔滨",
         "文学里的黑龙江:萧红的文学故乡",
         "百年巨匠:新凤霞",
+        "美食节目",
+        "百年巨匠:新凤霞",
+        "技耀龙江",
+        "文学里的黑龙江:夜幕下的哈尔滨",
+        "文学里的黑龙江:萧红的文学故乡",
+        "百年巨匠:郑律成",
         "美食节目"
       ]
     },
@@ -4017,16 +4025,16 @@
       ]
     },
     "湖南卫视": {
-      "total_programs": 258,
-      "matched": 256,
+      "total_programs": 257,
+      "matched": 255,
       "match_types": {
         "same_channel": 188,
-        "man_made": 67,
+        "man_made": 66,
         "global": 1
       },
       "match_sources": {
         "source1": 188,
-        "man-made": 67,
+        "man-made": 66,
         "source2": 1
       },
       "failed_titles": [
@@ -4036,16 +4044,16 @@
     },
     "吉林卫视": {
       "total_programs": 303,
-      "matched": 285,
+      "matched": 276,
       "match_types": {
-        "same_channel": 266,
-        "global": 13,
-        "man_made": 6
+        "same_channel": 254,
+        "global": 15,
+        "man_made": 7
       },
       "match_sources": {
-        "source1": 245,
-        "source2": 34,
-        "man-made": 6
+        "source1": 234,
+        "source2": 35,
+        "man-made": 7
       },
       "failed_titles": [
         "正午吉林",
@@ -4065,7 +4073,16 @@
         "巡回检察组(8)",
         "巡回检察组(9)",
         "巡回检察组(10)",
-        "巡回检察组(11)"
+        "巡回检察组(11)",
+        "巡回检察组(12)",
+        "巡回检察组(13)",
+        "巡回检察组(14)",
+        "巡回检察组(15)",
+        "巡回检察组(16)",
+        "巡回检察组(17)",
+        "巡回检察组(18)",
+        "正午吉林",
+        "民声"
       ]
     },
     "江苏卫视": {
@@ -4224,14 +4241,14 @@
       ]
     },
     "青海卫视": {
-      "total_programs": 240,
-      "matched": 236,
+      "total_programs": 239,
+      "matched": 235,
       "match_types": {
-        "same_channel": 220,
+        "same_channel": 219,
         "global": 16
       },
       "match_sources": {
-        "source1": 232,
+        "source1": 231,
         "source2": 4
       },
       "failed_titles": [
@@ -4283,26 +4300,41 @@
       ]
     },
     "山西卫视": {
-      "total_programs": 152,
-      "matched": 145,
+      "total_programs": 224,
+      "matched": 202,
       "match_types": {
-        "same_channel": 85,
-        "man_made": 50,
-        "global": 10
+        "man_made": 48,
+        "same_channel": 125,
+        "global": 29
       },
       "match_sources": {
-        "source1": 93,
-        "man-made": 50,
-        "source2": 2
+        "man-made": 48,
+        "source1": 153,
+        "source2": 1
       },
       "failed_titles": [
+        "无形防线密链",
+        "翠岗红旗",
+        "海鹰",
+        "奋晋者说",
+        "霓虹灯下的哨兵",
+        "奋晋者说",
+        "海鹰",
+        "奋晋者说",
+        "皓月",
         "奋晋者说",
         "奋晋者说",
+        "早春二月",
+        "小二黑结婚",
         "奋晋者说",
         "奋晋者说",
+        "甲午风云",
+        "昆仑铁骑",
+        "奋晋者说",
+        "矿灯",
+        "今天我休息",
         "天下寻宝",
-        "奋晋者说",
-        "EXPLORING SHANXI"
+        "奋晋者说"
       ]
     },
     "陕西卫视": {
@@ -4396,75 +4428,27 @@
       "failed_titles": []
     },
     "西藏卫视": {
-      "total_programs": 744,
-      "matched": 687,
+      "total_programs": 299,
+      "matched": 290,
       "match_types": {
-        "same_channel": 375,
-        "man_made": 311,
+        "same_channel": 264,
+        "man_made": 25,
         "global": 1
       },
       "match_sources": {
-        "source1": 376,
-        "man-made": 311
+        "source1": 265,
+        "man-made": 25
       },
       "failed_titles": [
-        "品牌广告",
-        "品牌广告",
         "奔腾的心之丹增的脚步(3)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
         "奔腾的心之丹增的脚步(4)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
         "奔腾的心之盲(1)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
         "奔腾的心之盲(2)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
         "奔腾的心之盲(3)",
-        "品牌广告",
-        "青稞飘香Ⅳ(2)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "奔腾的心之盲（4）",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
+        "青稞飘香4(2)",
+        "奔腾的心之盲(4)",
         "奔跑吧天路篇(1)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "大道之行探索中国式现代化(1)",
-        "文明旅游",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "奔跑吧天路篇(2)",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "品牌广告",
-        "大道之行探索中国式现代化(2)"
+        "大道之行探索中国式现代化(1)"
       ]
     },
     "云南卫视": {
@@ -4508,26 +4492,34 @@
       ]
     },
     "浙江卫视": {
-      "total_programs": 354,
-      "matched": 347,
+      "total_programs": 286,
+      "matched": 271,
       "match_types": {
-        "man_made": 94,
-        "same_channel": 234,
-        "global": 19
+        "same_channel": 200,
+        "man_made": 39,
+        "global": 32
       },
       "match_sources": {
-        "man-made": 94,
-        "source1": 248,
-        "source2": 5
+        "source1": 231,
+        "man-made": 39,
+        "source2": 1
       },
       "failed_titles": [
-        "来吧好身体Ⅰ（101）",
-        "来吧好身体Ⅰ（102）",
-        "来吧好身体",
-        "吴越国（2）问潮",
-        "来吧好身体Ⅰ（104）",
+        "在场(1)",
+        "在场(2)",
+        "刑警之海外行动(37)",
+        "刑警之海外行动(38)",
+        "吴越国(1)",
+        "来吧好身体Ⅰ(101)",
+        "停机检修",
+        "美美乡村(1)",
+        "来吧好身体Ⅰ(102)",
+        "来吧好身体1(103)",
+        "吴越国02问潮",
+        "来吧好身体1(104)",
         "王牌新春七天乐第七期",
-        "来吧好身体"
+        "与中国相遇3",
+        "来吧好身体1(105)"
       ]
     },
     "厦门卫视": {
@@ -4562,15 +4554,15 @@
       ]
     },
     "北京卫视4K": {
-      "total_programs": 381,
-      "matched": 339,
+      "total_programs": 367,
+      "matched": 325,
       "match_types": {
-        "man_made": 122,
+        "man_made": 108,
         "global": 208,
         "same_channel": 9
       },
       "match_sources": {
-        "man-made": 122,
+        "man-made": 108,
         "source1": 208,
         "source2": 9
       },
@@ -4609,7 +4601,7 @@
         "《我深深地爱着你》预告版",
         "《情满四合院》预告版",
         "《我深深地爱着你》预告",
-        "风味人间Ⅴ(5)",
+        "风味人间Ⅴ（5）",
         "风味人间Ⅴ(5)",
         "午茶剧场",
         "午茶剧场",
@@ -4735,15 +4727,15 @@
       ]
     },
     "湖南卫视4K": {
-      "total_programs": 258,
-      "matched": 251,
+      "total_programs": 257,
+      "matched": 250,
       "match_types": {
-        "global": 207,
+        "global": 206,
         "man_made": 43,
         "same_channel": 1
       },
       "match_sources": {
-        "source1": 207,
+        "source1": 206,
         "man-made": 43,
         "source2": 1
       },
@@ -5010,26 +5002,53 @@
       ]
     },
     "浙江卫视4K": {
-      "total_programs": 354,
-      "matched": 347,
+      "total_programs": 286,
+      "matched": 252,
       "match_types": {
-        "same_channel": 153,
-        "global": 175,
-        "man_made": 19
+        "global": 148,
+        "same_channel": 91,
+        "man_made": 13
       },
       "match_sources": {
-        "source2": 153,
-        "source1": 175,
-        "man-made": 19
+        "source1": 148,
+        "source2": 91,
+        "man-made": 13
       },
       "failed_titles": [
-        "来吧好身体Ⅰ（101）",
-        "来吧好身体Ⅰ（102）",
-        "来吧好身体",
-        "吴越国（2）问潮",
-        "来吧好身体Ⅰ（104）",
+        "在场(1)",
+        "在场(2)",
+        "刑警之海外行动(37)",
+        "刑警之海外行动(38)",
+        "王牌部队(1)",
+        "王牌部队(2)",
+        "吴越国(1)",
+        "来吧好身体Ⅰ(101)",
+        "停机检修",
+        "美美乡村(1)",
+        "来吧好身体Ⅰ(102)",
+        "王牌部队(3)",
+        "王牌部队(4)",
+        "王牌部队(5)",
+        "来吧好身体1(103)",
+        "天气旅行家",
+        "抢先看2",
+        "吴越国02问潮",
+        "王牌部队(6)",
+        "王牌部队(7)",
+        "王牌部队(8)",
+        "来吧好身体1(104)",
+        "天气旅行家",
         "王牌新春七天乐第七期",
-        "来吧好身体"
+        "王牌部队(9)",
+        "王牌部队(10)",
+        "王牌部队(11)",
+        "王牌部队(12)",
+        "王牌部队(13)",
+        "王牌部队(14)",
+        "王牌部队(15)",
+        "王牌部队(16)",
+        "与中国相遇3",
+        "来吧好身体1(105)"
       ]
     },
     "欢笑剧场": {
@@ -8294,17 +8313,17 @@
       "failed_titles": []
     },
     "CHC家庭影院": {
-      "total_programs": 202,
-      "matched": 89,
+      "total_programs": 201,
+      "matched": 88,
       "match_types": {
         "same_channel": 68,
         "man_made": 2,
-        "global": 19
+        "global": 18
       },
       "match_sources": {
         "source2": 68,
         "man-made": 2,
-        "source1": 19
+        "source1": 18
       },
       "failed_titles": [
         "家庭导视",
@@ -11119,15 +11138,19 @@
       "failed_titles": []
     },
     "东营公共": {
-      "total_programs": 1,
-      "matched": 1,
+      "total_programs": 105,
+      "matched": 102,
       "match_types": {
-        "man_made": 1
+        "man_made": 102
       },
       "match_sources": {
-        "man-made": 1
+        "man-made": 102
       },
-      "failed_titles": []
+      "failed_titles": [
+        "创富东营",
+        "光影纵横/欢乐黄河口",
+        "绿洲农事"
+      ]
     },
     "东营新闻": {
       "total_programs": 1,
@@ -11246,18 +11269,23 @@
       ]
     },
     "济南娱乐": {
-      "total_programs": 23,
-      "matched": 16,
+      "total_programs": 31,
+      "matched": 19,
       "match_types": {
-        "man_made": 16
+        "man_made": 19
       },
       "match_sources": {
-        "man-made": 16
+        "man-made": 19
       },
       "failed_titles": [
         "天籁村",
         "高手驾到",
         "高手驾到",
+        "天籁村",
+        "高手驾到",
+        "娱乐秀",
+        "高手驾到",
+        "天籁村",
         "天籁村",
         "高手驾到",
         "娱乐秀",
@@ -18024,15 +18052,15 @@
       "failed_titles": []
     },
     "优优宝贝": {
-      "total_programs": 150,
-      "matched": 150,
+      "total_programs": 203,
+      "matched": 203,
       "match_types": {
-        "man_made": 142,
-        "global": 8
+        "man_made": 193,
+        "global": 10
       },
       "match_sources": {
-        "man-made": 142,
-        "source1": 8
+        "man-made": 193,
+        "source1": 10
       },
       "failed_titles": []
     },
@@ -20894,15 +20922,15 @@
       ]
     },
     "农林卫视": {
-      "total_programs": 386,
-      "matched": 385,
+      "total_programs": 387,
+      "matched": 386,
       "match_types": {
-        "man_made": 284,
+        "man_made": 285,
         "global": 63,
         "same_channel": 38
       },
       "match_sources": {
-        "man-made": 284,
+        "man-made": 285,
         "source1": 63,
         "source2": 38
       },
@@ -23650,15 +23678,18 @@
       ]
     },
     "梨园": {
-      "total_programs": 40,
-      "matched": 33,
+      "total_programs": 56,
+      "matched": 46,
       "match_types": {
-        "same_channel": 33
+        "same_channel": 46
       },
       "match_sources": {
-        "source1": 33
+        "source1": 46
       },
       "failed_titles": [
+        "刘公传奇",
+        "刘公传奇",
+        "刘公传奇",
         "刘公传奇",
         "刘公传奇",
         "刘公传奇",
@@ -26094,13 +26125,15 @@
       ]
     },
     "龙口综合": {
-      "total_programs": 192,
-      "matched": 158,
+      "total_programs": 287,
+      "matched": 227,
       "match_types": {
-        "man_made": 158
+        "man_made": 225,
+        "global": 2
       },
       "match_sources": {
-        "man-made": 158
+        "man-made": 225,
+        "source1": 2
       },
       "failed_titles": [
         "电视剧场 国家命运",
@@ -26136,6 +26169,32 @@
         "天气海洋预报",
         "晚间剧场 闯关东",
         "书香龙口",
+        "午夜剧场 水浒传",
+        "书香龙口",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "天气海洋预报",
+        "晚间剧场 闯关东",
+        "天气海洋预报",
+        "晚间剧场 闯关东",
+        "书香龙口",
+        "午夜剧场 水浒传",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "书香龙口",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "电视剧场 追捕者",
+        "天气海洋预报",
+        "晚间剧场 闯关东",
+        "天气海洋预报",
+        "晚间剧场 闯关东",
         "午夜剧场 水浒传"
       ]
     },
@@ -26496,15 +26555,15 @@
       "failed_titles": []
     },
     "定陶综合": {
-      "total_programs": 252,
-      "matched": 252,
+      "total_programs": 246,
+      "matched": 246,
       "match_types": {
         "man_made": 219,
-        "global": 33
+        "global": 27
       },
       "match_sources": {
         "man-made": 219,
-        "source1": 33
+        "source1": 27
       },
       "failed_titles": []
     },
