@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-24 05:22:15",
-  "total_debug_entries": 61493,
-  "total_match_attempts": 88828,
+  "generated_at": "2026-03-24 12:30:10",
+  "total_debug_entries": 60875,
+  "total_match_attempts": 88361,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -3305,14 +3305,14 @@
       ]
     },
     "CGTN": {
-      "total_programs": 362,
-      "matched": 353,
+      "total_programs": 363,
+      "matched": 354,
       "match_types": {
-        "same_channel": 341,
+        "same_channel": 342,
         "man_made": 12
       },
       "match_sources": {
-        "source1": 341,
+        "source1": 342,
         "man-made": 12
       },
       "failed_titles": [
@@ -3535,16 +3535,16 @@
       ]
     },
     "北京卫视": {
-      "total_programs": 330,
-      "matched": 326,
+      "total_programs": 350,
+      "matched": 346,
       "match_types": {
-        "man_made": 95,
-        "same_channel": 229,
+        "man_made": 114,
+        "same_channel": 230,
         "global": 2
       },
       "match_sources": {
-        "man-made": 95,
-        "source1": 231
+        "man-made": 114,
+        "source1": 232
       },
       "failed_titles": [
         "停机检修",
@@ -3649,15 +3649,15 @@
       ]
     },
     "东方卫视": {
-      "total_programs": 312,
-      "matched": 291,
+      "total_programs": 311,
+      "matched": 290,
       "match_types": {
         "man_made": 54,
-        "same_channel": 237
+        "same_channel": 236
       },
       "match_sources": {
         "man-made": 54,
-        "source1": 237
+        "source1": 236
       },
       "failed_titles": [
         "千回百转(上)",
@@ -3765,13 +3765,13 @@
       "total_programs": 405,
       "matched": 370,
       "match_types": {
-        "man_made": 74,
-        "same_channel": 245,
-        "global": 51
+        "man_made": 85,
+        "same_channel": 236,
+        "global": 49
       },
       "match_sources": {
-        "man-made": 74,
-        "source1": 296
+        "man-made": 85,
+        "source1": 285
       },
       "failed_titles": [
         "飞越甘肃绘彩",
@@ -3806,8 +3806,8 @@
         "毛毛镇海岛大行动(46)",
         "飞越甘肃探水",
         "飞越甘肃探水",
-        "红色经典咏流传",
-        "红色经典咏流传",
+        "停机检修",
+        "飞越甘肃寻山",
         "瞰新区"
       ]
     },
@@ -4608,16 +4608,16 @@
       ]
     },
     "四川卫视": {
-      "total_programs": 234,
-      "matched": 227,
+      "total_programs": 236,
+      "matched": 229,
       "match_types": {
         "man_made": 6,
-        "same_channel": 219,
+        "same_channel": 221,
         "global": 2
       },
       "match_sources": {
         "man-made": 6,
-        "source1": 221
+        "source1": 223
       },
       "failed_titles": [
         "旅游风景区气象信息",
@@ -4630,15 +4630,15 @@
       ]
     },
     "深圳卫视": {
-      "total_programs": 451,
-      "matched": 442,
+      "total_programs": 465,
+      "matched": 456,
       "match_types": {
-        "same_channel": 309,
-        "man_made": 133
+        "same_channel": 310,
+        "man_made": 146
       },
       "match_sources": {
-        "source1": 309,
-        "man-made": 133
+        "source1": 310,
+        "man-made": 146
       },
       "failed_titles": [
         "一刻千金(18)",
@@ -4684,15 +4684,15 @@
       "failed_titles": []
     },
     "西藏卫视": {
-      "total_programs": 648,
-      "matched": 604,
+      "total_programs": 706,
+      "matched": 654,
       "match_types": {
-        "same_channel": 353,
-        "man_made": 251
+        "same_channel": 366,
+        "man_made": 288
       },
       "match_sources": {
-        "source1": 350,
-        "man-made": 251,
+        "source1": 363,
+        "man-made": 288,
         "source2": 3
       },
       "failed_titles": [
@@ -4729,8 +4729,16 @@
         "奔腾的心之盲（4）",
         "大道之行探索中国式现代化（1）",
         "文明旅游",
-        "大道之行探索中国式现代化（2）",
-        "大道之行探索中国式现代化（2）",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "大道之行探索中国式现代化(2)",
+        "大道之行探索中国式现代化(2)",
         "品牌广告",
         "品牌广告",
         "品牌广告",
@@ -4915,15 +4923,15 @@
       ]
     },
     "北京卫视4K": {
-      "total_programs": 345,
-      "matched": 304,
+      "total_programs": 365,
+      "matched": 323,
       "match_types": {
         "global": 212,
-        "man_made": 92
+        "man_made": 111
       },
       "match_sources": {
         "source1": 212,
-        "man-made": 92
+        "man-made": 111
       },
       "failed_titles": [
         "停机检修",
@@ -4955,13 +4963,14 @@
         "《情满四合院》预告版",
         "《我深深地爱着你》预告",
         "风味人间Ⅴ（5）",
+        "风味人间Ⅴ(5)",
         "医者",
         "《我深深地爱着你》预告版",
         "《情满四合院》预告版",
         "《我深深地爱着你》预告",
-        "乡约食光纯享版（2）",
-        "风味人间Ⅴ（6）",
-        "风味人间Ⅴ（6）",
+        "乡约食光纯享版(2)",
+        "风味人间Ⅴ(6)",
+        "风味人间Ⅴ(6)",
         "午茶剧场",
         "午茶剧场",
         "午茶剧场",
@@ -4970,15 +4979,15 @@
       ]
     },
     "东方卫视4K": {
-      "total_programs": 312,
-      "matched": 281,
+      "total_programs": 311,
+      "matched": 280,
       "match_types": {
         "man_made": 53,
-        "global": 228
+        "global": 227
       },
       "match_sources": {
         "man-made": 53,
-        "source1": 228
+        "source1": 227
       },
       "failed_titles": [
         "千回百转(上)",
@@ -5299,14 +5308,14 @@
       ]
     },
     "深圳卫视4K": {
-      "total_programs": 451,
-      "matched": 343,
+      "total_programs": 465,
+      "matched": 344,
       "match_types": {
-        "global": 308,
+        "global": 309,
         "man_made": 35
       },
       "match_sources": {
-        "source1": 308,
+        "source1": 309,
         "man-made": 35
       },
       "failed_titles": [
@@ -5417,19 +5426,32 @@
         "女神蒙上眼27(21：20科创最前沿)",
         "美好生活深圳创造：智能留样秤",
         "温暖在身边：广州彩瓷",
+        "美好生活深圳创造：智能留样秤",
+        "锁侠17(21：20科创最前沿)",
+        "锁侠18(21：20科创最前沿)",
+        "锁侠19(21：20科创最前沿)",
+        "锁侠20(21：20科创最前沿)",
+        "美好生活深圳创造：智能留样秤",
+        "战火中的兄弟8(21：20科创最前沿)",
+        "战火中的兄弟9(21：20科创最前沿)",
+        "美好生活深圳创造：添翼AI扩容卡",
+        "女神蒙上眼28(21：20科创最前沿)",
+        "美好生活深圳创造：添翼AI扩容卡",
+        "女神蒙上眼29(21：20科创最前沿)",
+        "美好生活深圳创造：添翼AI扩容卡",
         "温暖在身边：白沙茅龙笔"
       ]
     },
     "四川卫视4K": {
-      "total_programs": 234,
-      "matched": 212,
+      "total_programs": 236,
+      "matched": 214,
       "match_types": {
         "man_made": 6,
-        "global": 206
+        "global": 208
       },
       "match_sources": {
         "man-made": 6,
-        "source1": 206
+        "source1": 208
       },
       "failed_titles": [
         "旅游风景区气象信息",
@@ -5639,36 +5661,11 @@
       ]
     },
     "Astro QJ": {
-      "total_programs": 60,
+      "total_programs": 54,
       "matched": 0,
       "match_types": {},
       "match_sources": {},
       "failed_titles": [
-        "The Truth",
-        "Atypical Family",
-        "The Pride Of Hunan Cuisine",
-        "How Dare You!?",
-        "Hey Girls, Adventure",
-        "Twenty Your Life On 2",
-        "Hi Saturday 2025",
-        "How Dare You!?",
-        "Lu Yu You Yue",
-        "The Pride Of Hunan Cuisine",
-        "Hi Saturday 2026",
-        "Atypical Family",
-        "Twenty Your Life On 2",
-        "How Dare You!?",
-        "Atypical Family",
-        "Underwater China",
-        "The Last Cook",
-        "The Last Cook",
-        "A League of Nobleman",
-        "Breakfast In China",
-        "How Dare You!?",
-        "Where You Pee",
-        "19th Floor",
-        "Workplace Newcomers·TCM Season",
-        "How Dare You!?",
         "19th Floor",
         "Where You Pee",
         "The Last Cook",
@@ -5703,7 +5700,26 @@
         "A League of Nobleman",
         "Breakfast In China",
         "Twenty Your Life On 2",
-        "Hi Saturday 2025"
+        "Hi Saturday 2025",
+        "How Dare You!?",
+        "Taste of Life",
+        "Craftsmanship and Ingenuity",
+        "Where You Pee",
+        "Workplace Newcomers·TCM Season",
+        "The Story Of Anhua Dark Tea",
+        "Twenty Your Life On 2",
+        "How Dare You!?",
+        "19th Floor",
+        "The Last Cook",
+        "The Last Cook",
+        "A League of Nobleman",
+        "Breakfast In China",
+        "How Dare You!?",
+        "Macau Food's Time",
+        "19th Floor",
+        "Go for Happiness",
+        "Lu Yu You Yue",
+        "How Dare You!?"
       ]
     },
     "HOY77": {
@@ -13649,32 +13665,30 @@
       ]
     },
     "滨州民生": {
-      "total_programs": 82,
-      "matched": 81,
+      "total_programs": 66,
+      "matched": 65,
       "match_types": {
-        "man_made": 81
+        "man_made": 65
       },
       "match_sources": {
-        "man-made": 81
+        "man-made": 65
       },
       "failed_titles": [
         "委员关注"
       ]
     },
     "滨州新闻": {
-      "total_programs": 103,
-      "matched": 90,
+      "total_programs": 84,
+      "matched": 73,
       "match_types": {
-        "global": 11,
-        "man_made": 79
+        "man_made": 66,
+        "global": 7
       },
       "match_sources": {
-        "source1": 11,
-        "man-made": 79
+        "man-made": 66,
+        "source1": 7
       },
       "failed_titles": [
-        "梦之光",
-        "滨企创世界",
         "书记话心安",
         "所以然",
         "我们的心安城市圆桌会",
@@ -13700,43 +13714,29 @@
       "failed_titles": []
     },
     "德州新闻": {
-      "total_programs": 60,
-      "matched": 44,
+      "total_programs": 104,
+      "matched": 102,
       "match_types": {
-        "man_made": 40,
-        "global": 4
+        "man_made": 97,
+        "global": 5
       },
       "match_sources": {
-        "man-made": 40,
-        "source1": 4
+        "man-made": 97,
+        "source1": 5
       },
       "failed_titles": [
-        "三区新闻",
-        "三区新闻",
-        "午动天下",
-        "午动天下",
-        "三区新闻",
-        "午动天下",
-        "三区新闻",
-        "三区新闻",
-        "三区新闻",
-        "三区新闻",
-        "午动天下",
-        "午动天下",
-        "三区新闻",
-        "午动天下",
-        "三区新闻",
-        "三区新闻"
+        "转播山东台新闻联播",
+        "工会新视界"
       ]
     },
     "东营公共": {
-      "total_programs": 127,
-      "matched": 124,
+      "total_programs": 126,
+      "matched": 123,
       "match_types": {
-        "man_made": 124
+        "man_made": 123
       },
       "match_sources": {
-        "man-made": 124
+        "man-made": 123
       },
       "failed_titles": [
         "创富东营",
@@ -13760,15 +13760,15 @@
       ]
     },
     "济南都市": {
-      "total_programs": 174,
-      "matched": 174,
+      "total_programs": 145,
+      "matched": 145,
       "match_types": {
-        "man_made": 167,
-        "global": 7
+        "man_made": 139,
+        "global": 6
       },
       "match_sources": {
-        "man-made": 167,
-        "source1": 7
+        "man-made": 139,
+        "source1": 6
       },
       "failed_titles": []
     },
@@ -13790,65 +13790,65 @@
       ]
     },
     "济南鲁中": {
-      "total_programs": 157,
-      "matched": 157,
+      "total_programs": 128,
+      "matched": 128,
       "match_types": {
-        "global": 35,
-        "man_made": 122
+        "global": 28,
+        "man_made": 100
       },
       "match_sources": {
-        "source1": 35,
-        "man-made": 122
+        "source1": 28,
+        "man-made": 100
       },
       "failed_titles": []
     },
     "济南少儿": {
-      "total_programs": 119,
-      "matched": 119,
+      "total_programs": 100,
+      "matched": 100,
       "match_types": {
-        "man_made": 112,
-        "global": 7
+        "man_made": 94,
+        "global": 6
       },
       "match_sources": {
-        "man-made": 112,
-        "source1": 7
+        "man-made": 94,
+        "source1": 6
       },
       "failed_titles": []
     },
     "济南生活": {
-      "total_programs": 100,
-      "matched": 100,
+      "total_programs": 98,
+      "matched": 98,
       "match_types": {
-        "global": 6,
-        "man_made": 94
+        "man_made": 93,
+        "global": 5
       },
       "match_sources": {
-        "source1": 6,
-        "man-made": 94
+        "man-made": 93,
+        "source1": 5
       },
       "failed_titles": []
     },
     "济南体育": {
-      "total_programs": 130,
-      "matched": 130,
+      "total_programs": 110,
+      "matched": 110,
       "match_types": {
-        "man_made": 121,
-        "global": 9
+        "man_made": 102,
+        "global": 8
       },
       "match_sources": {
-        "man-made": 121,
-        "source1": 9
+        "man-made": 102,
+        "source1": 8
       },
       "failed_titles": []
     },
     "济南新闻": {
-      "total_programs": 98,
-      "matched": 96,
+      "total_programs": 83,
+      "matched": 81,
       "match_types": {
-        "man_made": 96
+        "man_made": 81
       },
       "match_sources": {
-        "man-made": 96
+        "man-made": 81
       },
       "failed_titles": [
         "作风监督面对面",
@@ -13884,15 +13884,15 @@
       ]
     },
     "济宁公共": {
-      "total_programs": 116,
-      "matched": 113,
+      "total_programs": 111,
+      "matched": 108,
       "match_types": {
-        "man_made": 97,
-        "global": 16
+        "man_made": 94,
+        "global": 14
       },
       "match_sources": {
-        "man-made": 97,
-        "source1": 16
+        "man-made": 94,
+        "source1": 14
       },
       "failed_titles": [
         "五世同堂",
@@ -13901,43 +13901,43 @@
       ]
     },
     "济宁生活": {
-      "total_programs": 125,
-      "matched": 124,
+      "total_programs": 104,
+      "matched": 103,
       "match_types": {
-        "global": 16,
-        "man_made": 108
+        "man_made": 90,
+        "global": 13
       },
       "match_sources": {
-        "source1": 16,
-        "man-made": 108
+        "man-made": 90,
+        "source1": 13
       },
       "failed_titles": [
         "我们的日子（10）"
       ]
     },
     "济宁综合": {
-      "total_programs": 140,
-      "matched": 140,
+      "total_programs": 113,
+      "matched": 113,
       "match_types": {
-        "global": 14,
-        "man_made": 126
+        "man_made": 103,
+        "global": 10
       },
       "match_sources": {
-        "source1": 14,
-        "man-made": 126
+        "man-made": 103,
+        "source1": 10
       },
       "failed_titles": []
     },
     "聊城综合": {
-      "total_programs": 172,
-      "matched": 163,
+      "total_programs": 150,
+      "matched": 141,
       "match_types": {
-        "global": 28,
-        "man_made": 135
+        "man_made": 117,
+        "global": 24
       },
       "match_sources": {
-        "source1": 28,
-        "man-made": 135
+        "man-made": 117,
+        "source1": 24
       },
       "failed_titles": [
         "生态聊城",
@@ -13969,135 +13969,70 @@
       ]
     },
     "青岛QTV-1": {
-      "total_programs": 52,
-      "matched": 48,
+      "total_programs": 154,
+      "matched": 154,
       "match_types": {
-        "man_made": 39,
+        "man_made": 143,
+        "global": 11
+      },
+      "match_sources": {
+        "man-made": 143,
+        "source1": 11
+      },
+      "failed_titles": []
+    },
+    "青岛QTV-2": {
+      "total_programs": 224,
+      "matched": 224,
+      "match_types": {
+        "man_made": 215,
         "global": 9
       },
       "match_sources": {
-        "man-made": 39,
+        "man-made": 215,
         "source1": 9
       },
-      "failed_titles": [
-        "美好生活",
-        "美好生活",
-        "国宝在山东第二季02",
-        "国宝在山东第二季03"
-      ]
-    },
-    "青岛QTV-2": {
-      "total_programs": 60,
-      "matched": 53,
-      "match_types": {
-        "man_made": 51,
-        "global": 2
-      },
-      "match_sources": {
-        "man-made": 51,
-        "source1": 2
-      },
-      "failed_titles": [
-        "铁道传奇01",
-        "铁道传奇02",
-        "铁道传奇03",
-        "铁道传奇04",
-        "铁道传奇05",
-        "铁道传奇06",
-        "铁道传奇07"
-      ]
+      "failed_titles": []
     },
     "青岛QTV-3": {
-      "total_programs": 40,
-      "matched": 11,
+      "total_programs": 25,
+      "matched": 25,
       "match_types": {
-        "man_made": 10,
-        "global": 1
+        "man_made": 23,
+        "global": 2
       },
       "match_sources": {
-        "man-made": 10,
-        "source1": 1
+        "man-made": 23,
+        "source1": 2
       },
-      "failed_titles": [
-        "湖上的斗争",
-        "川流精简版16",
-        "川流精简版17",
-        "川流精简版18",
-        "哈尔滨一九四四精简版02",
-        "哈尔滨一九四四精简版03",
-        "哈尔滨一九四四精简版04",
-        "东北抗日联军精简版70",
-        "东北抗日联军精简版71",
-        "东北抗日联军精简版72",
-        "川流精简版19",
-        "川流精简版20",
-        "川流精简版21",
-        "铁道传奇01",
-        "铁道传奇02",
-        "铁道传奇03",
-        "铁道传奇04",
-        "人生之路精简版07",
-        "人生之路精简版08",
-        "人生之路精简版09",
-        "人生之路精简版10",
-        "湖上的斗争",
-        "东北抗日联军精简版73",
-        "东北抗日联军精简版74",
-        "东北抗日联军精简版75",
-        "筑梦百年",
-        "湖上的斗争",
-        "虎穴追踪",
-        "虎穴追踪"
-      ]
+      "failed_titles": []
     },
     "青岛QTV-4": {
-      "total_programs": 37,
-      "matched": 35,
+      "total_programs": 143,
+      "matched": 143,
       "match_types": {
-        "man_made": 33,
-        "global": 2
+        "man_made": 132,
+        "global": 11
       },
       "match_sources": {
-        "man-made": 33,
-        "source1": 2
+        "man-made": 132,
+        "source1": 11
       },
-      "failed_titles": [
-        "美好生活",
-        "美好生活"
-      ]
+      "failed_titles": []
     },
     "青岛QTV-5": {
-      "total_programs": 38,
-      "matched": 18,
+      "total_programs": 123,
+      "matched": 120,
       "match_types": {
-        "man_made": 16,
-        "global": 2
+        "man_made": 120
       },
       "match_sources": {
-        "man-made": 16,
-        "source1": 2
+        "man-made": 120
       },
       "failed_titles": [
-        "够级英雄",
-        "生活天天秀",
-        "生活天天秀",
-        "棋牌英雄传之智斗地主2025",
-        "够级英雄",
-        "《最强医声》特别节目",
-        "棋牌英雄传之智斗地主2025",
-        "够级英雄",
-        "生活天天秀",
-        "生活天天秀",
-        "棋牌英雄传之智斗地主2025",
-        "够级英雄",
-        "《最强医声》特别节目",
-        "生活天天秀",
-        "生活天天秀",
-        "财经面对面",
-        "棋牌英雄传之智斗地主2025",
-        "够级英雄",
-        "够级英雄",
-        "够级英雄"
+        "青岛教育新闻",
+        "青岛教育新闻",
+        "青岛教育新闻"
       ]
     },
     "青岛QTV-7": {
@@ -14140,20 +14075,17 @@
       ]
     },
     "日照公共": {
-      "total_programs": 149,
-      "matched": 134,
+      "total_programs": 122,
+      "matched": 110,
       "match_types": {
-        "global": 28,
-        "man_made": 106
+        "man_made": 87,
+        "global": 23
       },
       "match_sources": {
-        "source1": 28,
-        "man-made": 106
+        "man-made": 87,
+        "source1": 23
       },
       "failed_titles": [
-        "城市之光",
-        "悬崖 36-40",
-        "爱情而已 35-37",
         "城市之光",
         "爱情而已38 我们的日子1-2",
         "城市之光",
@@ -14169,36 +14101,34 @@
       ]
     },
     "日照科教": {
-      "total_programs": 160,
-      "matched": 156,
+      "total_programs": 131,
+      "matched": 128,
       "match_types": {
-        "man_made": 148,
-        "global": 8
+        "man_made": 122,
+        "global": 6
       },
       "match_sources": {
-        "man-made": 148,
-        "source1": 8
+        "man-made": 122,
+        "source1": 6
       },
       "failed_titles": [
-        "向往的日照",
         "向往的日照",
         "向往的日照",
         "向往的日照"
       ]
     },
     "日照新闻": {
-      "total_programs": 200,
-      "matched": 174,
+      "total_programs": 168,
+      "matched": 143,
       "match_types": {
-        "global": 7,
-        "man_made": 167
+        "global": 5,
+        "man_made": 138
       },
       "match_sources": {
-        "source1": 7,
-        "man-made": 167
+        "source1": 5,
+        "man-made": 138
       },
       "failed_titles": [
-        "后浪11-14",
         "后浪23-26",
         "中国第二季7",
         "后浪15-18",
@@ -14266,111 +14196,397 @@
       "failed_titles": []
     },
     "威海新闻": {
-      "total_programs": 161,
-      "matched": 161,
+      "total_programs": 135,
+      "matched": 135,
       "match_types": {
-        "man_made": 160,
+        "man_made": 134,
         "global": 1
       },
       "match_sources": {
-        "man-made": 160,
+        "man-made": 134,
         "source1": 1
       },
       "failed_titles": []
     },
     "威海海洋生活": {
-      "total_programs": 242,
-      "matched": 242,
+      "total_programs": 201,
+      "matched": 201,
       "match_types": {
-        "man_made": 242
+        "man_made": 201
       },
       "match_sources": {
-        "man-made": 242
+        "man-made": 201
       },
       "failed_titles": []
     },
     "潍坊公共": {
-      "total_programs": 46,
-      "matched": 46,
+      "total_programs": 150,
+      "matched": 59,
       "match_types": {
-        "man_made": 44,
-        "global": 2
+        "global": 33,
+        "man_made": 26
       },
       "match_sources": {
-        "man-made": 44,
-        "source1": 2
-      },
-      "failed_titles": []
-    },
-    "潍坊经济生活": {
-      "total_programs": 72,
-      "matched": 72,
-      "match_types": {
-        "man_made": 70,
-        "global": 2
-      },
-      "match_sources": {
-        "man-made": 70,
-        "source1": 2
-      },
-      "failed_titles": []
-    },
-    "潍坊科教文化": {
-      "total_programs": 56,
-      "matched": 54,
-      "match_types": {
-        "man_made": 47,
-        "global": 7
-      },
-      "match_sources": {
-        "man-made": 47,
-        "source1": 7
+        "source1": 33,
+        "man-made": 26
       },
       "failed_titles": [
-        "四季和风",
-        "四季和风"
+        "咨询台",
+        "职教高地",
+        "天天健康",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "咨询台",
+        "天天健康",
+        "职教高地",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "咨询台",
+        "职教高地",
+        "潍有中医",
+        "咨询台",
+        "职教高地",
+        "天天健康",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "咨询台",
+        "天天健康",
+        "职教高地",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "潍有中医",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "咨询台",
+        "职教高地",
+        "咨询台",
+        "职教高地",
+        "天天健康",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "咨询台",
+        "天天健康",
+        "职教高地",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "潍有中医",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "咨询台",
+        "职教高地",
+        "潍有中医",
+        "咨询台",
+        "职教高地",
+        "天天健康",
+        "潍有中医",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "咨询台",
+        "天天健康",
+        "职教高地",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "咨询台",
+        "职教高地",
+        "咨询台",
+        "职教高地",
+        "天天健康",
+        "潍有中医",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划",
+        "咨询台",
+        "天天健康",
+        "职教高地",
+        "宝贝星计划",
+        "潍有中医",
+        "天天健康",
+        "宝贝星计划"
+      ]
+    },
+    "潍坊经济生活": {
+      "total_programs": 126,
+      "matched": 13,
+      "match_types": {
+        "global": 13
+      },
+      "match_sources": {
+        "source1": 13
+      },
+      "failed_titles": [
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "交警在线",
+        "潍坊时间",
+        "金融潍坊",
+        "潍坊时间",
+        "潍坊好声音",
+        "潍眼看世界",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍有尚品",
+        "交警在线",
+        "潍坊时间",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "交警在线",
+        "潍坊时间",
+        "金融潍坊",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍有尚品",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍有尚品",
+        "交警在线",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍眼看世界",
+        "交警在线",
+        "潍坊时间",
+        "金融潍坊",
+        "潍坊时间",
+        "潍坊好声音",
+        "潍眼看世界",
+        "潍有尚品",
+        "潍坊时间",
+        "交警在线",
+        "金融潍坊",
+        "潍坊好声音",
+        "潍眼看世界",
+        "潍有尚品",
+        "潍坊时间",
+        "交警在线",
+        "潍有尚品",
+        "潍坊好声音",
+        "潍眼看世界",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍有尚品",
+        "潍坊好声音",
+        "潍眼看世界",
+        "交警在线",
+        "潍坊时间",
+        "金融潍坊",
+        "潍坊好声音",
+        "潍有尚品",
+        "潍坊时间",
+        "潍坊时间",
+        "交警在线",
+        "金融潍坊",
+        "潍有尚品",
+        "潍坊好声音",
+        "潍眼看世界",
+        "潍坊时间",
+        "交警在线",
+        "交警在线",
+        "金融潍坊",
+        "潍坊时间",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊好声音",
+        "潍坊好声音",
+        "潍眼看世界",
+        "交警在线",
+        "潍坊时间",
+        "金融潍坊",
+        "潍坊好声音",
+        "潍有尚品",
+        "潍眼看世界",
+        "潍坊时间",
+        "潍坊好声音",
+        "潍坊青少年新闻联播",
+        "潍坊时间",
+        "金融潍坊",
+        "潍眼看世界",
+        "交警在线",
+        "潍有尚品",
+        "潍坊好声音",
+        "潍坊时间",
+        "交警在线",
+        "潍坊新闻联播"
+      ]
+    },
+    "潍坊科教文化": {
+      "total_programs": 70,
+      "matched": 7,
+      "match_types": {
+        "global": 5,
+        "man_made": 2
+      },
+      "match_sources": {
+        "source1": 5,
+        "man-made": 2
+      },
+      "failed_titles": [
+        "城市微旅行",
+        "睛彩潍坊",
+        "至味潍坊之大锅朝天",
+        "一荐倾心",
+        "百岁老人",
+        "城市微旅行",
+        "地名里的潍坊",
+        "百岁老人",
+        "睛彩潍坊",
+        "城市微旅行",
+        "一荐倾心",
+        "睛彩潍坊",
+        "科教文旅大艺术",
+        "城市微旅行",
+        "睛彩潍坊",
+        "百岁老人",
+        "睛彩潍坊",
+        "一荐倾心",
+        "城市微旅行",
+        "睛彩潍坊",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "百岁老人",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "睛彩潍坊",
+        "一荐倾心",
+        "睛彩潍坊",
+        "百岁老人",
+        "城市微旅行",
+        "睛彩潍坊",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "百岁老人",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "睛彩潍坊",
+        "一荐倾心",
+        "睛彩潍坊",
+        "百岁老人",
+        "城市微旅行",
+        "睛彩潍坊",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "百岁老人",
+        "一荐倾心",
+        "睛彩潍坊",
+        "城市微旅行",
+        "城市微旅行",
+        "睛彩潍坊",
+        "科教文旅大艺术",
+        "一荐倾心",
+        "城市微旅行",
+        "睛彩潍坊",
+        "地名里的潍坊",
+        "科教文旅大艺术",
+        "睛彩潍坊",
+        "科教文旅大艺术"
       ]
     },
     "潍坊新闻综合": {
-      "total_programs": 66,
-      "matched": 66,
+      "total_programs": 87,
+      "matched": 52,
       "match_types": {
-        "man_made": 60,
-        "global": 6
+        "global": 15,
+        "man_made": 37
       },
       "match_sources": {
-        "man-made": 60,
-        "source1": 6
-      },
-      "failed_titles": []
-    },
-    "烟台公共": {
-      "total_programs": 196,
-      "matched": 97,
-      "match_types": {
-        "global": 78,
-        "man_made": 19
-      },
-      "match_sources": {
-        "source1": 78,
-        "man-made": 19
+        "source1": 15,
+        "man-made": 37
       },
       "failed_titles": [
-        "电视剧《前途无量》",
-        "电视剧《前途无量》",
-        "开心耍大牌",
-        "电视剧《锦绣安宁》",
-        "社会广角",
-        "电视剧《锦绣安宁》",
-        "阳光园",
-        "社会广角",
-        "绿色田园",
-        "社会广角",
-        "融媒直通车",
-        "烟台新闻",
-        "电视剧《前途无量》",
-        "电视剧《红高粱》",
-        "开心耍大牌",
+        "少年直播说",
+        "敬明话潍坊",
+        "金融潍坊",
+        "海洋预告",
+        "敬明话潍坊",
+        "百岁老人乐在潍坊",
+        "星光童年",
+        "敬明话潍坊",
+        "敬明话潍坊",
+        "少年直播说",
+        "金融潍坊",
+        "少年直播说",
+        "海洋预告",
+        "潍有中医",
+        "敬明话潍坊",
+        "潍坊我的诗与远方",
+        "少年直播说",
+        "金融潍坊",
+        "少年直播说",
+        "海洋预告",
+        "文旅潍坊",
+        "敬明话潍坊",
+        "法治红绿灯",
+        "少年直播说",
+        "金融潍坊",
+        "少年直播说",
+        "海洋预告",
+        "潍坊我的诗与远方",
+        "敬明话潍坊",
+        "敬明话潍坊",
+        "少年直播说",
+        "金融潍坊",
+        "少年直播说",
+        "海洋预告",
+        "潍眼看世界"
+      ]
+    },
+    "烟台公共": {
+      "total_programs": 162,
+      "matched": 78,
+      "match_types": {
+        "global": 63,
+        "man_made": 15
+      },
+      "match_sources": {
+        "source1": 63,
+        "man-made": 15
+      },
+      "failed_titles": [
         "电视剧《锦绣安宁》",
         "社会广角",
         "电视剧《锦绣安宁》",
@@ -14458,19 +14674,17 @@
       ]
     },
     "烟台经济": {
-      "total_programs": 148,
-      "matched": 69,
+      "total_programs": 141,
+      "matched": 64,
       "match_types": {
-        "global": 63,
-        "man_made": 6
+        "global": 59,
+        "man_made": 5
       },
       "match_sources": {
-        "source1": 63,
-        "man-made": 6
+        "source1": 59,
+        "man-made": 5
       },
       "failed_titles": [
-        "停机检修",
-        "立春剧场《时光正好》",
         "电视剧《何以笙箫默》",
         "开心耍大牌",
         "谷雨剧场《何以笙箫默》",
@@ -14551,23 +14765,17 @@
       ]
     },
     "烟台新闻": {
-      "total_programs": 143,
-      "matched": 58,
+      "total_programs": 132,
+      "matched": 53,
       "match_types": {
-        "global": 52,
+        "global": 47,
         "man_made": 6
       },
       "match_sources": {
-        "source1": 52,
+        "source1": 47,
         "man-made": 6
       },
       "failed_titles": [
-        "电视剧《三叉戟》",
-        "电视剧《长风渡》",
-        "电视剧《长风渡》",
-        "绿色田园",
-        "融媒直通车",
-        "烟台新闻",
         "融媒直通车",
         "绿色田园",
         "电视剧《父辈的荣耀》",
@@ -14672,29 +14880,17 @@
       ]
     },
     "兖州新闻": {
-      "total_programs": 126,
-      "matched": 72,
+      "total_programs": 104,
+      "matched": 62,
       "match_types": {
-        "man_made": 39,
-        "global": 33
+        "man_made": 33,
+        "global": 29
       },
       "match_sources": {
-        "man-made": 39,
-        "source1": 33
+        "man-made": 33,
+        "source1": 29
       },
       "failed_titles": [
-        "转播中央电视台",
-        "兖州新闻",
-        "家在兖州",
-        "兖州新闻",
-        "直通镇街",
-        "家在兖州",
-        "兖州新闻",
-        "直通镇街",
-        "兖州新闻",
-        "转播中央电视台",
-        "兖州新闻",
-        "家在兖州",
         "兖州新闻",
         "家在兖州",
         "家在兖州",
@@ -14740,47 +14936,45 @@
       ]
     },
     "淄博民生": {
-      "total_programs": 96,
-      "matched": 95,
+      "total_programs": 92,
+      "matched": 91,
       "match_types": {
-        "man_made": 69,
-        "global": 26
+        "man_made": 67,
+        "global": 24
       },
       "match_sources": {
-        "man-made": 69,
-        "source1": 26
+        "man-made": 67,
+        "source1": 24
       },
       "failed_titles": [
         "最淄博"
       ]
     },
     "淄博文旅": {
-      "total_programs": 115,
-      "matched": 110,
+      "total_programs": 110,
+      "matched": 107,
       "match_types": {
-        "global": 67,
+        "global": 64,
         "man_made": 43
       },
       "match_sources": {
-        "source1": 67,
+        "source1": 64,
         "man-made": 43
       },
       "failed_titles": [
-        "最淄博",
-        "电视剧《锦绣安宁》",
         "最淄博",
         "最淄博",
         "最淄博"
       ]
     },
     "淄博影视": {
-      "total_programs": 51,
-      "matched": 45,
+      "total_programs": 42,
+      "matched": 36,
       "match_types": {
-        "man_made": 45
+        "man_made": 36
       },
       "match_sources": {
-        "man-made": 45
+        "man-made": 36
       },
       "failed_titles": [
         "最淄博",
@@ -14792,13 +14986,13 @@
       ]
     },
     "淄博新闻综合": {
-      "total_programs": 111,
-      "matched": 106,
+      "total_programs": 90,
+      "matched": 85,
       "match_types": {
-        "man_made": 106
+        "man_made": 85
       },
       "match_sources": {
-        "man-made": 106
+        "man-made": 85
       },
       "failed_titles": [
         "电视剧《老酒馆》",
@@ -14809,27 +15003,17 @@
       ]
     },
     "菏泽-1": {
-      "total_programs": 154,
-      "matched": 121,
+      "total_programs": 126,
+      "matched": 103,
       "match_types": {
-        "global": 32,
-        "man_made": 89
+        "man_made": 77,
+        "global": 26
       },
       "match_sources": {
-        "source1": 32,
-        "man-made": 89
+        "man-made": 77,
+        "source1": 26
       },
       "failed_titles": [
-        "重播第一精彩",
-        "直播行风热线",
-        "英雄戟",
-        "重播第一精彩",
-        "谁来伺候妈",
-        "重播菏泽好房子",
-        "第一精彩",
-        "重播第一精彩",
-        "直播行风热线",
-        "英雄戟",
         "重播第一精彩",
         "谁来伺候妈",
         "重播菏泽好房子",
@@ -14856,13 +15040,13 @@
       ]
     },
     "菏泽-2": {
-      "total_programs": 329,
-      "matched": 323,
+      "total_programs": 274,
+      "matched": 268,
       "match_types": {
-        "man_made": 323
+        "man_made": 268
       },
       "match_sources": {
-        "man-made": 323
+        "man-made": 268
       },
       "failed_titles": [
         "妈祖",
@@ -17705,16 +17889,14 @@
       "failed_titles": []
     },
     "江苏城市": {
-      "total_programs": 160,
-      "matched": 153,
+      "total_programs": 159,
+      "matched": 152,
       "match_types": {
-        "same_channel": 131,
-        "global": 21,
-        "man_made": 1
+        "same_channel": 132,
+        "global": 20
       },
       "match_sources": {
-        "source1": 152,
-        "man-made": 1
+        "source1": 152
       },
       "failed_titles": [
         "非遗有新人",
@@ -17727,13 +17909,13 @@
       ]
     },
     "江苏教育": {
-      "total_programs": 217,
-      "matched": 70,
+      "total_programs": 226,
+      "matched": 79,
       "match_types": {
-        "global": 70
+        "global": 79
       },
       "match_sources": {
-        "source1": 70
+        "source1": 79
       },
       "failed_titles": [
         "江苏教育新闻",
@@ -17862,27 +18044,27 @@
         "优秀文化节目展播",
         "凭栏一片风云起(43)",
         "凭栏一片风云起(44)",
-        "重温经典",
-        "传承人",
-        "教育周刊",
-        "重温经典励志版",
+        "江苏教育新闻",
         "微讲堂",
-        "重温经典青春版",
-        "领读江苏",
-        "今日科学",
-        "开放大学我的大学",
-        "重温经典青春版",
-        "健康江苏行",
-        "江苏职教风采",
-        "重温经典励志版",
-        "幸福新起点",
+        "未来科学家",
+        "重温经典",
+        "勇者大冲关",
+        "传承人精选",
+        "凭栏一片风云起(43)",
+        "凭栏一片风云起(44)",
+        "传承人精选",
+        "围猎(28)",
+        "围猎(29)",
+        "围猎(30)",
+        "围猎(31)",
+        "优秀文化节目展播",
+        "我们家",
         "微讲堂",
         "勇者大冲关",
-        "未来科学家",
-        "凡事讲礼",
         "江苏教育新闻",
-        "重温经典励志版",
-        "重温经典"
+        "优秀文化节目展播",
+        "凭栏一片风云起(45)",
+        "凭栏一片风云起(46)"
       ]
     },
     "江苏体育休闲": {
@@ -18203,16 +18385,16 @@
       ]
     },
     "江苏新闻": {
-      "total_programs": 310,
-      "matched": 260,
+      "total_programs": 316,
+      "matched": 262,
       "match_types": {
-        "same_channel": 189,
-        "global": 53,
-        "man_made": 18
+        "same_channel": 180,
+        "global": 59,
+        "man_made": 23
       },
       "match_sources": {
-        "source1": 242,
-        "man-made": 18
+        "source1": 239,
+        "man-made": 23
       },
       "failed_titles": [
         "晚霞",
@@ -18262,23 +18444,25 @@
         "纪录片专题片",
         "纪录片专题片",
         "你好江苏",
+        "你好江苏",
         "早安江苏",
         "晚霞",
-        "晚霞"
+        "晚霞",
+        "纪录片专题片",
+        "纪录片专题片",
+        "你好江苏"
       ]
     },
     "江苏影视": {
-      "total_programs": 179,
-      "matched": 167,
+      "total_programs": 200,
+      "matched": 189,
       "match_types": {
-        "same_channel": 131,
-        "man_made": 34,
-        "global": 2
+        "same_channel": 150,
+        "man_made": 39
       },
       "match_sources": {
-        "source1": 130,
-        "man-made": 34,
-        "source2": 3
+        "source1": 150,
+        "man-made": 39
       },
       "failed_titles": [
         "欢喜一家人",
@@ -18291,19 +18475,17 @@
         "小剧星",
         "乡土江苏",
         "欢喜一家人",
-        "荔枝小剧场",
-        "剧说那些事儿"
+        "欢喜一家人"
       ]
     },
     "江苏综艺": {
-      "total_programs": 109,
-      "matched": 54,
+      "total_programs": 105,
+      "matched": 49,
       "match_types": {
-        "same_channel": 51,
-        "global": 3
+        "same_channel": 49
       },
       "match_sources": {
-        "source1": 54
+        "source1": 49
       },
       "failed_titles": [
         "缘分进行时之桃花朵朵开",
@@ -18354,13 +18536,14 @@
         "缘分进行时之桃花朵朵开",
         "缘分进行时之桃花朵朵开",
         "缘分进行时之桃花朵朵开",
-        "综艺能量站",
-        "综艺能量站",
-        "综艺能量站",
-        "综艺能量站",
-        "美好生活荔枝帮",
-        "综艺能量站",
-        "美好生活荔枝帮"
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之非诚勿扰",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开",
+        "缘分进行时之桃花朵朵开"
       ]
     },
     "卡酷少儿": {
@@ -18894,14 +19077,14 @@
       ]
     },
     "山东体育": {
-      "total_programs": 320,
-      "matched": 290,
+      "total_programs": 321,
+      "matched": 284,
       "match_types": {
-        "same_channel": 282,
+        "same_channel": 276,
         "global": 8
       },
       "match_sources": {
-        "source1": 290
+        "source1": 284
       },
       "failed_titles": [
         "中超集锦",
@@ -18933,7 +19116,14 @@
         "中超集锦",
         "冠军说",
         "直播：2025/2026CBA联赛第29轮 四川丰谷酒业vs山东高速",
-        "冠军说"
+        "激情冲击播:ONE集锦",
+        "中超集锦",
+        "冠军说",
+        "中超集锦",
+        "激情冲击播:ONE集锦",
+        "冠军说",
+        "中超集锦",
+        "CBA联赛:新疆伊力特-山东高速"
       ]
     },
     "山东文旅": {
@@ -20442,13 +20632,13 @@
       ]
     },
     "乐游": {
-      "total_programs": 619,
-      "matched": 121,
+      "total_programs": 615,
+      "matched": 117,
       "match_types": {
-        "global": 121
+        "global": 117
       },
       "match_sources": {
-        "source1": 121
+        "source1": 117
       },
       "failed_titles": [
         "非遗新体验:玩转国潮",
@@ -20881,16 +21071,17 @@
         "乐游上海:MeetInShanghai",
         "历史现场:松江城市露天博物馆",
         "记录冬日(4)",
+        "乐游上海:黄浦春日色彩",
         "乐游上海:书香文化淮海路",
         "乐游上海:春天的樱花",
         "冀味儿3(4):沧浪流香",
-        "乐游长宁:何以爱长宁",
         "乐游黄浦:春日浪漫之旅",
         "海派城市考古新发现",
         "乐游上海:黄浦春日漫游记",
         "永远的行走1(1):起步",
         "永远的行走1(2):伙伴",
         "盛世芳华(12)",
+        "乐游上海:黄浦春日色彩",
         "希腊美食(12):佩利翁山",
         "冀味儿3(5):香满御河",
         "一碗人间烟火(54):绿波廊锦鲤饺",
@@ -20906,19 +21097,18 @@
         "此心安处是吾乡:愚园路",
         "历史现场:浙闽廊桥",
         "非遗新体验(9):上海皮影",
-        "寻找目的地",
+        "寻找目的地:俄罗斯9日精品之旅",
         "乐游上海:春天的樱花",
         "寻找目的地",
         "乐游上海:黄浦春日漫游记",
         "寻找目的地:澳大利亚东海岸",
-        "记录冬日(1)",
+        "东购苏州希尔顿酒店3天2晚套餐",
         "乐游黄浦:春日浪漫之旅",
-        "寻找黔味2(2)",
         "一碗人间烟火(58):张泽红烧羊肉",
         "乐游上海:我的黄浦攻略",
         "历史现场:潮州古城",
         "永远的行走3(2):林海寻踪",
-        "乐游临港:年轻人的城",
+        "乐游上海:黄浦春日色彩",
         "永远的行走3(3):后会有期",
         "寻找目的地",
         "乐游上海:春天的樱花",
@@ -20929,24 +21119,24 @@
         "历史现场:巴蜀石刻",
         "非遗新体验(10):曜变建盏烧制技",
         "茉莉窨城(1):茉莉花开",
+        "乐游上海:黄浦春日色彩",
         "青砖上的乾坤(1):技艺",
         "记录冬日(3)",
         "寻找目的地",
         "一碗人间烟火(60):清炒素蟹粉",
-        "寻找目的地:魅力南欧阳光西葡5号",
+        "寻找目的地:魅力南欧阳光西葡",
         "乐游上海:黄浦春日漫游记",
         "历史现场:松江城市露天博物馆",
         "茉莉窨城(2):茶王争霸",
         "记录冬日(4)",
         "一碗人间烟火(61):松江大闸蟹",
+        "东购北欧四国三峡湾波罗的海三国",
         "历史现场:应县木塔",
         "走进广富林",
-        "茉莉窨城(3):茶城密码",
-        "青砖上的乾坤(3):渊源",
         "记录冬日(5)",
-        "寻找目的地",
+        "寻找目的地:莱茵河欧洲河轮之旅",
         "一碗人间烟火(61):松江大闸蟹",
-        "寻找目的地:齐云山五天四晚6号",
+        "寻找目的地:齐云山五天四晚",
         "寻找目的地",
         "茉莉窨城(3):茶城密码"
       ]
@@ -32254,13 +32444,13 @@
       ]
     },
     "济阳综合": {
-      "total_programs": 102,
-      "matched": 96,
+      "total_programs": 87,
+      "matched": 81,
       "match_types": {
-        "man_made": 96
+        "man_made": 81
       },
       "match_sources": {
-        "man-made": 96
+        "man-made": 81
       },
       "failed_titles": [
         "电视栏目《医路同行》",
@@ -32272,23 +32462,17 @@
       ]
     },
     "黄岛综合": {
-      "total_programs": 179,
-      "matched": 154,
+      "total_programs": 149,
+      "matched": 130,
       "match_types": {
-        "man_made": 148,
+        "man_made": 124,
         "global": 6
       },
       "match_sources": {
-        "man-made": 148,
+        "man-made": 124,
         "source1": 6
       },
       "failed_titles": [
-        "民生新闻坊",
-        "民生新闻坊",
-        "民生新闻坊",
-        "民生新闻坊",
-        "民生新闻坊",
-        "民生新闻坊",
         "民生新闻坊",
         "民生新闻坊",
         "民生新闻坊",
@@ -32311,20 +32495,17 @@
       ]
     },
     "黄岛生活": {
-      "total_programs": 126,
-      "matched": 115,
+      "total_programs": 105,
+      "matched": 97,
       "match_types": {
-        "man_made": 111,
+        "man_made": 93,
         "global": 4
       },
       "match_sources": {
-        "man-made": 111,
+        "man-made": 93,
         "source1": 4
       },
       "failed_titles": [
-        "西海岸新闻",
-        "西海岸新闻",
-        "西海岸新闻",
         "西海岸新闻",
         "西海岸新闻",
         "西海岸新闻",
@@ -32336,15 +32517,15 @@
       ]
     },
     "崂山综合": {
-      "total_programs": 87,
-      "matched": 85,
+      "total_programs": 70,
+      "matched": 68,
       "match_types": {
-        "man_made": 71,
-        "global": 14
+        "man_made": 57,
+        "global": 11
       },
       "match_sources": {
-        "man-made": 71,
-        "source1": 14
+        "man-made": 57,
+        "source1": 11
       },
       "failed_titles": [
         "心怡崂山",
@@ -32352,27 +32533,27 @@
       ]
     },
     "胶州综合": {
-      "total_programs": 217,
-      "matched": 217,
+      "total_programs": 183,
+      "matched": 183,
       "match_types": {
-        "man_made": 190,
-        "global": 27
+        "man_made": 160,
+        "global": 23
       },
       "match_sources": {
-        "man-made": 190,
-        "source1": 27
+        "man-made": 160,
+        "source1": 23
       },
       "failed_titles": []
     },
     "平度综合": {
-      "total_programs": 111,
-      "matched": 110,
+      "total_programs": 108,
+      "matched": 107,
       "match_types": {
-        "man_made": 98,
+        "man_made": 95,
         "global": 12
       },
       "match_sources": {
-        "man-made": 98,
+        "man-made": 95,
         "source1": 12
       },
       "failed_titles": [
@@ -32380,23 +32561,17 @@
       ]
     },
     "莱西综合": {
-      "total_programs": 406,
-      "matched": 396,
+      "total_programs": 334,
+      "matched": 330,
       "match_types": {
-        "man_made": 382,
-        "global": 14
+        "man_made": 319,
+        "global": 11
       },
       "match_sources": {
-        "man-made": 382,
-        "source1": 14
+        "man-made": 319,
+        "source1": 11
       },
       "failed_titles": [
-        "电视剧 爱上海军蓝",
-        "电视剧 爱上海军蓝",
-        "电视剧 爱上海军蓝",
-        "电视剧 爱上海军蓝",
-        "电视剧 潜伏",
-        "电视剧 爱上海军蓝",
         "电视剧 爱上海军蓝",
         "电视剧 爱上海军蓝",
         "电视剧 爱上海军蓝",
@@ -32404,63 +32579,48 @@
       ]
     },
     "张店综合": {
-      "total_programs": 67,
-      "matched": 64,
+      "total_programs": 56,
+      "matched": 54,
       "match_types": {
-        "man_made": 64
+        "man_made": 54
       },
       "match_sources": {
-        "man-made": 64
+        "man-made": 54
       },
       "failed_titles": [
-        "三叉戟（38.39）",
         "三叉戟（40.41）",
         "三叉戟（42）霞光（1）"
       ]
     },
     "桓台综合": {
-      "total_programs": 187,
-      "matched": 183,
+      "total_programs": 156,
+      "matched": 153,
       "match_types": {
-        "global": 7,
-        "man_made": 176
+        "man_made": 148,
+        "global": 5
       },
       "match_sources": {
-        "source1": 7,
-        "man-made": 176
+        "man-made": 148,
+        "source1": 5
       },
       "failed_titles": [
-        "莲花楼35-38集",
         "问苍芒10-11集",
         "问苍芒12-13集",
         "问苍芒14-15集"
       ]
     },
     "龙口综合": {
-      "total_programs": 335,
-      "matched": 258,
+      "total_programs": 283,
+      "matched": 219,
       "match_types": {
-        "man_made": 255,
+        "man_made": 216,
         "global": 3
       },
       "match_sources": {
-        "man-made": 255,
+        "man-made": 216,
         "source1": 3
       },
       "failed_titles": [
-        "电视剧场 国家命运",
-        "电视剧场 国家命运",
-        "电视剧场 国家命运",
-        "电视剧场 国家命运",
-        "电视剧场 国家命运",
-        "书香龙口",
-        "电视剧场 国家命运",
-        "电视剧场 国家命运",
-        "天气海洋预报",
-        "晚间剧场 闯关东",
-        "天气海洋预报",
-        "晚间剧场 闯关东",
-        "午夜剧场 湾区儿女",
         "书香龙口",
         "天气海洋预报",
         "晚间剧场 闯关东",
@@ -32528,25 +32688,17 @@
       ]
     },
     "招远综合": {
-      "total_programs": 143,
-      "matched": 121,
+      "total_programs": 115,
+      "matched": 101,
       "match_types": {
-        "man_made": 114,
+        "man_made": 94,
         "global": 7
       },
       "match_sources": {
-        "man-made": 114,
+        "man-made": 94,
         "source1": 7
       },
       "failed_titles": [
-        "健康招远",
-        "四年二班",
-        "健康招远",
-        "四年二班",
-        "健康招远",
-        "站在金都看山金",
-        "铁道飞虎",
-        "健康招远",
         "铁道飞虎",
         "健康招远",
         "铁道飞虎",
@@ -32564,62 +32716,60 @@
       ]
     },
     "长岛综合": {
-      "total_programs": 119,
-      "matched": 119,
+      "total_programs": 100,
+      "matched": 100,
       "match_types": {
-        "man_made": 112,
-        "global": 7
+        "man_made": 94,
+        "global": 6
       },
       "match_sources": {
-        "man-made": 112,
-        "source1": 7
+        "man-made": 94,
+        "source1": 6
       },
       "failed_titles": []
     },
     "昌乐综合": {
-      "total_programs": 112,
-      "matched": 112,
+      "total_programs": 91,
+      "matched": 91,
       "match_types": {
-        "man_made": 84,
-        "global": 28
+        "man_made": 69,
+        "global": 22
       },
       "match_sources": {
-        "man-made": 84,
-        "source1": 28
+        "man-made": 69,
+        "source1": 22
       },
       "failed_titles": []
     },
     "曲阜综合": {
-      "total_programs": 118,
-      "matched": 114,
+      "total_programs": 99,
+      "matched": 96,
       "match_types": {
-        "global": 105,
-        "man_made": 9
+        "global": 88,
+        "man_made": 8
       },
       "match_sources": {
-        "source1": 105,
-        "man-made": 9
+        "source1": 88,
+        "man-made": 8
       },
       "failed_titles": [
-        "健康伴您行",
         "健康伴您行",
         "健康伴您行",
         "健康伴您行"
       ]
     },
     "邹城综合": {
-      "total_programs": 79,
-      "matched": 66,
+      "total_programs": 77,
+      "matched": 65,
       "match_types": {
-        "man_made": 59,
+        "man_made": 58,
         "global": 7
       },
       "match_sources": {
-        "man-made": 59,
+        "man-made": 58,
         "source1": 7
       },
       "failed_titles": [
-        "健康服务",
         "生活服务节目",
         "邹鲁民生",
         "邹鲁民生",
@@ -32635,15 +32785,15 @@
       ]
     },
     "鱼台综合": {
-      "total_programs": 127,
-      "matched": 125,
+      "total_programs": 104,
+      "matched": 102,
       "match_types": {
-        "man_made": 118,
-        "global": 7
+        "man_made": 96,
+        "global": 6
       },
       "match_sources": {
-        "man-made": 118,
-        "source1": 7
+        "man-made": 96,
+        "source1": 6
       },
       "failed_titles": [
         "电视剧：《幸福草》",
@@ -32651,15 +32801,15 @@
       ]
     },
     "鱼台生活": {
-      "total_programs": 155,
-      "matched": 152,
+      "total_programs": 128,
+      "matched": 125,
       "match_types": {
-        "man_made": 136,
-        "global": 16
+        "man_made": 111,
+        "global": 14
       },
       "match_sources": {
-        "man-made": 136,
-        "source1": 16
+        "man-made": 111,
+        "source1": 14
       },
       "failed_titles": [
         "电视剧《霞光》《父亲的草原母亲的河》",
@@ -32668,71 +32818,67 @@
       ]
     },
     "岱岳综合": {
-      "total_programs": 168,
-      "matched": 168,
+      "total_programs": 143,
+      "matched": 143,
       "match_types": {
-        "man_made": 133,
-        "global": 35
+        "man_made": 113,
+        "global": 30
       },
       "match_sources": {
-        "man-made": 133,
-        "source1": 35
+        "man-made": 113,
+        "source1": 30
       },
       "failed_titles": []
     },
     "泰山综合": {
-      "total_programs": 151,
-      "matched": 151,
+      "total_programs": 125,
+      "matched": 125,
       "match_types": {
-        "man_made": 136,
-        "global": 15
+        "man_made": 113,
+        "global": 12
       },
       "match_sources": {
-        "man-made": 136,
-        "source1": 15
+        "man-made": 113,
+        "source1": 12
       },
       "failed_titles": []
     },
     "河东综合": {
-      "total_programs": 63,
-      "matched": 63,
+      "total_programs": 52,
+      "matched": 52,
       "match_types": {
-        "global": 14,
-        "man_made": 49
+        "man_made": 41,
+        "global": 11
       },
       "match_sources": {
-        "source1": 14,
-        "man-made": 49
+        "man-made": 41,
+        "source1": 11
       },
       "failed_titles": []
     },
     "沂水综合": {
-      "total_programs": 80,
-      "matched": 80,
+      "total_programs": 65,
+      "matched": 65,
       "match_types": {
-        "global": 48,
-        "man_made": 32
+        "man_made": 26,
+        "global": 39
       },
       "match_sources": {
-        "source1": 48,
-        "man-made": 32
+        "man-made": 26,
+        "source1": 39
       },
       "failed_titles": []
     },
     "沂水生活": {
-      "total_programs": 88,
-      "matched": 80,
+      "total_programs": 71,
+      "matched": 67,
       "match_types": {
-        "man_made": 80
+        "man_made": 67
       },
       "match_sources": {
-        "man-made": 80
+        "man-made": 67
       },
       "failed_titles": [
-        "警方时空",
-        "行风热线",
-        "健康沂水",
-        "健康沂水",
         "视野",
         "视野",
         "行风热线",
@@ -32740,15 +32886,15 @@
       ]
     },
     "陵城综合": {
-      "total_programs": 165,
-      "matched": 156,
+      "total_programs": 136,
+      "matched": 127,
       "match_types": {
-        "man_made": 135,
-        "global": 21
+        "man_made": 110,
+        "global": 17
       },
       "match_sources": {
-        "man-made": 135,
-        "source1": 21
+        "man-made": 110,
+        "source1": 17
       },
       "failed_titles": [
         "专题节目《和合之路》",
@@ -32763,46 +32909,41 @@
       ]
     },
     "禹城综合": {
-      "total_programs": 139,
-      "matched": 139,
+      "total_programs": 116,
+      "matched": 116,
       "match_types": {
-        "man_made": 139
+        "man_made": 116
       },
       "match_sources": {
-        "man-made": 139
+        "man-made": 116
       },
       "failed_titles": []
     },
     "禹城综艺": {
-      "total_programs": 132,
-      "matched": 132,
+      "total_programs": 110,
+      "matched": 110,
       "match_types": {
-        "man_made": 119,
-        "global": 13
+        "man_made": 99,
+        "global": 11
       },
       "match_sources": {
-        "man-made": 119,
-        "source1": 13
+        "man-made": 99,
+        "source1": 11
       },
       "failed_titles": []
     },
     "武城综合": {
-      "total_programs": 18,
-      "matched": 8,
+      "total_programs": 11,
+      "matched": 6,
       "match_types": {
-        "global": 4,
-        "man_made": 4
+        "global": 3,
+        "man_made": 3
       },
       "match_sources": {
-        "source1": 4,
-        "man-made": 4
+        "source1": 3,
+        "man-made": 3
       },
       "failed_titles": [
-        "武城新闻",
-        "武城新闻",
-        "武城新闻",
-        "武城新闻",
-        "武城新闻",
         "武城新闻",
         "武城新闻",
         "武城新闻",
@@ -32811,67 +32952,67 @@
       ]
     },
     "齐河综合": {
-      "total_programs": 144,
-      "matched": 144,
+      "total_programs": 127,
+      "matched": 127,
       "match_types": {
-        "man_made": 109,
+        "man_made": 92,
         "global": 35
       },
       "match_sources": {
-        "man-made": 109,
+        "man-made": 92,
         "source2": 35
       },
       "failed_titles": []
     },
     "莘县综合": {
-      "total_programs": 42,
-      "matched": 42,
+      "total_programs": 35,
+      "matched": 35,
       "match_types": {
-        "global": 28,
-        "man_made": 14
+        "global": 23,
+        "man_made": 12
       },
       "match_sources": {
-        "source1": 28,
-        "man-made": 14
+        "source1": 23,
+        "man-made": 12
       },
       "failed_titles": []
     },
     "惠民综合": {
-      "total_programs": 140,
-      "matched": 140,
+      "total_programs": 113,
+      "matched": 113,
       "match_types": {
-        "man_made": 112,
-        "global": 28
+        "global": 22,
+        "man_made": 91
       },
       "match_sources": {
-        "man-made": 112,
-        "source1": 28
+        "source1": 22,
+        "man-made": 91
       },
       "failed_titles": []
     },
     "沾化综合": {
-      "total_programs": 80,
-      "matched": 80,
+      "total_programs": 58,
+      "matched": 58,
       "match_types": {
-        "man_made": 64,
-        "global": 16
+        "man_made": 47,
+        "global": 11
       },
       "match_sources": {
-        "man-made": 64,
-        "source1": 16
+        "man-made": 47,
+        "source1": 11
       },
       "failed_titles": []
     },
     "定陶综合": {
-      "total_programs": 292,
-      "matched": 292,
+      "total_programs": 244,
+      "matched": 244,
       "match_types": {
-        "man_made": 260,
-        "global": 32
+        "man_made": 220,
+        "global": 24
       },
       "match_sources": {
-        "man-made": 260,
-        "source1": 32
+        "man-made": 220,
+        "source1": 24
       },
       "failed_titles": []
     },
