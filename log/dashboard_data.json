@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-03-27 12:43:52",
+  "lastUpdate": "2026-03-27 17:09:13",
   "whitelistChannels": 378,
   "matchedChannels": 375,
   "unmatchedChannels": 3,
-  "totalPrograms": 91687,
-  "filteredPrograms": 9891,
+  "totalPrograms": 91679,
+  "filteredPrograms": 10328,
   "dateRange": "20260321 ~ 20260328",
   "aliasCount": 422,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 167,
-      "programs": 55932,
+      "programs": 55919,
       "matched": 167
     },
     {
@@ -27,7 +27,7 @@
       "enabled": true,
       "channels": 537,
       "programs": 133285,
-      "matched": 130
+      "matched": 132
     },
     {
       "name": "suming",
@@ -60,8 +60,8 @@
     {
       "name": "mxdyeah",
       "enabled": true,
-      "channels": 1430,
-      "programs": 343200,
+      "channels": 1431,
+      "programs": 368343,
       "matched": 17
     },
     {
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 455,
-      "programs": 18407,
+      "programs": 19389,
       "matched": 1
     },
     {
@@ -1618,8 +1618,8 @@
     {
       "id": "乐游",
       "name": "乐游",
-      "programs": 637,
-      "todayPrograms": 81,
+      "programs": 636,
+      "todayPrograms": 80,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -1712,7 +1712,7 @@
       "id": "兵团卫视",
       "name": "兵团卫视",
       "programs": 289,
-      "todayPrograms": 38,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "兵团卫视高清"
@@ -2121,8 +2121,8 @@
     {
       "id": "台视综合",
       "name": "台视综合",
-      "programs": 149,
-      "todayPrograms": 25,
+      "programs": 156,
+      "todayPrograms": 28,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2131,8 +2131,8 @@
     {
       "id": "台视财经",
       "name": "台视财经",
-      "programs": 129,
-      "todayPrograms": 20,
+      "programs": 152,
+      "todayPrograms": 35,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2141,8 +2141,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 294,
-      "todayPrograms": 37,
+      "programs": 295,
+      "todayPrograms": 38,
       "source": "main",
       "aliases": [
         "吉林卫视高清"
@@ -2219,8 +2219,8 @@
     {
       "id": "四海钓鱼",
       "name": "四海钓鱼",
-      "programs": 440,
-      "todayPrograms": 56,
+      "programs": 438,
+      "todayPrograms": 54,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2335,8 +2335,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 318,
-      "todayPrograms": 42,
+      "programs": 316,
+      "todayPrograms": 41,
       "source": "main",
       "aliases": [
         "宁夏卫视高清"
@@ -2511,8 +2511,8 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 146,
-      "todayPrograms": 17,
+      "programs": 147,
+      "todayPrograms": 18,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2677,9 +2677,9 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 220,
-      "todayPrograms": 26,
-      "source": "main",
+      "programs": 227,
+      "todayPrograms": 36,
+      "source": "erwcc",
       "aliases": [
         "广西卫视高清"
       ],
@@ -3531,8 +3531,8 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 333,
-      "todayPrograms": 42,
+      "programs": 334,
+      "todayPrograms": 43,
       "source": "main",
       "aliases": [
         "浙江卫视高清"
@@ -3543,8 +3543,8 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 333,
-      "todayPrograms": 42,
+      "programs": 334,
+      "todayPrograms": 43,
       "source": "main",
       "aliases": [
         "浙江卫视-4K",
@@ -3655,9 +3655,9 @@
     {
       "id": "湖北卫视",
       "name": "湖北卫视",
-      "programs": 269,
-      "todayPrograms": 35,
-      "source": "main",
+      "programs": 240,
+      "todayPrograms": 33,
+      "source": "erwcc",
       "aliases": [
         "湖北卫视高清"
       ],
@@ -4231,8 +4231,8 @@
     {
       "id": "财富天下",
       "name": "财富天下",
-      "programs": 311,
-      "todayPrograms": 38,
+      "programs": 310,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -4285,8 +4285,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 403,
-      "todayPrograms": 54,
+      "programs": 396,
+      "todayPrograms": 47,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -4592,8 +4592,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 252,
-      "todayPrograms": 35,
+      "programs": 245,
+      "todayPrograms": 28,
       "source": "main",
       "aliases": [
         "青海卫视高清"
