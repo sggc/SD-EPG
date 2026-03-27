@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-27 12:44:27",
-  "total_debug_entries": 66468,
-  "total_match_attempts": 82658,
+  "generated_at": "2026-03-27 17:09:51",
+  "total_debug_entries": 66410,
+  "total_match_attempts": 82650,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -1520,20 +1520,21 @@
     },
     "CCTV9": {
       "total_programs": 227,
-      "matched": 223,
+      "matched": 222,
       "match_types": {
-        "man_made": 178,
+        "man_made": 177,
         "global": 45
       },
       "match_sources": {
-        "man-made": 178,
+        "man-made": 177,
         "source1": 45
       },
       "failed_titles": [
         "致命对决（2）",
         "树袋鼠的生存智慧",
         "狮王塞西尔",
-        "美洲野牛"
+        "美洲野牛",
+        "野生动物自然图鉴"
       ]
     },
     "CCTV10": {
@@ -3824,19 +3825,22 @@
       ]
     },
     "广西卫视": {
-      "total_programs": 220,
-      "matched": 219,
+      "total_programs": 227,
+      "matched": 223,
       "match_types": {
-        "same_channel": 147,
-        "man_made": 56,
-        "global": 16
+        "same_channel": 142,
+        "man_made": 73,
+        "global": 8
       },
       "match_sources": {
-        "source1": 163,
-        "man-made": 56
+        "source1": 150,
+        "man-made": 73
       },
       "failed_titles": [
-        "全国部分城市天气预报"
+        "桂在协商",
+        "AI聚智赋能八桂电视党课",
+        "乐比悠悠学成语(45)",
+        "乐比悠悠学成语(46)"
       ]
     },
     "贵州卫视": {
@@ -4052,16 +4056,16 @@
     },
     "黑龙江卫视": {
       "total_programs": 263,
-      "matched": 247,
+      "matched": 244,
       "match_types": {
-        "global": 25,
-        "same_channel": 208,
-        "man_made": 14
+        "global": 29,
+        "same_channel": 200,
+        "man_made": 15
       },
       "match_sources": {
-        "source1": 219,
-        "source2": 14,
-        "man-made": 14
+        "source1": 216,
+        "source2": 13,
+        "man-made": 15
       },
       "failed_titles": [
         "技耀龙江",
@@ -4079,25 +4083,43 @@
         "文学里的黑龙江",
         "百年巨匠:李焕之",
         "百年巨匠:李焕之",
+        "美食节目",
+        "百年巨匠:李焕之",
+        "百年巨匠:马三立",
         "美食节目"
       ]
     },
     "湖北卫视": {
-      "total_programs": 269,
-      "matched": 267,
+      "total_programs": 240,
+      "matched": 223,
       "match_types": {
-        "same_channel": 253,
-        "man_made": 9,
-        "global": 5
+        "man_made": 14,
+        "same_channel": 205,
+        "global": 4
       },
       "match_sources": {
-        "source1": 223,
-        "man-made": 9,
-        "source2": 35
+        "man-made": 14,
+        "source1": 197,
+        "source2": 12
       },
       "failed_titles": [
+        "猪猪侠之深海小英雄3(6)",
+        "猪猪侠之深海小英雄3(7)",
+        "猪猪侠之深海小英雄3(8)",
+        "猪猪侠之深海小英雄3(9)",
+        "向心之路",
+        "猪猪侠之深海小英雄3(10)",
+        "猪猪侠之深海小英雄3(11)",
+        "猪猪侠之深海小英雄3(12)",
+        "猪猪侠之深海小英雄3(13)",
+        "猪猪侠之深海小英雄3(14)",
         "支点周刊",
-        "戎创再冲锋"
+        "猪猪侠之深海小英雄3(15)",
+        "猪猪侠之深海小英雄3(16)",
+        "猪猪侠之深海小英雄3(17)",
+        "猪猪侠之深海小英雄3(18)",
+        "猪猪侠之深海小英雄3(19)",
+        "猪猪侠之深海小英雄3(20)"
       ]
     },
     "湖南卫视": {
@@ -4122,17 +4144,17 @@
       ]
     },
     "吉林卫视": {
-      "total_programs": 294,
-      "matched": 258,
+      "total_programs": 295,
+      "matched": 253,
       "match_types": {
-        "same_channel": 239,
-        "global": 12,
-        "man_made": 7
+        "same_channel": 230,
+        "global": 15,
+        "man_made": 8
       },
       "match_sources": {
-        "source1": 237,
-        "source2": 14,
-        "man-made": 7
+        "source1": 230,
+        "source2": 15,
+        "man-made": 8
       },
       "failed_titles": [
         "巡回检察组(1)",
@@ -4170,7 +4192,13 @@
         "巡回检察组(27)",
         "巡回检察组(28)",
         "正午吉林",
-        "勇毅的力量"
+        "巡回检察组(29)",
+        "巡回检察组(30)",
+        "巡回检察组(31)",
+        "巡回检察组(32)",
+        "巡回检察组(33)",
+        "正午吉林",
+        "民声回头看"
       ]
     },
     "江苏卫视": {
@@ -4325,16 +4353,16 @@
       ]
     },
     "宁夏卫视": {
-      "total_programs": 318,
-      "matched": 316,
+      "total_programs": 316,
+      "matched": 314,
       "match_types": {
         "man_made": 45,
-        "same_channel": 270,
+        "same_channel": 268,
         "global": 1
       },
       "match_sources": {
         "man-made": 45,
-        "source1": 271
+        "source1": 269
       },
       "failed_titles": [
         "中国秦腔盛典",
@@ -4342,16 +4370,16 @@
       ]
     },
     "青海卫视": {
-      "total_programs": 252,
-      "matched": 237,
+      "total_programs": 245,
+      "matched": 231,
       "match_types": {
-        "same_channel": 216,
-        "global": 19,
-        "man_made": 2
+        "same_channel": 198,
+        "global": 20,
+        "man_made": 13
       },
       "match_sources": {
-        "source1": 235,
-        "man-made": 2
+        "source1": 218,
+        "man-made": 13
       },
       "failed_titles": [
         "闪亮闪亮太伶美3(3)",
@@ -4367,7 +4395,6 @@
         "闪亮闪亮太伶美3(12)",
         "闪亮闪亮太伶美3(12)",
         "闪亮闪亮太伶美3(13)",
-        "征战达喀尔",
         "征战达喀尔"
       ]
     },
@@ -4410,16 +4437,16 @@
       ]
     },
     "山西卫视": {
-      "total_programs": 146,
-      "matched": 141,
+      "total_programs": 147,
+      "matched": 142,
       "match_types": {
         "man_made": 56,
-        "same_channel": 77,
+        "same_channel": 78,
         "global": 8
       },
       "match_sources": {
         "man-made": 56,
-        "source1": 83,
+        "source1": 84,
         "source2": 2
       },
       "failed_titles": [
@@ -4657,17 +4684,17 @@
       ]
     },
     "浙江卫视": {
-      "total_programs": 333,
-      "matched": 323,
+      "total_programs": 334,
+      "matched": 320,
       "match_types": {
-        "man_made": 108,
-        "same_channel": 197,
+        "man_made": 99,
+        "same_channel": 203,
         "global": 18
       },
       "match_sources": {
-        "man-made": 108,
-        "source1": 206,
-        "source2": 9
+        "man-made": 99,
+        "source1": 204,
+        "source2": 17
       },
       "failed_titles": [
         "来吧好身体Ⅰ（105）",
@@ -4679,7 +4706,11 @@
         "来吧好身体Ⅰ（108）",
         "2025总局展播马王堆岁月不朽",
         "2025总局展播马王堆岁月不朽",
-        "来吧好身体"
+        "吴越国（4）：见塔",
+        "来吧好身体Ⅰ（109）",
+        "风华合伙人先导片",
+        "王牌新春七天乐第一期",
+        "风华合伙人先导片"
       ]
     },
     "厦门卫视": {
@@ -4898,7 +4929,7 @@
         "决战风铃渡（19）",
         "决战风铃渡（20）",
         "南粤4K画卷（108）",
-        "南粤4K画卷（108）",
+        "南粤4K画卷",
         "风味人间Ⅳ（1）",
         "风味人间Ⅳ（1）",
         "老广的味道Ⅺ（5）：酸甜如意",
@@ -5197,17 +5228,17 @@
       ]
     },
     "浙江卫视4K": {
-      "total_programs": 333,
-      "matched": 322,
+      "total_programs": 334,
+      "matched": 319,
       "match_types": {
-        "man_made": 45,
-        "same_channel": 116,
-        "global": 161
+        "man_made": 36,
+        "same_channel": 131,
+        "global": 152
       },
       "match_sources": {
-        "man-made": 45,
-        "source2": 116,
-        "source1": 161
+        "man-made": 36,
+        "source2": 131,
+        "source1": 152
       },
       "failed_titles": [
         "王牌部队（18）",
@@ -5220,7 +5251,11 @@
         "来吧好身体Ⅰ（108）",
         "2025总局展播马王堆岁月不朽",
         "2025总局展播马王堆岁月不朽",
-        "来吧好身体"
+        "吴越国（4）：见塔",
+        "来吧好身体Ⅰ（109）",
+        "风华合伙人先导片",
+        "王牌新春七天乐第一期",
+        "风华合伙人先导片"
       ]
     },
     "欢笑剧场": {
@@ -6778,13 +6813,13 @@
       ]
     },
     "台视财经": {
-      "total_programs": 129,
-      "matched": 49,
+      "total_programs": 152,
+      "matched": 60,
       "match_types": {
-        "global": 49
+        "global": 60
       },
       "match_sources": {
-        "source1": 49
+        "source1": 60
       },
       "failed_titles": [
         "财经新闻通(2043)(普)",
@@ -6848,18 +6883,30 @@
         "钱线百分百（重）(3933)(普)",
         "全球新观点(2303)(普)",
         "财经新闻通(2046)(普)",
+        "钱线百分百（重）(3934)(普)",
         "钱线百分百（重）(3933)(普)",
         "股市即时通(3356)(普)",
+        "ＮＥＷＳ金探号(0640)(普)",
+        "午安您好－台视新闻(0545)(普)",
         "国际财经脉动(2932)(普)",
+        "ＮＥＷＳ金探号(0640)(普)",
         "台视新闻全球现场(0737)(普)",
+        "财经钱线周报(0090)(普)",
         "国际财经脉动(2932)(普)",
         "钱线百分百(3934)(普)",
+        "财经钱线周报(0090)(普)",
         "全球新观点(2304)(普)",
         "财经新闻通(2047)(普)",
         "国际财经脉动(2932)(普)",
         "钱线百分百（重）(3934)(普)",
-        "ＮＥＷＳ金探号(0640)(普)",
         "钱线百分百（重）(3934)(普)",
+        "财经新闻通(2047)(普)",
+        "热线追踪（重）(1262)(普)",
+        "ＮＥＷＳ金探号(0640)(普)",
+        "股海扬帆(0583)(普)",
+        "钱线百分百（重）(3934)(普)",
+        "只要钱长大(0583)(普)",
+        "股市周报(0585)(普)",
         "ＮＥＷＳ金探号(0640)(普)",
         "午安您好－台视新闻(0545)(普)",
         "台湾真善美(0507)(普)",
@@ -6976,14 +7023,14 @@
       ]
     },
     "台视综合": {
-      "total_programs": 149,
-      "matched": 51,
+      "total_programs": 156,
+      "matched": 54,
       "match_types": {
-        "global": 49,
+        "global": 52,
         "same_channel": 2
       },
       "match_sources": {
-        "source1": 49,
+        "source1": 52,
         "source2": 2
       },
       "failed_titles": [
@@ -7055,6 +7102,7 @@
         "台湾真善美（重）(1252)(普)",
         "午夜健康好简单(3102)(普)",
         "早安杨丽花歌仔戏－孙膑下山(0009)(普)",
+        "周六幸福一点通(0415)(普)",
         "杨丽花歌仔戏－孙膑下山（重）(0009)(普)",
         "台湾真善美（重）(1252)(普)",
         "冬菊，没问题！(重)(0006)(普)",
@@ -7062,17 +7110,20 @@
         "360行向前冲(重)(0734)(普)",
         "杨丽花歌仔戏－孙膑下山（重）(0009)(普)",
         "杨丽花歌仔戏－孙膑下山(0010)(普)",
+        "阎小妹 (重)(0026)(普)",
         "台湾真善美(1253)(普)",
         "３６０行向前冲(0735)(普)",
         "罪美丽(0003)(护)",
         "冬菊，没问题！(重)(0007)(普)",
+        "台湾真善美(0174)(普)",
         "罪美丽(重)(0003)(护)",
+        "家庭８点档－转转发现爱(0323)(普)",
         "冬菊，没问题！(重)(0007)(普)",
         "台湾真善美（重）(1253)(普)",
         "午夜健康好简单(3103)(普)",
         "台湾真善美(0506)(普)",
         "家庭８点档－转转发现爱(0322)(普)",
-        "周六幸福一点通(0415)(普)",
+        "周六幸福一点通(0413)(普)",
         "他看她的第2眼  (重)(0018)(普)",
         "他看她的第2眼  (重)(0019)(普)",
         "家庭８点档－转转发现爱(重)(0322)(普)",
@@ -12630,11 +12681,11 @@
         "中超集锦",
         "冠军说",
         "中超集锦",
-        "激情冲击播:ONE集锦",
-        "激情冲击播:ONE集锦",
+        "激情冲击播之ONE集锦",
+        "激情冲击播之ONE集锦",
         "冠军说",
         "中超集锦",
-        "CBA第31轮:山西汾酒-山东高速",
+        "直播：2025/2026CBA联赛第31轮 山西汾酒vs山东高速",
         "好运山东",
         "好运山东",
         "好运山东",
@@ -13527,7 +13578,7 @@
       ]
     },
     "乐游": {
-      "total_programs": 637,
+      "total_programs": 636,
       "matched": 104,
       "match_types": {
         "global": 104
@@ -13943,7 +13994,6 @@
         "一碗人间烟火(54):绿波廊锦鲤饺",
         "乐游上海:黄浦春日漫游记",
         "乐游黄浦:春日浪漫之旅",
-        "寻找黔味2(1)",
         "历史现场:浙闽廊桥",
         "非遗新体验(9):上海皮影",
         "乐游上海:春天的樱花",
@@ -14701,13 +14751,13 @@
       ]
     },
     "四海钓鱼": {
-      "total_programs": 440,
-      "matched": 424,
+      "total_programs": 438,
+      "matched": 422,
       "match_types": {
-        "same_channel": 424
+        "same_channel": 422
       },
       "match_sources": {
-        "source1": 424
+        "source1": 422
       },
       "failed_titles": [
         "钓谈风云",
@@ -14925,15 +14975,15 @@
       "failed_titles": []
     },
     "财富天下": {
-      "total_programs": 311,
-      "matched": 311,
+      "total_programs": 310,
+      "matched": 310,
       "match_types": {
         "same_channel": 54,
-        "man_made": 257
+        "man_made": 256
       },
       "match_sources": {
         "source1": 54,
-        "man-made": 257
+        "man-made": 256
       },
       "failed_titles": []
     },
@@ -16258,16 +16308,16 @@
       ]
     },
     "都市剧场": {
-      "total_programs": 403,
-      "matched": 402,
+      "total_programs": 396,
+      "matched": 395,
       "match_types": {
         "same_channel": 362,
-        "man_made": 40
+        "man_made": 33
       },
       "match_sources": {
         "source1": 361,
         "source2": 1,
-        "man-made": 40
+        "man-made": 33
       },
       "failed_titles": [
         "切换人生"
@@ -17304,14 +17354,14 @@
       "total_programs": 391,
       "matched": 389,
       "match_types": {
-        "man_made": 281,
+        "man_made": 283,
         "global": 52,
-        "same_channel": 56
+        "same_channel": 54
       },
       "match_sources": {
-        "man-made": 281,
+        "man-made": 283,
         "source1": 52,
-        "source2": 56
+        "source2": 54
       },
       "failed_titles": [
         "专题节目五",
