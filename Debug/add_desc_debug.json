@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-29 05:05:31",
-  "total_debug_entries": 65772,
-  "total_match_attempts": 82763,
+  "generated_at": "2026-03-29 12:48:20",
+  "total_debug_entries": 65810,
+  "total_match_attempts": 82807,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -1588,14 +1588,14 @@
       ]
     },
     "CCTV9": {
-      "total_programs": 227,
-      "matched": 222,
+      "total_programs": 228,
+      "matched": 223,
       "match_types": {
-        "man_made": 174,
+        "man_made": 175,
         "global": 48
       },
       "match_sources": {
-        "man-made": 174,
+        "man-made": 175,
         "source1": 48
       },
       "failed_titles": [
@@ -3821,15 +3821,15 @@
       ]
     },
     "北京卫视": {
-      "total_programs": 363,
-      "matched": 359,
+      "total_programs": 380,
+      "matched": 376,
       "match_types": {
         "same_channel": 210,
-        "man_made": 149
+        "man_made": 166
       },
       "match_sources": {
         "source1": 210,
-        "man-made": 149
+        "man-made": 166
       },
       "failed_titles": [
         "神奇动物园(1)",
@@ -4059,16 +4059,16 @@
       ]
     },
     "甘肃卫视": {
-      "total_programs": 384,
-      "matched": 371,
+      "total_programs": 396,
+      "matched": 383,
       "match_types": {
-        "man_made": 83,
-        "same_channel": 240,
-        "global": 48
+        "man_made": 94,
+        "same_channel": 238,
+        "global": 51
       },
       "match_sources": {
-        "man-made": 83,
-        "source1": 286,
+        "man-made": 94,
+        "source1": 287,
         "source2": 2
       },
       "failed_titles": [
@@ -4084,7 +4084,7 @@
         "法治护航生态权益(3)",
         "瞰新区",
         "腔调(8)邢财成",
-        "红色经典咏流传"
+        "红色经典咏流传(11)"
       ]
     },
     "海南卫视": {
@@ -4159,16 +4159,16 @@
       ]
     },
     "河北卫视": {
-      "total_programs": 337,
-      "matched": 324,
+      "total_programs": 334,
+      "matched": 321,
       "match_types": {
-        "man_made": 121,
-        "same_channel": 196,
+        "man_made": 120,
+        "same_channel": 194,
         "global": 7
       },
       "match_sources": {
-        "man-made": 121,
-        "source1": 162,
+        "man-made": 120,
+        "source1": 160,
         "source2": 41
       },
       "failed_titles": [
@@ -4438,17 +4438,17 @@
       ]
     },
     "江西卫视": {
-      "total_programs": 257,
-      "matched": 249,
+      "total_programs": 273,
+      "matched": 263,
       "match_types": {
-        "man_made": 20,
-        "same_channel": 220,
+        "man_made": 22,
+        "same_channel": 232,
         "global": 9
       },
       "match_sources": {
-        "man-made": 20,
-        "source1": 214,
-        "source2": 15
+        "man-made": 22,
+        "source1": 222,
+        "source2": 19
       },
       "failed_titles": [
         "家有喜事",
@@ -4458,7 +4458,9 @@
         "我的铁血金戈梦(4)",
         "我的铁血金戈梦(5)",
         "我的铁血金戈梦(6)",
-        "我的铁血金戈梦(7)"
+        "我的铁血金戈梦(7)",
+        "家的味道",
+        "我的铁血金戈梦(9)"
       ]
     },
     "康巴卫视": {
@@ -4740,15 +4742,15 @@
       "failed_titles": []
     },
     "西藏卫视": {
-      "total_programs": 724,
-      "matched": 653,
+      "total_programs": 726,
+      "matched": 655,
       "match_types": {
-        "man_made": 304,
+        "man_made": 306,
         "same_channel": 348,
         "global": 1
       },
       "match_sources": {
-        "man-made": 304,
+        "man-made": 306,
         "source1": 349
       },
       "failed_titles": [
@@ -4826,16 +4828,16 @@
       ]
     },
     "云南卫视": {
-      "total_programs": 223,
-      "matched": 210,
+      "total_programs": 218,
+      "matched": 205,
       "match_types": {
         "man_made": 37,
-        "same_channel": 167,
+        "same_channel": 162,
         "global": 6
       },
       "match_sources": {
         "man-made": 37,
-        "source1": 170,
+        "source1": 165,
         "source2": 3
       },
       "failed_titles": [
@@ -4954,14 +4956,14 @@
       ]
     },
     "北京卫视4K": {
-      "total_programs": 363,
-      "matched": 324,
+      "total_programs": 380,
+      "matched": 341,
       "match_types": {
-        "man_made": 142,
+        "man_made": 159,
         "global": 182
       },
       "match_sources": {
-        "man-made": 142,
+        "man-made": 159,
         "source1": 182
       },
       "failed_titles": [
@@ -4996,11 +4998,11 @@
         "我是老北京古树传奇（1）",
         "神奇动物园（1）",
         "风味人间Ⅳ（3）",
-        "风味人间Ⅳ（3）",
+        "风味人间Ⅳ(3)",
         "《亮剑》预告版",
         "《我深深地爱着你》预告",
-        "风味人间Ⅳ（4）",
-        "风味人间Ⅳ（4）",
+        "风味人间Ⅳ(4)",
+        "风味人间Ⅳ(4)",
         "北京大视听用生命树书写绿色答卷",
         "《我深深地爱着你》预告",
         "风味人间Ⅳ(5)"
@@ -5577,37 +5579,11 @@
       ]
     },
     "Astro QJ": {
-      "total_programs": 62,
+      "total_programs": 54,
       "matched": 0,
       "match_types": {},
       "match_sources": {},
       "failed_titles": [
-        "Lu Yu You Yue",
-        "Macau Food's Time",
-        "The Last Cook",
-        "The Last Cook",
-        "How Dare You!?",
-        "A League of Nobleman",
-        "Breakfast In China",
-        "Go Go Goal",
-        "Hi Saturday 2025",
-        "How Dare You!?",
-        "Hi Saturday 2026",
-        "Hey Girls, Adventure",
-        "The Inn 2026",
-        "Craftsmanship and Ingenuity",
-        "How Dare You!?",
-        "Stellar Bites",
-        "Craftsmanship and Ingenuity",
-        "Kowloon My City",
-        "Atypical Family",
-        "The Pride Of Hunan Cuisine",
-        "Craftsmanship and Ingenuity",
-        "How Dare You!?",
-        "Stellar Bites",
-        "Craftsmanship and Ingenuity",
-        "Lu Yu You Yue",
-        "How Dare You!?",
         "Craftsmanship and Ingenuity",
         "Divas Hit The Road",
         "Craftsmanship and Ingenuity",
@@ -5643,7 +5619,25 @@
         "How Dare You!?",
         "Hey Girls, Adventure",
         "Twenty Your Life On 2",
-        "Hi Saturday 2025"
+        "Hi Saturday 2025",
+        "How Dare You!?",
+        "Lu Yu You Yue",
+        "The Pride Of Hunan Cuisine",
+        "Hi Saturday 2026",
+        "Atypical Family",
+        "Twenty Your Life On 2",
+        "How Dare You!?",
+        "Atypical Family",
+        "Underwater China",
+        "The Last Cook",
+        "The Last Cook",
+        "A League of Nobleman",
+        "Breakfast In China",
+        "How Dare You!?",
+        "Where You Pee",
+        "19th Floor",
+        "Workplace Newcomers·TCM Season",
+        "How Dare You!?"
       ]
     },
     "HOY77": {
@@ -13177,26 +13171,26 @@
       "total_programs": 341,
       "matched": 341,
       "match_types": {
-        "man_made": 49,
-        "same_channel": 255,
+        "same_channel": 262,
+        "man_made": 42,
         "global": 37
       },
       "match_sources": {
-        "man-made": 49,
-        "source1": 292
+        "source1": 299,
+        "man-made": 42
       },
       "failed_titles": []
     },
     "山东齐鲁": {
-      "total_programs": 283,
-      "matched": 263,
+      "total_programs": 278,
+      "matched": 258,
       "match_types": {
-        "man_made": 38,
-        "same_channel": 225
+        "same_channel": 227,
+        "man_made": 31
       },
       "match_sources": {
-        "man-made": 38,
-        "source1": 225
+        "source1": 227,
+        "man-made": 31
       },
       "failed_titles": [
         "关注",
@@ -13243,13 +13237,13 @@
       "total_programs": 285,
       "matched": 284,
       "match_types": {
-        "man_made": 12,
         "global": 15,
-        "same_channel": 257
+        "same_channel": 264,
+        "man_made": 5
       },
       "match_sources": {
-        "man-made": 12,
-        "source1": 272
+        "source1": 279,
+        "man-made": 5
       },
       "failed_titles": [
         "山东直通车"
@@ -13321,42 +13315,54 @@
     },
     "山东新闻": {
       "total_programs": 479,
-      "matched": 453,
+      "matched": 441,
       "match_types": {
-        "man_made": 87,
-        "same_channel": 366
+        "same_channel": 359,
+        "man_made": 82
       },
       "match_sources": {
-        "man-made": 87,
-        "source1": 366
+        "source1": 359,
+        "man-made": 82
       },
       "failed_titles": [
-        "大抗战(119)敌后战场局部反攻",
-        "大泰山(1)",
+        "光耀齐鲁（新闻频道80集）-49 王吉文",
+        "光耀齐鲁（新闻频道80集）-50 郭继胜",
+        "大抗战-119 敌后战场局部反攻",
+        "光耀齐鲁（新闻频道80集）-51 解文卿",
         "关注",
-        "大抗战(120)豫西鄂北战役",
-        "大抗战战局大转变美苏对日进攻",
-        "大泰山(2)",
+        "大抗战-120 豫西鄂北战役",
+        "光耀齐鲁（新闻频道80集）-52卢志英",
+        "光耀齐鲁（新闻频道80集）-53秦鸿钧",
+        "大抗战-123战局大转变美苏对日进攻",
+        "光耀齐鲁（新闻频道80集）-55沂蒙六姐妹",
         "关注",
-        "大抗战(124)敌后战场的全面反攻",
-        "大泰山(3)",
+        "大抗战-124敌后战场的全面反攻",
+        "大抗战-125抗联部队配合苏军出兵中国东北作战",
+        "光耀齐鲁（新闻频道80集）-57 王杰",
+        "光耀齐鲁（新闻频道80集）-58 王海",
+        "光耀齐鲁（新闻频道80集）-59 曹玉海",
         "关注",
-        "大泰山(4)",
         "关注",
-        "大抗战(3)东北义勇军抗战",
-        "大抗战(4)东北抗日联军(上)",
-        "大抗战(5)东北抗日联军(下)",
-        "大抗战(6)东北抗日联军英雄谱",
-        "大泰山(5)",
+        "大抗战-3 东北义勇军抗战",
+        "大抗战-4 东北抗日联军（上）",
+        "大抗战-5 东北抗日联军（下）",
+        "大抗战-6 东北抗日联军英雄谱",
         "关注",
-        "大抗战(7)一二八淞沪抗战",
-        "大泰山(6)",
+        "大抗战7-一二八淞沪抗战",
+        "光耀齐鲁（新闻频道80集）-66 吕鸿宾",
+        "光耀齐鲁（新闻频道80集）-67 王永幸",
+        "大抗战（2021版）9-察哈尔抗战",
+        "大抗战（2021版）10-华北事变",
         "关注",
         "新国动新视界",
+        "大抗战（2021版）11-绥远抗战",
+        "大抗战（2021版）12-一二九运动",
         "东营新时空",
-        "信仰如炬",
+        "大抗战（2021版）13-西安事变",
+        "大抗战（2021版）14-卢沟桥事变",
         "关注",
-        "东营新时空"
+        "东营新时空",
+        "大抗战（2021版）15-血战平津"
       ]
     },
     "山东教育": {
@@ -13376,12 +13382,12 @@
       "total_programs": 214,
       "matched": 214,
       "match_types": {
-        "man_made": 16,
-        "same_channel": 198
+        "same_channel": 207,
+        "man_made": 7
       },
       "match_sources": {
-        "man-made": 16,
-        "source1": 198
+        "source1": 207,
+        "man-made": 7
       },
       "failed_titles": []
     },
