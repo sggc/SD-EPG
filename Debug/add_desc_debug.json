@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-31 05:28:43",
-  "total_debug_entries": 63546,
-  "total_match_attempts": 81131,
+  "generated_at": "2026-03-31 12:46:08",
+  "total_debug_entries": 63651,
+  "total_match_attempts": 81240,
   "normalize_examples": [
     {
       "original": "CCTV2",
@@ -3627,15 +3627,15 @@
       ]
     },
     "CGTN": {
-      "total_programs": 361,
-      "matched": 353,
+      "total_programs": 362,
+      "matched": 354,
       "match_types": {
-        "same_channel": 339,
+        "same_channel": 340,
         "man_made": 12,
         "global": 2
       },
       "match_sources": {
-        "source1": 341,
+        "source1": 342,
         "man-made": 12
       },
       "failed_titles": [
@@ -3844,15 +3844,16 @@
       ]
     },
     "北京卫视": {
-      "total_programs": 243,
+      "total_programs": 248,
       "matched": 231,
       "match_types": {
-        "man_made": 62,
-        "same_channel": 169
+        "man_made": 64,
+        "same_channel": 166,
+        "global": 1
       },
       "match_sources": {
-        "man-made": 62,
-        "source1": 169
+        "man-made": 64,
+        "source1": 167
       },
       "failed_titles": [
         "甘肃(6)",
@@ -3866,7 +3867,12 @@
         "神奇动物园(1)",
         "预告",
         "古都新城",
-        "北京大视听用生命树书写绿色答卷"
+        "北京大视听用生命树书写绿色答卷",
+        "古都新城",
+        "甘肃(8)",
+        "古都新城",
+        "预告版",
+        "预告"
       ]
     },
     "重庆卫视": {
@@ -4068,16 +4074,16 @@
       ]
     },
     "甘肃卫视": {
-      "total_programs": 387,
-      "matched": 373,
+      "total_programs": 400,
+      "matched": 383,
       "match_types": {
-        "man_made": 77,
-        "same_channel": 243,
-        "global": 53
+        "man_made": 88,
+        "same_channel": 238,
+        "global": 57
       },
       "match_sources": {
-        "man-made": 77,
-        "source1": 293,
+        "man-made": 88,
+        "source1": 292,
         "source2": 3
       },
       "failed_titles": [
@@ -4094,7 +4100,10 @@
         "飞越甘肃探水",
         "护航警官",
         "人文始祖",
-        "瞰新区"
+        "人文始祖",
+        "人文始祖",
+        "瞰新区",
+        "人文始祖"
       ]
     },
     "海南卫视": {
@@ -4703,16 +4712,16 @@
       ]
     },
     "四川卫视": {
-      "total_programs": 221,
-      "matched": 213,
+      "total_programs": 233,
+      "matched": 227,
       "match_types": {
-        "man_made": 9,
-        "same_channel": 203,
+        "man_made": 8,
+        "same_channel": 218,
         "global": 1
       },
       "match_sources": {
-        "man-made": 9,
-        "source1": 204
+        "man-made": 8,
+        "source1": 219
       },
       "failed_titles": [
         "旅游风景区气象信息",
@@ -4720,9 +4729,7 @@
         "旅游风景区气象信息",
         "经典回顾",
         "2026花开天下国韵新年演唱会",
-        "旅游风景区气象信息",
-        "卡通剧场",
-        "燃情剧场"
+        "旅游风景区气象信息"
       ]
     },
     "深圳卫视": {
@@ -4772,16 +4779,16 @@
       "failed_titles": []
     },
     "西藏卫视": {
-      "total_programs": 661,
-      "matched": 602,
+      "total_programs": 720,
+      "matched": 652,
       "match_types": {
-        "man_made": 263,
-        "same_channel": 338,
+        "man_made": 301,
+        "same_channel": 350,
         "global": 1
       },
       "match_sources": {
-        "man-made": 263,
-        "source1": 339
+        "man-made": 301,
+        "source1": 351
       },
       "failed_titles": [
         "大道之行探访中国式现代化(2)",
@@ -4822,6 +4829,15 @@
         "品牌广告",
         "品牌广告",
         "青稞飘香Ⅳ",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
+        "品牌广告",
         "品牌广告",
         "品牌广告",
         "品牌广告",
@@ -5470,15 +5486,15 @@
       ]
     },
     "四川卫视4K": {
-      "total_programs": 221,
-      "matched": 202,
+      "total_programs": 233,
+      "matched": 216,
       "match_types": {
-        "man_made": 9,
-        "global": 193
+        "man_made": 8,
+        "global": 208
       },
       "match_sources": {
-        "man-made": 9,
-        "source1": 193
+        "man-made": 8,
+        "source1": 208
       },
       "failed_titles": [
         "旅游风景区气象信息",
@@ -5497,8 +5513,6 @@
         "旅游风景区气象信息",
         "四川超安逸",
         "四川超安逸",
-        "卡通剧场",
-        "燃情剧场",
         "四川超安逸"
       ]
     },
@@ -5599,37 +5613,11 @@
       ]
     },
     "Astro QJ": {
-      "total_programs": 62,
+      "total_programs": 54,
       "matched": 0,
       "match_types": {},
       "match_sources": {},
       "failed_titles": [
-        "The Truth",
-        "Kowloon My City",
-        "Atypical Family",
-        "The Pride Of Hunan Cuisine",
-        "How Dare You!?",
-        "Hey Girls, Adventure",
-        "Twenty Your Life On 2",
-        "Hi Saturday 2025",
-        "How Dare You!?",
-        "Lu Yu You Yue",
-        "The Pride Of Hunan Cuisine",
-        "Hi Saturday 2026",
-        "Atypical Family",
-        "Twenty Your Life On 2",
-        "How Dare You!?",
-        "Atypical Family",
-        "Underwater China",
-        "The Last Cook",
-        "The Last Cook",
-        "A League of Nobleman",
-        "Breakfast In China",
-        "How Dare You!?",
-        "Where You Pee",
-        "19th Floor",
-        "Workplace Newcomers·TCM Season",
-        "How Dare You!?",
         "19th Floor",
         "Where You Pee",
         "The Last Cook",
@@ -5665,7 +5653,25 @@
         "A League of Nobleman",
         "Breakfast In China",
         "Twenty Your Life On 2",
-        "Hi Saturday 2025"
+        "Hi Saturday 2025",
+        "How Dare You!?",
+        "Taste of Life",
+        "Craftsmanship and Ingenuity",
+        "Where You Pee",
+        "Workplace Newcomers·TCM Season",
+        "The Story Of Anhua Dark Tea",
+        "Twenty Your Life On 2",
+        "How Dare You!?",
+        "19th Floor",
+        "The Last Cook",
+        "The Last Cook",
+        "A League of Nobleman",
+        "Breakfast In China",
+        "How Dare You!?",
+        "Macau Food's Time",
+        "19th Floor",
+        "Go for Happiness",
+        "How Dare You!?"
       ]
     },
     "HOY77": {
@@ -13741,16 +13747,14 @@
       ]
     },
     "山东体育": {
-      "total_programs": 318,
-      "matched": 288,
+      "total_programs": 313,
+      "matched": 280,
       "match_types": {
-        "same_channel": 279,
-        "global": 8,
-        "man_made": 1
+        "same_channel": 272,
+        "global": 8
       },
       "match_sources": {
-        "source1": 287,
-        "man-made": 1
+        "source1": 280
       },
       "failed_titles": [
         "中超集锦",
@@ -13782,7 +13786,10 @@
         "中超集锦",
         "冠军说",
         "直播：2025/2026CBA联赛第32轮 山东高速vs天津先行者",
-        "冠军说"
+        "中超集锦",
+        "中超集锦",
+        "中超集锦",
+        "CBA联赛:山东高速-福建晋江文旅"
       ]
     },
     "山东文旅": {
@@ -14975,7 +14982,7 @@
       ]
     },
     "乐游": {
-      "total_programs": 595,
+      "total_programs": 591,
       "matched": 72,
       "match_types": {
         "global": 72
@@ -15437,7 +15444,6 @@
         "上博的至宝(6):再创辉煌",
         "马背之旅(106):西班牙",
         "乐游上海:黄浦春日漫游记",
-        "乐游上海:向世界发出邀请",
         "一碗人间烟火(62):一合酥",
         "乐游上海:黄浦春日色彩",
         "上博的至宝(1):吉金铸史",
@@ -15448,7 +15454,6 @@
         "一碗人间烟火(63):阿六汤圆",
         "乐游黄浦:春日浪漫之旅",
         "发现新上海5(1):浦江之滨",
-        "乐游徐汇:徐汇非遗之旅",
         "上博的至宝(2):瓷韵风华",
         "稻之道(1):稻之源",
         "盛世芳华(16)",
@@ -15458,21 +15463,21 @@
         "川味1(2):竹宴",
         "发现新上海5(2):读懂建筑",
         "上博的至宝(3):翰墨丹青",
-        "寻找目的地",
-        "寻找目的地",
+        "寻找目的地:俄罗斯9日精品之旅",
+        "寻找目的地:北极邮轮",
         "乐游上海:黄浦春日色彩",
         "寻找目的地",
-        "马背之旅(103):乔治亚海岸",
+        "东购横跨欧非西班牙葡萄牙摩洛哥",
         "川味1(3):泡菜",
-        "川味1(4):坛子肉",
         "发现新上海5(3):客宿沪郊",
         "上博的至宝(4):金石永铸",
         "乐游上海:春天的樱花",
         "稻之道(4):稻之味",
+        "寻找目的地:魅力南欧阳光西葡",
         "乐游黄浦:春日浪漫之旅",
-        "寻找目的地:香格里拉秘境之旅3号",
-        "川味1(5):东坡肘子",
+        "寻找目的地:莱茵河欧洲河轮之旅",
         "川味1(6):火锅",
+        "乐游上海:黄浦春日漫游记",
         "发现新上海5(4):上海礼物",
         "上博的至宝(5):匠心妙制",
         "乐游上海:春天的樱花",
@@ -15481,12 +15486,11 @@
         "马背之旅(105):科罗拉多州",
         "寻找目的地",
         "乐游上海:黄浦春日漫游记",
-        "寻找目的地:桂越双城记4号",
+        "寻找目的地:桂越双城记",
         "乐游上海:黄浦春日色彩",
         "发现新上海:名厨名菜(1)",
         "上博的至宝(6):再创辉煌",
         "寻味顺德(1):乡土之源",
-        "海派百工(59):浦东绕龙灯",
         "乐游黄浦:春日浪漫之旅",
         "马背之旅(106):西班牙",
         "乐游上海:黄浦春日漫游记",
@@ -15494,16 +15498,15 @@
         "川味1(11):毛血旺",
         "乐游上海:黄浦春日色彩",
         "发现新上海:名厨名菜(2)",
+        "东购西藏天上阿里珠峰圣湖14日",
         "行走的博物馆(1):照亮千年的光",
-        "寻味顺德(2):匠心独运",
         "乐游黄浦:春日浪漫之旅",
         "马背之旅(201):爱尔兰(上)",
         "乐游上海:黄浦春日漫游记",
-        "寻找目的地:北极邮轮1号",
+        "寻找目的地:北极邮轮",
         "乐游上海:黄浦春日色彩",
-        "寻找目的地:巴尔干四国6号",
+        "寻找目的地:巴尔干四国",
         "发现新上海:名厨名菜(2)",
-        "乐游上海:向世界发出邀请",
         "寻味顺德(2):匠心独运",
         "乐游上海:春天的樱花",
         "乐游黄浦:春日浪漫之旅"
@@ -16339,13 +16342,13 @@
       ]
     },
     "游戏风云": {
-      "total_programs": 302,
-      "matched": 302,
+      "total_programs": 326,
+      "matched": 326,
       "match_types": {
-        "same_channel": 302
+        "same_channel": 326
       },
       "match_sources": {
-        "source1": 302
+        "source1": 326
       },
       "failed_titles": []
     },
