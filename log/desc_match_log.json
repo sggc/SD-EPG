@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-03-31 18:47:29",
+  "timestamp": "2026-03-31 18:55:21",
   "type": "add_desc",
   "stats": {
-    "total_programs": 87334,
+    "total_programs": 87357,
     "already_has_desc": 6583,
-    "matched_man_made": 15201,
-    "matched_same_channel": 28568,
-    "matched_global": 5822,
-    "no_match": 31160,
-    "match_rate": 61.41
+    "matched_man_made": 15184,
+    "matched_same_channel": 28584,
+    "matched_global": 5825,
+    "no_match": 31181,
+    "match_rate": 61.4
   },
   "sources": {
-    "man-made": 15201,
-    "source1": 31493,
-    "source2": 2897
+    "man-made": 15184,
+    "source1": 31492,
+    "source2": 2917
   },
   "channels": [
     {
@@ -115,18 +115,18 @@
       "rate": 91.4
     },
     {
-      "name": "都市剧场",
-      "total": 390,
-      "matched": 385,
-      "has_desc": 0,
-      "rate": 98.7
-    },
-    {
       "name": "甘肃卫视",
       "total": 400,
       "matched": 383,
       "has_desc": 0,
       "rate": 95.8
+    },
+    {
+      "name": "都市剧场",
+      "total": 384,
+      "matched": 379,
+      "has_desc": 0,
+      "rate": 98.7
     },
     {
       "name": "农林卫视",
@@ -171,6 +171,13 @@
       "rate": 98.3
     },
     {
+      "name": "贵州卫视",
+      "total": 407,
+      "matched": 349,
+      "has_desc": 0,
+      "rate": 85.7
+    },
+    {
       "name": "法治天地",
       "total": 413,
       "matched": 349,
@@ -183,20 +190,6 @@
       "matched": 346,
       "has_desc": 0,
       "rate": 99.4
-    },
-    {
-      "name": "贵州卫视",
-      "total": 398,
-      "matched": 345,
-      "has_desc": 0,
-      "rate": 86.7
-    },
-    {
-      "name": "CCTV4",
-      "total": 346,
-      "matched": 343,
-      "has_desc": 0,
-      "rate": 99.1
     },
     {
       "name": "环球旅游",
@@ -218,6 +211,13 @@
       "matched": 340,
       "has_desc": 0,
       "rate": 87.6
+    },
+    {
+      "name": "CCTV4",
+      "total": 342,
+      "matched": 339,
+      "has_desc": 0,
+      "rate": 99.1
     },
     {
       "name": "CCTV8",
@@ -269,18 +269,18 @@
       "rate": 100.0
     },
     {
-      "name": "CCTV4欧洲",
-      "total": 329,
-      "matched": 325,
-      "has_desc": 0,
-      "rate": 98.8
-    },
-    {
       "name": "宁夏卫视",
       "total": 323,
       "matched": 323,
       "has_desc": 0,
       "rate": 100.0
+    },
+    {
+      "name": "CCTV4欧洲",
+      "total": 326,
+      "matched": 322,
+      "has_desc": 0,
+      "rate": 98.8
     },
     {
       "name": "CCTV2",
@@ -297,18 +297,18 @@
       "rate": 100.0
     },
     {
-      "name": "CCTV4美洲",
-      "total": 318,
-      "matched": 314,
-      "has_desc": 0,
-      "rate": 98.7
-    },
-    {
       "name": "三沙卫视",
       "total": 313,
       "matched": 312,
       "has_desc": 0,
       "rate": 99.7
+    },
+    {
+      "name": "CCTV4美洲",
+      "total": 314,
+      "matched": 310,
+      "has_desc": 0,
+      "rate": 98.7
     },
     {
       "name": "财富天下",
