@@ -158,9 +158,11 @@ const toggleAuth = () => {
 
 const fetchData = async () => {
   try {
-    let url = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json'
+    let url
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       url = '/dashboard_data.json'
+    } else {
+      url = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/dashboard/public/dashboard_data.json'
     }
     const response = await axios.get(url, { timeout: 10000 })
     data.value = response.data
