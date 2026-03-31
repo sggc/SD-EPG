@@ -1,12 +1,15 @@
 {
-  "timestamp": "2026-03-31 20:33:35",
-  "type": "add_desc",
-  "stats": {
+  "timestamp": "2026-03-31 20:42:04",
+  "type": "desc_injection",
+  "summary": {
     "total_programs": 87357,
     "already_has_desc": 6584,
-    "matched_man_made": 20380,
-    "matched_same_channel": 29070,
-    "matched_global": 9666,
+    "matched": {
+      "man_made": 20380,
+      "same_channel": 29070,
+      "global": 9666,
+      "total": 59116
+    },
     "no_match": 21657,
     "match_rate": 73.19
   },
