@@ -1,28 +1,25 @@
 {
-  "timestamp": "2026-03-31 20:42:04",
-  "type": "desc_injection",
-  "summary": {
-    "total_programs": 87357,
-    "already_has_desc": 6584,
-    "matched": {
-      "man_made": 20380,
-      "same_channel": 29070,
-      "global": 9666,
-      "total": 59116
-    },
-    "no_match": 21657,
+  "timestamp": "2026-04-01 04:02:35",
+  "type": "add_desc",
+  "stats": {
+    "total_programs": 87391,
+    "already_has_desc": 6439,
+    "matched_man_made": 20373,
+    "matched_same_channel": 29200,
+    "matched_global": 9679,
+    "no_match": 21700,
     "match_rate": 73.19
   },
   "sources": {
-    "man-made": 20380,
-    "source1": 35156,
-    "source2": 3580
+    "man-made": 20373,
+    "source1": 35389,
+    "source2": 3490
   },
   "channels": [
     {
       "name": "嘉佳卡通",
-      "total": 1124,
-      "matched": 1056,
+      "total": 1132,
+      "matched": 1064,
       "has_desc": 0,
       "rate": 94.0
     },
@@ -34,32 +31,39 @@
       "rate": 100.0
     },
     {
-      "name": "生活时尚",
-      "total": 1092,
-      "matched": 825,
+      "name": "动漫秀场",
+      "total": 878,
+      "matched": 874,
       "has_desc": 0,
-      "rate": 75.5
+      "rate": 99.5
     },
     {
-      "name": "动漫秀场",
-      "total": 800,
-      "matched": 738,
+      "name": "生活时尚",
+      "total": 1086,
+      "matched": 805,
       "has_desc": 0,
-      "rate": 92.2
+      "rate": 74.1
     },
     {
       "name": "汽摩",
-      "total": 617,
-      "matched": 617,
+      "total": 756,
+      "matched": 756,
       "has_desc": 0,
       "rate": 100.0
     },
     {
+      "name": "西藏卫视",
+      "total": 732,
+      "matched": 666,
+      "has_desc": 0,
+      "rate": 91.0
+    },
+    {
       "name": "CCTV电视指南",
       "total": 990,
-      "matched": 551,
+      "matched": 552,
       "has_desc": 0,
-      "rate": 55.7
+      "rate": 55.8
     },
     {
       "name": "中华特产",
@@ -77,31 +81,31 @@
     },
     {
       "name": "中国教育1",
-      "total": 567,
-      "matched": 468,
+      "total": 566,
+      "matched": 459,
       "has_desc": 0,
-      "rate": 82.5
+      "rate": 81.1
     },
     {
       "name": "深圳卫视",
-      "total": 493,
-      "matched": 456,
+      "total": 492,
+      "matched": 455,
       "has_desc": 0,
       "rate": 92.5
     },
     {
       "name": "金鹰卡通",
-      "total": 448,
-      "matched": 447,
+      "total": 453,
+      "matched": 452,
       "has_desc": 0,
       "rate": 99.8
     },
     {
       "name": "山东新闻",
-      "total": 478,
-      "matched": 438,
+      "total": 477,
+      "matched": 451,
       "has_desc": 0,
-      "rate": 91.6
+      "rate": 94.5
     },
     {
       "name": "IPTV法治",
@@ -112,80 +116,80 @@
     },
     {
       "name": "四海钓鱼",
-      "total": 440,
-      "matched": 424,
+      "total": 438,
+      "matched": 422,
       "has_desc": 0,
-      "rate": 96.4
+      "rate": 96.3
     },
     {
       "name": "河北三农",
-      "total": 432,
-      "matched": 418,
+      "total": 435,
+      "matched": 421,
       "has_desc": 0,
       "rate": 96.8
     },
     {
-      "name": "深圳卫视4K",
-      "total": 493,
-      "matched": 398,
-      "has_desc": 0,
-      "rate": 80.7
-    },
-    {
       "name": "NewTV古装剧场",
-      "total": 396,
-      "matched": 396,
+      "total": 397,
+      "matched": 397,
       "has_desc": 0,
       "rate": 100.0
     },
     {
       "name": "发现之旅",
-      "total": 430,
+      "total": 436,
       "matched": 393,
       "has_desc": 0,
-      "rate": 91.4
-    },
-    {
-      "name": "甘肃卫视",
-      "total": 400,
-      "matched": 383,
-      "has_desc": 0,
-      "rate": 95.8
-    },
-    {
-      "name": "都市剧场",
-      "total": 384,
-      "matched": 379,
-      "has_desc": 0,
-      "rate": 98.7
+      "rate": 90.1
     },
     {
       "name": "农林卫视",
-      "total": 378,
-      "matched": 378,
+      "total": 392,
+      "matched": 392,
       "has_desc": 0,
       "rate": 100.0
     },
     {
+      "name": "深圳卫视4K",
+      "total": 492,
+      "matched": 391,
+      "has_desc": 0,
+      "rate": 79.5
+    },
+    {
+      "name": "都市剧场",
+      "total": 391,
+      "matched": 386,
+      "has_desc": 0,
+      "rate": 98.7
+    },
+    {
       "name": "CGTN西语",
       "total": 391,
-      "matched": 375,
+      "matched": 379,
+      "has_desc": 0,
+      "rate": 96.9
+    },
+    {
+      "name": "金鹰纪实",
+      "total": 400,
+      "matched": 374,
+      "has_desc": 0,
+      "rate": 93.5
+    },
+    {
+      "name": "甘肃卫视",
+      "total": 386,
+      "matched": 370,
       "has_desc": 0,
       "rate": 95.9
     },
     {
-      "name": "金鹰纪实",
-      "total": 395,
-      "matched": 369,
-      "has_desc": 0,
-      "rate": 93.4
-    },
-    {
       "name": "CGTN俄语",
       "total": 376,
-      "matched": 367,
+      "matched": 364,
       "has_desc": 0,
-      "rate": 97.6
+      "rate": 96.8
     },
     {
       "name": "解密",
@@ -196,10 +200,10 @@
     },
     {
       "name": "CGTN",
-      "total": 362,
-      "matched": 354,
+      "total": 361,
+      "matched": 356,
       "has_desc": 0,
-      "rate": 97.8
+      "rate": 98.6
     },
     {
       "name": "CGTN阿语",
@@ -209,25 +213,32 @@
       "rate": 98.3
     },
     {
-      "name": "武术",
-      "total": 350,
-      "matched": 350,
-      "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "贵州卫视",
-      "total": 407,
-      "matched": 349,
-      "has_desc": 0,
-      "rate": 85.7
-    },
-    {
       "name": "法治天地",
       "total": 413,
       "matched": 349,
       "has_desc": 0,
       "rate": 84.5
+    },
+    {
+      "name": "贵州卫视",
+      "total": 390,
+      "matched": 347,
+      "has_desc": 0,
+      "rate": 89.0
+    },
+    {
+      "name": "CCTV4",
+      "total": 346,
+      "matched": 344,
+      "has_desc": 0,
+      "rate": 99.4
+    },
+    {
+      "name": "武术",
+      "total": 343,
+      "matched": 343,
+      "has_desc": 0,
+      "rate": 100.0
     },
     {
       "name": "环球旅游",
@@ -244,35 +255,21 @@
       "rate": 98.8
     },
     {
-      "name": "老故事",
-      "total": 388,
-      "matched": 340,
-      "has_desc": 0,
-      "rate": 87.6
-    },
-    {
-      "name": "CCTV4",
-      "total": 342,
-      "matched": 339,
-      "has_desc": 0,
-      "rate": 99.1
-    },
-    {
       "name": "CCTV8",
       "total": 336,
-      "matched": 336,
+      "matched": 334,
       "has_desc": 0,
-      "rate": 100.0
+      "rate": 99.4
+    },
+    {
+      "name": "老故事",
+      "total": 377,
+      "matched": 334,
+      "has_desc": 0,
+      "rate": 88.6
     },
     {
       "name": "凤凰卫视中文台",
-      "total": 330,
-      "matched": 330,
-      "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "国学",
       "total": 330,
       "matched": 330,
       "has_desc": 0,
@@ -286,11 +283,18 @@
       "rate": 100.0
     },
     {
-      "name": "泰安综合",
-      "total": 348,
+      "name": "浙江卫视",
+      "total": 340,
       "matched": 328,
       "has_desc": 0,
-      "rate": 94.3
+      "rate": 96.5
+    },
+    {
+      "name": "浙江卫视4K",
+      "total": 340,
+      "matched": 328,
+      "has_desc": 0,
+      "rate": 96.5
     },
     {
       "name": "广州新闻",
@@ -300,11 +304,11 @@
       "rate": 99.7
     },
     {
-      "name": "CCTV1",
-      "total": 332,
-      "matched": 326,
+      "name": "国学",
+      "total": 327,
+      "matched": 327,
       "has_desc": 0,
-      "rate": 98.2
+      "rate": 100.0
     },
     {
       "name": "游戏风云",
@@ -314,6 +318,13 @@
       "rate": 100.0
     },
     {
+      "name": "CCTV4欧洲",
+      "total": 327,
+      "matched": 324,
+      "has_desc": 0,
+      "rate": 99.1
+    },
+    {
       "name": "宁夏卫视",
       "total": 323,
       "matched": 323,
@@ -321,11 +332,11 @@
       "rate": 100.0
     },
     {
-      "name": "CCTV4欧洲",
-      "total": 326,
+      "name": "三沙卫视",
+      "total": 322,
       "matched": 322,
       "has_desc": 0,
-      "rate": 98.8
+      "rate": 100.0
     },
     {
       "name": "凤凰卫视资讯台",
@@ -342,32 +353,18 @@
       "rate": 91.1
     },
     {
-      "name": "三沙卫视",
-      "total": 313,
-      "matched": 312,
-      "has_desc": 0,
-      "rate": 99.7
-    },
-    {
       "name": "CCTV4美洲",
-      "total": 314,
-      "matched": 310,
+      "total": 318,
+      "matched": 315,
       "has_desc": 0,
-      "rate": 98.7
+      "rate": 99.1
     },
     {
-      "name": "财富天下",
-      "total": 308,
-      "matched": 308,
+      "name": "泰安综合",
+      "total": 329,
+      "matched": 313,
       "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "河南卫视",
-      "total": 349,
-      "matched": 307,
-      "has_desc": 0,
-      "rate": 88.0
+      "rate": 95.1
     }
   ]
 }
