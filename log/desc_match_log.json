@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-03-31 19:22:40",
+  "timestamp": "2026-03-31 19:31:04",
   "type": "add_desc",
   "stats": {
     "total_programs": 87357,
     "already_has_desc": 6583,
-    "matched_man_made": 15184,
-    "matched_same_channel": 28584,
-    "matched_global": 5825,
-    "no_match": 31181,
-    "match_rate": 61.4
+    "matched_man_made": 20380,
+    "matched_same_channel": 29070,
+    "matched_global": 9667,
+    "no_match": 21657,
+    "match_rate": 73.19
   },
   "sources": {
-    "man-made": 15184,
-    "source1": 31492,
-    "source2": 2917
+    "man-made": 20380,
+    "source1": 35157,
+    "source2": 3580
   },
   "channels": [
     {
@@ -22,6 +22,13 @@
       "matched": 1056,
       "has_desc": 0,
       "rate": 94.0
+    },
+    {
+      "name": "动画",
+      "total": 896,
+      "matched": 896,
+      "has_desc": 0,
+      "rate": 100.0
     },
     {
       "name": "生活时尚",
@@ -59,6 +66,13 @@
       "rate": 100.0
     },
     {
+      "name": "军事",
+      "total": 486,
+      "matched": 486,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
       "name": "中国教育1",
       "total": 567,
       "matched": 468,
@@ -87,6 +101,13 @@
       "rate": 91.6
     },
     {
+      "name": "IPTV法治",
+      "total": 432,
+      "matched": 432,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
       "name": "四海钓鱼",
       "total": 440,
       "matched": 424,
@@ -106,6 +127,13 @@
       "matched": 398,
       "has_desc": 0,
       "rate": 80.7
+    },
+    {
+      "name": "NewTV古装剧场",
+      "total": 396,
+      "matched": 396,
+      "has_desc": 0,
+      "rate": 100.0
     },
     {
       "name": "发现之旅",
@@ -157,6 +185,13 @@
       "rate": 97.6
     },
     {
+      "name": "解密",
+      "total": 360,
+      "matched": 360,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
       "name": "CGTN",
       "total": 362,
       "matched": 354,
@@ -171,6 +206,13 @@
       "rate": 98.3
     },
     {
+      "name": "武术",
+      "total": 350,
+      "matched": 350,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
       "name": "贵州卫视",
       "total": 407,
       "matched": 349,
@@ -183,13 +225,6 @@
       "matched": 349,
       "has_desc": 0,
       "rate": 84.5
-    },
-    {
-      "name": "HOY78",
-      "total": 348,
-      "matched": 346,
-      "has_desc": 0,
-      "rate": 99.4
     },
     {
       "name": "环球旅游",
@@ -234,6 +269,20 @@
       "rate": 100.0
     },
     {
+      "name": "国学",
+      "total": 330,
+      "matched": 330,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "墨宝",
+      "total": 330,
+      "matched": 330,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
       "name": "泰安综合",
       "total": 348,
       "matched": 328,
@@ -246,13 +295,6 @@
       "matched": 328,
       "has_desc": 0,
       "rate": 99.7
-    },
-    {
-      "name": "天元围棋",
-      "total": 339,
-      "matched": 328,
-      "has_desc": 0,
-      "rate": 96.8
     },
     {
       "name": "CCTV1",
@@ -283,18 +325,18 @@
       "rate": 98.8
     },
     {
-      "name": "CCTV2",
-      "total": 324,
-      "matched": 320,
-      "has_desc": 0,
-      "rate": 98.8
-    },
-    {
       "name": "凤凰卫视资讯台",
       "total": 320,
       "matched": 320,
       "has_desc": 0,
       "rate": 100.0
+    },
+    {
+      "name": "HOY78",
+      "total": 348,
+      "matched": 317,
+      "has_desc": 0,
+      "rate": 91.1
     },
     {
       "name": "三沙卫视",
@@ -318,53 +360,11 @@
       "rate": 100.0
     },
     {
-      "name": "中国教育4",
-      "total": 348,
-      "matched": 306,
+      "name": "河南卫视",
+      "total": 349,
+      "matched": 307,
       "has_desc": 0,
-      "rate": 87.9
-    },
-    {
-      "name": "环球奇观",
-      "total": 504,
-      "matched": 306,
-      "has_desc": 0,
-      "rate": 60.7
-    },
-    {
-      "name": "CCTV10",
-      "total": 304,
-      "matched": 303,
-      "has_desc": 0,
-      "rate": 99.7
-    },
-    {
-      "name": "CCTV13",
-      "total": 307,
-      "matched": 301,
-      "has_desc": 0,
-      "rate": 98.0
-    },
-    {
-      "name": "康巴卫视",
-      "total": 301,
-      "matched": 301,
-      "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "江西卫视",
-      "total": 295,
-      "matched": 295,
-      "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "辽宁卫视",
-      "total": 341,
-      "matched": 295,
-      "has_desc": 0,
-      "rate": 86.5
+      "rate": 88.0
     }
   ],
   "success_details": [
@@ -432,8 +432,8 @@
       "channel_id": "CCTV1",
       "channel_name": "CCTV1",
       "program_title": "《非遗里的中国》MV",
-      "match_type": "same_channel",
-      "match_source": "source1",
+      "match_type": "man_made",
+      "match_source": "man-made",
       "match_rule": "exact",
       "match_score": 1.0,
       "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
@@ -762,8 +762,8 @@
       "channel_id": "CCTV1",
       "channel_name": "CCTV1",
       "program_title": "《非遗里的中国》MV",
-      "match_type": "same_channel",
-      "match_source": "source1",
+      "match_type": "man_made",
+      "match_source": "man-made",
       "match_rule": "exact",
       "match_score": 1.0,
       "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
@@ -852,8 +852,8 @@
       "channel_id": "CCTV1",
       "channel_name": "CCTV1",
       "program_title": "《非遗里的中国》MV",
-      "match_type": "same_channel",
-      "match_source": "source1",
+      "match_type": "man_made",
+      "match_source": "man-made",
       "match_rule": "exact",
       "match_score": 1.0,
       "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
@@ -1262,8 +1262,8 @@
       "channel_id": "CCTV1",
       "channel_name": "CCTV1",
       "program_title": "《非遗里的中国》MV",
-      "match_type": "same_channel",
-      "match_source": "source1",
+      "match_type": "man_made",
+      "match_source": "man-made",
       "match_rule": "exact",
       "match_score": 1.0,
       "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
@@ -1403,7 +1403,57 @@
     {
       "channel_id": "CCTV2",
       "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
       "program_title": "万物滋养(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(5)"
     },
     {
       "channel_id": "CCTV2",
@@ -1413,7 +1463,37 @@
     {
       "channel_id": "CCTV2",
       "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：老广的味道Ⅶ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
       "program_title": "万物滋养(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物滋养Ⅰ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：老广的味道Ⅶ(4)"
     },
     {
       "channel_id": "CCTV2",
@@ -1421,9 +1501,84 @@
       "program_title": "航拍中国Ⅳ(9)"
     },
     {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(6)"
+    },
+    {
       "channel_id": "CCTV3",
       "channel_name": "CCTV3",
-      "program_title": "爱上这座城-2"
+      "program_title": "综艺喜乐汇-2026-206 扫黑风暴17/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-207 扫黑风暴18/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-208 扫黑风暴19/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-209 扫黑风暴20/28"
     },
     {
       "channel_id": "CCTV3",
@@ -1433,192 +1588,37 @@
     {
       "channel_id": "CCTV3",
       "channel_name": "CCTV3",
-      "program_title": "爱上这座城-1"
+      "program_title": "综艺喜乐汇-2026-210 扫黑风暴21/28"
     },
     {
       "channel_id": "CCTV3",
       "channel_name": "CCTV3",
-      "program_title": "金声玉振——中国器乐大会-精编二"
+      "program_title": "综艺喜乐汇-2026-211 扫黑风暴22/28"
     },
     {
       "channel_id": "CCTV3",
       "channel_name": "CCTV3",
-      "program_title": "爱上这座城-2"
+      "program_title": "综艺喜乐汇-2026-212 扫黑风暴23/28"
     },
     {
       "channel_id": "CCTV3",
       "channel_name": "CCTV3",
-      "program_title": "敢梦敢为—追觅之夜-1"
+      "program_title": "综艺喜乐汇-2026-213 扫黑风暴24/28"
     },
     {
-      "channel_id": "CCTV4",
-      "channel_name": "CCTV4",
-      "program_title": "国台办新闻发布会"
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-214 扫黑风暴25/28"
     },
     {
-      "channel_id": "CCTV4",
-      "channel_name": "CCTV4",
-      "program_title": "中国美食大会Ⅱ(7)"
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-215 扫黑风暴26/28"
     },
     {
-      "channel_id": "CCTV4",
-      "channel_name": "CCTV4",
-      "program_title": "国台办新闻发布会"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(2)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(2)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(5)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(5)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "“字”从遇见你(5)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(1)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(1)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(1)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(2)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "营造之法：在避暑山庄望长城内外"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(2)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(2)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "营造之法：在避暑山庄望长城内外"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(3)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(4)"
-    },
-    {
-      "channel_id": "CCTV4K",
-      "channel_name": "CCTV4K",
-      "program_title": "青蘋之末(5)"
-    },
-    {
-      "channel_id": "CCTV4欧洲",
-      "channel_name": "CCTV4欧洲",
-      "program_title": "国台办新闻发布会"
-    },
-    {
-      "channel_id": "CCTV4欧洲",
-      "channel_name": "CCTV4欧洲",
-      "program_title": "深度国际"
-    },
-    {
-      "channel_id": "CCTV4欧洲",
-      "channel_name": "CCTV4欧洲",
-      "program_title": "深度国际"
-    },
-    {
-      "channel_id": "CCTV4欧洲",
-      "channel_name": "CCTV4欧洲",
-      "program_title": "国台办新闻发布会"
-    },
-    {
-      "channel_id": "CCTV4美洲",
-      "channel_name": "CCTV4美洲",
-      "program_title": "国台办新闻发布会"
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-216 扫黑风暴27/28"
     }
   ]
 }
