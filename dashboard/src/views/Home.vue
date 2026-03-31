@@ -36,25 +36,25 @@
           <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
             <span class="text-3xl">📡</span>
           </div>
-          <p class="text-sm text-slate-500 mb-1">节目总数</p>
-          <p class="text-3xl font-bold text-slate-900">{{ data.total_programs?.toLocaleString() || 0 }}</p>
+          <p class="text-sm text-slate-500 mb-1">频道总数</p>
+          <p class="text-3xl font-bold text-slate-900">{{ data.whitelistChannels?.toLocaleString() || 0 }}</p>
         </div>
 
         <div class="stat-card rounded-2xl p-6 text-center" style="--accent-color: #10b981">
           <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mx-auto mb-4">
-            <span class="text-3xl">📅</span>
+            <span class="text-3xl">🗄️</span>
           </div>
-          <p class="text-sm text-slate-500 mb-1">今日节目数</p>
-          <p class="text-3xl font-bold text-slate-900">{{ data.today_programs?.toLocaleString() || 0 }}</p>
+          <p class="text-sm text-slate-500 mb-1">EPG数据源数</p>
+          <p class="text-3xl font-bold text-slate-900">{{ data.epgSources?.length || 0 }}</p>
         </div>
 
         <div class="stat-card rounded-2xl p-6 text-center" style="--accent-color: #8b5cf6">
           <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mx-auto mb-4">
             <span class="text-3xl">🎯</span>
           </div>
-          <p class="text-sm text-slate-500 mb-1">Desc总匹配率</p>
+          <p class="text-sm text-slate-500 mb-1">DESC匹配率</p>
           <p class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            {{ data.match_stats?.rate || 0 }}%
+            {{ data.matchedChannels && data.whitelistChannels ? Math.round(data.matchedChannels / data.whitelistChannels * 100) : 0 }}%
           </p>
         </div>
 
@@ -94,21 +94,13 @@
                 <th class="text-left">频道名称</th>
                 <th class="text-center">节目总数</th>
                 <th class="text-center">今日节目数</th>
-                <th class="text-center">DESC总匹配率</th>
-                <th class="text-center">DESC今日匹配率</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="channel in filteredChannels" :key="channel.name">
+              <tr v-for="channel in filteredChannels" :key="channel.id">
                 <td class="font-medium text-slate-900">{{ channel.name }}</td>
-                <td class="text-center text-slate-600">{{ channel.total?.toLocaleString() || 0 }}</td>
-                <td class="text-center text-slate-600">{{ channel.today_total?.toLocaleString() || 0 }}</td>
-                <td class="text-center">
-                  <span :class="getRateBadgeClass(channel.rate)">{{ channel.rate }}%</span>
-                </td>
-                <td class="text-center">
-                  <span :class="getRateBadgeClass(channel.today_rate)">{{ channel.today_rate }}%</span>
-                </td>
+                <td class="text-center text-slate-600">{{ channel.programs?.toLocaleString() || 0 }}</td>
+                <td class="text-center text-slate-600">{{ channel.todayPrograms?.toLocaleString() || 0 }}</td>
               </tr>
             </tbody>
           </table>
@@ -128,13 +120,9 @@ const searchQuery = ref('')
 const data = ref({
   timestamp: '',
   dateRange: '',
-  total_programs: 0,
-  has_desc: 0,
-  today_programs: 0,
-  today_has_desc: 0,
-  match_stats: { rate: 0 },
-  today_match_stats: { matched: 0, rate: 0 },
-  sources: {},
+  whitelistChannels: 0,
+  totalPrograms: 0,
+  matchedChannels: 0,
   channels: []
 })
 
@@ -162,10 +150,19 @@ const fetchData = async () => {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       url = '/dashboard_data.json'
     } else {
-      url = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/dashboard/public/dashboard_data.json'
+      url = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json'
     }
     const response = await axios.get(url, { timeout: 10000 })
-    data.value = response.data
+    const raw = response.data
+    data.value = {
+      timestamp: raw.lastUpdate || '',
+      dateRange: raw.dateRange || '',
+      whitelistChannels: raw.whitelistChannels || 0,
+      totalPrograms: raw.totalPrograms || 0,
+      matchedChannels: raw.matchedChannels || 0,
+      epgSources: raw.epgSources || [],
+      channels: raw.allChannels || []
+    }
   } catch (error) {
     console.error('Failed to fetch data:', error)
   }
