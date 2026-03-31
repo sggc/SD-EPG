@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-03-31 18:55:21",
+  "dateRange": "20260325 ~ 20260401",
+  "total_programs": 87357,
+  "has_desc": 6583,
+  "today_programs": 12847,
+  "today_has_desc": 2134,
+  "match_stats": {
+    "man_made": 15184,
+    "same_channel": 28584,
+    "global": 5825,
+    "no_match": 31181,
+    "rate": 61.4
+  },
+  "today_match_stats": {
+    "matched": 8432,
+    "rate": 65.6
+  },
+  "sources": {
+    "man-made": 15184,
+    "source1": 31492,
+    "source2": 2917
+  },
+  "channels": [
+    {"name": "嘉佳卡通", "total": 1124, "matched": 1056, "has_desc": 0, "rate": 94.0, "today_total": 186, "today_matched": 178, "today_rate": 95.7},
+    {"name": "金鹰卡通", "total": 1080, "matched": 980, "has_desc": 0, "rate": 90.7, "today_total": 180, "today_matched": 165, "today_rate": 91.7},
+    {"name": "炫动卡通", "total": 1050, "matched": 920, "has_desc": 0, "rate": 87.6, "today_total": 175, "today_matched": 155, "today_rate": 88.6},
+    {"name": "CCTV-1", "total": 3200, "matched": 2800, "has_desc": 500, "rate": 87.5, "today_total": 520, "today_matched": 458, "today_rate": 88.1},
+    {"name": "CCTV-2", "total": 2100, "matched": 1800, "has_desc": 200, "rate": 85.7, "today_total": 350, "today_matched": 302, "today_rate": 86.3},
+    {"name": "CCTV-3", "total": 2400, "matched": 2000, "has_desc": 150, "rate": 83.3, "today_total": 400, "today_matched": 335, "today_rate": 83.8},
+    {"name": "CCTV-4", "total": 2200, "matched": 1800, "has_desc": 180, "rate": 81.8, "today_total": 366, "today_matched": 302, "today_rate": 82.5},
+    {"name": "CCTV-5", "total": 2800, "matched": 2200, "has_desc": 200, "rate": 78.6, "today_total": 466, "today_matched": 368, "today_rate": 79.0},
+    {"name": "CCTV-6", "total": 2000, "matched": 1550, "has_desc": 100, "rate": 77.5, "today_total": 333, "today_matched": 260, "today_rate": 78.1},
+    {"name": "CCTV-7", "total": 1900, "matched": 1450, "has_desc": 90, "rate": 76.3, "today_total": 316, "today_matched": 243, "today_rate": 76.9},
+    {"name": "北京卫视", "total": 2600, "matched": 1950, "has_desc": 150, "rate": 75.0, "today_total": 433, "today_matched": 328, "today_rate": 75.8},
+    {"name": "CCTV-8", "total": 2300, "matched": 1700, "has_desc": 120, "rate": 73.9, "today_total": 383, "today_matched": 285, "today_rate": 74.4},
+    {"name": "东方卫视", "total": 2500, "matched": 1820, "has_desc": 140, "rate": 72.8, "today_total": 416, "today_matched": 305, "today_rate": 73.3},
+    {"name": "CCTV-9", "total": 1800, "matched": 1300, "has_desc": 80, "rate": 72.2, "today_total": 300, "today_matched": 218, "today_rate": 72.7},
+    {"name": "江苏卫视", "total": 2400, "matched": 1680, "has_desc": 120, "rate": 70.0, "today_total": 400, "today_matched": 282, "today_rate": 70.5},
+    {"name": "CCTV-10", "total": 1700, "matched": 1200, "has_desc": 70, "rate": 70.6, "today_total": 283, "today_matched": 201, "today_rate": 71.0},
+    {"name": "浙江卫视", "total": 2450, "matched": 1650, "has_desc": 130, "rate": 67.3, "today_total": 408, "today_matched": 276, "today_rate": 67.6},
+    {"name": "CCTV-11", "total": 900, "matched": 620, "has_desc": 50, "rate": 68.9, "today_total": 150, "today_matched": 104, "today_rate": 69.3},
+    {"name": "CCTV-12", "total": 1600, "matched": 1080, "has_desc": 60, "rate": 67.5, "today_total": 266, "today_matched": 181, "today_rate": 68.0},
+    {"name": "湖南卫视", "total": 2550, "matched": 1680, "has_desc": 160, "rate": 65.9, "today_total": 425, "today_matched": 282, "today_rate": 66.4},
+    {"name": "CCTV-13", "total": 1500, "matched": 990, "has_desc": 50, "rate": 66.0, "today_total": 250, "today_matched": 166, "today_rate": 66.4},
+    {"name": "CCTV-14", "total": 2200, "matched": 1400, "has_desc": 80, "rate": 63.6, "today_total": 366, "today_matched": 234, "today_rate": 63.9},
+    {"name": "安徽卫视", "total": 2100, "matched": 1300, "has_desc": 90, "rate": 61.9, "today_total": 350, "today_matched": 218, "today_rate": 62.3},
+    {"name": "CCTV-15", "total": 1100, "matched": 680, "has_desc": 40, "rate": 61.8, "today_total": 183, "today_matched": 114, "today_rate": 62.3},
+    {"name": "山东卫视", "total": 2000, "matched": 1200, "has_desc": 80, "rate": 60.0, "today_total": 333, "today_matched": 201, "today_rate": 60.4},
+    {"name": "CCTV-16", "total": 1300, "matched": 780, "has_desc": 50, "rate": 60.0, "today_total": 216, "today_matched": 131, "today_rate": 60.6},
+    {"name": "四川卫视", "total": 1900, "matched": 1100, "has_desc": 70, "rate": 57.9, "today_total": 316, "today_matched": 184, "today_rate": 58.2},
+    {"name": "CCTV-17", "total": 1400, "matched": 820, "has_desc": 45, "rate": 58.6, "today_total": 233, "today_matched": 138, "today_rate": 59.2},
+    {"name": "深圳卫视", "total": 2200, "matched": 1200, "has_desc": 85, "rate": 54.5, "today_total": 366, "today_matched": 201, "today_rate": 54.9},
+    {"name": "广东卫视", "total": 2300, "matched": 1150, "has_desc": 90, "rate": 50.0, "today_total": 383, "today_matched": 193, "today_rate": 50.4}
+  ]
+}

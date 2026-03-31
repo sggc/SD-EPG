@@ -1,47 +1,40 @@
 # SD-EPG Dashboard
 
-基于 SvelteKit 构建的 EPG 管理仪表盘，部署在 GitHub Pages。
+EPG 节目描述注入统计展示平台
 
-## 功能
+## 功能特性
 
-- 📊 仪表盘 - 查看运行状态、统计数据
-- 🔧 配置管理 - 在线编辑配置文件
-- 📦 数据库浏览 - 查看 EPG 数据库
-- 📝 日志查看 - 查看运行日志
-- 🔐 GitHub OAuth 登录 - 安全编辑私有配置
+- 📊 实时统计面板 - 显示总节目数、匹配率等关键指标
+- 📈 数据可视化 - 饼图、柱状图展示匹配来源分布
+- 🔍 频道搜索 - 支持按频道名称快速筛选
+- 📱 响应式设计 - 适配桌面、平板、手机等多端设备
+- 🔐 配置管理 - 管理员可配置 EPG 和 Desc 数据源
+
+## 技术栈
+
+- Vue 3 (Composition API)
+- Vite
+- Tailwind CSS
+- Chart.js
 
 ## 开发
 
 ```bash
-cd dashboard
+# 安装依赖
 npm install
+
+# 本地开发
 npm run dev
+
+# 构建生产版本
+npm run build
+
+# 预览生产版本
+npm run preview
 ```
 
 ## 部署
 
-项目会自动通过 GitHub Actions 部署到 GitHub Pages。
+本项目使用 GitHub Actions 自动部署到 GitHub Pages。
 
-### 配置 OAuth
-
-1. 在 GitHub 创建 OAuth App：
-   - Settings → Developer settings → OAuth Apps → New OAuth App
-   - Application name: `SD-EPG Dashboard`
-   - Homepage URL: `https://sggc.github.io/SD-EPG/`
-   - Authorization callback URL: `https://sggc.github.io/SD-EPG/auth/callback`
-
-2. 添加 Repository Secrets：
-   - `GITHUB_CLIENT_ID`: OAuth App 的 Client ID
-   - `GITHUB_CLIENT_SECRET`: OAuth App 的 Client Secret
-
-3. 更新 `.env` 文件：
-   ```
-   VITE_GITHUB_CLIENT_ID=你的_client_id
-   ```
-
-## 技术栈
-
-- [SvelteKit](https://kit.svelte.dev/) - 前端框架
-- [GitHub API](https://docs.github.com/en/rest) - 数据接口
-- [GitHub Pages](https://pages.github.com/) - 静态托管
-- [GitHub OAuth](https://docs.github.com/en/developers/apps/building-oauth-apps) - 用户认证
+数据源: https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json

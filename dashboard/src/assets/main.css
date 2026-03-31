@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100vh;
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-xl rounded-2xl;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 20px 50px rgba(0, 0, 0, 0.03);
+}
+
+.stat-card {
+  @apply relative overflow-hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.stat-card::before {
+  content: '';
+  @apply absolute top-0 left-0 w-full h-1;
+  background: linear-gradient(90deg, var(--accent-color), transparent);
+  opacity: 0.8;
+}
+
+.chart-container {
+  @apply relative;
+}
+
+.chart-container canvas {
+  @apply max-w-full;
+}
+
+.table-modern {
+  @apply w-full border-collapse;
+}
+
+.table-modern thead {
+  @apply sticky top-0 z-10;
+}
+
+.table-modern thead tr {
+  @apply bg-slate-50/80 backdrop-blur-sm;
+}
+
+.table-modern th {
+  @apply px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table-modern td {
+  @apply px-4 py-3 text-sm;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table-modern tbody tr {
+  @apply transition-colors duration-150;
+}
+
+.table-modern tbody tr:hover {
+  @apply bg-slate-50/50;
+}
+
+.rate-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.rate-high {
+  @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+}
+
+.rate-medium {
+  @apply bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+.rate-low {
+  @apply bg-orange-50 text-orange-700 border border-orange-200;
+}
+
+.rate-critical {
+  @apply bg-red-50 text-red-700 border border-red-200;
+}
+
+.nav-link {
+  @apply relative px-3 py-2 text-sm font-medium transition-colors duration-200;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 transition-all duration-200;
+}
+
+.nav-link:hover::after,
+.nav-link.router-link-active::after {
+  @apply w-full;
+}
+
+.input-modern {
+  @apply w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500;
+  @apply transition-all duration-200;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-primary {
+  @apply px-5 py-2.5 bg-primary-600 text-white rounded-xl font-medium;
+  @apply hover:bg-primary-700 active:bg-primary-800;
+  @apply transition-all duration-200;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
