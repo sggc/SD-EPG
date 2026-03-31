@@ -37,12 +37,12 @@ jobs:
       
       - name: List build output
         working-directory: dashboard
-        run: ls -la dist/
+        run: ls -la build/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dashboard/dist
+          path: dashboard/build
 
   deploy:
     needs: build
