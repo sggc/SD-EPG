@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-03-31 16:52:46",
+  "lastUpdate": "2026-03-31 17:19:49",
   "whitelistChannels": 378,
   "matchedChannels": 376,
   "unmatchedChannels": 2,
-  "totalPrograms": 87334,
-  "filteredPrograms": 8227,
+  "totalPrograms": 87520,
+  "filteredPrograms": 8332,
   "dateRange": "20260325 ~ 20260401",
   "aliasCount": 422,
   "epgSources": [
@@ -53,16 +53,16 @@
     {
       "name": "zmt",
       "enabled": true,
-      "channels": 297,
-      "programs": 17141,
-      "matched": 2
+      "channels": 0,
+      "programs": 0,
+      "matched": 0
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1432,
       "programs": 355796,
-      "matched": 19
+      "matched": 21
     },
     {
       "name": "epgpw",
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 455,
-      "programs": 19212,
+      "programs": 19265,
       "matched": 3
     },
     {
@@ -2605,9 +2605,9 @@
     {
       "id": "大湾区卫视",
       "name": "大湾区卫视",
-      "programs": 40,
+      "programs": 142,
       "todayPrograms": 20,
-      "source": "zmt",
+      "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3132,9 +3132,9 @@
     {
       "id": "广东经济",
       "name": "广东经济",
-      "programs": 42,
+      "programs": 126,
       "todayPrograms": 21,
-      "source": "zmt",
+      "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
       "gaps": []
