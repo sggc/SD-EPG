@@ -55,8 +55,8 @@ jobs:
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' }}
       run: |
         cd public_repo
-        python ../private_repo/scripts/aggregate_epg.py \
-          --config ../private_repo/config/epg_config.json \
+        python ../private_repo/SD-EPG/scripts/aggregate_epg.py \
+          --config ../private_repo/SD-EPG/config/epg_config.json \
           --output-dir ./EPG \
           --log-dir ./log
     
@@ -77,20 +77,19 @@ jobs:
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
         cd public_repo
-        python ../private_repo/scripts/add_desc.py \
+        python ../private_repo/SD-EPG/scripts/add_desc.py \
           --input ./EPG/sggc.xml.gz \
           --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/desc_database.json,https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/apidb.json" \
           --man-made-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/man-made.json" \
           --output ./EPG/sggc-desc.xml.gz \
-          --log ./log/desc_match_log.txt \
-          --debug-dir ./Debug
+          --log ./log/desc_match_log.txt
       continue-on-error: true
     
     - name: Commit EPG with Desc
       if: ${{ github.event_name == 'schedule' || github.event.inputs.run_desc_injection == 'true' }}
       run: |
         cd public_repo
-        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_database_log.txt Debug/ 2>/dev/null || true
+        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_database_log.txt 2>/dev/null || true
         
         if git diff --staged --quiet; then
           echo "No desc changes"

@@ -53,7 +53,7 @@
 				return;
 			}
 
-			const result = await github.getFileContent(CONFIG.PRIVATE_REPO, 'config/epg_config.json');
+			const result = await github.getFileContent(CONFIG.PRIVATE_REPO, 'SD-EPG/config/epg_config.json');
 			config = JSON.parse(result.content);
 			originalConfig = JSON.parse(JSON.stringify(config));
 		} catch (e) {
@@ -71,10 +71,10 @@
 		success = null;
 
 		try {
-			const result = await github.getFileContent(CONFIG.PRIVATE_REPO, 'config/epg_config.json');
+			const result = await github.getFileContent(CONFIG.PRIVATE_REPO, 'SD-EPG/config/epg_config.json');
 			await github.updateFile(
 				CONFIG.PRIVATE_REPO,
-				'config/epg_config.json',
+				'SD-EPG/config/epg_config.json',
 				JSON.stringify(config, null, 2),
 				'通过 Dashboard 更新 EPG 配置',
 				result.sha
@@ -235,7 +235,7 @@
 		</a>
 		<h1>EPG 数据源配置</h1>
 		{#if $authStore.isLoggedIn}
-			<p class="repo-hint">私有仓库: SDU-IPTV-NEW/config/epg_config.json</p>
+			<p class="repo-hint">私有仓库: SDU-IPTV-NEW/SD-EPG/config/epg_config.json</p>
 		{/if}
 	</header>
 

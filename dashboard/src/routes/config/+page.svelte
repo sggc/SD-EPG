@@ -19,7 +19,7 @@
 	];
 
 	const privateConfigs = [
-		{ name: 'epg_config.json (私有)', repo: 'SDU-IPTV-NEW', path: 'config/epg_config.json', private: true }
+		{ name: 'epg_config.json (私有)', repo: 'SDU-IPTV-NEW', path: 'SD-EPG/config/epg_config.json', private: true }
 	];
 
 	onMount(async () => {
