@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-04-01 13:10:35",
+  "timestamp": "2026-04-01 17:37:27",
   "type": "add_desc",
   "stats": {
-    "total_programs": 87372,
-    "already_has_desc": 6333,
-    "matched_man_made": 20359,
-    "matched_same_channel": 28257,
-    "matched_global": 9672,
-    "no_match": 22751,
-    "match_rate": 71.93
+    "total_programs": 87232,
+    "already_has_desc": 6381,
+    "matched_man_made": 20287,
+    "matched_same_channel": 28129,
+    "matched_global": 9629,
+    "no_match": 22806,
+    "match_rate": 71.79
   },
   "sources": {
-    "man-made": 20359,
-    "source1": 35275,
-    "source2": 2654
+    "man-made": 20287,
+    "source1": 35112,
+    "source2": 2646
   },
   "channels": [
     {
@@ -143,18 +143,18 @@
       "rate": 90.1
     },
     {
-      "name": "都市剧场",
-      "total": 391,
-      "matched": 388,
-      "has_desc": 0,
-      "rate": 99.2
-    },
-    {
       "name": "深圳卫视4K",
       "total": 492,
       "matched": 386,
       "has_desc": 0,
       "rate": 78.5
+    },
+    {
+      "name": "都市剧场",
+      "total": 384,
+      "matched": 381,
+      "has_desc": 0,
+      "rate": 99.2
     },
     {
       "name": "CGTN西语",
@@ -186,8 +186,8 @@
     },
     {
       "name": "农林卫视",
-      "total": 392,
-      "matched": 368,
+      "total": 393,
+      "matched": 369,
       "has_desc": 0,
       "rate": 93.9
     },
@@ -326,17 +326,10 @@
     },
     {
       "name": "宁夏卫视",
-      "total": 323,
-      "matched": 323,
-      "has_desc": 0,
-      "rate": 100.0
-    },
-    {
-      "name": "浙江卫视",
-      "total": 340,
+      "total": 322,
       "matched": 322,
       "has_desc": 0,
-      "rate": 94.7
+      "rate": 100.0
     },
     {
       "name": "凤凰卫视资讯台",
@@ -362,9 +355,16 @@
     {
       "name": "东方卫视",
       "total": 317,
-      "matched": 315,
+      "matched": 314,
       "has_desc": 0,
-      "rate": 99.4
+      "rate": 99.1
+    },
+    {
+      "name": "泰安综合",
+      "total": 329,
+      "matched": 313,
+      "has_desc": 0,
+      "rate": 95.1
     }
   ]
 }
