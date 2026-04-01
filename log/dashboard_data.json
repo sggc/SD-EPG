@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-02 04:04:05",
+  "lastUpdate": "2026-04-02 05:29:20",
   "whitelistChannels": 378,
   "matchedChannels": 376,
   "unmatchedChannels": 2,
-  "totalPrograms": 87012,
-  "filteredPrograms": 8174,
+  "totalPrograms": 87324,
+  "filteredPrograms": 8258,
   "dateRange": "20260327 ~ 20260403",
   "aliasCount": 422,
   "epgSources": [
@@ -53,16 +53,16 @@
     {
       "name": "zmt",
       "enabled": true,
-      "channels": 297,
-      "programs": 17257,
-      "matched": 3
+      "channels": 0,
+      "programs": 0,
+      "matched": 0
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1434,
-      "programs": 334419,
-      "matched": 18
+      "programs": 342777,
+      "matched": 21
     },
     {
       "name": "epgpw",
@@ -2657,9 +2657,9 @@
     {
       "id": "大湾区卫视",
       "name": "大湾区卫视",
-      "programs": 38,
+      "programs": 126,
       "todayPrograms": 20,
-      "source": "zmt",
+      "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3230,9 +3230,9 @@
     {
       "id": "广东经济",
       "name": "广东经济",
-      "programs": 42,
+      "programs": 127,
       "todayPrograms": 21,
-      "source": "zmt",
+      "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3636,9 +3636,9 @@
     {
       "id": "欢笑剧场",
       "name": "欢笑剧场",
-      "programs": 71,
+      "programs": 210,
       "todayPrograms": 37,
-      "source": "zmt",
+      "source": "mxdyeah",
       "aliases": [
         "欢笑剧场4K",
         "欢笑剧场超高清"
