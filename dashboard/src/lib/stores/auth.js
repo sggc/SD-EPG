@@ -7,7 +7,8 @@ function createAuthStore() {
 		token: null,
 		user: null,
 		loading: false,
-		error: null
+		error: null,
+		showLoginModal: false
 	});
 
 	return {
@@ -30,11 +31,20 @@ function createAuthStore() {
 		},
 		
 		async login() {
-			if (!browser) return;
-			
-			const token = prompt('请输入 GitHub Personal Access Token:\n\n需要在 GitHub Settings > Developer settings > Personal access tokens 创建，权限选择 repo 和 read:user');
-			
-			if (!token) return;
+			update(s => ({ ...s, showLoginModal: true }));
+			return { success: false, error: '请使用登录对话框' };
+		},
+
+		openLoginModal() {
+			update(s => ({ ...s, showLoginModal: true }));
+		},
+
+		closeLoginModal() {
+			update(s => ({ ...s, showLoginModal: false, error: null }));
+		},
+		
+		async loginWithToken(token) {
+			if (!browser || !token) return { success: false, error: 'Token 不能为空' };
 			
 			update(s => ({ ...s, loading: true, error: null }));
 			
@@ -63,9 +73,11 @@ function createAuthStore() {
 					loading: false,
 					error: null
 				});
+				
+				return { success: true };
 			} catch (e) {
 				update(s => ({ ...s, loading: false, error: e.message }));
-				alert('登录失败: ' + e.message);
+				return { success: false, error: e.message };
 			}
 		},
 		

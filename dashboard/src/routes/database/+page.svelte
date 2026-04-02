@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { themeStore } from '$lib/stores/theme.js';
+	import { github } from '$lib/api/github.js';
 
 	let databases = $state([]);
 	let selectedDb = $state(null);
@@ -43,15 +44,10 @@
 			const controller = new AbortController();
 			const timeoutId = setTimeout(() => controller.abort(), 30000);
 			
-			const url = `https://raw.githubusercontent.com/sggc/SD-EPG/main/${db.path}`;
-			const response = await fetch(url, { signal: controller.signal });
+			// 使用 github API 获取文件
+			const text = await github.getPublicFileRaw(db.path);
 			clearTimeout(timeoutId);
 			
-			if (!response.ok) {
-				throw new Error(`HTTP ${response.status}`);
-			}
-			
-			const text = await response.text();
 			dbContent = JSON.parse(text);
 		} catch (e) {
 			if (e.name === 'AbortError') {
@@ -67,26 +63,20 @@
 	function getStats() {
 		if (!dbContent) return null;
 		
+		// 处理数组格式 (man-made.json, desc_database.json, apidb.json)
+		if (Array.isArray(dbContent)) {
+			const channels = new Set(dbContent.map(item => item.channel)).size;
+			return { type: 'array', channels, programs: dbContent.length };
+		}
+		
+		// 处理 progress.json 格式
 		if (Array.isArray(dbContent.processed)) {
 			return { type: 'progress', count: dbContent.processed.length, lastUpdate: dbContent.last_update };
 		}
 		
+		// 处理 notfound.json 格式
 		if (dbContent.items && Array.isArray(dbContent.items)) {
 			return { type: 'notfound', count: dbContent.items.length, lastUpdate: dbContent.last_update };
-		}
-		
-		if (typeof dbContent === 'object') {
-			let totalPrograms = 0;
-			let channels = Object.keys(dbContent).length;
-			
-			for (const channel in dbContent) {
-				const channelData = dbContent[channel];
-				if (typeof channelData === 'object') {
-					totalPrograms += Object.keys(channelData).length;
-				}
-			}
-			
-			return { type: 'database', channels, programs: totalPrograms };
 		}
 		
 		return null;
@@ -95,36 +85,37 @@
 	function getEntries() {
 		if (!dbContent) return [];
 		
-		let entries = [];
-		
-		if (typeof dbContent === 'object' && !Array.isArray(dbContent)) {
-			for (const channel in dbContent) {
-				if (searchQuery && !channel.toLowerCase().includes(searchQuery.toLowerCase())) {
-					const programs = dbContent[channel];
-					if (typeof programs === 'object') {
-						let hasMatch = false;
-						for (const program in programs) {
-							if (program.toLowerCase().includes(searchQuery.toLowerCase())) {
-								hasMatch = true;
-								break;
-							}
-						}
-						if (!hasMatch) continue;
-					}
+		// 处理数组格式 (man-made.json, desc_database.json, apidb.json)
+		if (Array.isArray(dbContent)) {
+			// 按频道分组
+			const channelMap = new Map();
+			
+			for (const item of dbContent) {
+				// 搜索过滤
+				if (searchQuery) {
+					const query = searchQuery.toLowerCase();
+					const matchChannel = item.channel?.toLowerCase().includes(query);
+					const matchTitle = item.title?.toLowerCase().includes(query);
+					const matchDesc = item.desc?.toLowerCase().includes(query);
+					if (!matchChannel && !matchTitle && !matchDesc) continue;
 				}
 				
-				const programs = dbContent[channel];
-				const programCount = typeof programs === 'object' ? Object.keys(programs).length : 0;
-				
-				entries.push({
-					channel,
-					programCount,
-					programs: typeof programs === 'object' ? programs : null
-				});
+				const channel = item.channel || '未知频道';
+				if (!channelMap.has(channel)) {
+					channelMap.set(channel, []);
+				}
+				channelMap.get(channel).push(item);
 			}
+			
+			// 转换为 entries 数组
+			return Array.from(channelMap.entries()).map(([channel, programs]) => ({
+				channel,
+				programCount: programs.length,
+				programs
+			}));
 		}
 		
-		return entries;
+		return [];
 	}
 
 	function getPaginatedEntries() {
@@ -147,19 +138,6 @@
 		expandedItems = newExpanded;
 	}
 
-	function getFilteredPrograms(programs) {
-		if (!programs) return [];
-		const entries = Object.entries(programs);
-		if (!searchQuery) return entries.slice(0, 10);
-		return entries.filter(([name]) => name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 10);
-	}
-
-	function getDescPreview(info) {
-		if (!info) return '';
-		if (typeof info === 'string') return info.slice(0, 80) + (info.length > 80 ? '...' : '');
-		if (info.desc) return info.desc.slice(0, 80) + (info.desc.length > 80 ? '...' : '');
-		return '';
-	}
 </script>
 
 <svelte:head>
@@ -291,7 +269,7 @@
 							/>
 						</div>
 
-						{#if stats?.type === 'database'}
+						{#if stats?.type === 'array'}
 							<div class="entries-list">
 								{#each getPaginatedEntries() as entry}
 									<div class="entry-item">
@@ -319,14 +297,14 @@
 										
 										{#if expandedItems.has(entry.channel) && entry.programs}
 											<div class="programs-list">
-												{#each getFilteredPrograms(entry.programs) as [name, info]}
+												{#each entry.programs.slice(0, 10) as program}
 													<div class="program-item">
-														<div class="program-name">{name}</div>
-														<div class="program-desc">{getDescPreview(info)}</div>
+														<div class="program-name">{program.title || '未知节目'}</div>
+														<div class="program-desc">{program.desc || '暂无描述'}</div>
 													</div>
 												{/each}
-												{#if Object.keys(entry.programs).length > 10}
-													<div class="more-hint">仅显示前 10 个节目</div>
+												{#if entry.programs.length > 10}
+													<div class="more-hint">仅显示前 10 个节目，共 {entry.programs.length} 个</div>
 												{/if}
 											</div>
 										{/if}
@@ -429,7 +407,7 @@
 	}
 
 	.page-header h1 {
-		font-size: 1.5rem;
+		font-size: var(--text-2xl);
 		font-weight: 700;
 		margin-bottom: 0.25rem;
 		color: var(--text);
@@ -437,7 +415,7 @@
 
 	.subtitle {
 		color: var(--text-muted);
-		font-size: 0.85rem;
+		font-size: var(--text-sm);
 	}
 
 	.loading-container {
@@ -460,7 +438,7 @@
 
 	.loading-text {
 		color: var(--text-muted);
-		font-size: 0.85rem;
+		font-size: var(--text-sm);
 	}
 
 	@keyframes spin {
@@ -481,7 +459,7 @@
 	}
 
 	.card h3 {
-		font-size: 1rem;
+		font-size: var(--text-base);
 		font-weight: 600;
 		margin-bottom: 0.75rem;
 		color: var(--text);
@@ -497,10 +475,10 @@
 		display: flex;
 		align-items: flex-start;
 		gap: 0.625rem;
-		padding: 0.625rem;
+		padding: 0.75rem;
 		background: var(--bg-elevated);
 		border: 1px solid transparent;
-		border-radius: 8px;
+		border-radius: var(--radius-sm);
 		color: var(--text);
 		text-align: left;
 		cursor: pointer;
@@ -536,17 +514,17 @@
 
 	.db-name {
 		font-weight: 500;
-		font-size: 0.8rem;
+		font-size: var(--text-sm);
 		color: var(--text);
 	}
 
 	.db-desc {
-		font-size: 0.7rem;
+		font-size: var(--text-xs);
 		color: var(--text-muted);
 	}
 
 	.db-size {
-		font-size: 0.65rem;
+		font-size: var(--text-xs);
 		color: var(--text-dim);
 	}
 
@@ -565,7 +543,7 @@
 	}
 
 	.content-desc {
-		font-size: 0.75rem;
+		font-size: var(--text-xs);
 		color: var(--text-muted);
 	}
 
@@ -583,13 +561,13 @@
 	}
 
 	.stat-value {
-		font-size: 1.25rem;
+		font-size: var(--text-xl);
 		font-weight: 700;
 		color: var(--text);
 	}
 
 	.stat-label {
-		font-size: 0.65rem;
+		font-size: var(--text-xs);
 		color: var(--text-muted);
 	}
 
@@ -597,10 +575,10 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		padding: 0.5rem 0.75rem;
+		padding: 0.625rem 0.75rem;
 		background: var(--bg-elevated);
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: var(--radius-sm);
 		margin-bottom: 0.75rem;
 	}
 
@@ -614,7 +592,7 @@
 		background: transparent;
 		border: none;
 		padding: 0;
-		font-size: 0.85rem;
+		font-size: var(--text-sm);
 		color: var(--text);
 	}
 
@@ -634,7 +612,7 @@
 	.entry-item {
 		background: var(--bg-elevated);
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: var(--radius-sm);
 		overflow: hidden;
 	}
 
@@ -661,7 +639,7 @@
 
 	.entry-channel {
 		font-weight: 500;
-		font-size: 0.8rem;
+		font-size: var(--text-sm);
 		color: var(--text);
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -669,7 +647,7 @@
 	}
 
 	.entry-count {
-		font-size: 0.7rem;
+		font-size: var(--text-xs);
 		color: var(--text-muted);
 		flex-shrink: 0;
 	}
@@ -700,7 +678,7 @@
 	}
 
 	.program-name {
-		font-size: 0.75rem;
+		font-size: var(--text-sm);
 		font-weight: 600;
 		color: var(--text);
 		margin-bottom: 0.25rem;
@@ -708,7 +686,7 @@
 	}
 
 	.program-desc {
-		font-size: 0.7rem;
+		font-size: var(--text-xs);
 		color: var(--text-muted);
 		line-height: 1.4;
 		word-break: break-word;
@@ -716,7 +694,7 @@
 	}
 
 	.more-hint {
-		font-size: 0.65rem;
+		font-size: var(--text-xs);
 		color: var(--text-dim);
 		text-align: center;
 		padding: 0.25rem;
@@ -733,11 +711,11 @@
 	}
 
 	.page-btn {
-		padding: 0.375rem 0.75rem;
+		padding: 0.5rem 0.875rem;
 		background: var(--bg-elevated);
 		border: 1px solid var(--border);
 		border-radius: 6px;
-		font-size: 0.75rem;
+		font-size: var(--text-sm);
 		color: var(--text);
 		cursor: pointer;
 		transition: all 0.2s ease;
@@ -754,14 +732,14 @@
 	}
 
 	.page-info {
-		font-size: 0.8rem;
+		font-size: var(--text-sm);
 		color: var(--text-muted);
 	}
 
 	.json-preview {
 		background: var(--bg-elevated);
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: var(--radius-sm);
 		max-height: 400px;
 		overflow: auto;
 	}
@@ -770,7 +748,7 @@
 		margin: 0;
 		padding: 0.75rem;
 		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.7rem;
+		font-size: var(--text-xs);
 		line-height: 1.5;
 		color: var(--text);
 		white-space: pre-wrap;
@@ -785,8 +763,8 @@
 		border: 1px solid var(--danger);
 		color: var(--danger);
 		padding: 0.75rem 1rem;
-		border-radius: 8px;
-		font-size: 0.85rem;
+		border-radius: var(--radius-sm);
+		font-size: var(--text-sm);
 		margin-bottom: 1rem;
 	}
 
@@ -801,7 +779,7 @@
 	}
 
 	.empty-state p {
-		font-size: 0.85rem;
+		font-size: var(--text-sm);
 	}
 
 	.btn {
@@ -812,7 +790,7 @@
 		padding: 0.5rem 1rem;
 		border: none;
 		border-radius: var(--radius-sm);
-		font-size: 0.85rem;
+		font-size: var(--text-sm);
 		font-weight: 500;
 		cursor: pointer;
 		transition: all 0.2s ease;

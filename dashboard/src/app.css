@@ -20,9 +20,9 @@
 	--text-dim: #94a3b8;
 	--border: #e2e8f0;
 	--border-light: #cbd5e1;
-	--radius: 14px;
-	--radius-sm: 10px;
-	--radius-lg: 18px;
+	--radius: 12px;
+	--radius-sm: 8px;
+	--radius-lg: 16px;
 	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 	--shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
 	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
@@ -31,6 +31,15 @@
 	--glow-warning: 0 0 20px rgba(217, 119, 6, 0.15);
 	--glow-danger: 0 0 20px rgba(220, 38, 38, 0.15);
 	--font-scale: 1.0;
+
+	/* 字体大小系统 */
+	--text-xs: 0.75rem;
+	--text-sm: 0.8125rem;
+	--text-base: 0.9375rem;
+	--text-lg: 1.0625rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 1.875rem;
 }
 
 [data-theme="dark"] {
@@ -108,10 +117,10 @@ button {
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
-	padding: 0.75rem 1.5rem;
+	padding: 0.625rem 1.25rem;
 	border: none;
 	border-radius: var(--radius-sm);
-	font-size: 1rem;
+	font-size: var(--text-sm);
 	font-weight: 500;
 	transition: all 0.2s ease;
 	cursor: pointer;
@@ -172,7 +181,7 @@ button {
 }
 
 .card-title {
-	font-size: 1.35rem;
+	font-size: var(--text-lg);
 	font-weight: 600;
 }
 
@@ -196,22 +205,22 @@ button {
 }
 
 .stat-value {
-	font-size: 2.6rem;
+	font-size: var(--text-2xl);
 	font-weight: 700;
 	color: var(--text);
 }
 
 .stat-label {
 	color: var(--text-muted);
-	font-size: 1.1rem;
+	font-size: var(--text-sm);
 }
 
 .badge {
 	display: inline-flex;
 	align-items: center;
-	padding: 0.325rem 0.975rem;
+	padding: 0.25rem 0.75rem;
 	border-radius: 9999px;
-	font-size: 0.975rem;
+	font-size: var(--text-xs);
 	font-weight: 500;
 }
 
@@ -243,7 +252,7 @@ table {
 }
 
 th, td {
-	padding: 0.975rem 1.3rem;
+	padding: 0.875rem 1rem;
 	text-align: left;
 	border-bottom: 1px solid var(--border);
 }
@@ -251,7 +260,7 @@ th, td {
 th {
 	font-weight: 600;
 	color: var(--text-muted);
-	font-size: 0.975rem;
+	font-size: var(--text-xs);
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 }
@@ -284,13 +293,13 @@ tr:hover {
 pre, code {
 	font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
 	background: var(--bg-elevated);
-	padding: 0.325rem 0.65rem;
+	padding: 0.25rem 0.5rem;
 	border-radius: 5px;
-	font-size: 1.1rem;
+	font-size: var(--text-sm);
 }
 
 pre {
-	padding: 1.3rem;
+	padding: 1rem;
 	overflow-x: auto;
 	border: 1px solid var(--border);
 }
@@ -299,10 +308,10 @@ input, select, textarea {
 	background: var(--bg-elevated);
 	border: 1px solid var(--border);
 	border-radius: var(--radius-sm);
-	padding: 0.8rem 1.1rem;
+	padding: 0.625rem 0.875rem;
 	color: var(--text);
 	font-family: inherit;
-	font-size: 1rem;
+	font-size: var(--text-base);
 	width: 100%;
 	transition: all 0.2s ease;
 }
@@ -319,14 +328,14 @@ input::placeholder {
 
 label {
 	display: block;
-	margin-bottom: 0.65rem;
+	margin-bottom: 0.5rem;
 	font-weight: 500;
-	font-size: 1rem;
+	font-size: var(--text-sm);
 	color: var(--text);
 }
 
 .form-group {
-	margin-bottom: 1.3rem;
+	margin-bottom: 1rem;
 }
 
 .switch {
@@ -393,7 +402,7 @@ label {
 }
 
 .checkbox-wrapper span {
-	font-size: 1rem;
+	font-size: var(--text-sm);
 	color: var(--text);
 	user-select: none;
 }
@@ -418,14 +427,10 @@ label {
 
 @media (max-width: 768px) {
 	main {
-		padding: 0.975rem;
+		padding: 1rem;
 	}
 
 	.card {
-		padding: 1.3rem;
-	}
-
-	.stat-value {
-		font-size: 1.95rem;
+		padding: 1rem;
 	}
 }
