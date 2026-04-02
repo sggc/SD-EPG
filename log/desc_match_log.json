@@ -1,18 +1,18 @@
 {
-  "timestamp": "2026-04-02 05:30:10",
+  "timestamp": "2026-04-02 12:40:41",
   "type": "add_desc",
   "stats": {
-    "total_programs": 87324,
-    "already_has_desc": 6235,
-    "matched_man_made": 20168,
-    "matched_same_channel": 27886,
-    "matched_global": 9775,
-    "no_match": 23260,
-    "match_rate": 71.32
+    "total_programs": 86916,
+    "already_has_desc": 5948,
+    "matched_man_made": 20160,
+    "matched_same_channel": 27801,
+    "matched_global": 9773,
+    "no_match": 23234,
+    "match_rate": 71.3
   },
   "sources": {
-    "man-made": 20168,
-    "source1": 35488,
+    "man-made": 20160,
+    "source1": 35401,
     "source2": 2173
   },
   "channels": [
@@ -53,10 +53,10 @@
     },
     {
       "name": "西藏卫视",
-      "total": 727,
-      "matched": 665,
+      "total": 729,
+      "matched": 666,
       "has_desc": 0,
-      "rate": 91.5
+      "rate": 91.4
     },
     {
       "name": "CCTV电视指南",
@@ -172,8 +172,8 @@
     },
     {
       "name": "甘肃卫视",
-      "total": 393,
-      "matched": 377,
+      "total": 390,
+      "matched": 374,
       "has_desc": 0,
       "rate": 95.9
     },
@@ -200,8 +200,8 @@
     },
     {
       "name": "CGTN",
-      "total": 361,
-      "matched": 357,
+      "total": 362,
+      "matched": 358,
       "has_desc": 0,
       "rate": 98.9
     },
@@ -304,6 +304,13 @@
       "rate": 99.1
     },
     {
+      "name": "游戏风云",
+      "total": 326,
+      "matched": 324,
+      "has_desc": 0,
+      "rate": 99.4
+    },
+    {
       "name": "凤凰卫视资讯台",
       "total": 320,
       "matched": 320,
@@ -358,13 +365,6 @@
       "matched": 308,
       "has_desc": 0,
       "rate": 100.0
-    },
-    {
-      "name": "中国教育4",
-      "total": 349,
-      "matched": 307,
-      "has_desc": 0,
-      "rate": 88.0
     }
   ]
 }
