@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-02 05:29:20",
+  "lastUpdate": "2026-04-02 12:39:52",
   "whitelistChannels": 378,
   "matchedChannels": 376,
   "unmatchedChannels": 2,
-  "totalPrograms": 87324,
-  "filteredPrograms": 8258,
+  "totalPrograms": 86916,
+  "filteredPrograms": 8329,
   "dateRange": "20260327 ~ 20260403",
   "aliasCount": 422,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 167,
-      "programs": 55230,
+      "programs": 55397,
       "matched": 167
     },
     {
@@ -26,7 +26,7 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 536,
-      "programs": 132996,
+      "programs": 133078,
       "matched": 131
     },
     {
@@ -53,22 +53,22 @@
     {
       "name": "zmt",
       "enabled": true,
-      "channels": 0,
-      "programs": 0,
-      "matched": 0
+      "channels": 297,
+      "programs": 17257,
+      "matched": 3
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1434,
       "programs": 342777,
-      "matched": 21
+      "matched": 18
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15370,
-      "programs": 1500731,
+      "channels": 15345,
+      "programs": 1465070,
       "matched": 6
     },
     {
@@ -82,7 +82,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1128,
-      "programs": 261434,
+      "programs": 261516,
       "matched": 3
     }
   ],
@@ -649,7 +649,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 99,
+      "programs": 67,
       "todayPrograms": 34,
       "source": "epgpw",
       "aliases": [],
@@ -659,7 +659,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 78,
+      "programs": 52,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -669,7 +669,7 @@
     {
       "id": "Astro QJ",
       "name": "Astro QJ",
-      "programs": 62,
+      "programs": 52,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -1283,8 +1283,8 @@
     {
       "id": "CGTN",
       "name": "CGTN",
-      "programs": 361,
-      "todayPrograms": 45,
+      "programs": 362,
+      "todayPrograms": 46,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -1385,8 +1385,8 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 97,
-      "todayPrograms": 42,
+      "programs": 86,
+      "todayPrograms": 44,
       "source": "epgpw",
       "aliases": [],
       "hasGap": false,
@@ -1395,7 +1395,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 115,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1405,7 +1405,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 114,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1825,7 +1825,7 @@
     {
       "id": "东方财经",
       "name": "东方财经",
-      "programs": 328,
+      "programs": 366,
       "todayPrograms": 38,
       "source": "main",
       "aliases": [],
@@ -2006,7 +2006,7 @@
     {
       "id": "乐游",
       "name": "乐游",
-      "programs": 567,
+      "programs": 563,
       "todayPrograms": 71,
       "source": "main",
       "aliases": [],
@@ -2657,9 +2657,9 @@
     {
       "id": "大湾区卫视",
       "name": "大湾区卫视",
-      "programs": 126,
+      "programs": 38,
       "todayPrograms": 20,
-      "source": "mxdyeah",
+      "source": "zmt",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2879,8 +2879,8 @@
     {
       "id": "山东体育",
       "name": "山东体育",
-      "programs": 312,
-      "todayPrograms": 39,
+      "programs": 310,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "山东体育休闲"
@@ -3230,9 +3230,9 @@
     {
       "id": "广东经济",
       "name": "广东经济",
-      "programs": 127,
+      "programs": 42,
       "todayPrograms": 21,
-      "source": "mxdyeah",
+      "source": "zmt",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3636,9 +3636,9 @@
     {
       "id": "欢笑剧场",
       "name": "欢笑剧场",
-      "programs": 210,
+      "programs": 71,
       "todayPrograms": 37,
-      "source": "mxdyeah",
+      "source": "zmt",
       "aliases": [
         "欢笑剧场4K",
         "欢笑剧场超高清"
@@ -4599,7 +4599,7 @@
     {
       "id": "游戏风云",
       "name": "游戏风云",
-      "programs": 302,
+      "programs": 326,
       "todayPrograms": 42,
       "source": "main",
       "aliases": [],
@@ -4894,8 +4894,8 @@
     {
       "id": "甘肃卫视",
       "name": "甘肃卫视",
-      "programs": 393,
-      "todayPrograms": 57,
+      "programs": 390,
+      "todayPrograms": 54,
       "source": "erwcc",
       "aliases": [],
       "hasGap": false,
@@ -5293,8 +5293,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 727,
-      "todayPrograms": 100,
+      "programs": 729,
+      "todayPrograms": 101,
       "source": "main",
       "aliases": [
         "西藏卫视高清"
@@ -5410,8 +5410,8 @@
     {
       "id": "重庆卫视",
       "name": "重庆卫视",
-      "programs": 271,
-      "todayPrograms": 38,
+      "programs": 273,
+      "todayPrograms": 40,
       "source": "erwcc",
       "aliases": [
         "重庆卫视高清"
