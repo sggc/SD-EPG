@@ -99,3 +99,25 @@ jobs:
           git commit -m "EPG+Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
           git push
         fi
+    
+    - name: Merge Dashboard Data
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' || github.event.inputs.run_desc_injection == 'true' }}
+      run: |
+        cd public_repo
+        python ../private_repo/SD-EPG/scripts/merge_dashboard_data.py \
+          --epg ./log/dashboard_data.json \
+          --desc ./log/desc_match_log.json \
+          --output ./log/unified_dashboard_data.json
+    
+    - name: Commit Unified Dashboard Data
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_aggregation == 'true' || github.event.inputs.run_desc_injection == 'true' }}
+      run: |
+        cd public_repo
+        git add log/unified_dashboard_data.json
+        
+        if git diff --staged --quiet; then
+          echo "No unified data changes"
+        else
+          git commit -m "数据合并 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi

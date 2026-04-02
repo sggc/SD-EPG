@@ -3,7 +3,6 @@
 	import { themeStore } from '$lib/stores/theme.js';
 
 	let data = $state(null);
-	let descMatchLog = $state(null);
 	let loading = $state(true);
 	let error = $state(null);
 	let searchQuery = $state('');
@@ -18,18 +17,11 @@
 	async function loadData() {
 		loading = true;
 		try {
-			const [dashboardResponse, descMatchResponse] = await Promise.all([
-				fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/dashboard_data.json'),
-				fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/desc_match_log.txt')
-			]);
+			// 使用新的统一数据文件
+			const response = await fetch('https://raw.githubusercontent.com/sggc/SD-EPG/main/log/unified_dashboard_data.json');
 			
-			if (!dashboardResponse.ok) throw new Error('加载数据失败');
-			data = await dashboardResponse.json();
-			
-			if (descMatchResponse.ok) {
-				const descMatchContent = await descMatchResponse.text();
-				descMatchLog = parseDescMatchLog(descMatchContent);
-			}
+			if (!response.ok) throw new Error('加载数据失败');
+			data = await response.json();
 		} catch (e) {
 			error = e.message;
 		} finally {
@@ -37,57 +29,26 @@
 		}
 	}
 
-	function parseDescMatchLog(content) {
-		if (!content) return null;
-
-		const result = {
-			channelStats: []
-		};
-
-		const channelStatsSection = content.match(/📈 频道匹配统计[\s\S]*?(?=={50,}|$)/);
-		if (channelStatsSection) {
-			const channelLines = channelStatsSection[0].split('\n').filter(l => l.trim().startsWith('  '));
-			for (const line of channelLines) {
-				const match = line.match(/(\S.+?):\s*(\d+)\/(\d+)\s*\(([\d.]+)%\)/);
-				if (match) {
-					result.channelStats.push({
-						name: match[1],
-						matched: parseInt(match[2]),
-						total: parseInt(match[3]),
-						rate: parseFloat(match[4])
-					});
-				}
-			}
-		}
-
-		return result;
-	}
-
-	function getChannelDescStats(channelName) {
-		if (!descMatchLog?.channelStats) return null;
-		return descMatchLog.channelStats.find(cs => cs.name === channelName);
-	}
-
 	function getSources() {
-		if (!data?.epgSources) return [];
-		return data.epgSources.filter(s => s.enabled);
+		if (!data?.['数据源统计']) return [];
+		return data['数据源统计'].filter(s => s['是否启用']);
 	}
 
 	function getFilteredChannels() {
-		if (!data?.allChannels) return [];
+		if (!data?.['频道列表']) return [];
 		
-		let channels = data.allChannels;
+		let channels = data['频道列表'];
 		
 		if (selectedSource !== 'all') {
-			channels = channels.filter(c => c.source === selectedSource);
+			channels = channels.filter(c => c['数据源'] === selectedSource);
 		}
 		
 		if (searchQuery) {
 			const query = searchQuery.toLowerCase();
 			channels = channels.filter(c => 
-				c.id.toLowerCase().includes(query) ||
-				c.name.toLowerCase().includes(query) ||
-				c.aliases?.some(a => a.toLowerCase().includes(query))
+				c['tvg_id'].toLowerCase().includes(query) ||
+				c['频道名称'].toLowerCase().includes(query) ||
+				c['频道别名']?.some(a => a.toLowerCase().includes(query))
 			);
 		}
 		
@@ -117,6 +78,12 @@
 			'loc': '#84cc16'
 		};
 		return colors[source] || '#64748b';
+	}
+
+	function getDescRateColor(rate) {
+		if (rate >= 90) return '#10b981';
+		if (rate >= 70) return '#f59e0b';
+		return '#ef4444';
 	}
 </script>
 
@@ -165,21 +132,27 @@
 	{:else if error}
 		<div class="error-message">{error}</div>
 	{:else if data}
+		{@const stats = data['总体统计']}
+		{@const meta = data['元数据']}
 		<div class="stats-bar">
 			<div class="stat-item">
-				<span class="stat-value">{data.allChannels?.length || 0}</span>
+				<span class="stat-value">{stats['白名单频道数'] || 0}</span>
 				<span class="stat-label">总频道</span>
 			</div>
 			<div class="stat-item">
-				<span class="stat-value">{data.totalPrograms?.toLocaleString() || 0}</span>
+				<span class="stat-value">{stats['总节目数']?.toLocaleString() || 0}</span>
 				<span class="stat-label">总节目</span>
 			</div>
 			<div class="stat-item">
-				<span class="stat-value">{data.matchedChannels || 0}</span>
+				<span class="stat-value">{stats['已匹配频道数'] || 0}</span>
 				<span class="stat-label">已匹配</span>
 			</div>
+			<div class="stat-item desc-highlight">
+				<span class="stat-value">{stats['整体描述匹配率'] || 0}%</span>
+				<span class="stat-label">描述匹配率</span>
+			</div>
 			<div class="stat-item highlight">
-				<span class="stat-value">{data.dateRange || '-'}</span>
+				<span class="stat-value">{meta['数据日期范围'] || '-'}</span>
 				<span class="stat-label">数据日期</span>
 			</div>
 		</div>
@@ -209,12 +182,12 @@
 				{#each getSources() as source}
 					<button 
 						class="source-btn" 
-						class:active={selectedSource === source.name}
-						onclick={() => { selectedSource = source.name; currentPage = 1; }}
-						style="--source-color: {getSourceBadgeColor(source.name)}"
+						class:active={selectedSource === source['名称']}
+						onclick={() => { selectedSource = source['名称']; currentPage = 1; }}
+						style="--source-color: {getSourceBadgeColor(source['名称'])}"
 					>
-						{source.name}
-						<span class="count">{source.matched}</span>
+						{source['名称']}
+						<span class="count">{source['已匹配数']}</span>
 					</button>
 				{/each}
 			</div>
@@ -222,44 +195,50 @@
 
 		<div class="channels-grid">
 			{#each getPaginatedChannels() as channel}
-				<div class="channel-card" class:has-gap={channel.hasGap}>
+				<div class="channel-card" class:has-gap={channel['存在时间空隙']} class:has-desc={channel['有描述数据']}>
 					<div class="channel-header">
-						<span class="channel-name">{channel.name}</span>
-						<span class="source-badge" style="background: {getSourceBadgeColor(channel.source)}">
-							{channel.source}
+						<span class="channel-name">{channel['频道名称']}</span>
+						<span class="source-badge" style="background: {getSourceBadgeColor(channel['数据源'])}">
+							{channel['数据源']}
 						</span>
 					</div>
-					<div class="channel-id">{channel.id}</div>
+					<div class="channel-id">{channel['tvg_id']}</div>
 					<div class="channel-stats">
 						<div class="stat">
-							<span class="num">{channel.programs}</span>
+							<span class="num">{channel['节目总数']}</span>
 							<span class="label">节目</span>
 						</div>
 						<div class="stat">
-							<span class="num">{channel.todayPrograms}</span>
+							<span class="num">{channel['今日节目数']}</span>
 							<span class="label">今日</span>
 						</div>
-						{#if getChannelDescStats(channel.name)}
+						{#if channel['描述统计']}
+							{@const descStats = channel['描述统计']}
 							<div class="stat desc">
-								<span class="num">{getChannelDescStats(channel.name).matched}/{getChannelDescStats(channel.name).total}</span>
-								<span class="label">Desc</span>
+								<span class="num">{descStats['已匹配描述数']}/{descStats['需匹配节目数']}</span>
+								<span class="label">描述</span>
 								<div class="desc-rate">
-									<div class="desc-rate-fill" style="width: {getChannelDescStats(channel.name).rate}%"></div>
+									<div class="desc-rate-fill" 
+										style="width: {descStats['匹配率']}%; background: {getDescRateColor(descStats['匹配率'])}">
+									</div>
 								</div>
+								<span class="desc-rate-text" style="color: {getDescRateColor(descStats['匹配率'])}">
+									{descStats['匹配率']}%
+								</span>
 							</div>
 						{/if}
 					</div>
-					{#if channel.aliases?.length > 0}
+					{#if channel['频道别名']?.length > 0}
 						<div class="aliases">
-							{#each channel.aliases.slice(0, 3) as alias}
+							{#each channel['频道别名'].slice(0, 3) as alias}
 								<span class="alias-tag">{alias}</span>
 							{/each}
-							{#if channel.aliases.length > 3}
-								<span class="alias-more">+{channel.aliases.length - 3}</span>
+							{#if channel['频道别名'].length > 3}
+								<span class="alias-more">+{channel['频道别名'].length - 3}</span>
 							{/if}
 						</div>
 					{/if}
-					{#if channel.hasGap}
+					{#if channel['存在时间空隙']}
 						<div class="gap-warning">
 							<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
@@ -420,6 +399,11 @@
 		border-color: var(--primary);
 	}
 
+	.stat-item.desc-highlight {
+		background: rgba(124, 58, 237, 0.1);
+		border-color: #7c3aed;
+	}
+
 	.stat-item .stat-value {
 		font-size: 1.25rem;
 		font-weight: 700;
@@ -506,7 +490,7 @@
 
 	.channels-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 		gap: 0.75rem;
 		margin-bottom: 1rem;
 	}
@@ -527,6 +511,10 @@
 	.channel-card.has-gap {
 		border-color: var(--warning);
 		background: rgba(245, 158, 11, 0.05);
+	}
+
+	.channel-card.has-desc {
+		border-left: 3px solid #7c3aed;
 	}
 
 	.channel-header {
@@ -584,6 +572,8 @@
 
 	.channel-stats .stat.desc {
 		position: relative;
+		flex: 1;
+		align-items: flex-start;
 	}
 
 	.desc-rate {
@@ -591,15 +581,20 @@
 		height: 4px;
 		background: var(--bg-hover);
 		border-radius: 2px;
-		margin-top: 2px;
+		margin-top: 4px;
+		margin-bottom: 2px;
 		overflow: hidden;
 	}
 
 	.desc-rate-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #7c3aed, #a78bfa);
 		border-radius: 2px;
 		transition: width 0.3s ease;
+	}
+
+	.desc-rate-text {
+		font-size: 0.65rem;
+		font-weight: 600;
 	}
 
 	.aliases {
@@ -669,7 +664,7 @@
 
 	@media (max-width: 768px) {
 		.channels-grid {
-			grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		}
 
 		.stats-bar {
