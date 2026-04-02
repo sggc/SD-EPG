@@ -56,11 +56,49 @@
 		loading = true;
 		error = null;
 		try {
-			const [dashboardLog, logContent] = await Promise.all([
+			const [unifiedData, dashboardLog, logContent] = await Promise.all([
+				github.getPublicFile('log/unified_dashboard_data.json').catch(() => null),
 				github.getPublicFile('log/dashboard_data.json').catch(() => null),
 				github.getPublicFileRaw('log/aggregation_log.txt').catch(() => null)
 			]);
-			if (dashboardLog) {
+			if (unifiedData) {
+				const overallStats = unifiedData['总体统计'] || {};
+				const metadata = unifiedData['元数据'] || {};
+				const channelList = unifiedData['频道列表'] || [];
+				const epgSources = unifiedData['数据源统计'] || [];
+				stats = {
+					...stats,
+					whitelistChannels: overallStats['白名单频道数'] || 0,
+					matchedChannels: overallStats['已匹配频道数'] || 0,
+					unmatchedChannels: overallStats['未匹配频道数'] || 0,
+					totalPrograms: overallStats['总节目数'] || 0,
+					filteredPrograms: overallStats['已过滤节目数'] || 0,
+					dateRange: metadata['数据日期范围'] || '',
+					lastUpdate: metadata['最后更新时间'] || '',
+					descMatchRate: overallStats['整体描述匹配率'] || 0,
+					epgSources: epgSources.map(s => ({
+						name: s['名称'],
+						enabled: s['是否启用'],
+						channels: s['频道数'],
+						programs: s['节目数'],
+						matched: s['已匹配数'],
+						disabled: !s['是否启用']
+					})),
+					allChannels: channelList.map(ch => ({
+						id: ch['tvg_id'],
+						name: ch['频道名称'],
+						aliases: ch['频道别名'] || [],
+						programs: ch['节目总数'] || 0,
+						todayPrograms: ch['今日节目数'] || 0,
+						source: ch['数据源'] || '',
+						descStats: ch['描述统计'] ? {
+							total: ch['描述统计']['需匹配节目数'] || 0,
+							matched: ch['描述统计']['已匹配描述数'] || 0,
+							matchRate: ch['描述统计']['匹配率'] || 0
+						} : null
+					}))
+				};
+			} else if (dashboardLog) {
 				stats = { ...stats, ...dashboardLog };
 			} else if (logContent) {
 				parseAggregationLog(logContent);

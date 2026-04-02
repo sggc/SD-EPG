@@ -42,9 +42,10 @@
 		error = null;
 
 		try {
-			const [logContent, descConfig, dashboardLog, descMatchLog, descDatabaseLog] = await Promise.all([
+			const [logContent, descConfig, unifiedData, dashboardLog, descMatchLog, descDatabaseLog] = await Promise.all([
 				github.getPublicFileRaw('log/aggregation_log.txt').catch(() => null),
 				github.getPublicFile('config/desc_config.json').catch(() => null),
+				github.getPublicFile('log/unified_dashboard_data.json').catch(() => null),
 				github.getPublicFile('log/dashboard_data.json').catch(() => null),
 				github.getPublicFileRaw('log/desc_match_log.txt').catch(() => null),
 				github.getPublicFileRaw('log/desc_database_log.txt').catch(() => null)
@@ -54,7 +55,37 @@
 				descSources = descConfig.desc_sources?.length || 0;
 			}
 
-			if (dashboardLog) {
+			if (unifiedData) {
+				const overallStats = unifiedData['总体统计'] || {};
+				const metadata = unifiedData['元数据'] || {};
+				const epgSources = unifiedData['数据源统计'] || [];
+				const anomalyData = unifiedData['异常数据'] || {};
+				stats = {
+					...stats,
+					whitelistChannels: overallStats['白名单频道数'] || 0,
+					matchedChannels: overallStats['已匹配频道数'] || 0,
+					unmatchedChannels: overallStats['未匹配频道数'] || 0,
+					totalPrograms: overallStats['总节目数'] || 0,
+					filteredPrograms: overallStats['已过滤节目数'] || 0,
+					dateRange: metadata['数据日期范围'] || '',
+					lastUpdate: metadata['最后更新时间'] || '',
+					descMatchRate: overallStats['整体描述匹配率'] || 0,
+					aliasCount: overallStats['别名总数'] || 0,
+					epgSources: epgSources.map(s => ({
+						name: s['名称'],
+						disabled: !s['是否启用'],
+						channels: s['频道数'] || 0,
+						programs: s['节目数'] || 0,
+						matched: s['已匹配数'] || 0
+					})),
+					unmatchedList: (anomalyData['EPG未匹配频道列表'] || []).map(item => ({
+						id: item.id || item['id'],
+						name: item.name || item['名称'] || ''
+					})),
+					lowProgramChannels: anomalyData['低节目量频道'] || [],
+					gapChannels: anomalyData['有时间空隙频道'] || []
+				};
+			} else if (dashboardLog) {
 				stats = { ...stats, ...dashboardLog };
 			} else if (logContent) {
 				parseAggregationLog(logContent);
