@@ -1,0 +1,1624 @@
+{
+  "timestamp": "2026-03-31 18:13:07",
+  "type": "add_desc",
+  "stats": {
+    "total_programs": 87334,
+    "already_has_desc": 6583,
+    "matched_man_made": 20397,
+    "matched_same_channel": 29054,
+    "matched_global": 9664,
+    "no_match": 21636,
+    "match_rate": 73.21
+  },
+  "sources": {
+    "man-made": 20397,
+    "source1": 35158,
+    "source2": 3560
+  },
+  "channels": [
+    {
+      "name": "嘉佳卡通",
+      "total": 1124,
+      "matched": 1056,
+      "has_desc": 0,
+      "rate": 94.0
+    },
+    {
+      "name": "动画",
+      "total": 896,
+      "matched": 896,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "生活时尚",
+      "total": 1092,
+      "matched": 825,
+      "has_desc": 0,
+      "rate": 75.5
+    },
+    {
+      "name": "动漫秀场",
+      "total": 800,
+      "matched": 738,
+      "has_desc": 0,
+      "rate": 92.2
+    },
+    {
+      "name": "汽摩",
+      "total": 617,
+      "matched": 617,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "CCTV电视指南",
+      "total": 990,
+      "matched": 551,
+      "has_desc": 0,
+      "rate": 55.7
+    },
+    {
+      "name": "中华特产",
+      "total": 512,
+      "matched": 512,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "军事",
+      "total": 486,
+      "matched": 486,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "中国教育1",
+      "total": 567,
+      "matched": 468,
+      "has_desc": 0,
+      "rate": 82.5
+    },
+    {
+      "name": "深圳卫视",
+      "total": 493,
+      "matched": 456,
+      "has_desc": 0,
+      "rate": 92.5
+    },
+    {
+      "name": "金鹰卡通",
+      "total": 448,
+      "matched": 447,
+      "has_desc": 0,
+      "rate": 99.8
+    },
+    {
+      "name": "山东新闻",
+      "total": 478,
+      "matched": 438,
+      "has_desc": 0,
+      "rate": 91.6
+    },
+    {
+      "name": "IPTV法治",
+      "total": 432,
+      "matched": 432,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "四海钓鱼",
+      "total": 440,
+      "matched": 424,
+      "has_desc": 0,
+      "rate": 96.4
+    },
+    {
+      "name": "河北三农",
+      "total": 432,
+      "matched": 418,
+      "has_desc": 0,
+      "rate": 96.8
+    },
+    {
+      "name": "深圳卫视4K",
+      "total": 493,
+      "matched": 398,
+      "has_desc": 0,
+      "rate": 80.7
+    },
+    {
+      "name": "NewTV古装剧场",
+      "total": 396,
+      "matched": 396,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "发现之旅",
+      "total": 430,
+      "matched": 393,
+      "has_desc": 0,
+      "rate": 91.4
+    },
+    {
+      "name": "都市剧场",
+      "total": 390,
+      "matched": 385,
+      "has_desc": 0,
+      "rate": 98.7
+    },
+    {
+      "name": "甘肃卫视",
+      "total": 400,
+      "matched": 383,
+      "has_desc": 0,
+      "rate": 95.8
+    },
+    {
+      "name": "农林卫视",
+      "total": 378,
+      "matched": 378,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "CGTN西语",
+      "total": 391,
+      "matched": 375,
+      "has_desc": 0,
+      "rate": 95.9
+    },
+    {
+      "name": "金鹰纪实",
+      "total": 395,
+      "matched": 369,
+      "has_desc": 0,
+      "rate": 93.4
+    },
+    {
+      "name": "CGTN俄语",
+      "total": 376,
+      "matched": 367,
+      "has_desc": 0,
+      "rate": 97.6
+    },
+    {
+      "name": "解密",
+      "total": 360,
+      "matched": 360,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "CGTN",
+      "total": 362,
+      "matched": 354,
+      "has_desc": 0,
+      "rate": 97.8
+    },
+    {
+      "name": "CGTN阿语",
+      "total": 360,
+      "matched": 354,
+      "has_desc": 0,
+      "rate": 98.3
+    },
+    {
+      "name": "武术",
+      "total": 350,
+      "matched": 350,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "法治天地",
+      "total": 413,
+      "matched": 349,
+      "has_desc": 0,
+      "rate": 84.5
+    },
+    {
+      "name": "贵州卫视",
+      "total": 398,
+      "matched": 345,
+      "has_desc": 0,
+      "rate": 86.7
+    },
+    {
+      "name": "CCTV4",
+      "total": 346,
+      "matched": 343,
+      "has_desc": 0,
+      "rate": 99.1
+    },
+    {
+      "name": "环球旅游",
+      "total": 343,
+      "matched": 343,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "山东农科",
+      "total": 344,
+      "matched": 340,
+      "has_desc": 0,
+      "rate": 98.8
+    },
+    {
+      "name": "老故事",
+      "total": 388,
+      "matched": 340,
+      "has_desc": 0,
+      "rate": 87.6
+    },
+    {
+      "name": "CCTV8",
+      "total": 336,
+      "matched": 336,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "凤凰卫视中文台",
+      "total": 330,
+      "matched": 330,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "国学",
+      "total": 330,
+      "matched": 330,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "墨宝",
+      "total": 330,
+      "matched": 330,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "泰安综合",
+      "total": 348,
+      "matched": 328,
+      "has_desc": 0,
+      "rate": 94.3
+    },
+    {
+      "name": "广州新闻",
+      "total": 329,
+      "matched": 328,
+      "has_desc": 0,
+      "rate": 99.7
+    },
+    {
+      "name": "CCTV1",
+      "total": 332,
+      "matched": 326,
+      "has_desc": 0,
+      "rate": 98.2
+    },
+    {
+      "name": "游戏风云",
+      "total": 326,
+      "matched": 326,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "CCTV4欧洲",
+      "total": 329,
+      "matched": 325,
+      "has_desc": 0,
+      "rate": 98.8
+    },
+    {
+      "name": "宁夏卫视",
+      "total": 323,
+      "matched": 323,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "凤凰卫视资讯台",
+      "total": 320,
+      "matched": 320,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "HOY78",
+      "total": 348,
+      "matched": 317,
+      "has_desc": 0,
+      "rate": 91.1
+    },
+    {
+      "name": "CCTV4美洲",
+      "total": 318,
+      "matched": 314,
+      "has_desc": 0,
+      "rate": 98.7
+    },
+    {
+      "name": "三沙卫视",
+      "total": 313,
+      "matched": 312,
+      "has_desc": 0,
+      "rate": 99.7
+    },
+    {
+      "name": "财富天下",
+      "total": 308,
+      "matched": 308,
+      "has_desc": 0,
+      "rate": 100.0
+    },
+    {
+      "name": "河南卫视",
+      "total": 349,
+      "matched": 307,
+      "has_desc": 0,
+      "rate": 88.0
+    }
+  ],
+  "success_details": [
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "人口",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央电视台与国家人口和计划生育委员会合办、中国人口宣传教育中心承办，是中央电视台目前唯一的揭示生命奥..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "自然中国：探秘茂兰喀斯特",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.733,
+      "desc_preview": "自然资源是生存之基、发展之要、民生之本、生态之依。《自然中国》节目将聚焦耕地保护红线、见证海洋强国建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "晚间新闻",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《晚间新闻》是CCTV-1的一档新闻品牌栏目，开办多年，一直受到观众喜欢。栏目信息量丰富，特色鲜明，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：黄山迎客松",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.818,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：明清石榴园古树群",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.857,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《非遗里的中国》MV",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "泱泱中华-历史文化街区(1)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《泱泱中华》是中央广播电视总台央视综合频道推出的系列节目，旨在提炼展示中华文明的精神标识与文化精髓，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "今日说法",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《今日说法》是央视的法制节目，以案例分析普及法律知识。节目提高了公民的法律意识和法治观念。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻联播",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《新闻联播》是央视的王牌新闻节目，及时报道国内外重要新闻。节目是中国最权威的新闻发布平台之一。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "寻古中国：寻秦记(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "大型纪录片《寻古中国》由中央广播电视总台和国家文物局联合摄制，充分运用中华文明探源工程等研究成果，把..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央广播电视总台央视综合频道《生活圈》是2016年1月4日开播的一档生活服务节目，该栏目由《生活早参..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(24)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(25)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(26)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：阳朔古榕树",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.818,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻30分",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《新闻30分》节目创办于1995年4月，每天12:00开始播出，因其新颖、灵活的新闻报道方式，深受广..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "今日说法",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《今日说法》是央视的法制节目，以案例分析普及法律知识。节目提高了公民的法律意识和法治观念。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(12)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(13)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(14)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(15)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(16)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "第一动画乐园",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央电视台综合频道的《第一动画乐园》栏目，以启蒙和激发亿万少年儿童的想象潜能为目的，营造一个学习、娱..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "第一动画乐园",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央电视台综合频道的《第一动画乐园》栏目，以启蒙和激发亿万少年儿童的想象潜能为目的，营造一个学习、娱..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "自然中国：探秘茂兰喀斯特",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.733,
+      "desc_preview": "自然资源是生存之基、发展之要、民生之本、生态之依。《自然中国》节目将聚焦耕地保护红线、见证海洋强国建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "秘境之眼",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "央视综合频道全新推出短视频节目《秘境之眼》，联合国家林业和草原局拓展自然保护宣传模式，展现生态文明建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻联播",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《新闻联播》是央视的王牌新闻节目，及时报道国内外重要新闻。节目是中国最权威的新闻发布平台之一。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "天气预报",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "青岛电视台QTV-3频道播出的天气预报节目，提供青岛地区的天气情况、温度变化、降水概率等信息，为观众..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "焦点访谈",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《焦点访谈》诞生至今已17年。17年中，它迅速成长为一个在中国家喻户晓的电视栏目，也是中央电视台收视..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "前情提要：家事法庭(1)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.727,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "家事法庭(1)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "前情提要：家事法庭(2)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.727,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "家事法庭(2)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《非遗里的中国》MV",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "晚间新闻",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《晚间新闻》是CCTV-1的一档新闻品牌栏目，开办多年，一直受到观众喜欢。栏目信息量丰富，特色鲜明，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "自然中国：探秘茂兰喀斯特",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.733,
+      "desc_preview": "自然资源是生存之基、发展之要、民生之本、生态之依。《自然中国》节目将聚焦耕地保护红线、见证海洋强国建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "晚间新闻",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《晚间新闻》是CCTV-1的一档新闻品牌栏目，开办多年，一直受到观众喜欢。栏目信息量丰富，特色鲜明，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "寻古中国：寻秦记(2)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "大型纪录片《寻古中国》由中央广播电视总台和国家文物局联合摄制，充分运用中华文明探源工程等研究成果，把..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：阳山唐桂",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.8,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《三餐四季Ⅱ》宣传片",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "《三餐四季》是总台创新推出的大型美食文旅季播节目，总台主持人与各界知名人士组成寻味团，每期探访一省两..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《非遗里的中国》MV",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "泱泱中华-历史文化街区(1)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《泱泱中华》是中央广播电视总台央视综合频道推出的系列节目，旨在提炼展示中华文明的精神标识与文化精髓，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "今日说法",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《今日说法》是央视的法制节目，以案例分析普及法律知识。节目提高了公民的法律意识和法治观念。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻联播",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《新闻联播》是央视的王牌新闻节目，及时报道国内外重要新闻。节目是中国最权威的新闻发布平台之一。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "寻古中国：寻秦记(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "大型纪录片《寻古中国》由中央广播电视总台和国家文物局联合摄制，充分运用中华文明探源工程等研究成果，把..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央广播电视总台央视综合频道《生活圈》是2016年1月4日开播的一档生活服务节目，该栏目由《生活早参..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(27)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(28)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "大生意人(29)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "晚清年间，一位惨遭陷害被流放的读书人，以死谋生，在夹缝中凭借自己的智慧借势谋局，以行商入场，以票号立..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：霞浦黄连木",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.818,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻30分",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《新闻30分》节目创办于1995年4月，每天12:00开始播出，因其新颖、灵活的新闻报道方式，深受广..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "今日说法",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《今日说法》是央视的法制节目，以案例分析普及法律知识。节目提高了公民的法律意识和法治观念。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(17)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(18)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(19)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(20)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "北上(21)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "2000年的夏天，身世成谜的十岁女孩马思艺来到运河边的花街。由于马思艺异于常人的外貌，她成为花街的风..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "第一动画乐园",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央电视台综合频道的《第一动画乐园》栏目，以启蒙和激发亿万少年儿童的想象潜能为目的，营造一个学习、娱..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "第一动画乐园",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "中央电视台综合频道的《第一动画乐园》栏目，以启蒙和激发亿万少年儿童的想象潜能为目的，营造一个学习、娱..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "自然中国：探秘鼎湖山-植物生灵",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.385,
+      "desc_preview": "自然资源是生存之基、发展之要、民生之本、生态之依。《自然中国》节目将聚焦耕地保护红线、见证海洋强国建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "秘境之眼",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "央视综合频道全新推出短视频节目《秘境之眼》，联合国家林业和草原局拓展自然保护宣传模式，展现生态文明建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻联播",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《新闻联播》是央视的王牌新闻节目，及时报道国内外重要新闻。节目是中国最权威的新闻发布平台之一。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "天气预报",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "青岛电视台QTV-3频道播出的天气预报节目，提供青岛地区的天气情况、温度变化、降水概率等信息，为观众..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "焦点访谈",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《焦点访谈》诞生至今已17年。17年中，它迅速成长为一个在中国家喻户晓的电视栏目，也是中央电视台收视..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "前情提要：家事法庭(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.727,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "家事法庭(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "前情提要：家事法庭(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.727,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "家事法庭(4)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "青年法官沈谢秩携手律师秦睿，与舒静、胡艾溪、陈向辉等法律同侪深入基层工作，为人民群众解决亲子矛盾、婚..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《三餐四季Ⅱ》宣传片",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "《三餐四季》是总台创新推出的大型美食文旅季播节目，总台主持人与各界知名人士组成寻味团，每期探访一省两..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "晚间新闻",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《晚间新闻》是CCTV-1的一档新闻品牌栏目，开办多年，一直受到观众喜欢。栏目信息量丰富，特色鲜明，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(7)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(7)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "自然中国：鼎湖山-植物生灵",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "自然资源是生存之基、发展之要、民生之本、生态之依。《自然中国》节目将聚焦耕地保护红线、见证海洋强国建..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "晚间新闻",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《晚间新闻》是CCTV-1的一档新闻品牌栏目，开办多年，一直受到观众喜欢。栏目信息量丰富，特色鲜明，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《三餐四季Ⅱ》宣传片",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.5,
+      "desc_preview": "《三餐四季》是总台创新推出的大型美食文旅季播节目，总台主持人与各界知名人士组成寻味团，每期探访一省两..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "寻古中国：寻秦记(3)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "大型纪录片《寻古中国》由中央广播电视总台和国家文物局联合摄制，充分运用中华文明探源工程等研究成果，把..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "《非遗里的中国》MV",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《非遗里的中国》通过非遗创新秀演、沉浸体验、还原绝技等全新的方式来打开非遗，多维度呈现非遗的创新成果..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华古树：霞浦黄连木",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.818,
+      "desc_preview": "《中华古树》是由中央广播电视总台、国家林业和草原局、全国绿化委员会办公室共同推出的人文自然纪录片，于..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "城市风华录(7)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "fuzzy",
+      "match_score": 0.833,
+      "desc_preview": "《城市风华录》（Urban Charm Record）是中央广播电视总台推出的大型季播节目。该节目每..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "泱泱中华-历史文化街区(1)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《泱泱中华》是中央广播电视总台央视综合频道推出的系列节目，旨在提炼展示中华文明的精神标识与文化精髓，..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "今日说法",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《今日说法》是央视的法制节目，以案例分析普及法律知识。节目提高了公民的法律意识和法治观念。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "新闻联播",
+      "match_type": "man_made",
+      "match_source": "man-made",
+      "match_rule": "global",
+      "match_score": 0.9,
+      "desc_preview": "《新闻联播》是央视的王牌新闻节目，及时报道国内外重要新闻。节目是中国最权威的新闻发布平台之一。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "寻古中国：寻秦记(5)",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "大型纪录片《寻古中国》由中央广播电视总台和国家文物局联合摄制，充分运用中华文明探源工程等研究成果，把..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "中华人民共和国国歌",
+      "match_type": "global",
+      "match_source": "source1",
+      "match_rule": "global",
+      "match_score": 0.85,
+      "desc_preview": "垫片，播放中华人民共和国国歌。"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "朝闻天下",
+      "match_type": "same_channel",
+      "match_source": "source1",
+      "match_rule": "exact",
+      "match_score": 1.0,
+      "desc_preview": "《朝闻天下》由中国中央电视台综合频道和新闻频道每天直播，包括3档节目，日均累计收视率达2.2%。20..."
+    }
+  ],
+  "failed_details": [
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV1",
+      "channel_name": "CCTV1",
+      "program_title": "生活圈精编"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "万物滋养(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：八闽奇味(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "CMG直播电商盛典"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：老广的味道Ⅶ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "万物滋养(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物滋养Ⅰ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：老广的味道Ⅶ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "航拍中国Ⅳ(9)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：中国民居Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：大河之北Ⅲ(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(2)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(3)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(4)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：万物之生(1)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(5)"
+    },
+    {
+      "channel_id": "CCTV2",
+      "channel_name": "CCTV2",
+      "program_title": "精品财经纪录：宵夜江湖Ⅲ(6)"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-206 扫黑风暴17/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-207 扫黑风暴18/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-208 扫黑风暴19/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-209 扫黑风暴20/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "金声玉振——中国器乐大会-精编一"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-210 扫黑风暴21/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-211 扫黑风暴22/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-212 扫黑风暴23/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-213 扫黑风暴24/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-214 扫黑风暴25/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-215 扫黑风暴26/28"
+    },
+    {
+      "channel_id": "CCTV3",
+      "channel_name": "CCTV3",
+      "program_title": "综艺喜乐汇-2026-216 扫黑风暴27/28"
+    }
+  ]
+}
