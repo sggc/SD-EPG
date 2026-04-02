@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-04-02 12:40:41",
+  "timestamp": "2026-04-02 15:37:49",
   "type": "add_desc",
   "stats": {
-    "total_programs": 86916,
-    "already_has_desc": 5948,
-    "matched_man_made": 20160,
-    "matched_same_channel": 27801,
-    "matched_global": 9773,
-    "no_match": 23234,
-    "match_rate": 71.3
+    "total_programs": 86745,
+    "already_has_desc": 5998,
+    "matched_man_made": 20123,
+    "matched_same_channel": 27668,
+    "matched_global": 9702,
+    "no_match": 23254,
+    "match_rate": 71.2
   },
   "sources": {
-    "man-made": 20160,
-    "source1": 35401,
-    "source2": 2173
+    "man-made": 20123,
+    "source1": 35207,
+    "source2": 2163
   },
   "channels": [
     {
@@ -164,13 +164,6 @@
       "rate": 96.9
     },
     {
-      "name": "都市剧场",
-      "total": 384,
-      "matched": 379,
-      "has_desc": 0,
-      "rate": 98.7
-    },
-    {
       "name": "甘肃卫视",
       "total": 390,
       "matched": 374,
@@ -183,6 +176,13 @@
       "matched": 374,
       "has_desc": 0,
       "rate": 93.5
+    },
+    {
+      "name": "都市剧场",
+      "total": 377,
+      "matched": 372,
+      "has_desc": 0,
+      "rate": 98.7
     },
     {
       "name": "CGTN俄语",
@@ -248,20 +248,6 @@
       "rate": 98.8
     },
     {
-      "name": "浙江卫视",
-      "total": 340,
-      "matched": 330,
-      "has_desc": 0,
-      "rate": 97.1
-    },
-    {
-      "name": "浙江卫视4K",
-      "total": 340,
-      "matched": 330,
-      "has_desc": 0,
-      "rate": 97.1
-    },
-    {
       "name": "凤凰卫视中文台",
       "total": 330,
       "matched": 330,
@@ -319,8 +305,8 @@
     },
     {
       "name": "宁夏卫视",
-      "total": 324,
-      "matched": 319,
+      "total": 323,
+      "matched": 318,
       "has_desc": 0,
       "rate": 98.5
     },
@@ -348,16 +334,9 @@
     {
       "name": "东方卫视",
       "total": 318,
-      "matched": 310,
+      "matched": 309,
       "has_desc": 0,
-      "rate": 97.5
-    },
-    {
-      "name": "河南卫视",
-      "total": 357,
-      "matched": 308,
-      "has_desc": 0,
-      "rate": 86.3
+      "rate": 97.2
     },
     {
       "name": "财富天下",
@@ -365,6 +344,27 @@
       "matched": 308,
       "has_desc": 0,
       "rate": 100.0
+    },
+    {
+      "name": "中国教育4",
+      "total": 349,
+      "matched": 307,
+      "has_desc": 0,
+      "rate": 88.0
+    },
+    {
+      "name": "河北卫视",
+      "total": 328,
+      "matched": 307,
+      "has_desc": 0,
+      "rate": 93.6
+    },
+    {
+      "name": "辽宁卫视",
+      "total": 353,
+      "matched": 307,
+      "has_desc": 0,
+      "rate": 87.0
     }
   ]
 }
