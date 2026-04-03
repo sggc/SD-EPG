@@ -363,8 +363,8 @@ class DescExtractor:
         now = datetime.now(BEIJING_TZ)
         timestamp = now.strftime('%Y-%m-%d %H:%M:%S')
 
-        log_txt_path = os.path.join(self.log_dir, 'epg_aggregation_log.txt')
-        log_json_path = os.path.join(self.log_dir, 'epg_aggregation_log.json')
+        log_txt_path = os.path.join(self.log_dir, 'desc_database_log.txt')
+        log_json_path = os.path.join(self.log_dir, 'desc_database_log.json')
 
         channel_counts = self.desc_db.get_channel_counts()
         sorted_channels = sorted(channel_counts.items(), key=lambda x: -x[1])
