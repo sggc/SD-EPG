@@ -459,70 +459,70 @@
 							</div>
 
 							<div class="channels-list">
-							{#each getPaginatedChannels() as [id, ch]}
-								<div class="channel-row" class:expanded={expandedChannel === id}>
-									<div class="channel-summary" onclick={() => toggleChannel(id)}>
-										<span class="expand-icon">{expandedChannel === id ? '▾' : '▸'}</span>
-										<span class="channel-id">{id}</span>
-										<span class="channel-name">{ch.n || '（未命名）'}</span>
-										<span class="channel-meta">
-											{#if (ch.a?.length)}
-												<span class="meta-badge alias">a:{ch.a.length}</span>
-											{/if}
-											{#if (ch.x?.length)}
-												<span class="meta-badge ext">x:{ch.x.length}</span>
-											{/if}
-										</span>
-										<button class="btn-danger-xs" onclick={(e) => { e.stopPropagation(); removeChannel(id); }}>✕</button>
-									</div>
-									
-									{#if expandedChannel === id}
-										<div class="channel-detail">
-											<div class="form-group">
-												<label>标准名称 (n)</label>
-												<input type="text" value={ch.n || ''} oninput={(e) => configData.channels = { ...configData.channels, [id]: { ...ch, n: e.target.value } }}/>
-											</div>
-											<div class="alias-section">
-												<div class="alias-header">
-													<label>别名 (a)</label>
-													<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'a')}>+添加</button>
-												</div>
-												{#each (ch.a || []) as alias, ai}
-													<div class="alias-row">
-														<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'a', ai, e.target.value)}/>
-														<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'a', ai)}>✕</button>
-													</div>
-												{:else}
-													<p class="empty-aliases">暂无别名</p>
-												{/each}
-											</div>
-											<div class="alias-section">
-												<div class="alias-header">
-													<label>扩展名 (x)</label>
-													<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'x')}>+添加</button>
-												</div>
-												{#each (ch.x || []) as alias, ai}
-													<div class="alias-row">
-														<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'x', ai, e.target.value)}/>
-														<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'x', ai)}>✕</button>
-													</div>
-												{:else}
-													<p class="empty-aliases">暂无扩展名</p>
-												{/each}
-											</div>
+								{#each getPaginatedChannels() as [id, ch]}
+									<div class="channel-row" class:expanded={expandedChannel === id}>
+										<div class="channel-summary" onclick={() => toggleChannel(id)}>
+											<span class="expand-icon">{expandedChannel === id ? '▾' : '▸'}</span>
+											<span class="channel-id">{id}</span>
+											<span class="channel-name">{ch.n || '（未命名）'}</span>
+											<span class="channel-meta">
+												{#if (ch.a?.length)}
+													<span class="meta-badge alias">a:{ch.a.length}</span>
+												{/if}
+												{#if (ch.x?.length)}
+													<span class="meta-badge ext">x:{ch.x.length}</span>
+												{/if}
+											</span>
+											<button class="btn-danger-xs" onclick={(e) => { e.stopPropagation(); removeChannel(id); }}>✕</button>
 										</div>
-									{/if}
-								</div>
-							{:else}
-								<p class="empty-hint">暂无频道，点击上方按钮新增</p>
-							{/each}
-							{#if Object.keys(getFilteredChannels()).length > channelPage * CHANNELS_PER_PAGE}
-								<button class="btn btn-secondary btn-sm load-more" onclick={loadMoreChannels}>
-									加载更多 ({Object.keys(getFilteredChannels()).length - channelPage * CHANNELS_PER_PAGE} 剩余)
-								</button>
-							{/if}
+										
+										{#if expandedChannel === id}
+											<div class="channel-detail">
+												<div class="form-group">
+													<label>标准名称 (n)</label>
+													<input type="text" value={ch.n || ''} oninput={(e) => configData.channels = { ...configData.channels, [id]: { ...ch, n: e.target.value } }}/>
+												</div>
+												<div class="alias-section">
+													<div class="alias-header">
+														<label>别名 (a)</label>
+														<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'a')}>+添加</button>
+													</div>
+													{#each (ch.a || []) as alias, ai}
+														<div class="alias-row">
+															<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'a', ai, e.target.value)}/>
+															<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'a', ai)}>✕</button>
+														</div>
+													{:else}
+														<p class="empty-aliases">暂无别名</p>
+													{/each}
+												</div>
+												<div class="alias-section">
+													<div class="alias-header">
+														<label>扩展名 (x)</label>
+														<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'x')}>+添加</button>
+													</div>
+													{#each (ch.x || []) as alias, ai}
+														<div class="alias-row">
+															<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'x', ai, e.target.value)}/>
+															<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'x', ai)}>✕</button>
+														</div>
+													{:else}
+														<p class="empty-aliases">暂无扩展名</p>
+													{/each}
+												</div>
+											</div>
+										{/if}
+									</div>
+								{:else}
+									<p class="empty-hint">暂无频道，点击上方按钮新增</p>
+								{/each}
+								{#if Object.keys(getFilteredChannels()).length > channelPage * CHANNELS_PER_PAGE}
+									<button class="btn btn-secondary btn-sm load-more" onclick={loadMoreChannels}>
+										加载更多 ({Object.keys(getFilteredChannels()).length - channelPage * CHANNELS_PER_PAGE} 剩余)
+									</button>
+								{/if}
+							</div>
 						</div>
-					</div>
 					{/if}
 
 					<!-- Provinces 配置 -->
