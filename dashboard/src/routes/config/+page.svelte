@@ -153,6 +153,10 @@
 		);
 	}
 
+	let expandedChannel = $state(null);
+	let newChannelId = $state('');
+	let newChannelName = $state('');
+
 	function getFilteredChannels() {
 		if (!configData?.channels) return {};
 		if (!channelSearch.trim()) return configData.channels;
@@ -166,16 +170,21 @@
 		return filtered;
 	}
 
+	function toggleChannel(id) {
+		expandedChannel = expandedChannel === id ? null : id;
+	}
+
 	function removeChannel(id) {
 		const newChannels = { ...configData.channels };
 		delete newChannels[id];
 		configData.channels = newChannels;
+		if (expandedChannel === id) expandedChannel = null;
 	}
 
 	function updateChannelAlias(id, type, index, value) {
 		const ch = configData.channels[id];
 		if (!ch) return;
-		const arr = [...ch[type]];
+		const arr = [...(ch[type] || [])];
 		arr[index] = value;
 		configData.channels = { ...configData.channels, [id]: { ...ch, [type]: arr } };
 	}
@@ -189,8 +198,21 @@
 	function removeChannelAlias(id, type, index) {
 		const ch = configData.channels[id];
 		if (!ch) return;
-		const arr = ch[type].filter((_, i) => i !== index);
+		const arr = (ch[type] || []).filter((_, i) => i !== index);
 		configData.channels = { ...configData.channels, [id]: { ...ch, [type]: arr } };
+	}
+
+	function addNewChannel() {
+		if (!newChannelId.trim()) return;
+		const id = newChannelId.trim();
+		if (configData.channels[id]) return;
+		configData.channels = {
+			...configData.channels,
+			[id]: { n: newChannelName.trim(), a: [], x: [] }
+		};
+		newChannelId = '';
+		newChannelName = '';
+		expandedChannel = id;
 	}
 </script>
 
@@ -386,55 +408,90 @@
 						{/if}
 
 						{#if activeTab === 'channels'}
-							<div class="section">
-								<div class="section-header">
-									<h4>频道配置 ({Object.keys(configData.channels || {}).length})</h4>
+						<div class="section">
+							<div class="section-header">
+								<h4>频道配置 ({Object.keys(configData.channels || {}).length})</h4>
+								<div class="header-actions">
 									<div class="search-box-small">
 										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
 										<input type="text" placeholder="搜索频道..." bind:value={channelSearch}/>
 									</div>
-								</div>
-								
-								<div class="channels-editor">
-									{#each Object.entries(getFilteredChannels()) as [id, ch]}
-										<div class="channel-edit-card">
-											<div class="channel-edit-header">
-												<span class="channel-id">{id}</span>
-												<button class="btn btn-danger btn-xs" onclick={() => removeChannel(id)}>删除</button>
-											</div>
-											<div class="form-group">
-												<label>标准名称</label>
-												<input type="text" value={ch.n || ''} oninput={(e) => configData.channels = { ...configData.channels, [id]: { ...ch, n: e.target.value } }}/>
-											</div>
-											<div class="alias-section">
-												<div class="alias-header">
-													<label>别名 (a)</label>
-													<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'a')}>+添加</button>
-												</div>
-												{#each (ch.a || []) as alias, ai}
-													<div class="alias-row">
-														<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'a', ai, e.target.value)}/>
-														<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'a', ai)}>✕</button>
-													</div>
-												{/each}
-											</div>
-											<div class="alias-section">
-												<div class="alias-header">
-													<label>扩展名 (x)</label>
-													<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'x')}>+添加</button>
-												</div>
-												{#each (ch.x || []) as alias, ai}
-													<div class="alias-row">
-														<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'x', ai, e.target.value)}/>
-														<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'x', ai)}>✕</button>
-													</div>
-												{/each}
-											</div>
-										</div>
-									{/each}
+									<button class="btn btn-primary btn-sm" onclick={() => { newChannelId = ''; newChannelName = ''; }}>+ 新增频道</button>
 								</div>
 							</div>
-						{/if}
+							
+							<div class="add-channel-bar">
+								{#if newChannelId !== null}
+									<div class="add-channel-form">
+										<input type="text" placeholder="频道ID (如: CCTV-1)" bind:value={newChannelId} class="input-id"/>
+										<input type="text" placeholder="标准名称 (如: 央视综合)" bind:value={newChannelName} class="input-name"/>
+										<button class="btn btn-primary btn-sm" onclick={addNewChannel}>添加</button>
+										<button class="btn btn-secondary btn-sm" onclick={() => { newChannelId = ''; newChannelName = ''; }}>取消</button>
+									</div>
+								{/if}
+							</div>
+
+							<div class="channels-list">
+								{#each Object.entries(getFilteredChannels()) as [id, ch]}
+									<div class="channel-row" class:expanded={expandedChannel === id}>
+										<div class="channel-summary" onclick={() => toggleChannel(id)}>
+											<span class="expand-icon">{expandedChannel === id ? '▾' : '▸'}</span>
+											<span class="channel-id">{id}</span>
+											<span class="channel-name">{ch.n || '（未命名）'}</span>
+											<span class="channel-meta">
+												{#if (ch.a?.length)}
+													<span class="meta-badge alias">a:{ch.a.length}</span>
+												{/if}
+												{#if (ch.x?.length)}
+													<span class="meta-badge ext">x:{ch.x.length}</span>
+												{/if}
+											</span>
+											<button class="btn-danger-xs" onclick={(e) => { e.stopPropagation(); removeChannel(id); }}>✕</button>
+										</div>
+										
+										{#if expandedChannel === id}
+											<div class="channel-detail">
+												<div class="form-group">
+													<label>标准名称 (n)</label>
+													<input type="text" value={ch.n || ''} oninput={(e) => configData.channels = { ...configData.channels, [id]: { ...ch, n: e.target.value } }}/>
+												</div>
+												<div class="alias-section">
+													<div class="alias-header">
+														<label>别名 (a)</label>
+														<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'a')}>+添加</button>
+													</div>
+													{#each (ch.a || []) as alias, ai}
+														<div class="alias-row">
+															<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'a', ai, e.target.value)}/>
+															<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'a', ai)}>✕</button>
+														</div>
+													{:else}
+														<p class="empty-aliases">暂无别名</p>
+													{/each}
+												</div>
+												<div class="alias-section">
+													<div class="alias-header">
+														<label>扩展名 (x)</label>
+														<button class="btn btn-secondary btn-xs" onclick={() => addChannelAlias(id, 'x')}>+添加</button>
+													</div>
+													{#each (ch.x || []) as alias, ai}
+														<div class="alias-row">
+															<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'x', ai, e.target.value)}/>
+															<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'x', ai)}>✕</button>
+														</div>
+													{:else}
+														<p class="empty-aliases">暂无扩展名</p>
+													{/each}
+												</div>
+											</div>
+										{/if}
+									</div>
+								{:else}
+									<p class="empty-hint">暂无频道，点击上方按钮新增</p>
+								{/each}
+							</div>
+						</div>
+					{/if}
 					{/if}
 
 					<!-- Provinces 配置 -->
@@ -868,6 +925,133 @@
 		padding-right: 0.25rem;
 	}
 
+	.header-actions {
+		display: flex;
+		gap: 0.75rem;
+		align-items: center;
+	}
+
+	.add-channel-bar {
+		margin-bottom: 1rem;
+	}
+
+	.add-channel-form {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		background: var(--bg-elevated);
+		padding: 0.75rem;
+		border-radius: 8px;
+	}
+
+	.add-channel-form .input-id {
+		flex: 1;
+		min-width: 150px;
+	}
+
+	.add-channel-form .input-name {
+		flex: 1.5;
+		min-width: 180px;
+	}
+
+	.channels-list {
+		max-height: 500px;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+	}
+
+	.channel-row {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+		transition: all 0.2s;
+	}
+
+	.channel-row:hover {
+		border-color: rgba(59, 130, 246, 0.3);
+	}
+
+	.channel-row.expanded {
+		border-color: var(--primary);
+		background: var(--bg-elevated);
+	}
+
+	.channel-summary {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 0.75rem;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.channel-summary:hover {
+		background: rgba(59, 130, 246, 0.05);
+	}
+
+	.expand-icon {
+		width: 16px;
+		text-align: center;
+		color: var(--text-muted);
+		font-size: 12px;
+		transition: transform 0.2s;
+	}
+
+	.channel-row.expanded .expand-icon {
+		transform: rotate(90deg);
+	}
+
+	.channel-summary .channel-id {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--primary);
+		flex-shrink: 0;
+	}
+
+	.channel-name {
+		flex: 1;
+		font-size: var(--text-sm);
+		color: var(--text);
+	}
+
+	.channel-meta {
+		display: flex;
+		gap: 0.375rem;
+	}
+
+	.meta-badge {
+		padding: 0.125rem 0.375rem;
+		border-radius: 4px;
+		font-size: 10px;
+		font-weight: 600;
+	}
+
+	.meta-badge.alias {
+		background: rgba(59, 130, 246, 0.1);
+		color: var(--primary);
+	}
+
+	.meta-badge.ext {
+		background: rgba(34, 197, 94, 0.1);
+		color: var(--success);
+	}
+
+	.channel-detail {
+		padding: 0.75rem;
+		border-top: 1px solid var(--border);
+		background: var(--bg);
+	}
+
+	.empty-aliases {
+		font-size: var(--text-xs);
+		color: var(--text-muted);
+		padding: 0.5rem 0;
+	}
+
 	.channel-edit-card {
 		background: var(--bg);
 		border: 1px solid var(--border);
@@ -1001,6 +1185,19 @@
 
 		.province-card .form-row {
 			width: 100%;
+		}
+
+		.header-actions {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.add-channel-form {
+			flex-wrap: wrap;
+		}
+
+		.channel-summary {
+			padding: 0.5rem 0.625rem;
 		}
 	}
 </style>
