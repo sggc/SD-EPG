@@ -407,7 +407,7 @@
 														<input type="text" value={alias} oninput={(e) => updateChannelAlias(id, 'x', ai, e.target.value)}/>
 														<button class="btn-danger-xs" onclick={() => removeChannelAlias(id, 'x', ai)}>✕</button>
 													</div>
-												{/if}
+												{/each}
 											</div>
 										</div>
 									{/each}
