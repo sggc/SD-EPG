@@ -21,8 +21,10 @@
 	];
 
 	const privateConfigs = [
-	{ name: 'epg_config.json', repo: 'SDU-IPTV-NEW', path: 'config/epg_config.json', type: 'epg', icon: '📡', private: true }
+	{ name: 'epg_config.json', repo: 'SDU-IPTV-NEW', path: 'SD-EPG/config/epg_config.json', type: 'epg', icon: '📡', private: true }
 	];
+
+	let privateRepoAccessible = $state(false);
 
 	onMount(async () => {
 		await loadConfigList();
@@ -38,17 +40,17 @@
 
 	async function loadConfigList() {
 		loading = true;
-		configs = [...publicConfigs];
+		configs = [...publicConfigs, ...privateConfigs];
 		
 		if ($authStore.isLoggedIn) {
 			try {
-				const hasAccess = await github.checkRepoAccess(CONFIG.PRIVATE_REPO);
-				if (hasAccess) {
-					configs = [...configs, ...privateConfigs];
-				}
+				privateRepoAccessible = await github.checkRepoAccess(CONFIG.PRIVATE_REPO);
 			} catch (e) {
+				privateRepoAccessible = false;
 				console.warn('检查私有仓库访问失败:', e.message);
 			}
+		} else {
+			privateRepoAccessible = false;
 		}
 		
 		loading = false;
@@ -59,6 +61,16 @@
 		error = null;
 		configData = null;
 		activeTab = 'sources';
+		
+		if (config.private && !$authStore.isLoggedIn) {
+			error = '请先登录 GitHub 才能访问私有配置';
+			return;
+		}
+		
+		if (config.private && !privateRepoAccessible) {
+			error = '当前账号没有私有仓库访问权限';
+			return;
+		}
 		
 		try {
 			const result = await github.getFileContent(config.repo, config.path);
@@ -199,29 +211,38 @@
 				<h3>配置文件</h3>
 				
 				<div class="config-items">
-					{#each configs as config}
-						<button 
-							class="config-item"
-							class:selected={selectedConfig?.path === config.path}
-							onclick={() => selectConfig(config)}
-						>
-							<span class="config-icon">{config.icon}</span>
-							<span class="config-name">{config.name}</span>
-							{#if config.private}
-								<span class="badge-private">私有</span>
+				{#each configs as config}
+					<button 
+						class="config-item"
+						class:selected={selectedConfig?.path === config.path}
+						class:locked={config.private && !privateRepoAccessible}
+						onclick={() => selectConfig(config)}
+					>
+						<span class="config-icon">{config.icon}</span>
+						<span class="config-name">{config.name}</span>
+						{#if config.private}
+							{#if privateRepoAccessible}
+								<span class="badge-private badge-unlocked">私有</span>
+							{:else}
+								<span class="badge-private badge-locked">🔒</span>
 							{/if}
-						</button>
-					{/each}
-				</div>
+						{/if}
+					</button>
+				{/each}
+			</div>
 
-				{#if !$authStore.isLoggedIn}
-					<div class="login-hint">
-						<p>登录后可编辑私有配置</p>
-						<button class="btn btn-primary btn-sm" onclick={() => authStore.openLoginModal()}>
-							登录 GitHub
-						</button>
-					</div>
-				{/if}
+			{#if $authStore.isLoggedIn && !privateRepoAccessible}
+				<div class="login-hint">
+					<p>当前账号无权访问私有仓库</p>
+				</div>
+			{:else if !$authStore.isLoggedIn}
+				<div class="login-hint">
+					<p>登录后可编辑私有配置</p>
+					<button class="btn btn-primary btn-sm" onclick={() => authStore.openLoginModal()}>
+						登录 GitHub
+					</button>
+				</div>
+			{/if}
 			</div>
 
 			<div class="config-editor card">
@@ -516,12 +537,26 @@
 
 	.badge-private {
 		padding: 0.0625rem 0.375rem;
-		background: rgba(217, 119, 6, 0.15);
-		color: var(--warning);
 		border-radius: 4px;
 		font-size: 10px;
 		font-weight: 600;
 		line-height: 1.4;
+	}
+
+	.badge-unlocked {
+		background: rgba(217, 119, 6, 0.15);
+		color: var(--warning);
+	}
+
+	.badge-locked {
+		background: rgba(239, 68, 68, 0.1);
+		color: var(--danger);
+		padding: 0.125rem 0.375rem;
+		font-size: 11px;
+	}
+
+	.config-item.locked {
+		opacity: 0.6;
 	}
 
 	.login-hint {
