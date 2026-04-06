@@ -154,8 +154,11 @@
 	}
 
 	let expandedChannel = $state(null);
+	let showAddChannelForm = $state(false);
 	let newChannelId = $state('');
 	let newChannelName = $state('');
+	let channelPage = $state(1);
+	const CHANNELS_PER_PAGE = 50;
 
 	function getFilteredChannels() {
 		if (!configData?.channels) return {};
@@ -168,6 +171,19 @@
 			}
 		}
 		return filtered;
+	}
+
+	function getPaginatedChannels() {
+		const all = Object.entries(getFilteredChannels());
+		return all.slice(0, channelPage * CHANNELS_PER_PAGE);
+	}
+
+	function loadMoreChannels() {
+		channelPage++;
+	}
+
+	function resetChannelPage() {
+		channelPage = 1;
 	}
 
 	function toggleChannel(id) {
@@ -202,6 +218,18 @@
 		configData.channels = { ...configData.channels, [id]: { ...ch, [type]: arr } };
 	}
 
+	function openAddChannel() {
+		showAddChannelForm = true;
+		newChannelId = '';
+		newChannelName = '';
+	}
+
+	function cancelAddChannel() {
+		showAddChannelForm = false;
+		newChannelId = '';
+		newChannelName = '';
+	}
+
 	function addNewChannel() {
 		if (!newChannelId.trim()) return;
 		const id = newChannelId.trim();
@@ -210,8 +238,7 @@
 			...configData.channels,
 			[id]: { n: newChannelName.trim(), a: [], x: [] }
 		};
-		newChannelId = '';
-		newChannelName = '';
+		cancelAddChannel();
 		expandedChannel = id;
 	}
 </script>
@@ -414,25 +441,25 @@
 								<div class="header-actions">
 									<div class="search-box-small">
 										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-										<input type="text" placeholder="搜索频道..." bind:value={channelSearch}/>
+										<input type="text" placeholder="搜索频道..." bind:value={channelSearch} oninput={resetChannelPage}/>
 									</div>
-									<button class="btn btn-primary btn-sm" onclick={() => { newChannelId = ''; newChannelName = ''; }}>+ 新增频道</button>
+									<button class="btn btn-primary btn-sm" onclick={openAddChannel}>+ 新增频道</button>
 								</div>
 							</div>
 							
 							<div class="add-channel-bar">
-								{#if newChannelId !== null}
+								{#if showAddChannelForm}
 									<div class="add-channel-form">
 										<input type="text" placeholder="频道ID (如: CCTV-1)" bind:value={newChannelId} class="input-id"/>
 										<input type="text" placeholder="标准名称 (如: 央视综合)" bind:value={newChannelName} class="input-name"/>
 										<button class="btn btn-primary btn-sm" onclick={addNewChannel}>添加</button>
-										<button class="btn btn-secondary btn-sm" onclick={() => { newChannelId = ''; newChannelName = ''; }}>取消</button>
+										<button class="btn btn-secondary btn-sm" onclick={cancelAddChannel}>取消</button>
 									</div>
 								{/if}
 							</div>
 
 							<div class="channels-list">
-								{#each Object.entries(getFilteredChannels()) as [id, ch]}
+							{#each getPaginatedChannels() as [id, ch]}
 									<div class="channel-row" class:expanded={expandedChannel === id}>
 										<div class="channel-summary" onclick={() => toggleChannel(id)}>
 											<span class="expand-icon">{expandedChannel === id ? '▾' : '▸'}</span>
@@ -489,6 +516,11 @@
 								{:else}
 									<p class="empty-hint">暂无频道，点击上方按钮新增</p>
 								{/each}
+								{#if Object.keys(getFilteredChannels()).length > channelPage * CHANNELS_PER_PAGE}
+									<button class="btn btn-secondary btn-sm load-more" onclick={loadMoreChannels}>
+										加载更多 ({Object.keys(getFilteredChannels()).length - channelPage * CHANNELS_PER_PAGE} 剩余)
+									</button>
+								{/if}
 							</div>
 						</div>
 					{/if}
@@ -959,6 +991,12 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.375rem;
+	}
+
+	.load-more {
+		margin-top: 0.5rem;
+		width: 100%;
+		justify-content: center;
 	}
 
 	.channel-row {
