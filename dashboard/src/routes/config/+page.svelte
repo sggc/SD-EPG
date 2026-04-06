@@ -523,7 +523,7 @@
 								{/if}
 							</div>
 						</div>
-					{/if}
+						{/if}
 
 					<!-- Provinces 配置 -->
 					{#if selectedConfig.type === 'provinces'}
