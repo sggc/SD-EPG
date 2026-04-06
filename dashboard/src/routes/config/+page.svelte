@@ -522,8 +522,8 @@
 									</button>
 								{/if}
 							</div>
-						</div>
-					{/if}
+					</div>
+						{/if}
 
 					<!-- Provinces 配置 -->
 					{#if selectedConfig.type === 'provinces'}
