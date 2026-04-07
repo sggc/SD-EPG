@@ -1,17 +1,53 @@
 {
-  "generated_at": "2026-04-07T16:54:44.585363",
-  "channels_count": 4,
+  "generated_at": "2026-04-07T17:05:19.872036",
+  "channels_count": 8,
   "programs_per_channel": 72,
-  "total_programs": 288,
+  "total_programs": 576,
   "date_range": {
     "yesterday": "2026-04-06",
     "today": "2026-04-07",
     "tomorrow": "2026-04-08"
   },
   "channels": [
-    "测试频道1",
-    "测试频道2",
-    "虚假频道1",
-    "虚假频道2"
+    {
+      "id": "CCTV1",
+      "name": "CCTV-1 综合",
+      "program_count": 12
+    },
+    {
+      "id": "CCTV5",
+      "name": "CCTV-5 体育",
+      "program_count": 12
+    },
+    {
+      "id": "CCTV6",
+      "name": "CCTV-6 电影",
+      "program_count": 12
+    },
+    {
+      "id": "CCTV14",
+      "name": "CCTV-14 少儿",
+      "program_count": 12
+    },
+    {
+      "id": "HUNAN",
+      "name": "湖南卫视",
+      "program_count": 12
+    },
+    {
+      "id": "ZHEJIANG",
+      "name": "浙江卫视",
+      "program_count": 12
+    },
+    {
+      "id": "JIANGSU",
+      "name": "江苏卫视",
+      "program_count": 12
+    },
+    {
+      "id": "DONGFANG",
+      "name": "东方卫视",
+      "program_count": 12
+    }
   ]
 }

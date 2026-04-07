@@ -4,6 +4,7 @@
 生成虚假EPG数据
 为没有EPG的频道生成昨天、今天、明天的节目单
 每个节目1小时，一天24个节目
+支持每个频道自定义节目内容
 """
 
 import gzip
@@ -18,31 +19,48 @@ import argparse
 class FalseEPGGenerator:
     """虚假EPG生成器"""
 
-    # 默认频道列表（可以根据需要修改）
+    # 默认频道列表（每个频道可自定义节目模板）
     DEFAULT_CHANNELS = [
-        {"id": "TEST1", "name": "测试频道1"},
-        {"id": "TEST2", "name": "测试频道2"},
-        {"id": "FALSE1", "name": "虚假频道1"},
-        {"id": "FALSE2", "name": "虚假频道2"},
+        {
+            "id": "CCTV1",
+            "name": "CCTV-1 综合",
+            "programs": [
+                "朝闻天下", "生活早参考", "新闻30分", "今日说法",
+                "焦点访谈", "新闻联播", "天气预报", "电视剧",
+                "星光大道", "开讲啦", "朗读者", "经典咏流传"
+            ]
+        },
+        {
+            "id": "CCTV5",
+            "name": "CCTV-5 体育",
+            "programs": [
+                "体育晨报", "NBA", "CBA", "中超",
+                "欧冠", "英超", "西甲", "意甲",
+                "网球", "乒乓球", "羽毛球", "游泳"
+            ]
+        },
+        {
+            "id": "CCTV6",
+            "name": "CCTV-6 电影",
+            "programs": [
+                "早间电影", "经典老片", "动作大片", "喜剧电影",
+                "爱情电影", "科幻电影", " horror电影", "国产电影",
+                "欧美电影", "亚洲电影", "电影报道", "佳片有约"
+            ]
+        },
+        {
+            "id": "CCTV14",
+            "name": "CCTV-14 少儿",
+            "programs": [
+                "动画乐翻天", "智慧树", "小小智慧树", "动漫世界",
+                "大风车", "动画梦工厂", "银河剧场", "芝麻开门",
+                "新闻袋袋裤", "动感特区", "快乐体验", "童心回放"
+            ]
+        },
     ]
 
-    # 默认节目名称模板
-    DEFAULT_PROGRAM_TEMPLATES = [
-        "精彩节目",
-        "电视剧场",
-        "电影天地",
-        "综艺大观",
-        "新闻播报",
-        "纪录片",
-        "动画片",
-        "体育赛事",
-        "音乐欣赏",
-        "生活百科",
-    ]
-
-    def __init__(self, channels=None, program_templates=None, output_dir='EPG'):
+    def __init__(self, channels=None, output_dir='EPG'):
         self.channels = channels or self.DEFAULT_CHANNELS
-        self.program_templates = program_templates or self.DEFAULT_PROGRAM_TEMPLATES
         self.output_dir = output_dir
         self.root = None
 
@@ -62,11 +80,19 @@ class FalseEPGGenerator:
             display_name.set('lang', 'zh')
             display_name.text = ch['name']
 
-    def _generate_program_title(self, hour, day_offset):
+    def _get_channel_programs(self, ch):
+        """获取频道的节目列表，如果没有则使用默认"""
+        return ch.get('programs', ch.get('program_templates', [
+            "精彩节目", "电视剧场", "电影天地", "综艺大观",
+            "新闻播报", "纪录片", "动画片", "体育赛事"
+        ]))
+
+    def _generate_program_title(self, ch, hour, day_offset):
         """生成节目标题"""
-        template = self.program_templates[hour % len(self.program_templates)]
+        programs = self._get_channel_programs(ch)
+        program_name = programs[hour % len(programs)]
         day_names = ['昨天', '今天', '明天']
-        return f"{day_names[day_offset + 1]}{template}{hour:02d}:00"
+        return f"{day_names[day_offset + 1]}{program_name}"
 
     def _format_datetime(self, dt):
         """格式化日期时间为XMLTV格式"""
@@ -91,7 +117,7 @@ class FalseEPGGenerator:
 
                     title = ET.SubElement(programme, 'title')
                     title.set('lang', 'zh')
-                    title.text = self._generate_program_title(hour, day_offset)
+                    title.text = self._generate_program_title(ch, hour, day_offset)
 
                     desc = ET.SubElement(programme, 'desc')
                     desc.set('lang', 'zh')
@@ -134,7 +160,14 @@ class FalseEPGGenerator:
                 'today': datetime.now().strftime('%Y-%m-%d'),
                 'tomorrow': (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
             },
-            'channels': [ch['name'] for ch in self.channels]
+            'channels': [
+                {
+                    'id': ch['id'],
+                    'name': ch['name'],
+                    'program_count': len(self._get_channel_programs(ch))
+                }
+                for ch in self.channels
+            ]
         }
 
         return output_path, stats
@@ -148,13 +181,23 @@ def load_channels_from_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
+    # 支持两种格式：
+    # 1. 对象格式：{"channels": [{"id": "xxx", "name": "xxx", "programs": [...]}, ...]}
+    # 2. 数组格式：[{"id": "xxx", "name": "xxx", "programs": [...]}, ...]
+    if isinstance(data, dict) and 'channels' in data:
+        data = data['channels']
+
     channels = []
     for item in data:
         if isinstance(item, dict):
-            channels.append({
+            channel = {
                 'id': item.get('id', item.get('channel_id', '')),
                 'name': item.get('name', item.get('channel_name', ''))
-            })
+            }
+            # 如果提供了节目列表
+            if 'programs' in item or 'program_templates' in item:
+                channel['programs'] = item.get('programs', item.get('program_templates', []))
+            channels.append(channel)
         elif isinstance(item, str):
             channels.append({'id': item, 'name': item})
 

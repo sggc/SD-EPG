@@ -33,6 +33,7 @@ jobs:
     - name: Generate False EPG
       run: |
         python scripts/generate_false_epg.py \
+          --channels-file ./config/false_epg_channels.json \
           --output-dir ./EPG \
           --log-file ./log/false_epg_log.json
 
