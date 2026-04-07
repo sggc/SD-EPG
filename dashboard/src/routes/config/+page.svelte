@@ -192,6 +192,36 @@
 		const arr = ch[type].filter((_, i) => i !== index);
 		configData.channels = { ...configData.channels, [id]: { ...ch, [type]: arr } };
 	}
+
+	// 新增频道
+	let showAddChannelForm = $state(false);
+	let newChannelId = $state('');
+	let newChannelName = $state('');
+
+	function openAddChannel() {
+		showAddChannelForm = true;
+		newChannelId = '';
+		newChannelName = '';
+	}
+
+	function cancelAddChannel() {
+		showAddChannelForm = false;
+		newChannelId = '';
+		newChannelName = '';
+	}
+
+	function addNewChannel() {
+		if (!newChannelId.trim()) return;
+		const id = newChannelId.trim();
+		if (configData.channels[id]) return;
+		configData.channels = {
+			...configData.channels,
+			[id]: { n: newChannelName.trim(), a: [], x: [] }
+		};
+		showAddChannelForm = false;
+		newChannelId = '';
+		newChannelName = '';
+	}
 </script>
 
 <svelte:head>
@@ -389,11 +419,25 @@
 							<div class="section">
 								<div class="section-header">
 									<h4>频道配置 ({Object.keys(configData.channels || {}).length})</h4>
-									<div class="search-box-small">
-										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-										<input type="text" placeholder="搜索频道..." bind:value={channelSearch}/>
+									<div class="header-actions">
+										<div class="search-box-small">
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+											<input type="text" placeholder="搜索频道..." bind:value={channelSearch}/>
+										</div>
+										<button class="btn btn-primary btn-sm" onclick={openAddChannel}>+ 新增频道</button>
 									</div>
 								</div>
+								
+								{#if showAddChannelForm}
+									<div class="add-channel-bar">
+										<div class="add-channel-form">
+											<input type="text" placeholder="频道ID (如: CCTV-1)" bind:value={newChannelId} class="input-id"/>
+											<input type="text" placeholder="标准名称 (如: 央视综合)" bind:value={newChannelName} class="input-name"/>
+											<button class="btn btn-primary btn-sm" onclick={addNewChannel}>添加</button>
+											<button class="btn btn-secondary btn-sm" onclick={cancelAddChannel}>取消</button>
+										</div>
+									</div>
+								{/if}
 								
 								<div class="channels-editor">
 									{#each Object.entries(getFilteredChannels()) as [id, ch]}
@@ -857,6 +901,36 @@
 	.search-box-small input:focus {
 		outline: none;
 		border-color: var(--primary);
+	}
+
+	.header-actions {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.add-channel-bar {
+		background: var(--bg-elevated);
+		border: 1px dashed var(--border);
+		border-radius: var(--radius);
+		padding: 0.75rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.add-channel-form {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.add-channel-form .input-id {
+		width: 160px;
+	}
+
+	.add-channel-form .input-name {
+		width: 200px;
 	}
 
 	.channels-editor {
