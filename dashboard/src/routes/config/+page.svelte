@@ -25,10 +25,72 @@
 	];
 
 	let privateRepoAccessible = $state(false);
+	let devMode = $state(false);
 
 	onMount(async () => {
 		await loadConfigList();
+		
+		// 检查是否是本地开发模式
+		if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+			console.log('本地开发模式可用，按 Ctrl+Shift+D 启用模拟数据');
+		}
 	});
+	
+	// 开发模式快捷键
+	function handleKeyDown(e) {
+		if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+			e.preventDefault();
+			toggleDevMode();
+		}
+	}
+	
+	function toggleDevMode() {
+		devMode = !devMode;
+		if (devMode) {
+			privateRepoAccessible = true;
+			console.log('开发模式已启用');
+		} else {
+			privateRepoAccessible = false;
+			console.log('开发模式已禁用');
+		}
+	}
+	
+	function getMockData(type) {
+		if (type === 'epg') {
+			return {
+				epg_sources: [
+					{ name: '示例源1', url: 'https://example.com/epg1.xml', enabled: true, compressed: true },
+					{ name: '示例源2', url: 'https://example.com/epg2.xml', enabled: false, compressed: false }
+				],
+				channels: {
+					'CCTV1': { n: 'CCTV-1 综合', a: ['cctv1', '中央一套', '央视一套'], x: ['CCTV1HD'] },
+					'CCTV2': { n: 'CCTV-2 财经', a: ['cctv2', '中央二套'], x: ['CCTV2HD'] },
+					'CCTV3': { n: 'CCTV-3 综艺', a: ['cctv3'], x: ['CCTV3HD'] },
+					'湖南卫视': { n: '湖南卫视', a: ['湖南台', '芒果台'], x: ['湖南卫视HD'] }
+				}
+			};
+		}
+		if (type === 'desc') {
+			return {
+				desc_sources: [
+					{ name: '示例描述源', url: 'https://example.com/desc.txt', compressed: true }
+				],
+				reference_epg: { name: '参考EPG', url: 'https://example.com/ref.xml', compressed: true },
+				existing_db: '',
+				accumulate: true
+			};
+		}
+		if (type === 'provinces') {
+			return {
+				provinces: [
+					{ id: '370000', name: '山东', enabled: true },
+					{ id: '310000', name: '上海', enabled: true },
+					{ id: '110000', name: '北京', enabled: false }
+				]
+			};
+		}
+		return {};
+	}
 
 	$effect(() => {
 		const currentLoginState = $authStore.isLoggedIn;
@@ -61,6 +123,14 @@
 		error = null;
 		configData = null;
 		activeTab = 'sources';
+		
+		// 开发模式下使用模拟数据
+		if (devMode) {
+			configData = getMockData(config.type);
+			configSha = 'dev-mock-sha';
+			console.log('开发模式：加载模拟数据', config.type, configData);
+			return;
+		}
 		
 		if (config.private && !$authStore.isLoggedIn) {
 			error = '请先登录 GitHub 才能访问私有配置';
@@ -228,8 +298,15 @@
 	<title>配置管理 - SD-EPG</title>
 </svelte:head>
 
+<svelte:window onkeydown={handleKeyDown}/>
+
 <div class="page">
-	<h1 class="page-title">配置管理</h1>
+	<h1 class="page-title">
+		配置管理
+		{#if devMode}
+			<span class="dev-mode-badge">开发模式</span>
+		{/if}
+	</h1>
 
 	{#if loading}
 		<div class="loading">
@@ -698,6 +775,16 @@
 		font-weight: 600;
 		color: var(--text);
 		margin: 0;
+	}
+
+	.dev-mode-badge {
+		font-size: var(--text-xs);
+		font-weight: 500;
+		color: var(--primary);
+		background: rgba(59, 130, 246, 0.1);
+		padding: 0.25rem 0.5rem;
+		border-radius: 4px;
+		margin-left: 0.5rem;
 	}
 
 	.source-card {
