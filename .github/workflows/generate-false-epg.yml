@@ -1,0 +1,48 @@
+name: Generate False EPG
+
+on:
+  schedule:
+    # 每天凌晨1点运行 (UTC时间17:00，北京时间01:00)
+    - cron: '0 17 * * *'
+  workflow_dispatch:
+    inputs:
+      force_regenerate:
+        description: '强制重新生成'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  generate-false-epg:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Configure git
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+    - name: Generate False EPG
+      run: |
+        python scripts/generate_false_epg.py \
+          --output-dir ./EPG \
+          --log-file ./log/false_epg_log.json
+
+    - name: Commit and Push
+      run: |
+        git add EPG/false.xml.gz log/false_epg_log.json
+
+        if git diff --staged --quiet; then
+          echo "No changes to false EPG"
+        else
+          git commit -m "生成虚假EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
