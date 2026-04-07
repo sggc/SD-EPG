@@ -132,8 +132,7 @@ class FalseEPGGenerator:
         """生成节目标题"""
         programs = self._get_channel_programs(ch)
         program_name = programs[hour % len(programs)]
-        day_names = ['昨天', '今天', '明天']
-        return f"{day_names[day_offset + 1]}{program_name}"
+        return program_name
 
     def _format_datetime(self, dt):
         """格式化日期时间为XMLTV格式"""
