@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-04-08 15:10:32",
+  "lastUpdate": "2026-04-08 15:21:54",
   "whitelistChannels": 403,
-  "matchedChannels": 389,
-  "unmatchedChannels": 14,
-  "totalPrograms": 87710,
-  "filteredPrograms": 10002,
+  "matchedChannels": 396,
+  "unmatchedChannels": 7,
+  "totalPrograms": 89698,
+  "filteredPrograms": 11067,
   "dateRange": "20260402 ~ 20260409",
-  "aliasCount": 422,
+  "aliasCount": 430,
   "epgSources": [
     {
       "name": "main",
@@ -27,7 +27,7 @@
       "enabled": true,
       "channels": 536,
       "programs": 132693,
-      "matched": 135
+      "matched": 138
     },
     {
       "name": "suming",
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 1434,
       "programs": 364011,
-      "matched": 26
+      "matched": 30
     },
     {
       "name": "epgpw",
@@ -84,6 +84,13 @@
       "channels": 1129,
       "programs": 259239,
       "matched": 2
+    },
+    {
+      "name": "占位",
+      "enabled": true,
+      "channels": 11,
+      "programs": 792,
+      "matched": 0
     }
   ],
   "unmatchedList": [
@@ -105,7 +112,9 @@
     {
       "id": "寰宇财经台",
       "name": "寰宇财经台",
-      "aliases": []
+      "aliases": [
+        "寰宇财经"
+      ]
     },
     {
       "id": "龙华卡通",
@@ -118,48 +127,13 @@
       "aliases": []
     },
     {
-      "id": "好消息1台",
-      "name": "好消息1台",
+      "id": "Smart知识台",
+      "name": "Smart知识台",
       "aliases": []
     },
     {
-      "id": "TVB明珠台",
-      "name": "TVB明珠台",
-      "aliases": []
-    },
-    {
-      "id": "TVB娱乐新闻",
-      "name": "TVB娱乐新闻",
-      "aliases": []
-    },
-    {
-      "id": "Mytv SUPER FREE",
-      "name": "Mytv SUPER FREE",
-      "aliases": []
-    },
-    {
-      "id": "Mytv 华语剧台",
-      "name": "Mytv 华语剧台",
-      "aliases": []
-    },
-    {
-      "id": "Mytv 亚洲剧台",
-      "name": "Mytv 亚洲剧台",
-      "aliases": []
-    },
-    {
-      "id": "Mytv 黄金华剧台",
-      "name": "Mytv 黄金华剧台",
-      "aliases": []
-    },
-    {
-      "id": "Mytv 黄金翡翠台",
-      "name": "Mytv 黄金翡翠台",
-      "aliases": []
-    },
-    {
-      "id": "Mytv 戏曲台",
-      "name": "Mytv 戏曲台",
+      "id": "娱乐新闻",
+      "name": "娱乐新闻",
       "aliases": []
     }
   ],
@@ -1869,6 +1843,18 @@
       "gaps": []
     },
     {
+      "id": "SUPER FREE",
+      "name": "SUPER FREE",
+      "programs": 195,
+      "todayPrograms": 31,
+      "source": "mxdyeah",
+      "aliases": [
+        "Mytv SUPER FREE"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "TVB PLUS",
       "name": "TVB PLUS",
       "programs": 236,
@@ -2166,6 +2152,18 @@
       "todayPrograms": 37,
       "source": "erwcc",
       "aliases": [],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "亚洲剧台",
+      "name": "亚洲剧台",
+      "programs": 191,
+      "todayPrograms": 28,
+      "source": "erwcc",
+      "aliases": [
+        "Mytv 亚洲剧台"
+      ],
       "hasGap": false,
       "gaps": []
     },
@@ -2597,6 +2595,18 @@
       "gaps": []
     },
     {
+      "id": "华语剧台",
+      "name": "华语剧台",
+      "programs": 207,
+      "todayPrograms": 29,
+      "source": "erwcc",
+      "aliases": [
+        "Mytv 华语剧台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "南国都市",
       "name": "南国都市",
       "programs": 194,
@@ -2875,6 +2885,18 @@
       "todayPrograms": 39,
       "source": "main",
       "aliases": [],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "好消息",
+      "name": "好消息",
+      "programs": 278,
+      "todayPrograms": 51,
+      "source": "mxdyeah",
+      "aliases": [
+        "好消息1台"
+      ],
       "hasGap": false,
       "gaps": []
     },
@@ -3580,6 +3602,18 @@
       "gaps": []
     },
     {
+      "id": "戏曲台",
+      "name": "戏曲台",
+      "programs": 724,
+      "todayPrograms": 154,
+      "source": "mxdyeah",
+      "aliases": [
+        "Mytv 戏曲台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "招远综合",
       "name": "招远综合",
       "programs": 98,
@@ -3768,7 +3802,9 @@
       "programs": 272,
       "todayPrograms": 41,
       "source": "erwcc",
-      "aliases": [],
+      "aliases": [
+        "TVB明珠台"
+      ],
       "hasGap": false,
       "gaps": []
     },
@@ -6149,6 +6185,30 @@
           "duration": 900
         }
       ]
+    },
+    {
+      "id": "黄金华剧台",
+      "name": "黄金华剧台",
+      "programs": 202,
+      "todayPrograms": 37,
+      "source": "mxdyeah",
+      "aliases": [
+        "Mytv 黄金华剧台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "黄金翡翠台",
+      "name": "黄金翡翠台",
+      "programs": 191,
+      "todayPrograms": 27,
+      "source": "erwcc",
+      "aliases": [
+        "Mytv 黄金翡翠台"
+      ],
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "黑莓动画",
