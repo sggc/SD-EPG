@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-04-12 03:52:21",
+  "lastUpdate": "2026-04-12 05:16:27",
   "whitelistChannels": 417,
-  "matchedChannels": 401,
-  "unmatchedChannels": 16,
-  "totalPrograms": 86062,
-  "filteredPrograms": 14898,
+  "matchedChannels": 402,
+  "unmatchedChannels": 15,
+  "totalPrograms": 85860,
+  "filteredPrograms": 14856,
   "dateRange": "20260406 ~ 20260413",
-  "aliasCount": 429,
+  "aliasCount": 431,
   "epgSources": [
     {
       "name": "main",
@@ -74,9 +74,9 @@
     {
       "name": "liliu",
       "enabled": true,
-      "channels": 0,
-      "programs": 0,
-      "matched": 0
+      "channels": 454,
+      "programs": 17969,
+      "matched": 2
     },
     {
       "name": "loc",
@@ -99,14 +99,6 @@
       "name": "安多卫视",
       "aliases": [
         "安多卫视"
-      ]
-    },
-    {
-      "id": "凤凰卫视电影台",
-      "name": "凤凰卫视电影台",
-      "aliases": [
-        "凤凰电影",
-        "凤凰卫视电影"
       ]
     },
     {
@@ -242,15 +234,6 @@
     }
   ],
   "gapChannels": [
-    {
-      "id": "北京卫视4K",
-      "name": "北京卫视4K",
-      "gaps": [
-        "09:01-09:46",
-        "09:50-10:35",
-        "10:39-11:24"
-      ]
-    },
     {
       "id": "威海海洋生活",
       "name": "威海海洋生活",
@@ -2397,6 +2380,19 @@
       "gaps": []
     },
     {
+      "id": "凤凰卫视电影台",
+      "name": "凤凰卫视电影台",
+      "programs": 26,
+      "todayPrograms": 13,
+      "source": "liliu",
+      "aliases": [
+        "凤凰电影",
+        "凤凰电影台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "凤凰卫视资讯台",
       "name": "凤凰卫视资讯台",
       "programs": 340,
@@ -2548,33 +2544,17 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 300,
-      "todayPrograms": 53,
-      "source": "main",
+      "programs": 72,
+      "todayPrograms": 37,
+      "source": "liliu",
       "aliases": [
         "北京卫视-4K",
         "北京卫视4K超高清",
         "北京卫视超高清",
         "BTV4K"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "09:01",
-          "stop": "09:46",
-          "duration": 45
-        },
-        {
-          "start": "09:50",
-          "stop": "10:35",
-          "duration": 45
-        },
-        {
-          "start": "10:39",
-          "stop": "11:24",
-          "duration": 45
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "北京国际",
