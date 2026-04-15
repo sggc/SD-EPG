@@ -1,18 +1,18 @@
 {
-  "lastUpdate": "2026-04-15 13:09:15",
-  "whitelistChannels": 417,
-  "matchedChannels": 401,
+  "lastUpdate": "2026-04-15 17:51:58",
+  "whitelistChannels": 415,
+  "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 90973,
-  "filteredPrograms": 11429,
+  "totalPrograms": 90332,
+  "filteredPrograms": 11166,
   "dateRange": "20260409 ~ 20260416",
-  "aliasCount": 433,
+  "aliasCount": 428,
   "epgSources": [
     {
       "name": "main",
       "enabled": true,
       "channels": 166,
-      "programs": 54882,
+      "programs": 54848,
       "matched": 166
     },
     {
@@ -27,13 +27,13 @@
       "enabled": true,
       "channels": 535,
       "programs": 132701,
-      "matched": 140
+      "matched": 144
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 220,
-      "programs": 41707,
+      "programs": 41729,
       "matched": 62
     },
     {
@@ -41,14 +41,14 @@
       "enabled": true,
       "channels": 72,
       "programs": 3323,
-      "matched": 29
+      "matched": 28
     },
     {
       "name": "tv-mao",
       "enabled": true,
       "channels": 98,
       "programs": 3886,
-      "matched": 39
+      "matched": 38
     },
     {
       "name": "zmt",
@@ -74,8 +74,8 @@
     {
       "name": "liliu",
       "enabled": true,
-      "channels": 454,
-      "programs": 18248,
+      "channels": 60,
+      "programs": 4654,
       "matched": 2
     },
     {
@@ -205,38 +205,12 @@
     },
     {
       "index": 3,
-      "name": "青岛QTV-6",
-      "id": "青岛QTV-6",
-      "todayPrograms": 0
-    },
-    {
-      "index": 4,
-      "name": "青岛QTV-7",
-      "id": "青岛QTV-7",
-      "todayPrograms": 0
-    },
-    {
-      "index": 5,
-      "name": "齐河综合",
-      "id": "齐河综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 6,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
     }
   ],
   "gapChannels": [
-    {
-      "id": "北京卫视4K",
-      "name": "北京卫视4K",
-      "gaps": [
-        "09:03-09:47",
-        "09:51-10:36"
-      ]
-    },
     {
       "id": "威海海洋生活",
       "name": "威海海洋生活",
@@ -637,20 +611,6 @@
       ]
     },
     {
-      "id": "青岛QTV-6",
-      "name": "青岛QTV-6",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "青岛QTV-7",
-      "name": "青岛QTV-7",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
       "id": "鱼台生活",
       "name": "鱼台生活",
       "gaps": [
@@ -695,7 +655,11 @@
       "id": "齐河综合",
       "name": "齐河综合",
       "gaps": [
-        "07:00-22:00"
+        "07:12-12:03",
+        "12:15-18:30",
+        "19:35-19:49",
+        "20:19-20:34",
+        "20:52-22:00"
       ]
     },
     {
@@ -808,8 +772,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 186,
-      "todayPrograms": 21,
+      "programs": 187,
+      "todayPrograms": 22,
       "source": "main",
       "aliases": [
         "CCTV-11",
@@ -2121,7 +2085,7 @@
       "id": "中国教育4",
       "name": "中国教育4",
       "programs": 349,
-      "todayPrograms": 44,
+      "todayPrograms": 45,
       "source": "main",
       "aliases": [
         "中国教育-4",
@@ -2326,8 +2290,8 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 300,
-      "todayPrograms": 37,
+      "programs": 301,
+      "todayPrograms": 38,
       "source": "main",
       "aliases": [
         "兵团卫视高清"
@@ -2338,9 +2302,9 @@
     {
       "id": "内蒙古卫视",
       "name": "内蒙古卫视",
-      "programs": 310,
-      "todayPrograms": 38,
-      "source": "main",
+      "programs": 290,
+      "todayPrograms": 37,
+      "source": "erwcc",
       "aliases": [
         "内蒙古卫视高清"
       ],
@@ -2360,8 +2324,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 389,
-      "todayPrograms": 35,
+      "programs": 387,
+      "todayPrograms": 33,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2546,28 +2510,17 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 364,
-      "todayPrograms": 52,
-      "source": "main",
+      "programs": 68,
+      "todayPrograms": 37,
+      "source": "liliu",
       "aliases": [
         "北京卫视-4K",
         "北京卫视4K超高清",
         "北京卫视超高清",
         "BTV4K"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "09:03",
-          "stop": "09:47",
-          "duration": 44
-        },
-        {
-          "start": "09:51",
-          "stop": "10:36",
-          "duration": 45
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "北京国际",
@@ -2779,8 +2732,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 290,
-      "todayPrograms": 36,
+      "programs": 291,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "吉林卫视高清"
@@ -3036,8 +2989,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 322,
-      "todayPrograms": 39,
+      "programs": 320,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "宁夏卫视高清"
@@ -3191,8 +3144,8 @@
     {
       "id": "山东体育",
       "name": "山东体育",
-      "programs": 289,
-      "todayPrograms": 29,
+      "programs": 288,
+      "todayPrograms": 28,
       "source": "main",
       "aliases": [
         "山东体育休闲"
@@ -3313,9 +3266,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 146,
-      "todayPrograms": 16,
-      "source": "main",
+      "programs": 234,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3542,9 +3495,9 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 203,
-      "todayPrograms": 21,
-      "source": "main",
+      "programs": 251,
+      "todayPrograms": 31,
+      "source": "erwcc",
       "aliases": [
         "广西卫视高清"
       ],
@@ -4766,8 +4719,8 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 269,
-      "todayPrograms": 42,
+      "programs": 270,
+      "todayPrograms": 43,
       "source": "main",
       "aliases": [
         "浙江卫视高清"
@@ -4778,8 +4731,8 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 269,
-      "todayPrograms": 42,
+      "programs": 270,
+      "todayPrograms": 43,
       "source": "main",
       "aliases": [
         "浙江卫视-4K",
@@ -5570,9 +5523,9 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 770,
-      "todayPrograms": 91,
-      "source": "main",
+      "programs": 297,
+      "todayPrograms": 40,
+      "source": "erwcc",
       "aliases": [
         "西藏卫视高清"
       ],
@@ -5677,8 +5630,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 432,
-      "todayPrograms": 55,
+      "programs": 430,
+      "todayPrograms": 53,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -5990,49 +5943,10 @@
       ]
     },
     {
-      "id": "青岛QTV-6",
-      "name": "青岛QTV-6",
-      "programs": 0,
-      "todayPrograms": 0,
-      "source": "tv-sou",
-      "aliases": [
-        "青岛都市频道",
-        "QTV-6"
-      ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
-    },
-    {
-      "id": "青岛QTV-7",
-      "name": "青岛QTV-7",
-      "programs": 1,
-      "todayPrograms": 0,
-      "source": "tv-mao",
-      "aliases": [
-        "QTV-图文·党建",
-        "青岛图文党建频道",
-        "QTV-7"
-      ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
-    },
-    {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 238,
-      "todayPrograms": 25,
+      "programs": 231,
+      "todayPrograms": 26,
       "source": "main",
       "aliases": [
         "青海卫视高清"
@@ -6277,16 +6191,36 @@
     {
       "id": "齐河综合",
       "name": "齐河综合",
-      "programs": 40,
-      "todayPrograms": 0,
+      "programs": 62,
+      "todayPrograms": 11,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
+          "start": "07:12",
+          "stop": "12:03",
+          "duration": 291
+        },
+        {
+          "start": "12:15",
+          "stop": "18:30",
+          "duration": 375
+        },
+        {
+          "start": "19:35",
+          "stop": "19:49",
+          "duration": 14
+        },
+        {
+          "start": "20:19",
+          "stop": "20:34",
+          "duration": 15
+        },
+        {
+          "start": "20:52",
           "stop": "22:00",
-          "duration": 900
+          "duration": 68
         }
       ]
     },
