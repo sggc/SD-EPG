@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-16 05:37:44",
+  "lastUpdate": "2026-04-16 13:15:13",
   "whitelistChannels": 415,
   "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 91543,
-  "filteredPrograms": 10203,
+  "totalPrograms": 91199,
+  "filteredPrograms": 11210,
   "dateRange": "20260410 ~ 20260417",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 166,
-      "programs": 54714,
+      "programs": 54826,
       "matched": 166
     },
     {
@@ -26,14 +26,14 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 535,
-      "programs": 132710,
-      "matched": 141
+      "programs": 132818,
+      "matched": 140
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 220,
-      "programs": 41822,
+      "programs": 41838,
       "matched": 62
     },
     {
@@ -61,15 +61,15 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1432,
-      "programs": 335092,
+      "programs": 362370,
       "matched": 32
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15361,
-      "programs": 1522636,
-      "matched": 13
+      "channels": 15376,
+      "programs": 1635883,
+      "matched": 14
     },
     {
       "name": "liliu",
@@ -82,7 +82,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1126,
-      "programs": 258158,
+      "programs": 258266,
       "matched": 3
     },
     {
@@ -713,7 +713,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 61,
+      "programs": 41,
       "todayPrograms": 20,
       "source": "epgpw",
       "aliases": [],
@@ -733,7 +733,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 99,
+      "programs": 67,
       "todayPrograms": 34,
       "source": "epgpw",
       "aliases": [],
@@ -743,7 +743,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 81,
+      "programs": 55,
       "todayPrograms": 29,
       "source": "epgpw",
       "aliases": [],
@@ -753,7 +753,7 @@
     {
       "id": "Astro QJ",
       "name": "Astro QJ",
-      "programs": 52,
+      "programs": 45,
       "todayPrograms": 23,
       "source": "epgpw",
       "aliases": [],
@@ -1367,8 +1367,8 @@
     {
       "id": "CGTN",
       "name": "CGTN",
-      "programs": 359,
-      "todayPrograms": 42,
+      "programs": 360,
+      "todayPrograms": 43,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -1439,7 +1439,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 110,
+      "programs": 91,
       "todayPrograms": 46,
       "source": "epgpw",
       "aliases": [],
@@ -1449,7 +1449,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 114,
+      "programs": 76,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1459,7 +1459,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 114,
+      "programs": 78,
       "todayPrograms": 39,
       "source": "epgpw",
       "aliases": [],
@@ -1499,7 +1499,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 110,
+      "programs": 91,
       "todayPrograms": 46,
       "source": "epgpw",
       "aliases": [],
@@ -1509,7 +1509,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 114,
+      "programs": 76,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1519,7 +1519,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 114,
+      "programs": 78,
       "todayPrograms": 39,
       "source": "epgpw",
       "aliases": [],
@@ -1923,7 +1923,7 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 126,
+      "programs": 84,
       "todayPrograms": 42,
       "source": "epgpw",
       "aliases": [
@@ -1955,7 +1955,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 75,
+      "programs": 50,
       "todayPrograms": 25,
       "source": "epgpw",
       "aliases": [],
@@ -2013,7 +2013,7 @@
     {
       "id": "东方财经",
       "name": "东方财经",
-      "programs": 336,
+      "programs": 370,
       "todayPrograms": 45,
       "source": "main",
       "aliases": [],
@@ -2194,7 +2194,7 @@
     {
       "id": "乐游",
       "name": "乐游",
-      "programs": 702,
+      "programs": 693,
       "todayPrograms": 85,
       "source": "main",
       "aliases": [],
@@ -2527,8 +2527,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 371,
-      "todayPrograms": 33,
+      "programs": 394,
+      "todayPrograms": 54,
       "source": "main",
       "aliases": [
         "北京卫视高清"
@@ -2539,8 +2539,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 371,
-      "todayPrograms": 33,
+      "programs": 394,
+      "todayPrograms": 54,
       "source": "main",
       "aliases": [
         "北京卫视-4K",
@@ -2657,8 +2657,8 @@
     {
       "id": "华视新闻资讯",
       "name": "华视新闻资讯",
-      "programs": 115,
-      "todayPrograms": 23,
+      "programs": 114,
+      "todayPrograms": 22,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2751,9 +2751,9 @@
     {
       "id": "台视财经",
       "name": "台视财经",
-      "programs": 129,
+      "programs": 39,
       "todayPrograms": 19,
-      "source": "mxdyeah",
+      "source": "epgpw",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2813,8 +2813,8 @@
     {
       "id": "四川卫视",
       "name": "四川卫视",
-      "programs": 243,
-      "todayPrograms": 32,
+      "programs": 244,
+      "todayPrograms": 33,
       "source": "erwcc",
       "aliases": [
         "四川卫视高清"
@@ -2825,8 +2825,8 @@
     {
       "id": "四川卫视4K",
       "name": "四川卫视4K",
-      "programs": 243,
-      "todayPrograms": 32,
+      "programs": 244,
+      "todayPrograms": 33,
       "source": "erwcc",
       "aliases": [
         "四川卫视-4K",
@@ -3144,8 +3144,8 @@
     {
       "id": "寰宇新闻台",
       "name": "寰宇新闻台",
-      "programs": 142,
-      "todayPrograms": 24,
+      "programs": 141,
+      "todayPrograms": 23,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -3174,8 +3174,8 @@
     {
       "id": "山东体育",
       "name": "山东体育",
-      "programs": 290,
-      "todayPrograms": 36,
+      "programs": 286,
+      "todayPrograms": 35,
       "source": "main",
       "aliases": [
         "山东体育休闲"
@@ -3266,9 +3266,9 @@
     {
       "id": "山东生活",
       "name": "山东生活",
-      "programs": 279,
-      "todayPrograms": 41,
-      "source": "erwcc",
+      "programs": 278,
+      "todayPrograms": 40,
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5190,8 +5190,8 @@
     {
       "id": "甘肃卫视",
       "name": "甘肃卫视",
-      "programs": 374,
-      "todayPrograms": 57,
+      "programs": 369,
+      "todayPrograms": 52,
       "source": "erwcc",
       "aliases": [],
       "hasGap": false,
@@ -5215,7 +5215,7 @@
     {
       "id": "生活时尚",
       "name": "生活时尚",
-      "programs": 963,
+      "programs": 962,
       "todayPrograms": 112,
       "source": "main",
       "aliases": [],
@@ -5584,8 +5584,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 765,
-      "todayPrograms": 106,
+      "programs": 767,
+      "todayPrograms": 107,
       "source": "main",
       "aliases": [
         "西藏卫视高清"
@@ -5701,8 +5701,8 @@
     {
       "id": "重庆卫视",
       "name": "重庆卫视",
-      "programs": 263,
-      "todayPrograms": 36,
+      "programs": 267,
+      "todayPrograms": 40,
       "source": "erwcc",
       "aliases": [
         "重庆卫视高清"
@@ -6302,8 +6302,8 @@
     {
       "id": "龙华洋片",
       "name": "龙华洋片",
-      "programs": 104,
-      "todayPrograms": 13,
+      "programs": 115,
+      "todayPrograms": 24,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -6312,8 +6312,8 @@
     {
       "id": "龙华电影",
       "name": "龙华电影",
-      "programs": 74,
-      "todayPrograms": 11,
+      "programs": 80,
+      "todayPrograms": 17,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
