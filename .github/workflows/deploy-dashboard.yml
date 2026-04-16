@@ -38,6 +38,9 @@ jobs:
       - name: List build output
         working-directory: dashboard
         run: ls -la build/
+      
+      - name: Copy m3u tool to build output
+        run: cp -r m3u dashboard/build/m3u
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

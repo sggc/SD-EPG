@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="多功能频道列表转换工具，支持M3U、TXT、CSV、JSON等多种格式">
+    <meta name="keywords" content="频道列表, M3U, TXT, CSV, JSON, IPTV, 转换工具">
+    <meta name="author" content="Channel Converter">
+    <meta name="theme-color" content="#6366f1">
+    <title>多功能频道管理工具</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <main class="container">
+        <header class="page-header">
+            <h1>📺 多功能频道管理工具</h1>
+            <p class="subtitle">支持M3U、TXT、CSV、JSON等多种格式的频道列表转换与编辑</p>
+        </header>
+
+        <nav class="tabs" role="tablist" aria-label="功能导航">
+            <button class="tab active" role="tab" aria-selected="true" data-tab="converter" aria-controls="converter">
+                <span class="tab-icon">🔄</span>转换工具
+            </button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="channelEditor" aria-controls="channelEditor">
+                <span class="tab-icon">✏️</span>频道编辑
+            </button>
+            <button class="tab" role="tab" aria-selected="false" data-tab="history" aria-controls="history">
+                <span class="tab-icon">📋</span>历史记录
+            </button>
+            <button class="tab" id="settingsBtn" role="tab" aria-selected="false" data-tab="settingsTab" aria-controls="settingsTab">
+                <span class="tab-icon">⚙️</span>设置
+            </button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- 转换工具 Tab：独立的输入 → 转换 → 输出 -->
+        <!-- ============================================================ -->
+        <section id="converter" class="tab-content active" role="tabpanel" aria-labelledby="tab-converter">
+            <article class="card">
+                <h3>📥 文件输入</h3>
+                <div id="dropArea" class="drop-area">
+                    <div class="drop-icon">📁</div>
+                    <p>拖放文件到此处或点击下方按钮选择文件</p>
+                    <button id="selectFilesBtn" class="btn btn-primary">📂 选择文件</button>
+                    <input type="file" id="fileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml" aria-describedby="fileInputDesc">
+                    <span id="fileInputDesc" class="sr-only">支持的文件格式: M3U, M3U8, TXT, CSV, JSON, XML</span>
+                </div>
+                <div id="fileList" class="mt-20" aria-live="polite"></div>
+                <div class="form-group mt-15">
+                    <label for="textInput" class="form-label">📝 或粘贴文本</label>
+                    <textarea id="textInput" class="form-control" rows="5" placeholder="粘贴频道列表文本..."></textarea>
+                </div>
+                <div class="flex gap-10 flex-wrap">
+                    <button id="parseTextBtn" class="btn btn-secondary">📥 解析文本</button>
+                    <label class="form-check">
+                        <input type="checkbox" id="deduplicate" class="form-check-input" checked>
+                        <span class="form-check-label">自动去重</span>
+                    </label>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>⚙️ 输出设置</h3>
+                <div class="form-row flex gap-20 flex-wrap">
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="outputFormat" class="form-label">输出格式</label>
+                        <select id="outputFormat" class="form-control">
+                            <option value="m3u">M3U</option>
+                            <option value="txt">TXT</option>
+                            <option value="csv">CSV</option>
+                            <option value="json">JSON</option>
+                            <option value="excel">Excel</option>
+                            <option value="xml">XML</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="fieldOrder" class="form-label">字段顺序</label>
+                        <select id="fieldOrder" class="form-control">
+                            <option value="default">默认 (名称, URL, Logo, 分组)</option>
+                            <option value="groupFirst">分组优先 (分组, 名称, URL, Logo)</option>
+                            <option value="urlFirst">URL优先 (URL, 名称, Logo, 分组)</option>
+                            <option value="logoFirst">Logo优先 (Logo, 名称, URL, 分组)</option>
+                            <option value="custom">自定义顺序</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="epgUrl" class="form-label">EPG节目单地址 (仅M3U格式生效)</label>
+                    <input type="text" id="epgUrl" class="form-control" placeholder="例如: https://epg.example.com/epg.xml.gz">
+                </div>
+                <div id="customOrderContainer" class="hidden mt-20">
+                    <label class="form-label">选择并拖动字段排序</label>
+                    <div id="customOrderFields" class="sortable-fields" role="listbox" aria-label="自定义字段顺序"></div>
+                    <div class="field-checkboxes mt-15">
+                        <label class="form-label">可用字段</label>
+                        <div class="flex gap-20 flex-wrap">
+                            <label class="form-check">
+                                <input type="checkbox" id="field-name" name="fields" value="name" class="form-check-input" checked>
+                                <span class="form-check-label">名称</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" id="field-url" name="fields" value="url" class="form-check-input" checked>
+                                <span class="form-check-label">URL</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" id="field-logo" name="fields" value="logo" class="form-check-input" checked>
+                                <span class="form-check-label">Logo</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" id="field-group" name="fields" value="group" class="form-check-input" checked>
+                                <span class="form-check-label">分组</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>📤 输出结果</h3>
+                <textarea id="outputText" class="form-control" rows="10" placeholder="转换结果将显示在这里..." aria-label="转换结果"></textarea>
+                <div class="action-bar">
+                    <button id="copyBtn" class="btn btn-outline">📋 复制</button>
+                    <div class="flex gap-10">
+                        <button id="clearBtn" class="btn btn-danger">🗑️ 清空</button>
+                        <button id="convertBtn" class="btn btn-primary">🔄 转换</button>
+                        <button id="downloadBtn" class="btn btn-secondary">⬇️ 下载</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 频道编辑 Tab：独立的输入 → 编辑/配置 → 输出 -->
+        <!-- ============================================================ -->
+        <section id="channelEditor" class="tab-content" role="tabpanel" aria-labelledby="tab-channelEditor">
+            <article class="card">
+                <h3>📥 加载直播源</h3>
+                <div id="editorDropArea" class="drop-area">
+                    <div class="drop-icon">📁</div>
+                    <p>拖放M3U文件到此处或点击选择文件</p>
+                    <button id="editorSelectFilesBtn" class="btn btn-primary">📂 选择文件</button>
+                    <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
+                </div>
+                <div id="editorFileList" class="mt-20" aria-live="polite"></div>
+                <div class="form-group mt-15">
+                    <label for="editorTextInput" class="form-label">📝 或粘贴文本</label>
+                    <textarea id="editorTextInput" class="form-control" rows="5" placeholder="粘贴M3U/TXT频道列表文本..."></textarea>
+                </div>
+                <div class="flex gap-10 flex-wrap">
+                    <button id="editorParseTextBtn" class="btn btn-secondary">📥 解析文本</button>
+                    <label class="form-check">
+                        <input type="checkbox" id="editorDeduplicate" class="form-check-input" checked>
+                        <span class="form-check-label">自动去重</span>
+                    </label>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>⏪ 回看源配置</h3>
+                <div class="form-group">
+                    <label for="catchupType" class="form-label">回看类型</label>
+                    <select id="catchupType" class="form-control">
+                        <option value="append">append - 在直播源URL后追加回看参数</option>
+                        <option value="default">default - 基于直播源URL构建回看地址</option>
+                    </select>
+                </div>
+
+                <!-- append 模式：只需填写追加的参数 -->
+                <div id="catchupAppendSection">
+                    <div class="form-group">
+                        <label for="catchupAppendParam" class="form-label">追加参数（拼在直播源URL后面）</label>
+                        <input type="text" id="catchupAppendParam" class="form-control" placeholder="示例: ?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}">
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                        效果：直播源URL + 追加参数 → catchup-source<br>
+                        例：http://xxx/live/cctv1 <strong>+ ?playseek=...</strong> → catchup-source="http://xxx/live/cctv1?playseek=..."
+                    </div>
+                </div>
+
+                <!-- default 模式：基于直播源URL，用前缀+后缀构建 -->
+                <div id="catchupDefaultSection" class="hidden">
+                    <div class="form-group">
+                        <label for="catchupDefaultPrefix" class="form-label">URL前缀替换（可选）</label>
+                        <input type="text" id="catchupDefaultPrefix" class="form-control" placeholder="留空则保留原直播源URL；填写则替换URL的协议+主机部分">
+                    </div>
+                    <div class="form-group">
+                        <label for="catchupDefaultSuffix" class="form-label">回看参数后缀</label>
+                        <input type="text" id="catchupDefaultSuffix" class="form-control" placeholder="示例: ?tvdr=${(b)yyyyMMddHHmmss}GMT-${(e)yyyyMMddHHmmss}GMT&r2h-seek-offset=-28800">
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                        效果：前缀(或原URL) + 回看参数后缀 → catchup-source<br>
+                        例1（留空前缀）：http://xxx/live/cctv1 <strong>+ ?tvdr=...GMT</strong><br>
+                        例2（替换前缀）：rtsp://112.245.125.39:1554/iptv/... <strong>+ ?tvdr=...GMT</strong>
+                    </div>
+                </div>
+
+                <div class="flex gap-10 flex-wrap">
+                    <button id="catchupSelectedBtn" class="btn btn-secondary">✅ 配置选中频道</button>
+                    <button id="catchupAllBtn" class="btn btn-primary">⚡ 一键全部配置</button>
+                    <button id="catchupClearBtn" class="btn btn-danger">🗑️ 清除所有回看</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>📺 频道列表</h3>
+                <div class="flex flex-between flex-wrap gap-10" style="margin-bottom: 10px;">
+                    <div class="search-box" style="flex:1; min-width:200px;">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="channelSearch" class="form-control" placeholder="搜索频道..." aria-label="搜索频道">
+                    </div>
+                    <div class="flex gap-10">
+                        <button id="autoMatchLogoBtn" class="btn btn-primary btn-sm">🎯 自动匹配Logo</button>
+                        <button id="logoRuleBtn" class="btn btn-outline btn-sm">📐 规则管理</button>
+                        <button id="checkLogoBtn" class="btn btn-outline btn-sm">🔍 检测Logo</button>
+                        <button id="deleteSelectedBtn" class="btn btn-danger btn-sm">🗑️ 删除选中</button>
+                    </div>
+                </div>
+                <div id="logoCheckResult" class="hidden" style="margin-bottom: 10px; font-size: 13px;"></div>
+                <div class="table-container">
+                    <table class="table" role="grid" aria-label="频道列表">
+                        <thead id="channelListHead" role="rowgroup"></thead>
+                        <tbody id="channelList" role="rowgroup">
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">
+                                    <div class="empty-state">
+                                        <div class="empty-state-icon">📭</div>
+                                        <p class="empty-state-text">没有频道数据，请先加载直播源</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="flex flex-between flex-wrap gap-10">
+                    <div><strong>📺 频道数:</strong> <span id="totalChannels">0</span></div>
+                    <div><strong>📁 分组数:</strong> <span id="groupCount">0</span></div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>📤 导出结果</h3>
+                <div class="form-row flex gap-20 flex-wrap">
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="editorOutputFormat" class="form-label">输出格式</label>
+                        <select id="editorOutputFormat" class="form-control">
+                            <option value="m3u">M3U</option>
+                            <option value="txt">TXT</option>
+                            <option value="csv">CSV</option>
+                            <option value="json">JSON</option>
+                            <option value="xml">XML</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="editorEpgUrl" class="form-label">EPG地址 (仅M3U)</label>
+                        <input type="text" id="editorEpgUrl" class="form-control" placeholder="https://epg.example.com/epg.xml.gz">
+                    </div>
+                </div>
+                <textarea id="editorOutputText" class="form-control" rows="8" placeholder="编辑后导出结果..." aria-label="导出结果"></textarea>
+                <div class="action-bar">
+                    <button id="editorCopyBtn" class="btn btn-outline">📋 复制</button>
+                    <div class="flex gap-10">
+                        <button id="editorClearBtn" class="btn btn-danger">🗑️ 清空</button>
+                        <button id="editorExportBtn" class="btn btn-primary">📤 导出</button>
+                        <button id="editorDownloadBtn" class="btn btn-secondary">⬇️ 下载</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 历史记录 Tab -->
+        <!-- ============================================================ -->
+        <section id="history" class="tab-content" role="tabpanel" aria-labelledby="tab-history">
+            <div class="card">
+                <div class="flex flex-between flex-wrap gap-10">
+                    <h3>📋 转换历史</h3>
+                    <button id="clearAllHistory" class="btn btn-danger btn-sm">清除所有历史记录</button>
+                </div>
+                <div id="historyList" class="mt-20" aria-live="polite">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p class="empty-state-text">没有历史记录</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- 设置 Tab -->
+        <!-- ============================================================ -->
+        <section id="settingsTab" class="tab-content" role="tabpanel" aria-labelledby="tab-settings">
+            <article class="card">
+                <h3>⚙️ 主题偏好</h3>
+                <div class="form-group">
+                    <label for="themePref" class="form-label">主题模式</label>
+                    <select id="themePref" class="form-control">
+                        <option value="auto">跟随系统</option>
+                        <option value="light">浅色模式</option>
+                        <option value="dark">暗黑模式</option>
+                    </select>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>🔧 功能选项</h3>
+                <div class="flex flex-wrap gap-15">
+                    <label class="form-check">
+                        <input type="checkbox" id="saveHistory" class="form-check-input" checked>
+                        <span class="form-check-label">保存历史记录</span>
+                    </label>
+                    <label class="form-check">
+                        <input type="checkbox" id="showNotifications" class="form-check-input" checked>
+                        <span class="form-check-label">显示通知</span>
+                    </label>
+                </div>
+            </article>
+
+            <article class="card">
+                <h3>🗑️ 数据管理</h3>
+                <button id="clearAllHistoryBtn" class="btn btn-danger">🗑️ 清除所有历史记录</button>
+                <button id="clearAllHistory" class="btn btn-danger mt-10">清除历史记录（备用）</button>
+            </article>
+
+            <article class="card">
+                <p class="text-muted text-center">多功能频道管理工具 v2.0</p>
+            </article>
+        </section>
+
+        <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+        <style>
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            .settings-footer {
+                padding-top: 20px;
+                border-top: 1px solid var(--border-color);
+            }
+            .form-row {
+                display: flex;
+                margin: 0 -10px;
+            }
+            .form-row > * {
+                padding: 0 10px;
+            }
+            .field-checkboxes > div {
+                margin-top: 8px;
+            }
+        </style>
+    </main>
+
+    <script src="js/formatConverter.js"></script>
+    <script src="js/channelConfig.js"></script>
+    <script src="js/logoMatcher.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const converter = new ChannelConverter();
+            const ui = new UIHandler(converter);
+            const utils = new Utils();
+
+            ui.initEventListeners();
+            converter.loadSettings();
+            ui.applySettings();
+            converter.loadHistory();
+            ui.renderHistory();
+            ui.initChart();
+        });
+    </script>
+</body>
+</html>
