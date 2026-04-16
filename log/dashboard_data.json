@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-16 13:15:13",
+  "lastUpdate": "2026-04-16 17:50:38",
   "whitelistChannels": 415,
   "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 91199,
-  "filteredPrograms": 11210,
+  "totalPrograms": 91201,
+  "filteredPrograms": 11122,
   "dateRange": "20260410 ~ 20260417",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 166,
-      "programs": 54826,
+      "programs": 54796,
       "matched": 166
     },
     {
@@ -27,13 +27,13 @@
       "enabled": true,
       "channels": 535,
       "programs": 132818,
-      "matched": 140
+      "matched": 142
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 220,
-      "programs": 41838,
+      "programs": 41868,
       "matched": 62
     },
     {
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 60,
-      "programs": 3553,
+      "programs": 4847,
       "matched": 1
     },
     {
@@ -199,30 +199,24 @@
     },
     {
       "index": 2,
-      "name": "岱岳综合",
-      "id": "岱岳综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 3,
       "name": "淄博新闻综合",
       "id": "淄博新闻综合",
       "todayPrograms": 0
     },
     {
-      "index": 4,
+      "index": 3,
       "name": "黑莓动画",
       "id": "黑莓动画",
       "todayPrograms": 1
     },
     {
-      "index": 5,
+      "index": 4,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 6,
+      "index": 5,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -271,7 +265,13 @@
       "id": "岱岳综合",
       "name": "岱岳综合",
       "gaps": [
-        "07:00-22:00"
+        "07:15-12:30",
+        "12:45-13:15",
+        "13:20-15:10",
+        "15:15-17:05",
+        "17:10-18:25",
+        "19:50-20:35",
+        "20:45-21:30"
       ]
     },
     {
@@ -801,8 +801,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 184,
-      "todayPrograms": 22,
+      "programs": 185,
+      "todayPrograms": 23,
       "source": "main",
       "aliases": [
         "CCTV-11",
@@ -858,8 +858,8 @@
     {
       "id": "CCTV14",
       "name": "CCTV14",
-      "programs": 144,
-      "todayPrograms": 18,
+      "programs": 146,
+      "todayPrograms": 20,
       "source": "main",
       "aliases": [
         "CCTV-14",
@@ -974,8 +974,8 @@
     {
       "id": "CCTV4",
       "name": "CCTV4",
-      "programs": 319,
-      "todayPrograms": 38,
+      "programs": 320,
+      "todayPrograms": 39,
       "source": "main",
       "aliases": [
         "CCTV-4",
@@ -1024,8 +1024,8 @@
     {
       "id": "CCTV4美洲",
       "name": "CCTV4美洲",
-      "programs": 311,
-      "todayPrograms": 36,
+      "programs": 312,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "CCTV-4 美洲",
@@ -1367,8 +1367,8 @@
     {
       "id": "CGTN",
       "name": "CGTN",
-      "programs": 360,
-      "todayPrograms": 43,
+      "programs": 361,
+      "todayPrograms": 44,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2353,8 +2353,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 381,
-      "todayPrograms": 47,
+      "programs": 385,
+      "todayPrograms": 51,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2527,8 +2527,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 394,
-      "todayPrograms": 54,
+      "programs": 382,
+      "todayPrograms": 42,
       "source": "main",
       "aliases": [
         "北京卫视高清"
@@ -2539,8 +2539,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 394,
-      "todayPrograms": 54,
+      "programs": 382,
+      "todayPrograms": 42,
       "source": "main",
       "aliases": [
         "北京卫视-4K",
@@ -2761,8 +2761,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 289,
-      "todayPrograms": 36,
+      "programs": 290,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "吉林卫视高清"
@@ -3024,8 +3024,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 324,
-      "todayPrograms": 42,
+      "programs": 322,
+      "todayPrograms": 40,
       "source": "main",
       "aliases": [
         "宁夏卫视高清"
@@ -3266,8 +3266,8 @@
     {
       "id": "山东生活",
       "name": "山东生活",
-      "programs": 278,
-      "todayPrograms": 40,
+      "programs": 277,
+      "todayPrograms": 39,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -3296,8 +3296,8 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 147,
-      "todayPrograms": 17,
+      "programs": 148,
+      "todayPrograms": 18,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -3316,16 +3316,46 @@
     {
       "id": "岱岳综合",
       "name": "岱岳综合",
-      "programs": 15,
-      "todayPrograms": 0,
+      "programs": 45,
+      "todayPrograms": 15,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "start": "07:15",
+          "stop": "12:30",
+          "duration": 315
+        },
+        {
+          "start": "12:45",
+          "stop": "13:15",
+          "duration": 30
+        },
+        {
+          "start": "13:20",
+          "stop": "15:10",
+          "duration": 110
+        },
+        {
+          "start": "15:15",
+          "stop": "17:05",
+          "duration": 110
+        },
+        {
+          "start": "17:10",
+          "stop": "18:25",
+          "duration": 75
+        },
+        {
+          "start": "19:50",
+          "stop": "20:35",
+          "duration": 45
+        },
+        {
+          "start": "20:45",
+          "stop": "21:30",
+          "duration": 45
         }
       ]
     },
@@ -3525,8 +3555,8 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 203,
-      "todayPrograms": 24,
+      "programs": 204,
+      "todayPrograms": 25,
       "source": "main",
       "aliases": [
         "广西卫视高清"
@@ -4348,8 +4378,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 358,
-      "todayPrograms": 51,
+      "programs": 348,
+      "todayPrograms": 41,
       "source": "main",
       "aliases": [
         "河南卫视高清"
@@ -4749,9 +4779,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 269,
-      "todayPrograms": 42,
-      "source": "main",
+      "programs": 272,
+      "todayPrograms": 40,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清"
       ],
@@ -4761,9 +4791,9 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 269,
-      "todayPrograms": 42,
-      "source": "main",
+      "programs": 272,
+      "todayPrograms": 40,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视-4K",
         "浙江卫视4K超高清",
@@ -5691,8 +5721,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 431,
-      "todayPrograms": 60,
+      "programs": 424,
+      "todayPrograms": 53,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -6000,8 +6030,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 235,
-      "todayPrograms": 26,
+      "programs": 229,
+      "todayPrograms": 27,
       "source": "main",
       "aliases": [
         "青海卫视高清"
@@ -6234,8 +6264,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 262,
-      "todayPrograms": 29,
+      "programs": 265,
+      "todayPrograms": 32,
       "source": "main",
       "aliases": [
         "黑龙江卫视高清"
