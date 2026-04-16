@@ -24,7 +24,7 @@ class LogoMatcher {
             { pattern: /^CCTV16五环/, logo: 'CCTV16五环.png', desc: 'CCTV16五环', priority: 20 },
             { pattern: /^CCTV4欧洲/, logo: 'CCTV4欧洲.png', desc: 'CCTV4欧洲', priority: 20 },
             { pattern: /^CCTV4美洲/, logo: 'CCTV4美洲.png', desc: 'CCTV4美洲', priority: 20 },
-            { pattern: /^CCTV(\d+)$/, logo: 'CCTV${n}.png', desc: 'CCTV数字频道', priority: 10, extract: true },
+            { pattern: /^CCTV(\d+)/, logo: 'CCTV${n}.png', desc: 'CCTV数字频道', priority: 10, extract: true },
 
             // CCTV付费/专业频道（中文后缀）
             { pattern: /^CCTV世界地理/, logo: 'CCTV世界地理.png', desc: 'CCTV世界地理', priority: 20 },
@@ -72,6 +72,11 @@ class LogoMatcher {
             // === IPTV 系列 ===
             { pattern: /^IPTV法治/, logo: 'IPTV法治.png', desc: 'IPTV法治', priority: 20 },
             { pattern: /^IPTV野外/, logo: 'IPTV野外.png', desc: 'IPTV野外', priority: 20 },
+
+            // === CETV 系列（中国教育电视台，也叫中国教育1/2/4） ===
+            { pattern: /^CETV1/, logo: '中国教育1.png', desc: 'CETV1→中国教育1', priority: 20 },
+            { pattern: /^CETV2/, logo: '中国教育2.png', desc: 'CETV2→中国教育2', priority: 20 },
+            { pattern: /^CETV4/, logo: '中国教育4.png', desc: 'CETV4→中国教育4', priority: 20 },
 
             // === 卫视4K变体（优先匹配） ===
             { pattern: /^北京卫视4K简化/, logo: '北京卫视4K简化.png', desc: '北京卫视4K简化', priority: 30 },
@@ -165,95 +170,95 @@ class LogoMatcher {
             { pattern: /^爱电影/, logo: '爱电影.png', desc: '爱电影', priority: 20 },
             { pattern: /^爱综艺/, logo: '爱综艺.png', desc: '爱综艺', priority: 20 },
 
-            // === 纯中文频道名精确匹配 ===
-            { pattern: /^中华特产$/, logo: '中华特产.png', desc: '中华特产', priority: 20 },
-            { pattern: /^中国交通$/, logo: '中国交通.png', desc: '中国交通', priority: 20 },
-            { pattern: /^中国教育1$/, logo: '中国教育1.png', desc: '中国教育1', priority: 20 },
-            { pattern: /^中国教育2$/, logo: '中国教育2.png', desc: '中国教育2', priority: 20 },
-            { pattern: /^中国教育4$/, logo: '中国教育4.png', desc: '中国教育4', priority: 20 },
-            { pattern: /^中学生$/, logo: '中学生.png', desc: '中学生', priority: 20 },
-            { pattern: /^乐游$/, logo: '乐游.png', desc: '乐游', priority: 20 },
-            { pattern: /^九屏同看$/, logo: '九屏同看.png', desc: '九屏同看', priority: 20 },
-            { pattern: /^书画$/, logo: '书画.png', desc: '书画', priority: 20 },
-            { pattern: /^优优宝贝$/, logo: '优优宝贝.png', desc: '优优宝贝', priority: 20 },
-            { pattern: /^优漫卡通$/, logo: '优漫卡通.png', desc: '优漫卡通', priority: 20 },
-            { pattern: /^优购物$/, logo: '优购物.png', desc: '优购物', priority: 20 },
-            { pattern: /^先锋乒羽$/, logo: '先锋乒羽.png', desc: '先锋乒羽', priority: 20 },
-            { pattern: /^光影$/, logo: '光影.png', desc: '光影', priority: 20 },
-            { pattern: /^军事$/, logo: '军事.png', desc: '军事', priority: 20 },
-            { pattern: /^军旅剧场$/, logo: '军旅剧场.png', desc: '军旅剧场', priority: 20 },
-            { pattern: /^动作影院$/, logo: '动作影院.png', desc: '动作影院', priority: 20 },
-            { pattern: /^动漫秀场$/, logo: '动漫秀场.png', desc: '动漫秀场', priority: 20 },
-            { pattern: /^动画$/, logo: '动画.png', desc: '动画', priority: 20 },
-            { pattern: /^劲爆体育$/, logo: '劲爆体育.png', desc: '劲爆体育', priority: 20 },
-            { pattern: /^卡酷少儿$/, logo: '卡酷少儿.png', desc: '卡酷少儿', priority: 20 },
-            { pattern: /^发现之旅$/, logo: '发现之旅.png', desc: '发现之旅', priority: 20 },
-            { pattern: /^古装剧场$/, logo: '古装剧场.png', desc: '古装剧场', priority: 20 },
-            { pattern: /^喜剧影院$/, logo: '喜剧影院.png', desc: '喜剧影院', priority: 20 },
-            { pattern: /^嘉佳卡通$/, logo: '嘉佳卡通.png', desc: '嘉佳卡通', priority: 20 },
-            { pattern: /^四海钓鱼$/, logo: '四海钓鱼.png', desc: '四海钓鱼', priority: 20 },
-            { pattern: /^国学$/, logo: '国学.png', desc: '国学', priority: 20 },
-            { pattern: /^地理$/, logo: '地理.png', desc: '地理', priority: 20 },
-            { pattern: /^城市剧场$/, logo: '城市剧场.png', desc: '城市剧场', priority: 20 },
-            { pattern: /^墨宝$/, logo: '墨宝.png', desc: '墨宝', priority: 20 },
-            { pattern: /^央广购物2$/, logo: '央广购物2.png', desc: '央广购物2', priority: 25 },
-            { pattern: /^央广购物$/, logo: '央广购物.png', desc: '央广购物', priority: 20 },
-            { pattern: /^好学生$/, logo: '好学生.png', desc: '好学生', priority: 20 },
-            { pattern: /^家庭影院$/, logo: '家庭影院.png', desc: '家庭影院', priority: 20 },
-            { pattern: /^家庭理财$/, logo: '家庭理财.png', desc: '家庭理财', priority: 20 },
-            { pattern: /^少儿动画$/, logo: '少儿动画.png', desc: '少儿动画', priority: 20 },
-            { pattern: /^影视解说$/, logo: '影视解说.png', desc: '影视解说', priority: 20 },
-            { pattern: /^快乐垂钓$/, logo: '快乐垂钓.png', desc: '快乐垂钓', priority: 20 },
-            { pattern: /^戏曲$/, logo: '戏曲.png', desc: '戏曲', priority: 20 },
-            { pattern: /^收视指南$/, logo: '收视指南.png', desc: '收视指南', priority: 20 },
-            { pattern: /^文物宝库$/, logo: '文物宝库.png', desc: '文物宝库', priority: 20 },
-            { pattern: /^新动漫$/, logo: '新动漫.png', desc: '新动漫', priority: 20 },
-            { pattern: /^早教$/, logo: '早教.png', desc: '早教', priority: 20 },
-            { pattern: /^星影$/, logo: '星影.png', desc: '星影', priority: 20 },
-            { pattern: /^星空国际$/, logo: '星空国际.png', desc: '星空国际', priority: 20 },
-            { pattern: /^智慧康养$/, logo: '智慧康养.png', desc: '智慧康养', priority: 20 },
-            { pattern: /^梨园$/, logo: '梨园.png', desc: '梨园', priority: 20 },
-            { pattern: /^武侠剧场$/, logo: '武侠剧场.png', desc: '武侠剧场', priority: 20 },
-            { pattern: /^武术世界$/, logo: '武术世界.png', desc: '武术世界', priority: 20 },
-            { pattern: /^武术$/, logo: '武术.png', desc: '武术', priority: 20 },
-            { pattern: /^求索纪录$/, logo: '求索纪录.png', desc: '求索纪录', priority: 20 },
-            { pattern: /^汽摩$/, logo: '汽摩.png', desc: '汽摩', priority: 20 },
-            { pattern: /^法治天地$/, logo: '法治天地.png', desc: '法治天地', priority: 20 },
-            { pattern: /^海看演艺$/, logo: '海看演艺.png', desc: '海看演艺', priority: 20 },
-            { pattern: /^游戏风云$/, logo: '游戏风云.png', desc: '游戏风云', priority: 20 },
-            { pattern: /^热播剧场$/, logo: '热播剧场.png', desc: '热播剧场', priority: 20 },
-            { pattern: /^热血剧场$/, logo: '热血剧场.png', desc: '热血剧场', priority: 20 },
-            { pattern: /^环球旅游$/, logo: '环球旅游.png', desc: '环球旅游', priority: 20 },
-            { pattern: /^生态环境$/, logo: '生态环境.png', desc: '生态环境', priority: 20 },
-            { pattern: /^生活时尚$/, logo: '生活时尚.png', desc: '生活时尚', priority: 20 },
-            { pattern: /^电影大片$/, logo: '电影大片.png', desc: '电影大片', priority: 20 },
-            { pattern: /^相声小品$/, logo: '相声小品.png', desc: '相声小品', priority: 20 },
-            { pattern: /^短剧$/, logo: '短剧.png', desc: '短剧', priority: 20 },
-            { pattern: /^精彩影视$/, logo: '精彩影视.png', desc: '精彩影视', priority: 20 },
-            { pattern: /^精选$/, logo: '精选.png', desc: '精选', priority: 20 },
-            { pattern: /^红色影院$/, logo: '红色影院.png', desc: '红色影院', priority: 20 },
-            { pattern: /^经典剧场$/, logo: '经典剧场.png', desc: '经典剧场', priority: 20 },
-            { pattern: /^经典电影$/, logo: '经典电影.png', desc: '经典电影', priority: 20 },
-            { pattern: /^美人$/, logo: '美人.png', desc: '美人', priority: 20 },
-            { pattern: /^美妆$/, logo: '美妆.png', desc: '美妆', priority: 20 },
-            { pattern: /^翡翠剧集台$/, logo: '翡翠剧集台.png', desc: '翡翠剧集台', priority: 20 },
-            { pattern: /^老故事$/, logo: '老故事.png', desc: '老故事', priority: 20 },
-            { pattern: /^聚鲨环球$/, logo: '聚鲨环球.png', desc: '聚鲨环球', priority: 20 },
-            { pattern: /^茶$/, logo: '茶.png', desc: '茶', priority: 20 },
-            { pattern: /^解密$/, logo: '解密.png', desc: '解密', priority: 20 },
-            { pattern: /^谍战剧场$/, logo: '谍战剧场.png', desc: '谍战剧场', priority: 20 },
-            { pattern: /^财富天下$/, logo: '财富天下.png', desc: '财富天下', priority: 20 },
-            { pattern: /^足球$/, logo: '足球.png', desc: '足球', priority: 20 },
-            { pattern: /^轮播$/, logo: '轮播.png', desc: '轮播', priority: 20 },
-            { pattern: /^都市剧场$/, logo: '都市剧场.png', desc: '都市剧场', priority: 20 },
-            { pattern: /^重温经典影视$/, logo: '重温经典影视.png', desc: '重温经典影视', priority: 20 },
-            { pattern: /^金色学堂$/, logo: '金色学堂.png', desc: '金色学堂', priority: 20 },
-            { pattern: /^金鹰卡通$/, logo: '金鹰卡通.png', desc: '金鹰卡通', priority: 20 },
-            { pattern: /^金鹰纪实$/, logo: '金鹰纪实.png', desc: '金鹰纪实', priority: 20 },
-            { pattern: /^鉴赏$/, logo: '鉴赏.png', desc: '鉴赏', priority: 20 },
-            { pattern: /^音乐现场$/, logo: '音乐现场.png', desc: '音乐现场', priority: 20 },
-            { pattern: /^魅力时尚$/, logo: '魅力时尚.png', desc: '魅力时尚', priority: 20 },
-            { pattern: /^魅力足球$/, logo: '魅力足球.png', desc: '魅力足球', priority: 20 },
+            // === 纯中文频道名匹配（清洗后名称，无需$结尾） ===
+            { pattern: /^中华特产/, logo: '中华特产.png', desc: '中华特产', priority: 20 },
+            { pattern: /^中国交通/, logo: '中国交通.png', desc: '中国交通', priority: 20 },
+            { pattern: /^中国教育1/, logo: '中国教育1.png', desc: '中国教育1', priority: 20 },
+            { pattern: /^中国教育2/, logo: '中国教育2.png', desc: '中国教育2', priority: 20 },
+            { pattern: /^中国教育4/, logo: '中国教育4.png', desc: '中国教育4', priority: 20 },
+            { pattern: /^中学生/, logo: '中学生.png', desc: '中学生', priority: 20 },
+            { pattern: /^乐游/, logo: '乐游.png', desc: '乐游', priority: 20 },
+            { pattern: /^九屏同看/, logo: '九屏同看.png', desc: '九屏同看', priority: 20 },
+            { pattern: /^书画/, logo: '书画.png', desc: '书画', priority: 20 },
+            { pattern: /^优优宝贝/, logo: '优优宝贝.png', desc: '优优宝贝', priority: 20 },
+            { pattern: /^优漫卡通/, logo: '优漫卡通.png', desc: '优漫卡通', priority: 20 },
+            { pattern: /^优购物/, logo: '优购物.png', desc: '优购物', priority: 20 },
+            { pattern: /^先锋乒羽/, logo: '先锋乒羽.png', desc: '先锋乒羽', priority: 20 },
+            { pattern: /^光影/, logo: '光影.png', desc: '光影', priority: 20 },
+            { pattern: /^军事/, logo: '军事.png', desc: '军事', priority: 20 },
+            { pattern: /^军旅剧场/, logo: '军旅剧场.png', desc: '军旅剧场', priority: 20 },
+            { pattern: /^动作影院/, logo: '动作影院.png', desc: '动作影院', priority: 20 },
+            { pattern: /^动漫秀场/, logo: '动漫秀场.png', desc: '动漫秀场', priority: 20 },
+            { pattern: /^动画/, logo: '动画.png', desc: '动画', priority: 20 },
+            { pattern: /^劲爆体育/, logo: '劲爆体育.png', desc: '劲爆体育', priority: 20 },
+            { pattern: /^卡酷少儿/, logo: '卡酷少儿.png', desc: '卡酷少儿', priority: 20 },
+            { pattern: /^发现之旅/, logo: '发现之旅.png', desc: '发现之旅', priority: 20 },
+            { pattern: /^古装剧场/, logo: '古装剧场.png', desc: '古装剧场', priority: 20 },
+            { pattern: /^喜剧影院/, logo: '喜剧影院.png', desc: '喜剧影院', priority: 20 },
+            { pattern: /^嘉佳卡通/, logo: '嘉佳卡通.png', desc: '嘉佳卡通', priority: 20 },
+            { pattern: /^四海钓鱼/, logo: '四海钓鱼.png', desc: '四海钓鱼', priority: 20 },
+            { pattern: /^国学/, logo: '国学.png', desc: '国学', priority: 20 },
+            { pattern: /^地理/, logo: '地理.png', desc: '地理', priority: 20 },
+            { pattern: /^城市剧场/, logo: '城市剧场.png', desc: '城市剧场', priority: 20 },
+            { pattern: /^墨宝/, logo: '墨宝.png', desc: '墨宝', priority: 20 },
+            { pattern: /^央广购物2/, logo: '央广购物2.png', desc: '央广购物2', priority: 25 },
+            { pattern: /^央广购物/, logo: '央广购物.png', desc: '央广购物', priority: 20 },
+            { pattern: /^好学生/, logo: '好学生.png', desc: '好学生', priority: 20 },
+            { pattern: /^家庭影院/, logo: '家庭影院.png', desc: '家庭影院', priority: 20 },
+            { pattern: /^家庭理财/, logo: '家庭理财.png', desc: '家庭理财', priority: 20 },
+            { pattern: /^少儿动画/, logo: '少儿动画.png', desc: '少儿动画', priority: 20 },
+            { pattern: /^影视解说/, logo: '影视解说.png', desc: '影视解说', priority: 20 },
+            { pattern: /^快乐垂钓/, logo: '快乐垂钓.png', desc: '快乐垂钓', priority: 20 },
+            { pattern: /^戏曲/, logo: '戏曲.png', desc: '戏曲', priority: 20 },
+            { pattern: /^收视指南/, logo: '收视指南.png', desc: '收视指南', priority: 20 },
+            { pattern: /^文物宝库/, logo: '文物宝库.png', desc: '文物宝库', priority: 20 },
+            { pattern: /^新动漫/, logo: '新动漫.png', desc: '新动漫', priority: 20 },
+            { pattern: /^早教/, logo: '早教.png', desc: '早教', priority: 20 },
+            { pattern: /^星影/, logo: '星影.png', desc: '星影', priority: 20 },
+            { pattern: /^星空国际/, logo: '星空国际.png', desc: '星空国际', priority: 20 },
+            { pattern: /^智慧康养/, logo: '智慧康养.png', desc: '智慧康养', priority: 20 },
+            { pattern: /^梨园/, logo: '梨园.png', desc: '梨园', priority: 20 },
+            { pattern: /^武侠剧场/, logo: '武侠剧场.png', desc: '武侠剧场', priority: 20 },
+            { pattern: /^武术世界/, logo: '武术世界.png', desc: '武术世界', priority: 20 },
+            { pattern: /^武术/, logo: '武术.png', desc: '武术', priority: 20 },
+            { pattern: /^求索纪录/, logo: '求索纪录.png', desc: '求索纪录', priority: 20 },
+            { pattern: /^汽摩/, logo: '汽摩.png', desc: '汽摩', priority: 20 },
+            { pattern: /^法治天地/, logo: '法治天地.png', desc: '法治天地', priority: 20 },
+            { pattern: /^海看演艺/, logo: '海看演艺.png', desc: '海看演艺', priority: 20 },
+            { pattern: /^游戏风云/, logo: '游戏风云.png', desc: '游戏风云', priority: 20 },
+            { pattern: /^热播剧场/, logo: '热播剧场.png', desc: '热播剧场', priority: 20 },
+            { pattern: /^热血剧场/, logo: '热血剧场.png', desc: '热血剧场', priority: 20 },
+            { pattern: /^环球旅游/, logo: '环球旅游.png', desc: '环球旅游', priority: 20 },
+            { pattern: /^生态环境/, logo: '生态环境.png', desc: '生态环境', priority: 20 },
+            { pattern: /^生活时尚/, logo: '生活时尚.png', desc: '生活时尚', priority: 20 },
+            { pattern: /^电影大片/, logo: '电影大片.png', desc: '电影大片', priority: 20 },
+            { pattern: /^相声小品/, logo: '相声小品.png', desc: '相声小品', priority: 20 },
+            { pattern: /^短剧/, logo: '短剧.png', desc: '短剧', priority: 20 },
+            { pattern: /^精彩影视/, logo: '精彩影视.png', desc: '精彩影视', priority: 20 },
+            { pattern: /^精选/, logo: '精选.png', desc: '精选', priority: 20 },
+            { pattern: /^红色影院/, logo: '红色影院.png', desc: '红色影院', priority: 20 },
+            { pattern: /^经典剧场/, logo: '经典剧场.png', desc: '经典剧场', priority: 20 },
+            { pattern: /^经典电影/, logo: '经典电影.png', desc: '经典电影', priority: 20 },
+            { pattern: /^美人/, logo: '美人.png', desc: '美人', priority: 20 },
+            { pattern: /^美妆/, logo: '美妆.png', desc: '美妆', priority: 20 },
+            { pattern: /^翡翠剧集台/, logo: '翡翠剧集台.png', desc: '翡翠剧集台', priority: 20 },
+            { pattern: /^老故事/, logo: '老故事.png', desc: '老故事', priority: 20 },
+            { pattern: /^聚鲨环球/, logo: '聚鲨环球.png', desc: '聚鲨环球', priority: 20 },
+            { pattern: /^茶/, logo: '茶.png', desc: '茶', priority: 20 },
+            { pattern: /^解密/, logo: '解密.png', desc: '解密', priority: 20 },
+            { pattern: /^谍战剧场/, logo: '谍战剧场.png', desc: '谍战剧场', priority: 20 },
+            { pattern: /^财富天下/, logo: '财富天下.png', desc: '财富天下', priority: 20 },
+            { pattern: /^足球/, logo: '足球.png', desc: '足球', priority: 20 },
+            { pattern: /^轮播/, logo: '轮播.png', desc: '轮播', priority: 20 },
+            { pattern: /^都市剧场/, logo: '都市剧场.png', desc: '都市剧场', priority: 20 },
+            { pattern: /^重温经典影视/, logo: '重温经典影视.png', desc: '重温经典影视', priority: 20 },
+            { pattern: /^金色学堂/, logo: '金色学堂.png', desc: '金色学堂', priority: 20 },
+            { pattern: /^金鹰卡通/, logo: '金鹰卡通.png', desc: '金鹰卡通', priority: 20 },
+            { pattern: /^金鹰纪实/, logo: '金鹰纪实.png', desc: '金鹰纪实', priority: 20 },
+            { pattern: /^鉴赏/, logo: '鉴赏.png', desc: '鉴赏', priority: 20 },
+            { pattern: /^音乐现场/, logo: '音乐现场.png', desc: '音乐现场', priority: 20 },
+            { pattern: /^魅力时尚/, logo: '魅力时尚.png', desc: '魅力时尚', priority: 20 },
+            { pattern: /^魅力足球/, logo: '魅力足球.png', desc: '魅力足球', priority: 20 },
 
             // === 山东2子目录频道 ===
             { pattern: /^QTV(\d)/, logo: '山东2/QTV${n}.png', desc: 'QTV频道', priority: 20, extract: true },
@@ -461,6 +466,30 @@ class LogoMatcher {
     // ============================================================
 
     /**
+     * 清洗频道名称，去掉末尾无关后缀
+     * 例如：
+     *   "CCTV-1(高请)" → "CCTV-1"
+     *   "山东新闻（标清）" → "山东新闻"
+     *   "湖南卫视+1" → "湖南卫视"
+     *   "CCTV5+4K" → "CCTV5+4K" (保留，因为4K有意义)
+     */
+    cleanName(name) {
+        if (!name) return '';
+        // 去掉末尾的括号内容：(高请)（标清）[HD]等
+        let cleaned = name.replace(/[\(（\[【].*?[\)）\]】]\s*$/, '');
+        // 去掉末尾的 +数字（如+1 +2，但保留CCTV5+这种有意义的）
+        cleaned = cleaned.replace(/\+(\d+)$/, '');
+        // 去掉末尾的 -数字（如-1 -2，但不是CCTV-5这种）
+        // 不做，因为CCTV-5的横杠需要保留给后续标准化
+        // 去掉末尾的"高清""标清""HD""SD""4K"等标注（但保留卫视4K这种有意义的）
+        // 只去掉纯标注，不影响"卫视4K"这种
+        cleaned = cleaned.replace(/[\s]*[(（]?(高清|高请|标清|超清|原画|HD|SD|FHD|UHD|HEVC)[)）]?$/i, '');
+        // 去掉末尾空格
+        cleaned = cleaned.trim();
+        return cleaned;
+    }
+
+    /**
      * 根据频道名称匹配Logo
      * @param {string} channelName - 频道名称
      * @returns {string|null} - Logo完整URL，未匹配返回null
@@ -468,14 +497,17 @@ class LogoMatcher {
     match(channelName) {
         if (!channelName) return null;
 
-        // 标准化名称：去掉横杠（CCTV-5 → CCTV5），统一格式
-        const normalizedName = channelName.replace(/CCTV-/g, 'CCTV');
+        // 1. 清洗名称：去掉末尾无关后缀
+        let name = this.cleanName(channelName);
+
+        // 2. 标准化名称：去掉横杠（CCTV-5 → CCTV5, CETV-1 → CETV1）
+        name = name.replace(/CCTV-/g, 'CCTV').replace(/CETV-/g, 'CETV');
 
         // 按优先级排序（高优先级先匹配）
         const sortedRules = [...this.rules].sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
         for (const rule of sortedRules) {
-            const m = normalizedName.match(rule.pattern);
+            const m = name.match(rule.pattern);
             if (m) {
                 let logoPath = rule.logo;
                 // 如果有extract标记，替换${n}为捕获组
