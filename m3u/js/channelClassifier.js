@@ -223,15 +223,15 @@ class ChannelClassifier {
      * @returns {{category: string, sortKey: string}}
      */
     classify(name) {
-        if (!name) return { category: '其他频道', sortKey: name || '' };
+        if (!name) return { category: '其他频道', sortKey: name || '', province: null };
 
         for (const rule of this.rules) {
             if (rule.pattern.test(name)) {
-                return { category: rule.category, sortKey: rule.sortKey };
+                return { category: rule.category, sortKey: rule.sortKey, province: rule.province || null };
             }
         }
 
-        return { category: '其他频道', sortKey: name };
+        return { category: '其他频道', sortKey: name, province: null };
     }
 
     /**

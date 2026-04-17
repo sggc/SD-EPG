@@ -1058,19 +1058,23 @@ class UIHandler {
             return;
         }
 
-        const classified = this.classifier.classifyAll(channels, true);
-        const sorted = this.classifier.sortClassified(classified);
-
-        // 应用分类结果到频道分组
+        // 逐个分类并更新分组
         let changed = 0;
-        const originalChannels = this.editorConfig.getChannels();
-        sorted.forEach((ch) => {
-            if (ch._category) {
-                const idx = originalChannels.indexOf(ch);
-                if (idx >= 0 && ch.group !== ch._category) {
-                    this.editorConfig.updateChannel(idx, { group: ch._category });
-                    changed++;
-                }
+        channels.forEach((ch, idx) => {
+            const name = (ch.tvgName && ch.tvgName.trim()) || ch.name;
+            const result = this.classifier.classify(name);
+
+            let category = result.category;
+            // 地方频道：本地省份归到"xx频道"，非本地归到"其他频道"
+            if (result.province && result.province === this.classifier.localProvince) {
+                category = this.classifier.localProvince + '频道';
+            } else if (result.province && result.province !== this.classifier.localProvince) {
+                category = '其他频道';
+            }
+
+            if (category && ch.group !== category) {
+                this.editorConfig.updateChannel(idx, { group: category });
+                changed++;
             }
         });
 
