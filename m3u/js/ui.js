@@ -11,6 +11,12 @@ class UIHandler {
         // Logo自动匹配引擎
         this.logoMatcher = new LogoMatcher();
 
+        // 频道自动分类器
+        this.classifier = new ChannelClassifier();
+
+        // 融合模式：累积的频道数据
+        this.mergedChannels = [];
+
         this.elements = {
             // 转换工具元素
             dropArea: document.getElementById('dropArea'),
@@ -145,6 +151,16 @@ class UIHandler {
         el.checkLogoBtn.addEventListener('click', () => this.checkLogos());
         el.autoMatchLogoBtn.addEventListener('click', () => this.autoMatchLogo());
         el.logoRuleBtn.addEventListener('click', () => this.showLogoRuleManager());
+
+        // 自动分类按钮
+        const autoClassifyBtn = document.getElementById('autoClassifyBtn');
+        if (autoClassifyBtn) autoClassifyBtn.addEventListener('click', () => this.autoClassify());
+
+        // 本地省份选择
+        const localProvince = document.getElementById('localProvince');
+        if (localProvince) localProvince.addEventListener('change', (e) => {
+            this.classifier.setLocalProvince(e.target.value);
+        });
 
         el.catchupSelectedBtn.addEventListener('click', () => this.applyCatchupSelected());
         el.catchupAllBtn.addEventListener('click', () => this.applyCatchupAll());
@@ -294,8 +310,12 @@ class UIHandler {
                     parsedChannels = parsedChannels.concat(this.core.formatter.parseFileContent(e.target.result, ext));
                     filesProcessed++;
                     if (filesProcessed === files.length) {
-                        const channels = this.elements.editorDeduplicate.checked ?
+                        let channels = this.elements.editorDeduplicate.checked ?
                             this.core.deduplicateChannels(parsedChannels) : parsedChannels;
+
+                        // 融合模式
+                        channels = this.mergeChannels(channels);
+
                         this.editorConfig.setChannels(channels);
                         this.renderChannelList();
                         this.updateStats();
@@ -318,8 +338,12 @@ class UIHandler {
         try {
             const ext = this.core.formatter.detectFormat(text);
             const parsed = this.core.formatter.parseFileContent(text, ext);
-            const channels = this.elements.editorDeduplicate.checked ?
+            let channels = this.elements.editorDeduplicate.checked ?
                 this.core.deduplicateChannels(parsed) : parsed;
+
+            // 融合模式
+            channels = this.mergeChannels(channels);
+
             this.editorConfig.setChannels(channels);
             this.renderChannelList();
             this.updateStats();
@@ -537,17 +561,22 @@ class UIHandler {
         if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
 
         const format = this.elements.editorOutputFormat.value;
-        const epgUrl = this.elements.editorEpgUrl.value.trim();
+        let epgUrl = this.elements.editorEpgUrl.value.trim();
         const formatter = this.core.formatter;
+
+        // 应用加速链接
+        const processedChannels = this.applyAccelToChannels(channels);
+        epgUrl = this.applyAccelToEpg(epgUrl);
+
         let result;
 
         try {
             switch (format) {
-                case 'm3u': result = formatter.convertToM3U(channels, ['name', 'url', 'logo', 'group'], epgUrl); break;
-                case 'txt': result = formatter.convertToTXT(channels, ['name', 'url']); break;
-                case 'csv': result = formatter.convertToCSV(channels, ['name', 'url', 'logo', 'group']); break;
-                case 'json': result = formatter.convertToJSON(channels, ['name', 'url', 'logo', 'group']); break;
-                case 'xml': result = formatter.convertToXML(channels, ['name', 'url', 'logo', 'group']); break;
+                case 'm3u': result = formatter.convertToM3U(processedChannels, ['name', 'url', 'logo', 'group'], epgUrl); break;
+                case 'txt': result = formatter.convertToTXT(processedChannels, ['name', 'url']); break;
+                case 'csv': result = formatter.convertToCSV(processedChannels, ['name', 'url', 'logo', 'group']); break;
+                case 'json': result = formatter.convertToJSON(processedChannels, ['name', 'url', 'logo', 'group']); break;
+                case 'xml': result = formatter.convertToXML(processedChannels, ['name', 'url', 'logo', 'group']); break;
                 default: result = '不支持的输出格式';
             }
             this.elements.editorOutputText.value = result;
@@ -1016,5 +1045,88 @@ class UIHandler {
         else { toast.textContent = message; }
         toast.classList.add('show');
         setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+
+    // ================================================================
+    // 自动分类
+    // ================================================================
+
+    autoClassify() {
+        const channels = this.editorConfig.getAllChannels();
+        if (channels.length === 0) {
+            this.showToast('没有频道数据，请先加载直播源', 'warning');
+            return;
+        }
+
+        const classified = this.classifier.classifyAll(channels, true);
+        const sorted = this.classifier.sortClassified(classified);
+
+        // 应用分类结果到频道分组
+        let changed = 0;
+        sorted.forEach((ch, idx) => {
+            if (ch._category && ch.group !== ch._category) {
+                this.editorConfig.updateChannel(this.editorConfig.getAllChannels().indexOf(ch), { group: ch._category });
+                changed++;
+            }
+        });
+
+        this.renderChannelList();
+        this.updateStats();
+        this.showToast(`自动分类完成，${changed} 个频道分组已更新`, 'success');
+    }
+
+    // ================================================================
+    // 融合模式
+    // ================================================================
+
+    isMergeMode() {
+        const cb = document.getElementById('editorMergeMode');
+        return cb && cb.checked;
+    }
+
+    mergeChannels(newChannels) {
+        if (!this.isMergeMode()) {
+            this.mergedChannels = [...newChannels];
+            return this.mergedChannels;
+        }
+
+        // 融合模式：按频道名去重，保留第一个出现的
+        const existingNames = new Set(this.mergedChannels.map(ch => ch.name));
+        const toAdd = newChannels.filter(ch => !existingNames.has(ch.name));
+        this.mergedChannels = [...this.mergedChannels, ...toAdd];
+        return this.mergedChannels;
+    }
+
+    // ================================================================
+    // 加速链接
+    // ================================================================
+
+    getAccelPrefix() {
+        const input = document.getElementById('accelPrefix');
+        return input ? input.value.trim() : '';
+    }
+
+    applyAccelToUrl(url) {
+        const prefix = this.getAccelPrefix();
+        if (!prefix || !url) return url;
+        // 只对GitHub raw链接加速
+        if (url.includes('raw.githubusercontent.com') && !url.startsWith(prefix)) {
+            return prefix + url;
+        }
+        return url;
+    }
+
+    applyAccelToChannels(channels) {
+        const prefix = this.getAccelPrefix();
+        if (!prefix) return channels;
+
+        return channels.map(ch => ({
+            ...ch,
+            logo: this.applyAccelToUrl(ch.logo)
+        }));
+    }
+
+    applyAccelToEpg(epgUrl) {
+        return this.applyAccelToUrl(epgUrl);
     }
 }

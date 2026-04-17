@@ -143,7 +143,7 @@
                 <h3>📥 加载直播源</h3>
                 <div id="editorDropArea" class="drop-area">
                     <div class="drop-icon">📁</div>
-                    <p>拖放M3U文件到此处或点击选择文件</p>
+                    <p>拖放M3U文件到此处或点击选择文件（支持多文件融合）</p>
                     <button id="editorSelectFilesBtn" class="btn btn-primary">📂 选择文件</button>
                     <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
                 </div>
@@ -157,6 +157,10 @@
                     <label class="form-check">
                         <input type="checkbox" id="editorDeduplicate" class="form-check-input" checked>
                         <span class="form-check-label">自动去重</span>
+                    </label>
+                    <label class="form-check">
+                        <input type="checkbox" id="editorMergeMode" class="form-check-input">
+                        <span class="form-check-label">融合模式（多源合并）</span>
                     </label>
                 </div>
             </article>
@@ -216,6 +220,7 @@
                     </div>
                     <div class="flex gap-10">
                         <button id="autoMatchLogoBtn" class="btn btn-primary btn-sm">🎯 自动匹配Logo</button>
+                        <button id="autoClassifyBtn" class="btn btn-primary btn-sm">📂 自动分类</button>
                         <button id="logoRuleBtn" class="btn btn-outline btn-sm">📐 规则管理</button>
                         <button id="checkLogoBtn" class="btn btn-outline btn-sm">🔍 检测Logo</button>
                         <button id="deleteSelectedBtn" class="btn btn-danger btn-sm">🗑️ 删除选中</button>
@@ -262,6 +267,49 @@
                     <div class="form-group" style="flex: 1; min-width: 200px;">
                         <label for="editorEpgUrl" class="form-label">EPG地址 (仅M3U)</label>
                         <input type="text" id="editorEpgUrl" class="form-control" placeholder="https://epg.example.com/epg.xml.gz">
+                    </div>
+                </div>
+                <div class="form-row flex gap-20 flex-wrap">
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="accelPrefix" class="form-label">加速前缀 (可选)</label>
+                        <input type="text" id="accelPrefix" class="form-control" placeholder="例如: https://gh-proxy.org/">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">自动加在EPG/Logo的GitHub链接前</div>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 200px;">
+                        <label for="localProvince" class="form-label">本地省份</label>
+                        <select id="localProvince" class="form-control">
+                            <option value="山东" selected>山东</option>
+                            <option value="北京">北京</option>
+                            <option value="上海">上海</option>
+                            <option value="广东">广东</option>
+                            <option value="浙江">浙江</option>
+                            <option value="江苏">江苏</option>
+                            <option value="湖南">湖南</option>
+                            <option value="湖北">湖北</option>
+                            <option value="四川">四川</option>
+                            <option value="天津">天津</option>
+                            <option value="重庆">重庆</option>
+                            <option value="辽宁">辽宁</option>
+                            <option value="黑龙江">黑龙江</option>
+                            <option value="吉林">吉林</option>
+                            <option value="安徽">安徽</option>
+                            <option value="河北">河北</option>
+                            <option value="河南">河南</option>
+                            <option value="江西">江西</option>
+                            <option value="福建">福建</option>
+                            <option value="陕西">陕西</option>
+                            <option value="山西">山西</option>
+                            <option value="云南">云南</option>
+                            <option value="贵州">贵州</option>
+                            <option value="甘肃">甘肃</option>
+                            <option value="内蒙古">内蒙古</option>
+                            <option value="宁夏">宁夏</option>
+                            <option value="青海">青海</option>
+                            <option value="新疆">新疆</option>
+                            <option value="西藏">西藏</option>
+                            <option value="海南">海南</option>
+                            <option value="广西">广西</option>
+                        </select>
                     </div>
                 </div>
                 <textarea id="editorOutputText" class="form-control" rows="8" placeholder="编辑后导出结果..." aria-label="导出结果"></textarea>
@@ -369,6 +417,7 @@
     <script src="js/formatConverter.js"></script>
     <script src="js/channelConfig.js"></script>
     <script src="js/logoMatcher.js"></script>
+    <script src="js/channelClassifier.js"></script>
     <script src="js/core.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/utils.js"></script>
