@@ -156,10 +156,19 @@ class UIHandler {
         const autoClassifyBtn = document.getElementById('autoClassifyBtn');
         if (autoClassifyBtn) autoClassifyBtn.addEventListener('click', () => this.autoClassify());
 
-        // 本地省份选择
+        // 自定义分组按钮
+        const customClassifyBtn = document.getElementById('customClassifyBtn');
+        if (customClassifyBtn) customClassifyBtn.addEventListener('click', () => this.showCustomClassifyModal());
+
+        // 排序按钮
+        const sortChannelsBtn = document.getElementById('sortChannelsBtn');
+        if (sortChannelsBtn) sortChannelsBtn.addEventListener('click', () => this.showSortModal());
+
+        // 本地省份选择 - 选择后立即刷新列表
         const localProvince = document.getElementById('localProvince');
         if (localProvince) localProvince.addEventListener('change', (e) => {
             this.classifier.setLocalProvince(e.target.value);
+            this.renderChannelList();
         });
 
         el.catchupSelectedBtn.addEventListener('click', () => this.applyCatchupSelected());
@@ -1136,5 +1145,236 @@ class UIHandler {
 
     applyAccelToEpg(epgUrl) {
         return this.applyAccelToUrl(epgUrl);
+    }
+
+    // ================================================================
+    // 自定义分组弹窗
+    // ================================================================
+
+    showCustomClassifyModal() {
+        const channels = this.editorConfig.getChannels();
+        if (channels.length === 0) {
+            this.showToast('没有频道数据', 'warning');
+            return;
+        }
+
+        // 获取当前所有分组
+        const groups = [...new Set(channels.map(ch => ch.group).filter(Boolean))];
+        // 获取选中的频道
+        const selectedIdxes = this.getSelectedChannelIndices();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+
+        overlay.innerHTML = `
+            <div class="modal-content" style="max-width: 520px;">
+                <h3 style="margin-top:0;">🏷️ 自定义分组</h3>
+                <p style="font-size:13px; color:var(--text-muted);">
+                    ${selectedIdxes.length > 0 ? `已选中 <b>${selectedIdxes.length}</b> 个频道` : '未选中频道，将应用到全部频道'}
+                </p>
+                <div class="form-group" style="margin-top:12px;">
+                    <label class="form-label">选择或输入分组名称</label>
+                    <div style="display:flex; gap:8px;">
+                        <select id="customGroupSelect" class="form-control" style="flex:1;">
+                            <option value="">-- 选择已有分组 --</option>
+                            ${groups.map(g => `<option value="${g}">${g}</option>`).join('')}
+                        </select>
+                        <input type="text" id="customGroupInput" class="form-control" style="flex:1;" placeholder="或输入新分组名">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:12px;">
+                    <label class="form-label">重命名分组</label>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <select id="renameGroupFrom" class="form-control" style="flex:1;">
+                            <option value="">-- 选择要重命名的分组 --</option>
+                            ${groups.map(g => `<option value="${g}">${g} (${channels.filter(ch=>ch.group===g).length}个)</option>`).join('')}
+                        </select>
+                        <span style="color:var(--text-muted);">→</span>
+                        <input type="text" id="renameGroupTo" class="form-control" style="flex:1;" placeholder="新名称">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="customGroupApplyBtn" class="btn btn-primary">应用分组</button>
+                    <button id="renameGroupApplyBtn" class="btn btn-outline">重命名</button>
+                    <button id="customGroupCancelBtn" class="btn btn-outline">关闭</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const close = () => document.body.removeChild(overlay);
+        overlay.querySelector('#customGroupCancelBtn').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+        // 应用分组
+        overlay.querySelector('#customGroupApplyBtn').addEventListener('click', () => {
+            const selectVal = overlay.querySelector('#customGroupSelect').value;
+            const inputVal = overlay.querySelector('#customGroupInput').value.trim();
+            const groupName = inputVal || selectVal;
+            if (!groupName) { this.showToast('请选择或输入分组名称', 'warning'); return; }
+
+            const targets = selectedIdxes.length > 0 ? selectedIdxes : channels.map((_, i) => i);
+            let changed = 0;
+            targets.forEach(idx => {
+                if (channels[idx].group !== groupName) {
+                    this.editorConfig.updateChannel(idx, { group: groupName });
+                    changed++;
+                }
+            });
+
+            this.renderChannelList();
+            this.updateStats();
+            this.showToast(`已将 ${changed} 个频道设为"${groupName}"`, 'success');
+            close();
+        });
+
+        // 重命名分组
+        overlay.querySelector('#renameGroupApplyBtn').addEventListener('click', () => {
+            const from = overlay.querySelector('#renameGroupFrom').value;
+            const to = overlay.querySelector('#renameGroupTo').value.trim();
+            if (!from || !to) { this.showToast('请选择原分组并输入新名称', 'warning'); return; }
+
+            let changed = 0;
+            channels.forEach((ch, idx) => {
+                if (ch.group === from) {
+                    this.editorConfig.updateChannel(idx, { group: to });
+                    changed++;
+                }
+            });
+
+            this.renderChannelList();
+            this.updateStats();
+            this.showToast(`已将"${from}"重命名为"${to}"（${changed}个频道）`, 'success');
+            close();
+        });
+    }
+
+    // ================================================================
+    // 排序弹窗
+    // ================================================================
+
+    showSortModal() {
+        const channels = this.editorConfig.getChannels();
+        if (channels.length === 0) {
+            this.showToast('没有频道数据', 'warning');
+            return;
+        }
+
+        // 获取当前所有分组
+        const groups = [...new Set(channels.map(ch => ch.group).filter(Boolean))];
+        // 默认分类顺序
+        const defaultOrder = ['央视频道', '卫视频道', this.classifier.localProvince + '频道', '港澳台频道', '付费频道', '其他频道'];
+        // 合并：默认顺序 + 未在默认中的分组
+        const allGroups = [...new Set([...defaultOrder, ...groups])].filter(g => groups.includes(g));
+
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+
+        overlay.innerHTML = `
+            <div class="modal-content" style="max-width: 520px;">
+                <h3 style="margin-top:0;">🔢 频道排序</h3>
+                <div class="form-group">
+                    <label class="form-label">分组排列顺序（拖拽调整，或用↑↓按钮）</label>
+                    <ul id="sortGroupList" style="list-style:none; padding:0; margin:0; max-height: 300px; overflow-y: auto;">
+                        ${allGroups.map((g, i) => {
+                            const count = channels.filter(ch => ch.group === g).length;
+                            return `<li data-group="${g}" style="display:flex; align-items:center; gap:8px; padding:6px 8px; margin:2px 0; background:var(--bg-secondary); border-radius:4px; cursor:move;">
+                                <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-up" data-idx="${i}">↑</span>
+                                <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-down" data-idx="${i}">↓</span>
+                                <span style="flex:1; font-size:13px;">${g} <span style="color:var(--text-muted);">(${count})</span></span>
+                            </li>`;
+                        }).join('')}
+                    </ul>
+                </div>
+                <div class="form-group" style="margin-top:12px;">
+                    <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer;">
+                        <input type="checkbox" id="sortWithinGroup" checked>
+                        分组内也排序（CCTV按数字，卫视按拼音）
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button id="sortApplyBtn" class="btn btn-primary">应用排序</button>
+                    <button id="sortCancelBtn" class="btn btn-outline">关闭</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const close = () => document.body.removeChild(overlay);
+        overlay.querySelector('#sortCancelBtn').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+        // 上下移动
+        const list = overlay.querySelector('#sortGroupList');
+        overlay.querySelectorAll('.sort-up').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const li = btn.closest('li');
+                const prev = li.previousElementSibling;
+                if (prev) list.insertBefore(li, prev);
+            });
+        });
+        overlay.querySelectorAll('.sort-down').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const li = btn.closest('li');
+                const next = li.nextElementSibling;
+                if (next) list.insertBefore(next, li);
+            });
+        });
+
+        // 应用排序
+        overlay.querySelector('#sortApplyBtn').addEventListener('click', () => {
+            const sortWithinGroup = overlay.querySelector('#sortWithinGroup').checked;
+            const groupOrder = [...list.querySelectorAll('li')].map(li => li.dataset.group);
+
+            // 按分组顺序排列频道
+            const sorted = [...channels];
+            sorted.sort((a, b) => {
+                const aIdx = groupOrder.indexOf(a.group);
+                const bIdx = groupOrder.indexOf(b.group);
+                const aOrder = aIdx === -1 ? 9999 : aIdx;
+                const bOrder = bIdx === -1 ? 9999 : bIdx;
+                if (aOrder !== bOrder) return aOrder - bOrder;
+
+                // 分组内排序
+                if (sortWithinGroup) {
+                    return this.compareChannelsWithinGroup(a, b);
+                }
+                return 0;
+            });
+
+            this.editorConfig.setChannels(sorted);
+            this.renderChannelList();
+            this.updateStats();
+            this.showToast('排序已应用', 'success');
+            close();
+        });
+    }
+
+    compareChannelsWithinGroup(a, b) {
+        const nameA = a.tvgName || a.name;
+        const nameB = b.tvgName || b.name;
+
+        // CCTV按数字排序
+        const cctvA = nameA.match(/^CCTV-?(\d+|5\+)/i);
+        const cctvB = nameB.match(/^CCTV-?(\d+|5\+)/i);
+        if (cctvA && cctvB) {
+            const numA = cctvA[1] === '5+' ? 5.5 : parseInt(cctvA[1]);
+            const numB = cctvB[1] === '5+' ? 5.5 : parseInt(cctvB[1]);
+            return numA - numB;
+        }
+        if (cctvA) return -1;
+        if (cctvB) return 1;
+
+        // 其他按拼音排序
+        return nameA.localeCompare(nameB, 'zh-CN');
+    }
+
+    getSelectedChannelIndices() {
+        const checkboxes = this.elements.channelList.querySelectorAll('.channel-select:checked');
+        return [...checkboxes].map(cb => parseInt(cb.dataset.index));
     }
 }
