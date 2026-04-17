@@ -1390,7 +1390,7 @@ class UIHandler {
     }
 
     getSelectedChannelIndices() {
-        const checkboxes = this.elements.channelList.querySelectorAll('.channel-select:checked');
+        const checkboxes = this.elements.channelList.querySelectorAll('.channel-checkbox:checked');
         return [...checkboxes].map(cb => parseInt(cb.dataset.index));
     }
 }
