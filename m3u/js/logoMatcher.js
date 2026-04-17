@@ -94,6 +94,7 @@ class LogoMatcher {
             { pattern: /^三沙卫视/, logo: '三沙卫视.png', desc: '三沙卫视', priority: 20 },
             { pattern: /^东南卫视/, logo: '东南卫视.png', desc: '东南卫视', priority: 20 },
             { pattern: /^东方卫视/, logo: '东方卫视.png', desc: '东方卫视', priority: 20 },
+            { pattern: /^东方财经/, logo: '东方财经.png', desc: '东方财经', priority: 20 },
             { pattern: /^云南卫视/, logo: '云南卫视.png', desc: '云南卫视', priority: 20 },
             { pattern: /^内蒙古卫视/, logo: '内蒙古卫视.png', desc: '内蒙古卫视', priority: 20 },
             { pattern: /^北京卫视/, logo: '北京卫视.png', desc: '北京卫视', priority: 20 },
@@ -134,17 +135,18 @@ class LogoMatcher {
             { pattern: /^凤凰资讯/, logo: '凤凰资讯台.png', desc: '凤凰资讯台', priority: 20 },
 
             // === 山东地方频道 ===
-            { pattern: /^山东居家购物裁切/, logo: '山东居家购物裁切.png', desc: '山东居家购物裁切', priority: 25 },
+            { pattern: /^山东居家购物/, logo: '山东居家购物裁切.png', desc: '山东居家购物→裁切版', priority: 25 },
+            { pattern: /^居家购物/, logo: '山东居家购物裁切.png', desc: '居家购物→裁切版', priority: 25 },
             { pattern: /^山东交通广播/, logo: '山东交通广播.png', desc: '山东交通广播', priority: 20 },
             { pattern: /^山东体育休闲/, logo: '山东体育休闲.png', desc: '山东体育休闲', priority: 20 },
             { pattern: /^山东广播综合/, logo: '山东广播综合.png', desc: '山东广播综合', priority: 20 },
             { pattern: /^山东经济广播/, logo: '山东经济广播.png', desc: '山东经济广播', priority: 20 },
             { pattern: /^山东海洋频道/, logo: '山东海洋频道.png', desc: '山东海洋频道', priority: 20 },
-            { pattern: /^山东居家购物/, logo: '山东居家购物.png', desc: '山东居家购物', priority: 20 },
             { pattern: /^山东(.+)/, logo: '山东${n}.png', desc: '山东其他频道', priority: 10, extract: true },
 
             // === 北京地方 ===
             { pattern: /^北京纪实科教/, logo: '北京纪实科教.png', desc: '北京纪实科教', priority: 20 },
+            { pattern: /^纪实科教/, logo: '北京纪实科教.png', desc: '纪实科教→北京纪实科教', priority: 20 },
 
             // === 4K/3D频道 ===
             { pattern: /^多彩文体4K/, logo: '多彩文体4K.png', desc: '多彩文体4K', priority: 20 },
@@ -342,7 +344,7 @@ class LogoMatcher {
             { pattern: /^济南平阴/, logo: '山东2/济南平阴.png', desc: '济南平阴', priority: 25 },
             { pattern: /^济南教育/, logo: '山东2/济南教育.png', desc: '济南教育', priority: 25 },
             { pattern: /^济南文旅体育/, logo: '山东2/济南文旅体育.png', desc: '济南文旅体育', priority: 25 },
-            { pattern: /^济南新闻综合/, logo: '山东2/济南新闻综合.png', desc: '济南新闻综合', priority: 25 },
+            { pattern: /^济南新闻/, logo: '山东2/济南新闻综合.png', desc: '济南新闻→济南新闻综合', priority: 25 },
             { pattern: /^济南济铁/, logo: '山东2/济南济铁.png', desc: '济南济铁', priority: 25 },
             { pattern: /^济南济阳/, logo: '山东2/济南济阳.png', desc: '济南济阳', priority: 25 },
             { pattern: /^济南生活/, logo: '山东2/济南生活.png', desc: '济南生活', priority: 25 },
@@ -407,7 +409,14 @@ class LogoMatcher {
             { pattern: /^潍坊青州/, logo: '山东2/潍坊青州.png', desc: '潍坊青州', priority: 25 },
             { pattern: /^潍坊高密/, logo: '山东2/潍坊高密.png', desc: '潍坊高密', priority: 25 },
             { pattern: /^潍坊高新区/, logo: '山东2/潍坊高新区.png', desc: '潍坊高新区', priority: 25 },
-            { pattern: /^潍坊[1234]/, logo: '山东2/潍坊${n}.png', desc: '潍坊数字频道', priority: 20, extract: true },
+            // 潍坊数字频道（潍坊1=新闻综合, 潍坊2=经济生活, 潍坊3=公共/影视综艺, 潍坊4=科教文旅/科教文化）
+            { pattern: /^潍坊新闻综合/, logo: '山东2/潍坊1.png', desc: '潍坊新闻综合→潍坊1', priority: 25 },
+            { pattern: /^潍坊经济生活/, logo: '山东2/潍坊2.png', desc: '潍坊经济生活→潍坊2', priority: 25 },
+            { pattern: /^潍坊公共/, logo: '山东2/潍坊3.png', desc: '潍坊公共→潍坊3', priority: 25 },
+            { pattern: /^潍坊影视综艺/, logo: '山东2/潍坊3.png', desc: '潍坊影视综艺→潍坊3', priority: 25 },
+            { pattern: /^潍坊科教文旅/, logo: '山东2/潍坊4.png', desc: '潍坊科教文旅→潍坊4', priority: 25 },
+            { pattern: /^潍坊科教文化/, logo: '山东2/潍坊4.png', desc: '潍坊科教文化→潍坊4', priority: 25 },
+            { pattern: /^潍坊([1234])/, logo: '山东2/潍坊${n}.png', desc: '潍坊数字频道', priority: 20, extract: true },
 
             // 烟台
             { pattern: /^烟台招远/, logo: '山东2/烟台招远.png', desc: '烟台招远', priority: 25 },
@@ -517,6 +526,30 @@ class LogoMatcher {
                 return this.baseUrl + logoPath;
             }
         }
+
+        // 3. 回退：如果直接匹配不到，尝试用"市名+频道名"再匹配
+        // 例如"临朐" → 尝试"潍坊临朐"、"济南临朐"等
+        // 只匹配山东2/路径的规则，且组合名长度必须大于市名（避免"烟台临朐"匹配到"烟台"）
+        const cityNames = ['济南','青岛','烟台','潍坊','淄博','济宁','临沂','威海','德州','聊城','菏泽','滨州','枣庄','泰安','日照','东营','莱芜'];
+        for (const city of cityNames) {
+            const combinedName = city + name;
+            for (const rule of sortedRules) {
+                // 只尝试山东2/路径的规则
+                if (!rule.logo.startsWith('山东2/')) continue;
+                const m = combinedName.match(rule.pattern);
+                if (m) {
+                    // 确保匹配到的不是市名本身（如"烟台"）
+                    const matchedStr = m[0];
+                    if (matchedStr.length <= city.length) continue;
+                    let logoPath = rule.logo;
+                    if (rule.extract && m[1] !== undefined) {
+                        logoPath = logoPath.replace('${n}', m[1]);
+                    }
+                    return this.baseUrl + logoPath;
+                }
+            }
+        }
+
         return null;
     }
 
