@@ -262,6 +262,272 @@ class LogoMatcher {
             { pattern: /^魅力时尚/, logo: '魅力时尚.png', desc: '魅力时尚', priority: 20 },
             { pattern: /^魅力足球/, logo: '魅力足球.png', desc: '魅力足球', priority: 20 },
 
+            // ============================================================
+            // 外省子目录频道
+            // ============================================================
+
+            // === 北京 ===
+            { pattern: /^北京IPTV萌宠TV/, logo: '北京/北京IPTV萌宠TV.png', desc: '北京IPTV萌宠TV', priority: 25 },
+            { pattern: /^北京IPTV淘4K/, logo: '北京/北京IPTV淘4K.png', desc: '北京IPTV淘4K', priority: 25 },
+            { pattern: /^北京IPTV淘Baby/, logo: '北京/北京IPTV淘Baby.png', desc: '北京IPTV淘Baby', priority: 25 },
+            { pattern: /^北京IPTV淘电影/, logo: '北京/北京IPTV淘电影.png', desc: '北京IPTV淘电影', priority: 25 },
+            { pattern: /^北京IPTV淘剧场/, logo: '北京/北京IPTV淘剧场.png', desc: '北京IPTV淘剧场', priority: 25 },
+            { pattern: /^北京IPTV淘娱乐/, logo: '北京/北京IPTV淘娱乐.png', desc: '北京IPTV淘娱乐', priority: 25 },
+            { pattern: /^北京财经/, logo: '北京/北京财经.png', desc: '北京财经', priority: 25 },
+            { pattern: /^北京国际/, logo: '北京/北京国际.png', desc: '北京国际', priority: 25 },
+            { pattern: /^北京生活/, logo: '北京/北京生活.png', desc: '北京生活', priority: 25 },
+            { pattern: /^北京体育休闲/, logo: '北京/北京体育休闲.png', desc: '北京体育休闲', priority: 25 },
+            { pattern: /^北京文艺/, logo: '北京/北京文艺.png', desc: '北京文艺', priority: 25 },
+            { pattern: /^北京新闻/, logo: '北京/北京新闻.png', desc: '北京新闻', priority: 25 },
+            { pattern: /^北京影视/, logo: '北京/北京影视.png', desc: '北京影视', priority: 25 },
+
+            // === 上海 ===
+            { pattern: /^上海东方国际/, logo: '上海/上海东方国际.png', desc: '上海东方国际', priority: 25 },
+            { pattern: /^上海东方影视/, logo: '上海/上海东方影视.png', desc: '上海东方影视', priority: 25 },
+            { pattern: /^上海五星体育/, logo: '上海/上海五星体育.png', desc: '上海五星体育', priority: 25 },
+            { pattern: /^上海教育/, logo: '上海/上海教育.png', desc: '上海教育', priority: 25 },
+            { pattern: /^上海新闻综合/, logo: '上海/上海新闻综合.png', desc: '上海新闻综合', priority: 25 },
+            { pattern: /^上海都市/, logo: '上海/上海都市.png', desc: '上海都市', priority: 25 },
+
+            // === 广东 ===
+            { pattern: /^广东经济科教/, logo: '广东/广东经济科教.png', desc: '广东经济科教', priority: 25 },
+            { pattern: /^广东岭南戏曲/, logo: '广东/广东岭南戏曲.png', desc: '广东岭南戏曲', priority: 25 },
+            { pattern: /^广东民生/, logo: '广东/广东民生.png', desc: '广东民生', priority: 25 },
+            { pattern: /^广东少儿/, logo: '广东/广东少儿.png', desc: '广东少儿', priority: 25 },
+            { pattern: /^广东体育/, logo: '广东/广东体育.png', desc: '广东体育', priority: 25 },
+            { pattern: /^广东新闻/, logo: '广东/广东新闻.png', desc: '广东新闻', priority: 25 },
+            { pattern: /^广东影视/, logo: '广东/广东影视.png', desc: '广东影视', priority: 25 },
+
+            // === 广西 ===
+            { pattern: /^广西都市/, logo: '广西/广西都市.png', desc: '广西都市', priority: 25 },
+            { pattern: /^广西国际/, logo: '广西/广西国际.png', desc: '广西国际', priority: 25 },
+            { pattern: /^广西新闻/, logo: '广西/广西新闻.png', desc: '广西新闻', priority: 25 },
+            { pattern: /^广西移动/, logo: '广西/广西移动.png', desc: '广西移动', priority: 25 },
+            { pattern: /^广西影视/, logo: '广西/广西影视.png', desc: '广西影视', priority: 25 },
+            { pattern: /^广西综艺旅游/, logo: '广西/广西综艺旅游.png', desc: '广西综艺旅游', priority: 25 },
+
+            // === 浙江 ===
+            { pattern: /^浙江公共新闻/, logo: '浙江/浙江公共新闻.png', desc: '浙江公共新闻', priority: 25 },
+            { pattern: /^浙江国际/, logo: '浙江/浙江国际.png', desc: '浙江国际', priority: 25 },
+            { pattern: /^浙江经济生活/, logo: '浙江/浙江经济生活.png', desc: '浙江经济生活', priority: 25 },
+            { pattern: /^浙江科教影视/, logo: '浙江/浙江科教影视.png', desc: '浙江科教影视', priority: 25 },
+            { pattern: /^浙江民生休闲/, logo: '浙江/浙江民生休闲.png', desc: '浙江民生休闲', priority: 25 },
+            { pattern: /^浙江钱江都市/, logo: '浙江/浙江钱江都市.png', desc: '浙江钱江都市', priority: 25 },
+            { pattern: /^浙江少儿/, logo: '浙江/浙江少儿.png', desc: '浙江少儿', priority: 25 },
+
+            // === 江苏 ===
+            { pattern: /^江苏城市/, logo: '江苏/江苏城市.png', desc: '江苏城市', priority: 25 },
+            { pattern: /^江苏国际/, logo: '江苏/江苏国际.png', desc: '江苏国际', priority: 25 },
+            { pattern: /^江苏教育/, logo: '江苏/江苏教育.png', desc: '江苏教育', priority: 25 },
+            { pattern: /^江苏体育休闲/, logo: '江苏/江苏体育休闲.png', desc: '江苏体育休闲', priority: 25 },
+            { pattern: /^江苏新闻/, logo: '江苏/江苏新闻.png', desc: '江苏新闻', priority: 25 },
+            { pattern: /^江苏影视/, logo: '江苏/江苏影视.png', desc: '江苏影视', priority: 25 },
+            { pattern: /^江苏综艺/, logo: '江苏/江苏综艺.png', desc: '江苏综艺', priority: 25 },
+
+            // === 湖南 ===
+            { pattern: /^湖南爱晚/, logo: '湖南/湖南爱晚.png', desc: '湖南爱晚', priority: 25 },
+            { pattern: /^湖南电视剧/, logo: '湖南/湖南电视剧.png', desc: '湖南电视剧', priority: 25 },
+            { pattern: /^湖南电影/, logo: '湖南/湖南电影.png', desc: '湖南电影', priority: 25 },
+            { pattern: /^湖南都市/, logo: '湖南/湖南都市.png', desc: '湖南都市', priority: 25 },
+            { pattern: /^湖南国际/, logo: '湖南/湖南国际.png', desc: '湖南国际', priority: 25 },
+            { pattern: /^湖南教育/, logo: '湖南/湖南教育.png', desc: '湖南教育', priority: 25 },
+            { pattern: /^湖南经视/, logo: '湖南/湖南经视.png', desc: '湖南经视', priority: 25 },
+            { pattern: /^湖南娱乐/, logo: '湖南/湖南娱乐.png', desc: '湖南娱乐', priority: 25 },
+
+            // === 湖北 ===
+            { pattern: /^湖北公共新闻/, logo: '湖北/湖北公共新闻.png', desc: '湖北公共新闻', priority: 25 },
+            { pattern: /^湖北垄上/, logo: '湖北/湖北垄上.png', desc: '湖北垄上', priority: 25 },
+            { pattern: /^湖北影视/, logo: '湖北/湖北影视.png', desc: '湖北影视', priority: 25 },
+            { pattern: /^湖北教育/, logo: '湖北/湖北教育.png', desc: '湖北教育', priority: 25 },
+            { pattern: /^湖北生活/, logo: '湖北/湖北生活.png', desc: '湖北生活', priority: 25 },
+            { pattern: /^湖北经视/, logo: '湖北/湖北经视.png', desc: '湖北经视', priority: 25 },
+            { pattern: /^湖北综合/, logo: '湖北/湖北综合.png', desc: '湖北综合', priority: 25 },
+
+            // === 四川 ===
+            { pattern: /^四川峨眉电影/, logo: '四川/四川峨眉电影.png', desc: '四川峨眉电影', priority: 25 },
+            { pattern: /^四川妇女儿童/, logo: '四川/四川妇女儿童.png', desc: '四川妇女儿童', priority: 25 },
+            { pattern: /^四川经济/, logo: '四川/四川经济.png', desc: '四川经济', priority: 25 },
+            { pattern: /^四川康巴卫视/, logo: '四川/四川康巴卫视.png', desc: '四川康巴卫视', priority: 25 },
+            { pattern: /^四川科教/, logo: '四川/四川科教.png', desc: '四川科教', priority: 25 },
+            { pattern: /^四川文化旅游/, logo: '四川/四川文化旅游.png', desc: '四川文化旅游', priority: 25 },
+            { pattern: /^四川乡村/, logo: '四川/四川乡村.png', desc: '四川乡村', priority: 25 },
+            { pattern: /^四川新闻/, logo: '四川/四川新闻.png', desc: '四川新闻', priority: 25 },
+            { pattern: /^四川影视文艺/, logo: '四川/四川影视文艺.png', desc: '四川影视文艺', priority: 25 },
+
+            // === 天津 ===
+            { pattern: /^天津都市/, logo: '天津/天津都市.png', desc: '天津都市', priority: 25 },
+            { pattern: /^天津教育/, logo: '天津/天津教育.png', desc: '天津教育', priority: 25 },
+            { pattern: /^天津体育/, logo: '天津/天津体育.png', desc: '天津体育', priority: 25 },
+            { pattern: /^天津文艺/, logo: '天津/天津文艺.png', desc: '天津文艺', priority: 25 },
+            { pattern: /^天津新闻/, logo: '天津/天津新闻.png', desc: '天津新闻', priority: 25 },
+            { pattern: /^天津影视/, logo: '天津/天津影视.png', desc: '天津影视', priority: 25 },
+
+            // === 重庆 ===
+            { pattern: /^重庆红岩文化/, logo: '重庆/重庆红岩文化.png', desc: '重庆红岩文化', priority: 25 },
+            { pattern: /^重庆少儿/, logo: '重庆/重庆少儿.png', desc: '重庆少儿', priority: 25 },
+            { pattern: /^重庆社会与法/, logo: '重庆/重庆社会与法.png', desc: '重庆社会与法', priority: 25 },
+            { pattern: /^重庆文体娱乐/, logo: '重庆/重庆文体娱乐.png', desc: '重庆文体娱乐', priority: 25 },
+            { pattern: /^重庆新农村/, logo: '重庆/重庆新农村.png', desc: '重庆新农村', priority: 25 },
+            { pattern: /^重庆影视/, logo: '重庆/重庆影视.png', desc: '重庆影视', priority: 25 },
+
+            // === 辽宁 ===
+            { pattern: /^辽宁体育休闲/, logo: '辽宁/辽宁体育休闲.png', desc: '辽宁体育休闲', priority: 25 },
+            { pattern: /^辽宁公共/, logo: '辽宁/辽宁公共.png', desc: '辽宁公共', priority: 25 },
+            { pattern: /^辽宁北方/, logo: '辽宁/辽宁北方.png', desc: '辽宁北方', priority: 25 },
+            { pattern: /^辽宁影视剧/, logo: '辽宁/辽宁影视剧.png', desc: '辽宁影视剧', priority: 25 },
+            { pattern: /^辽宁教育青少/, logo: '辽宁/辽宁教育青少.png', desc: '辽宁教育青少', priority: 25 },
+            { pattern: /^辽宁生活/, logo: '辽宁/辽宁生活.png', desc: '辽宁生活', priority: 25 },
+            { pattern: /^辽宁移动电视/, logo: '辽宁/辽宁移动电视.png', desc: '辽宁移动电视', priority: 25 },
+            { pattern: /^辽宁经济/, logo: '辽宁/辽宁经济.png', desc: '辽宁经济', priority: 25 },
+            { pattern: /^辽宁都市/, logo: '辽宁/辽宁都市.png', desc: '辽宁都市', priority: 25 },
+
+            // === 黑龙江 ===
+            { pattern: /^黑龙江农业科教/, logo: '黑龙江/黑龙江农业科教.png', desc: '黑龙江农业科教', priority: 25 },
+            { pattern: /^黑龙江少儿/, logo: '黑龙江/黑龙江少儿.png', desc: '黑龙江少儿', priority: 25 },
+            { pattern: /^黑龙江影视/, logo: '黑龙江/黑龙江影视.png', desc: '黑龙江影视', priority: 25 },
+            { pattern: /^黑龙江文体/, logo: '黑龙江/黑龙江文体.png', desc: '黑龙江文体', priority: 25 },
+            { pattern: /^黑龙江新闻法治/, logo: '黑龙江/黑龙江新闻法治.png', desc: '黑龙江新闻法治', priority: 25 },
+            { pattern: /^黑龙江都市/, logo: '黑龙江/黑龙江都市.png', desc: '黑龙江都市', priority: 25 },
+
+            // === 吉林 ===
+            { pattern: /^吉林都市/, logo: '吉林/吉林都市.png', desc: '吉林都市', priority: 25 },
+            { pattern: /^吉林生活/, logo: '吉林/吉林生活.png', desc: '吉林生活', priority: 25 },
+            { pattern: /^吉林乡村/, logo: '吉林/吉林乡村.png', desc: '吉林乡村', priority: 25 },
+            { pattern: /^吉林影视/, logo: '吉林/吉林影视.png', desc: '吉林影视', priority: 25 },
+            { pattern: /^吉林长影频道/, logo: '吉林/吉林长影频道.png', desc: '吉林长影频道', priority: 25 },
+            { pattern: /^吉林综艺文化/, logo: '吉林/吉林综艺文化.png', desc: '吉林综艺文化', priority: 25 },
+
+            // === 安徽 ===
+            { pattern: /^安徽公共/, logo: '安徽/安徽公共.png', desc: '安徽公共', priority: 25 },
+            { pattern: /^安徽国际/, logo: '安徽/安徽国际.png', desc: '安徽国际', priority: 25 },
+            { pattern: /^安徽经济生活/, logo: '安徽/安徽经济生活.png', desc: '安徽经济生活', priority: 25 },
+            { pattern: /^安徽农业科教/, logo: '安徽/安徽农业科教.png', desc: '安徽农业科教', priority: 25 },
+            { pattern: /^安徽影视/, logo: '安徽/安徽影视.png', desc: '安徽影视', priority: 25 },
+            { pattern: /^安徽综艺体育/, logo: '安徽/安徽综艺体育.png', desc: '安徽综艺体育', priority: 25 },
+
+            // === 河北 ===
+            { pattern: /^河北都市/, logo: '河北/河北都市.png', desc: '河北都市', priority: 25 },
+            { pattern: /^河北经济生活/, logo: '河北/河北经济生活.png', desc: '河北经济生活', priority: 25 },
+            { pattern: /^河北三农/, logo: '河北/河北三农.png', desc: '河北三农', priority: 25 },
+            { pattern: /^河北少儿科教/, logo: '河北/河北少儿科教.png', desc: '河北少儿科教', priority: 25 },
+            { pattern: /^河北文旅公共/, logo: '河北/河北文旅公共.png', desc: '河北文旅公共', priority: 25 },
+            { pattern: /^河北影视剧/, logo: '河北/河北影视剧.png', desc: '河北影视剧', priority: 25 },
+
+            // === 河南 ===
+            { pattern: /^河南电视剧/, logo: '河南/河南电视剧.png', desc: '河南电视剧', priority: 25 },
+            { pattern: /^河南都市/, logo: '河南/河南都市.png', desc: '河南都市', priority: 25 },
+            { pattern: /^河南法治/, logo: '河南/河南法治.png', desc: '河南法治', priority: 25 },
+            { pattern: /^河南公共/, logo: '河南/河南公共.png', desc: '河南公共', priority: 25 },
+            { pattern: /^河南民生/, logo: '河南/河南民生.png', desc: '河南民生', priority: 25 },
+            { pattern: /^河南收藏天下/, logo: '河南/河南收藏天下.png', desc: '河南收藏天下', priority: 25 },
+            { pattern: /^河南乡村/, logo: '河南/河南乡村.png', desc: '河南乡村', priority: 25 },
+            { pattern: /^河南新闻/, logo: '河南/河南新闻.png', desc: '河南新闻', priority: 25 },
+            { pattern: /^河南中华功夫/, logo: '河南/河南中华功夫.png', desc: '河南中华功夫', priority: 25 },
+
+            // === 江西 ===
+            { pattern: /^江西都市/, logo: '江西/江西都市.png', desc: '江西都市', priority: 25 },
+            { pattern: /^江西公共农业/, logo: '江西/江西公共农业.png', desc: '江西公共农业', priority: 25 },
+            { pattern: /^江西教育/, logo: '江西/江西教育.png', desc: '江西教育', priority: 25 },
+            { pattern: /^江西经济生活/, logo: '江西/江西经济生活.png', desc: '江西经济生活', priority: 25 },
+            { pattern: /^江西少儿/, logo: '江西/江西少儿.png', desc: '江西少儿', priority: 25 },
+            { pattern: /^江西新闻/, logo: '江西/江西新闻.png', desc: '江西新闻', priority: 25 },
+
+            // === 福建 ===
+            { pattern: /^福建乡村公共/, logo: '福建/福建乡村公共.png', desc: '福建乡村公共', priority: 25 },
+            { pattern: /^福建少儿/, logo: '福建/福建少儿.png', desc: '福建少儿', priority: 25 },
+            { pattern: /^福建教育/, logo: '福建/福建教育.png', desc: '福建教育', priority: 25 },
+            { pattern: /^福建文体/, logo: '福建/福建文体.png', desc: '福建文体', priority: 25 },
+            { pattern: /^福建新闻/, logo: '福建/福建新闻.png', desc: '福建新闻', priority: 25 },
+            { pattern: /^福建旅游/, logo: '福建/福建旅游.png', desc: '福建旅游', priority: 25 },
+            { pattern: /^福建电视剧/, logo: '福建/福建电视剧.png', desc: '福建电视剧', priority: 25 },
+            { pattern: /^福建经济/, logo: '福建/福建经济.png', desc: '福建经济', priority: 25 },
+            { pattern: /^福建综合/, logo: '福建/福建综合.png', desc: '福建综合', priority: 25 },
+
+            // === 陕西 ===
+            { pattern: /^陕西体育休闲/, logo: '陕西/陕西体育休闲.png', desc: '陕西体育休闲', priority: 25 },
+            { pattern: /^陕西新闻资讯/, logo: '陕西/陕西新闻资讯.png', desc: '陕西新闻资讯', priority: 25 },
+            { pattern: /^陕西秦腔/, logo: '陕西/陕西秦腔.png', desc: '陕西秦腔', priority: 25 },
+            { pattern: /^陕西西部电影/, logo: '陕西/陕西西部电影.png', desc: '陕西西部电影', priority: 25 },
+            { pattern: /^陕西都市青春/, logo: '陕西/陕西都市青春.png', desc: '陕西都市青春', priority: 25 },
+            { pattern: /^陕西银龄/, logo: '陕西/陕西银龄.png', desc: '陕西银龄', priority: 25 },
+
+            // === 山西 ===
+            { pattern: /^山西黄河卫视/, logo: '山西/山西黄河卫视.png', desc: '山西黄河卫视', priority: 25 },
+            { pattern: /^山西经济与科教/, logo: '山西/山西经济与科教.png', desc: '山西经济与科教', priority: 25 },
+            { pattern: /^山西社会与法治/, logo: '山西/山西社会与法治.png', desc: '山西社会与法治', priority: 25 },
+            { pattern: /^山西文体生活/, logo: '山西/山西文体生活.png', desc: '山西文体生活', priority: 25 },
+            { pattern: /^山西影视/, logo: '山西/山西影视.png', desc: '山西影视', priority: 25 },
+
+            // === 云南 ===
+            { pattern: /^云南娱乐/, logo: '云南/云南娱乐.png', desc: '云南娱乐', priority: 25 },
+            { pattern: /^云南少儿/, logo: '云南/云南少儿.png', desc: '云南少儿', priority: 25 },
+            { pattern: /^云南康旅/, logo: '云南/云南康旅.png', desc: '云南康旅', priority: 25 },
+            { pattern: /^云南影视/, logo: '云南/云南影视.png', desc: '云南影视', priority: 25 },
+            { pattern: /^云南澜湄国际/, logo: '云南/云南澜湄国际.png', desc: '云南澜湄国际', priority: 25 },
+            { pattern: /^云南都市/, logo: '云南/云南都市.png', desc: '云南都市', priority: 25 },
+
+            // === 贵州 ===
+            { pattern: /^贵州公共频道/, logo: '贵州/贵州公共频道.png', desc: '贵州公共频道', priority: 25 },
+            { pattern: /^贵州大众生活/, logo: '贵州/贵州大众生活.png', desc: '贵州大众生活', priority: 25 },
+            { pattern: /^贵州影视文艺/, logo: '贵州/贵州影视文艺.png', desc: '贵州影视文艺', priority: 25 },
+            { pattern: /^贵州生态乡村/, logo: '贵州/贵州生态乡村.png', desc: '贵州生态乡村', priority: 25 },
+            { pattern: /^贵州科教健康/, logo: '贵州/贵州科教健康.png', desc: '贵州科教健康', priority: 25 },
+            { pattern: /^贵州经济频道/, logo: '贵州/贵州经济频道.png', desc: '贵州经济频道', priority: 25 },
+
+            // === 甘肃 ===
+            { pattern: /^甘肃公共应急/, logo: '甘肃/甘肃公共应急.png', desc: '甘肃公共应急', priority: 25 },
+            { pattern: /^甘肃少儿/, logo: '甘肃/甘肃少儿.png', desc: '甘肃少儿', priority: 25 },
+            { pattern: /^甘肃文化影视/, logo: '甘肃/甘肃文化影视.png', desc: '甘肃文化影视', priority: 25 },
+            { pattern: /^甘肃科教/, logo: '甘肃/甘肃科教.png', desc: '甘肃科教', priority: 25 },
+
+            // === 内蒙古 ===
+            { pattern: /^内蒙古农牧/, logo: '内蒙古/内蒙古农牧.png', desc: '内蒙古农牧', priority: 25 },
+            { pattern: /^内蒙古少儿/, logo: '内蒙古/内蒙古少儿.png', desc: '内蒙古少儿', priority: 25 },
+            { pattern: /^内蒙古文体娱乐/, logo: '内蒙古/内蒙古文体娱乐.png', desc: '内蒙古文体娱乐', priority: 25 },
+            { pattern: /^内蒙古新闻综合/, logo: '内蒙古/内蒙古新闻综合.png', desc: '内蒙古新闻综合', priority: 25 },
+            { pattern: /^内蒙古经济生活/, logo: '内蒙古/内蒙古经济生活.png', desc: '内蒙古经济生活', priority: 25 },
+            { pattern: /^内蒙古蒙语文化/, logo: '内蒙古/内蒙古蒙语文化.png', desc: '内蒙古蒙语文化', priority: 25 },
+            { pattern: /^内蒙古蒙语/, logo: '内蒙古/内蒙古蒙语.png', desc: '内蒙古蒙语', priority: 25 },
+
+            // === 宁夏 ===
+            { pattern: /^宁夏公共/, logo: '宁夏/宁夏公共.png', desc: '宁夏公共', priority: 25 },
+            { pattern: /^宁夏教育/, logo: '宁夏/宁夏教育.png', desc: '宁夏教育', priority: 25 },
+            { pattern: /^宁夏经济/, logo: '宁夏/宁夏经济.png', desc: '宁夏经济', priority: 25 },
+            { pattern: /^宁夏少儿/, logo: '宁夏/宁夏少儿.png', desc: '宁夏少儿', priority: 25 },
+            { pattern: /^宁夏文旅/, logo: '宁夏/宁夏文旅.png', desc: '宁夏文旅', priority: 25 },
+
+            // === 青海 ===
+            { pattern: /^青海安多卫视/, logo: '青海/青海安多卫视.png', desc: '青海安多卫视', priority: 25 },
+            { pattern: /^青海经视/, logo: '青海/青海经视.png', desc: '青海经视', priority: 25 },
+            { pattern: /^青海都市/, logo: '青海/青海都市.png', desc: '青海都市', priority: 25 },
+
+            // === 新疆 ===
+            { pattern: /^新疆哈语/, logo: '新疆/新疆哈语.png', desc: '新疆哈语', priority: 25 },
+            { pattern: /^新疆汉语影视/, logo: '新疆/新疆汉语影视.png', desc: '新疆汉语影视', priority: 25 },
+            { pattern: /^新疆汉语综艺/, logo: '新疆/新疆汉语综艺.png', desc: '新疆汉语综艺', priority: 25 },
+            { pattern: /^新疆少儿/, logo: '新疆/新疆少儿.png', desc: '新疆少儿', priority: 25 },
+            { pattern: /^新疆体育健康/, logo: '新疆/新疆体育健康.png', desc: '新疆体育健康', priority: 25 },
+            { pattern: /^新疆维语影视/, logo: '新疆/新疆维语影视.png', desc: '新疆维语影视', priority: 25 },
+            { pattern: /^新疆维语/, logo: '新疆/新疆维语.png', desc: '新疆维语', priority: 25 },
+
+            // === 西藏 ===
+            { pattern: /^西藏藏语/, logo: '西藏/西藏藏语.png', desc: '西藏藏语', priority: 25 },
+
+            // === 海南 ===
+            { pattern: /^海南公共/, logo: '海南/海南公共.png', desc: '海南公共', priority: 25 },
+            { pattern: /^海南少儿/, logo: '海南/海南少儿.png', desc: '海南少儿', priority: 25 },
+            { pattern: /^海南文旅/, logo: '海南/海南文旅.png', desc: '海南文旅', priority: 25 },
+            { pattern: /^海南新闻/, logo: '海南/海南新闻.png', desc: '海南新闻', priority: 25 },
+            { pattern: /^海南自贸/, logo: '海南/海南自贸.png', desc: '海南自贸', priority: 25 },
+
+            // === 深圳 ===
+            { pattern: /^深圳财经生活/, logo: '深圳/深圳财经生活.png', desc: '深圳财经生活', priority: 25 },
+            { pattern: /^深圳电视剧/, logo: '深圳/深圳电视剧.png', desc: '深圳电视剧', priority: 25 },
+            { pattern: /^深圳都市/, logo: '深圳/深圳都市.png', desc: '深圳都市', priority: 25 },
+            { pattern: /^深圳国际/, logo: '深圳/深圳国际.png', desc: '深圳国际', priority: 25 },
+            { pattern: /^深圳少儿/, logo: '深圳/深圳少儿.png', desc: '深圳少儿', priority: 25 },
+            { pattern: /^深圳体育健康/, logo: '深圳/深圳体育健康.png', desc: '深圳体育健康', priority: 25 },
+
             // === 山东2子目录频道 ===
             { pattern: /^QTV(\d)/, logo: '山东2/QTV${n}.png', desc: 'QTV频道', priority: 20, extract: true },
 
