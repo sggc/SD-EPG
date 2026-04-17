@@ -1052,7 +1052,7 @@ class UIHandler {
     // ================================================================
 
     autoClassify() {
-        const channels = this.editorConfig.getAllChannels();
+        const channels = this.editorConfig.getChannels();
         if (channels.length === 0) {
             this.showToast('没有频道数据，请先加载直播源', 'warning');
             return;
@@ -1063,10 +1063,14 @@ class UIHandler {
 
         // 应用分类结果到频道分组
         let changed = 0;
-        sorted.forEach((ch, idx) => {
-            if (ch._category && ch.group !== ch._category) {
-                this.editorConfig.updateChannel(this.editorConfig.getAllChannels().indexOf(ch), { group: ch._category });
-                changed++;
+        const originalChannels = this.editorConfig.getChannels();
+        sorted.forEach((ch) => {
+            if (ch._category) {
+                const idx = originalChannels.indexOf(ch);
+                if (idx >= 0 && ch.group !== ch._category) {
+                    this.editorConfig.updateChannel(idx, { group: ch._category });
+                    changed++;
+                }
             }
         });
 
