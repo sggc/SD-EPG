@@ -375,15 +375,15 @@ class UIHandler {
 
         const headerRow = document.createElement('tr');
         headerRow.innerHTML = `
-            <th style="width: 30px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选"></th>
-            <th style="width: 70px;">tvg-id</th>
-            <th style="width: 90px;">tvg-name</th>
-            <th style="width: 40px;">Logo</th>
-            <th style="width: 80px;">分类</th>
-            <th style="width: 40px;">回看</th>
-            <th>频道名称</th>
+            <th style="width:28px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选" style="margin:0;"></th>
+            <th style="width:80px;max-width:80px;">tvg-id</th>
+            <th style="width:80px;max-width:80px;">tvg-name</th>
+            <th style="width:32px;">Logo</th>
+            <th style="width:70px;">分类</th>
+            <th style="width:36px;">回看</th>
+            <th style="width:120px;">频道名称</th>
             <th>URL</th>
-            <th style="width: 55px;">操作</th>
+            <th style="width:48px;">操作</th>
         `;
         el.channelListHead.appendChild(headerRow);
         document.getElementById('selectAll')?.addEventListener('change', (e) => {
@@ -399,29 +399,30 @@ class UIHandler {
 
             // Checkbox
             const checkboxCell = document.createElement('td');
-            checkboxCell.style.textAlign = 'center';
+            checkboxCell.style.textAlign = 'center'; checkboxCell.style.padding = '4px';
             const cb = document.createElement('input');
             cb.type = 'checkbox'; cb.className = 'form-check-input channel-checkbox'; cb.dataset.index = index;
+            cb.style.margin = '0';
             cb.setAttribute('aria-label', `选择 ${channel.name}`);
             checkboxCell.appendChild(cb); row.appendChild(checkboxCell);
 
             // tvg-id
             const tvgIdCell = document.createElement('td');
-            tvgIdCell.style.fontSize = '11px'; tvgIdCell.style.color = 'var(--text-muted)';
+            tvgIdCell.style.cssText = 'font-size:11px;color:var(--text-muted);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgIdCell.textContent = channel.tvgId || '';
             tvgIdCell.title = channel.tvgId || '';
             row.appendChild(tvgIdCell);
 
             // tvg-name
             const tvgNameCell = document.createElement('td');
-            tvgNameCell.style.fontSize = '11px';
+            tvgNameCell.style.cssText = 'font-size:11px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgNameCell.textContent = channel.tvgName || '';
             tvgNameCell.title = channel.tvgName || '';
             row.appendChild(tvgNameCell);
 
             // Logo
             const logoCell = document.createElement('td');
-            logoCell.style.textAlign = 'center';
+            logoCell.style.textAlign = 'center'; logoCell.style.padding = '2px';
             if (channel.logo) {
                 const img = document.createElement('img');
                 img.src = channel.logo; img.className = 'channel-logo'; img.alt = '';
@@ -433,17 +434,17 @@ class UIHandler {
             // 分类
             const groupCell = document.createElement('td');
             const badge = document.createElement('span');
-            badge.className = 'badge'; badge.textContent = channel.group || '未分组'; badge.style.fontSize = '11px';
+            badge.className = 'badge'; badge.textContent = channel.group || '未分组'; badge.style.fontSize = '10px';
             groupCell.appendChild(badge); row.appendChild(groupCell);
 
             // 回看
             const catchupCell = document.createElement('td');
-            catchupCell.style.fontSize = '11px'; catchupCell.style.textAlign = 'center';
+            catchupCell.style.textAlign = 'center';
             if (channel.catchup) {
                 const catchupBadge = document.createElement('span');
                 catchupBadge.className = 'badge';
                 catchupBadge.style.background = channel.catchup === 'append' ? '#22c55e' : '#3b82f6';
-                catchupBadge.style.color = '#fff'; catchupBadge.style.fontSize = '10px';
+                catchupBadge.style.color = '#fff'; catchupBadge.style.fontSize = '9px'; catchupBadge.style.padding = '1px 4px';
                 catchupBadge.textContent = channel.catchup;
                 catchupCell.appendChild(catchupBadge);
             }
@@ -451,32 +452,31 @@ class UIHandler {
 
             // 频道名称
             const nameCell = document.createElement('td');
-            nameCell.textContent = channel.name || '未命名'; nameCell.style.fontWeight = '500';
+            nameCell.style.cssText = 'font-weight:500;font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            nameCell.textContent = channel.name || '未命名';
+            nameCell.title = channel.name || '';
             row.appendChild(nameCell);
 
             // URL
             const urlCell = document.createElement('td');
-            urlCell.style.maxWidth = '200px'; urlCell.style.overflow = 'hidden';
-            urlCell.style.textOverflow = 'ellipsis'; urlCell.style.whiteSpace = 'nowrap'; urlCell.style.fontSize = '11px';
+            urlCell.style.cssText = 'font-size:11px;max-width:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             if (channel.url) {
                 const a = document.createElement('a');
-                a.href = channel.url; a.textContent = channel.url.length > 40 ? channel.url.substring(0, 40) + '...' : channel.url;
+                a.href = channel.url; a.textContent = channel.url;
                 a.target = '_blank'; a.rel = 'noopener noreferrer'; urlCell.appendChild(a);
             }
             row.appendChild(urlCell);
 
             // 操作
             const actionCell = document.createElement('td');
-            actionCell.className = 'action-cell';
-            actionCell.style.whiteSpace = 'nowrap'; actionCell.style.textAlign = 'center';
+            actionCell.style.whiteSpace = 'nowrap'; actionCell.style.textAlign = 'center'; actionCell.style.padding = '2px 4px';
             const editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-outline btn-sm'; editBtn.innerHTML = '✏️'; editBtn.style.padding = '1px 4px'; editBtn.style.fontSize = '11px';
+            editBtn.className = 'btn btn-outline btn-sm'; editBtn.innerHTML = '✏'; editBtn.style.cssText = 'padding:1px 3px;font-size:10px;';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
             editBtn.addEventListener('click', () => this.editChannel(index));
             actionCell.appendChild(editBtn);
-            actionCell.appendChild(document.createTextNode(' '));
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.innerHTML = '🗑'; deleteBtn.style.padding = '1px 4px'; deleteBtn.style.fontSize = '11px';
+            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.innerHTML = '🗑'; deleteBtn.style.cssText = 'padding:1px 3px;font-size:10px;';
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
             deleteBtn.addEventListener('click', () => this.deleteChannel(index));
             actionCell.appendChild(deleteBtn);
@@ -848,38 +848,42 @@ class UIHandler {
 
         const channels = this.editorConfig.getChannels();
         const selectedIndices = this.getSelectedChannelIndices();
-        const targetChannels = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+        const targetIndices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
         const targetLabel = selectedIndices.length > 0 ? `选中的 ${selectedIndices.length} 个频道` : `全部 ${channels.length} 个频道`;
+
+        // 检测目标频道中哪些参数有值
+        const paramDefs = [
+            { key: 'tvgId', label: 'tvg-id' },
+            { key: 'tvgName', label: 'tvg-name' },
+            { key: 'logo', label: 'tvg-logo (Logo)' },
+            { key: 'group', label: 'group-title (分类)' },
+            { key: 'catchup', label: 'catchup (回看类型)' },
+            { key: 'catchupSource', label: 'catchup-source' },
+            { key: 'catchupDays', label: 'catchup-days' },
+            { key: 'extraAttrs', label: '额外属性' }
+        ];
+
+        const availableParams = paramDefs.filter(p => {
+            if (p.key === 'extraAttrs') {
+                return targetIndices.some(idx => channels[idx].extraAttrs && Object.keys(channels[idx].extraAttrs).length > 0);
+            }
+            return targetIndices.some(idx => channels[idx][p.key]);
+        });
+
+        if (availableParams.length === 0) {
+            this.showToast('目标频道没有可清除的参数', 'warning'); return;
+        }
+
+        const paramCheckboxes = availableParams.map(p =>
+            `<label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                <input type="checkbox" class="clear-param-check" data-param="${p.key}"> ${p.label}
+            </label>`
+        ).join('');
 
         content.innerHTML = `
             <h3 style="margin-bottom: 16px;">🚫 清除参数</h3>
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}</div>
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="tvgId"> tvg-id
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="tvgName"> tvg-name
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="logo"> tvg-logo (Logo)
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="group"> group-title (分类)
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="catchup"> catchup (回看类型)
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="catchupSource"> catchup-source
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="catchupDays"> catchup-days
-                </label>
-                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                    <input type="checkbox" class="clear-param-check" data-param="extraAttrs"> 所有额外属性
-                </label>
-            </div>
+            <div style="margin-bottom: 12px;">${paramCheckboxes}</div>
             <div class="modal-actions">
                 <button id="doClearParamsBtn" class="btn btn-danger btn-sm">确认清除</button>
                 <button id="cancelClearParamsBtn" class="btn btn-outline btn-sm">取消</button>
@@ -894,7 +898,7 @@ class UIHandler {
 
             const params = [...checks].map(c => c.dataset.param);
             let cleared = 0;
-            targetChannels.forEach(idx => {
+            targetIndices.forEach(idx => {
                 const ch = channels[idx];
                 const update = {};
                 params.forEach(p => {

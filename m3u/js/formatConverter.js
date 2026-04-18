@@ -241,7 +241,6 @@ class FormatConverter {
         const groupedChannels = this.groupChannels(channels);
 
         for (const group in groupedChannels) {
-            m3u += `#genre# ${group}\n`;
 
             groupedChannels[group].forEach(channel => {
                 m3u += `#EXTINF:-1`;

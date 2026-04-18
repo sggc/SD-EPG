@@ -599,7 +599,7 @@ select.form-control {
 }
 
 .table th, .table td {
-    padding: 14px 16px;
+    padding: 6px 8px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
 }
@@ -650,8 +650,8 @@ select.form-control {
 
 /* Channel Logo */
 .channel-logo {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
     border-radius: var(--radius-sm);
     object-fit: cover;
     box-shadow: var(--shadow-sm);
