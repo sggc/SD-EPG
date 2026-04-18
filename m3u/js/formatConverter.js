@@ -43,8 +43,8 @@ class FormatConverter {
     }
 
     isValidUrl(url) {
-        const urlRegex = /^(http|https|rtmp|rtsp|rtp|udp|srt):\/\/[^\s/$.?#].[^\s]*$/i;
-        return urlRegex.test(url);
+        // 不限定协议，只要非空且看起来像URL即可
+        return typeof url === 'string' && url.trim().length > 0;
     }
 
     // ============================================================

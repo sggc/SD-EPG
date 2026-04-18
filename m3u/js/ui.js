@@ -156,6 +156,10 @@ class UIHandler {
         const autoClassifyBtn = document.getElementById('autoClassifyBtn');
         if (autoClassifyBtn) autoClassifyBtn.addEventListener('click', () => this.autoClassify());
 
+        // 去除Logo按钮
+        const clearLogoBtn = document.getElementById('clearLogoBtn');
+        if (clearLogoBtn) clearLogoBtn.addEventListener('click', () => this.clearAllLogos());
+
         // 自定义分组按钮
         const customClassifyBtn = document.getElementById('customClassifyBtn');
         if (customClassifyBtn) customClassifyBtn.addEventListener('click', () => this.showCustomClassifyModal());
@@ -904,6 +908,28 @@ class UIHandler {
 
         this.renderChannelList();
         this.showToast(`已为 ${matched} 个频道自动匹配Logo`, 'success');
+    }
+
+    // ================================================================
+    // 去除所有Logo
+    // ================================================================
+
+    clearAllLogos() {
+        const channels = this.editorConfig.getChannels();
+        if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
+
+        if (!confirm('确定要去除所有频道的Logo吗？')) return;
+
+        let cleared = 0;
+        channels.forEach((ch, idx) => {
+            if (ch.logo) {
+                this.editorConfig.updateChannel(idx, { logo: '' });
+                cleared++;
+            }
+        });
+
+        this.renderChannelList();
+        this.showToast(`已去除 ${cleared} 个频道的Logo`, 'success');
     }
 
     // ================================================================
