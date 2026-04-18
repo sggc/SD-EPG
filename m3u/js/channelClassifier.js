@@ -4,7 +4,7 @@
  */
 class ChannelClassifier {
     constructor() {
-        this.localProvince = '山东'; // 默认本地省份
+        this.localProvince = '通用'; // 默认通用模式，各省频道保留"xx频道"
         this.rules = this.buildRules();
     }
 
@@ -116,7 +116,7 @@ class ChannelClassifier {
             { pattern: /^海南卫视/, category: '卫视频道', sortKey: '海南卫视' },
             { pattern: /^甘肃卫视/, category: '卫视频道', sortKey: '甘肃卫视' },
             { pattern: /^兵团卫视/, category: '卫视频道', sortKey: '兵团卫视', province: '新疆' },
-            { pattern: /^湾区卫视/, category: '卫视频道', sortKey: '湾区卫视', province: '广东' },
+            { pattern: /^大湾区卫视/, category: '卫视频道', sortKey: '大湾区卫视', province: '广东' },
             { pattern: /^延边卫视/, category: '卫视频道', sortKey: '延边卫视' },
             { pattern: /^厦门卫视/, category: '卫视频道', sortKey: '厦门卫视' },
             { pattern: /^三沙卫视/, category: '卫视频道', sortKey: '三沙卫视' },

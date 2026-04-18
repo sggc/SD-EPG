@@ -1074,11 +1074,19 @@ class UIHandler {
             const result = this.classifier.classify(name);
 
             let category = result.category;
-            // 地方频道：本地省份归到"xx频道"，非本地归到"其他频道"
-            if (result.province && result.province === this.classifier.localProvince) {
-                category = this.classifier.localProvince + '频道';
-            } else if (result.province && result.province !== this.classifier.localProvince) {
-                category = '其他频道';
+            const localProvince = this.classifier.localProvince;
+
+            if (result.province) {
+                if (localProvince === '通用') {
+                    // 通用模式：各省频道保留"xx频道"
+                    category = result.province + '频道';
+                } else if (result.province === localProvince) {
+                    // 本地省份归到"xx频道"
+                    category = localProvince + '频道';
+                } else {
+                    // 非本地省份归到"其他频道"
+                    category = '其他频道';
+                }
             }
 
             if (category && ch.group !== category) {
@@ -1274,7 +1282,10 @@ class UIHandler {
         // 获取当前所有分组
         const groups = [...new Set(channels.map(ch => ch.group).filter(Boolean))];
         // 默认分类顺序
-        const defaultOrder = ['央视频道', '卫视频道', this.classifier.localProvince + '频道', '港澳台频道', '付费频道', '其他频道'];
+        const localProvince = this.classifier.localProvince;
+        const defaultOrder = localProvince === '通用'
+            ? ['央视频道', '卫视频道', '港澳台频道', '付费频道', '其他频道']
+            : ['央视频道', '卫视频道', localProvince + '频道', '港澳台频道', '付费频道', '其他频道'];
         // 合并：默认顺序 + 未在默认中的分组
         const allGroups = [...new Set([...defaultOrder, ...groups])].filter(g => groups.includes(g));
 
