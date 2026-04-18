@@ -43,7 +43,7 @@ class FormatConverter {
     }
 
     isValidUrl(url) {
-        const urlRegex = /^(http|https|rtmp|rtsp):\/\/[^\s/$.?#].[^\s]*$/i;
+        const urlRegex = /^(http|https|rtmp|rtsp|rtp|udp|srt):\/\/[^\s/$.?#].[^\s]*$/i;
         return urlRegex.test(url);
     }
 
