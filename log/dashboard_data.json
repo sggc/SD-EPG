@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-18 12:43:22",
+  "lastUpdate": "2026-04-18 17:06:23",
   "whitelistChannels": 415,
   "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 91484,
-  "filteredPrograms": 11623,
+  "totalPrograms": 90967,
+  "filteredPrograms": 11486,
   "dateRange": "20260412 ~ 20260419",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 166,
-      "programs": 54812,
+      "programs": 54792,
       "matched": 166
     },
     {
@@ -27,7 +27,7 @@
       "enabled": true,
       "channels": 534,
       "programs": 133107,
-      "matched": 144
+      "matched": 146
     },
     {
       "name": "suming",
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 454,
-      "programs": 18398,
+      "programs": 19527,
       "matched": 2
     },
     {
@@ -766,8 +766,8 @@
     {
       "id": "CCTV1",
       "name": "CCTV1",
-      "programs": 320,
-      "todayPrograms": 36,
+      "programs": 321,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [
         "CCTV-1",
@@ -804,8 +804,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 183,
-      "todayPrograms": 22,
+      "programs": 184,
+      "todayPrograms": 23,
       "source": "main",
       "aliases": [
         "CCTV-11",
@@ -958,8 +958,8 @@
     {
       "id": "CCTV3",
       "name": "CCTV3",
-      "programs": 186,
-      "todayPrograms": 22,
+      "programs": 184,
+      "todayPrograms": 20,
       "source": "main",
       "aliases": [
         "CCTV-3",
@@ -2334,9 +2334,9 @@
     {
       "id": "内蒙古卫视",
       "name": "内蒙古卫视",
-      "programs": 310,
-      "todayPrograms": 38,
-      "source": "main",
+      "programs": 290,
+      "todayPrograms": 37,
+      "source": "erwcc",
       "aliases": [
         "内蒙古卫视高清"
       ],
@@ -2530,8 +2530,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 408,
-      "todayPrograms": 62,
+      "programs": 394,
+      "todayPrograms": 48,
       "source": "main",
       "aliases": [
         "北京卫视高清"
@@ -2542,8 +2542,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 408,
-      "todayPrograms": 62,
+      "programs": 394,
+      "todayPrograms": 48,
       "source": "main",
       "aliases": [
         "北京卫视-4K",
@@ -2764,8 +2764,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 280,
-      "todayPrograms": 33,
+      "programs": 285,
+      "todayPrograms": 38,
       "source": "main",
       "aliases": [
         "吉林卫视高清"
@@ -3177,8 +3177,8 @@
     {
       "id": "山东体育",
       "name": "山东体育",
-      "programs": 288,
-      "todayPrograms": 39,
+      "programs": 284,
+      "todayPrograms": 35,
       "source": "main",
       "aliases": [
         "山东体育休闲"
@@ -3732,8 +3732,8 @@
     {
       "id": "新疆卫视",
       "name": "新疆卫视",
-      "programs": 264,
-      "todayPrograms": 34,
+      "programs": 263,
+      "todayPrograms": 33,
       "source": "main",
       "aliases": [
         "新疆卫视高清"
@@ -5567,9 +5567,9 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 759,
-      "todayPrograms": 98,
-      "source": "main",
+      "programs": 289,
+      "todayPrograms": 43,
+      "source": "erwcc",
       "aliases": [
         "西藏卫视高清"
       ],
@@ -6228,8 +6228,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 259,
-      "todayPrograms": 33,
+      "programs": 260,
+      "todayPrograms": 34,
       "source": "main",
       "aliases": [
         "黑龙江卫视高清"
