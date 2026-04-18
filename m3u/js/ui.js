@@ -49,21 +49,10 @@ class UIHandler {
             channelListHead: document.getElementById('channelListHead'),
             channelList: document.getElementById('channelList'),
             deleteSelectedBtn: document.getElementById('deleteSelectedBtn'),
-            checkLogoBtn: document.getElementById('checkLogoBtn'),
             logoCheckResult: document.getElementById('logoCheckResult'),
             autoMatchLogoBtn: document.getElementById('autoMatchLogoBtn'),
-            logoRuleBtn: document.getElementById('logoRuleBtn'),
             totalChannels: document.getElementById('totalChannels'),
             groupCount: document.getElementById('groupCount'),
-            catchupType: document.getElementById('catchupType'),
-            catchupAppendSection: document.getElementById('catchupAppendSection'),
-            catchupDefaultSection: document.getElementById('catchupDefaultSection'),
-            catchupAppendParam: document.getElementById('catchupAppendParam'),
-            catchupDefaultPrefix: document.getElementById('catchupDefaultPrefix'),
-            catchupDefaultSuffix: document.getElementById('catchupDefaultSuffix'),
-            catchupSelectedBtn: document.getElementById('catchupSelectedBtn'),
-            catchupAllBtn: document.getElementById('catchupAllBtn'),
-            catchupClearBtn: document.getElementById('catchupClearBtn'),
             editorOutputFormat: document.getElementById('editorOutputFormat'),
             editorEpgUrl: document.getElementById('editorEpgUrl'),
             editorOutputText: document.getElementById('editorOutputText'),
@@ -148,17 +137,19 @@ class UIHandler {
         el.editorParseTextBtn.addEventListener('click', () => this.parseEditorText());
         el.channelSearch.addEventListener('input', () => this.renderChannelList());
         el.deleteSelectedBtn.addEventListener('click', () => this.deleteSelectedChannels());
-        el.checkLogoBtn.addEventListener('click', () => this.checkLogos());
         el.autoMatchLogoBtn.addEventListener('click', () => this.autoMatchLogo());
-        el.logoRuleBtn.addEventListener('click', () => this.showLogoRuleManager());
 
         // 自动分类按钮
         const autoClassifyBtn = document.getElementById('autoClassifyBtn');
         if (autoClassifyBtn) autoClassifyBtn.addEventListener('click', () => this.autoClassify());
 
-        // 去除Logo按钮
-        const clearLogoBtn = document.getElementById('clearLogoBtn');
-        if (clearLogoBtn) clearLogoBtn.addEventListener('click', () => this.clearAllLogos());
+        // 清除参数按钮
+        const clearParamsBtn = document.getElementById('clearParamsBtn');
+        if (clearParamsBtn) clearParamsBtn.addEventListener('click', () => this.showClearParamsModal());
+
+        // 回看配置按钮
+        const catchupConfigBtn = document.getElementById('catchupConfigBtn');
+        if (catchupConfigBtn) catchupConfigBtn.addEventListener('click', () => this.showCatchupConfigModal());
 
         // 自定义分组按钮
         const customClassifyBtn = document.getElementById('customClassifyBtn');
@@ -173,16 +164,6 @@ class UIHandler {
         if (localProvince) localProvince.addEventListener('change', (e) => {
             this.classifier.setLocalProvince(e.target.value);
             this.renderChannelList();
-        });
-
-        el.catchupSelectedBtn.addEventListener('click', () => this.applyCatchupSelected());
-        el.catchupAllBtn.addEventListener('click', () => this.applyCatchupAll());
-        el.catchupClearBtn.addEventListener('click', () => this.clearCatchupAll());
-
-        el.catchupType.addEventListener('change', () => {
-            const isDefault = el.catchupType.value === 'default';
-            el.catchupAppendSection.classList.toggle('hidden', isDefault);
-            el.catchupDefaultSection.classList.toggle('hidden', !isDefault);
         });
 
         el.editorCopyBtn.addEventListener('click', () => { Utils.copyToClipboard(el.editorOutputText.value); this.showToast('已复制到剪贴板', 'success'); });
@@ -394,13 +375,15 @@ class UIHandler {
 
         const headerRow = document.createElement('tr');
         headerRow.innerHTML = `
-            <th style="width: 36px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选"></th>
-            <th style="width: 50px;">Logo</th>
+            <th style="width: 30px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选"></th>
+            <th style="width: 70px;">tvg-id</th>
+            <th style="width: 90px;">tvg-name</th>
+            <th style="width: 40px;">Logo</th>
+            <th style="width: 80px;">分类</th>
+            <th style="width: 40px;">回看</th>
             <th>频道名称</th>
-            <th>分类</th>
-            <th>回看</th>
             <th>URL</th>
-            <th style="width: 60px;">操作</th>
+            <th style="width: 55px;">操作</th>
         `;
         el.channelListHead.appendChild(headerRow);
         document.getElementById('selectAll')?.addEventListener('change', (e) => {
@@ -422,21 +405,30 @@ class UIHandler {
             cb.setAttribute('aria-label', `选择 ${channel.name}`);
             checkboxCell.appendChild(cb); row.appendChild(checkboxCell);
 
+            // tvg-id
+            const tvgIdCell = document.createElement('td');
+            tvgIdCell.style.fontSize = '11px'; tvgIdCell.style.color = 'var(--text-muted)';
+            tvgIdCell.textContent = channel.tvgId || '';
+            tvgIdCell.title = channel.tvgId || '';
+            row.appendChild(tvgIdCell);
+
+            // tvg-name
+            const tvgNameCell = document.createElement('td');
+            tvgNameCell.style.fontSize = '11px';
+            tvgNameCell.textContent = channel.tvgName || '';
+            tvgNameCell.title = channel.tvgName || '';
+            row.appendChild(tvgNameCell);
+
             // Logo
             const logoCell = document.createElement('td');
             logoCell.style.textAlign = 'center';
             if (channel.logo) {
                 const img = document.createElement('img');
-                img.src = channel.logo; img.className = 'channel-logo'; img.alt = (channel.name || '') + ' logo';
+                img.src = channel.logo; img.className = 'channel-logo'; img.alt = '';
                 img.onerror = () => { img.style.display = 'none'; };
                 logoCell.appendChild(img);
             }
             row.appendChild(logoCell);
-
-            // 频道名称
-            const nameCell = document.createElement('td');
-            nameCell.textContent = channel.name || '未命名'; nameCell.style.fontWeight = '500';
-            row.appendChild(nameCell);
 
             // 分类
             const groupCell = document.createElement('td');
@@ -446,40 +438,45 @@ class UIHandler {
 
             // 回看
             const catchupCell = document.createElement('td');
-            catchupCell.style.fontSize = '11px';
+            catchupCell.style.fontSize = '11px'; catchupCell.style.textAlign = 'center';
             if (channel.catchup) {
                 const catchupBadge = document.createElement('span');
                 catchupBadge.className = 'badge';
                 catchupBadge.style.background = channel.catchup === 'append' ? '#22c55e' : '#3b82f6';
-                catchupBadge.style.color = '#fff';
+                catchupBadge.style.color = '#fff'; catchupBadge.style.fontSize = '10px';
                 catchupBadge.textContent = channel.catchup;
                 catchupCell.appendChild(catchupBadge);
             }
             row.appendChild(catchupCell);
 
+            // 频道名称
+            const nameCell = document.createElement('td');
+            nameCell.textContent = channel.name || '未命名'; nameCell.style.fontWeight = '500';
+            row.appendChild(nameCell);
+
             // URL
             const urlCell = document.createElement('td');
             urlCell.style.maxWidth = '200px'; urlCell.style.overflow = 'hidden';
-            urlCell.style.textOverflow = 'ellipsis'; urlCell.style.whiteSpace = 'nowrap'; urlCell.style.fontSize = '12px';
+            urlCell.style.textOverflow = 'ellipsis'; urlCell.style.whiteSpace = 'nowrap'; urlCell.style.fontSize = '11px';
             if (channel.url) {
                 const a = document.createElement('a');
-                a.href = channel.url; a.textContent = channel.url.length > 35 ? channel.url.substring(0, 35) + '...' : channel.url;
+                a.href = channel.url; a.textContent = channel.url.length > 40 ? channel.url.substring(0, 40) + '...' : channel.url;
                 a.target = '_blank'; a.rel = 'noopener noreferrer'; urlCell.appendChild(a);
             }
             row.appendChild(urlCell);
 
-            // 操作（同一行小按钮）
+            // 操作
             const actionCell = document.createElement('td');
             actionCell.className = 'action-cell';
-            actionCell.style.whiteSpace = 'nowrap';
+            actionCell.style.whiteSpace = 'nowrap'; actionCell.style.textAlign = 'center';
             const editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-outline btn-sm'; editBtn.innerHTML = '✏️'; editBtn.style.padding = '2px 6px'; editBtn.style.fontSize = '12px';
+            editBtn.className = 'btn btn-outline btn-sm'; editBtn.innerHTML = '✏️'; editBtn.style.padding = '1px 4px'; editBtn.style.fontSize = '11px';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
             editBtn.addEventListener('click', () => this.editChannel(index));
             actionCell.appendChild(editBtn);
             actionCell.appendChild(document.createTextNode(' '));
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.innerHTML = '🗑️'; deleteBtn.style.padding = '2px 6px'; deleteBtn.style.fontSize = '12px';
+            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.innerHTML = '🗑'; deleteBtn.style.padding = '1px 4px'; deleteBtn.style.fontSize = '11px';
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
             deleteBtn.addEventListener('click', () => this.deleteChannel(index));
             actionCell.appendChild(deleteBtn);
@@ -518,6 +515,7 @@ class UIHandler {
             <div class="form-group"><label for="edit-group" class="form-label">分组</label><input type="text" id="edit-group" class="form-control" value="${this.escapeHtml(channel.group || '')}"></div>
             <div class="form-group"><label for="edit-catchup" class="form-label">回看类型</label><select id="edit-catchup" class="form-control"><option value="">无</option><option value="append"${channel.catchup === 'append' ? ' selected' : ''}>append</option><option value="default"${channel.catchup === 'default' ? ' selected' : ''}>default</option></select></div>
             <div class="form-group"><label for="edit-catchupSource" class="form-label">catchup-source</label><input type="text" id="edit-catchupSource" class="form-control" value="${this.escapeHtml(channel.catchupSource || '')}"></div>
+            <div class="form-group"><label for="edit-catchupDays" class="form-label">catchup-days</label><input type="text" id="edit-catchupDays" class="form-control" value="${this.escapeHtml(channel.catchupDays || '')}"></div>
             <div class="modal-actions"><button id="cancel-edit" class="btn btn-outline">取消</button><button id="save-edit" class="btn btn-primary">保存</button></div>
         `;
         modal.appendChild(content); document.body.appendChild(modal);
@@ -531,7 +529,8 @@ class UIHandler {
                 logo: document.getElementById('edit-logo').value.trim(),
                 group: document.getElementById('edit-group').value.trim(),
                 catchup: document.getElementById('edit-catchup').value,
-                catchupSource: document.getElementById('edit-catchupSource').value.trim()
+                catchupSource: document.getElementById('edit-catchupSource').value.trim(),
+                catchupDays: document.getElementById('edit-catchupDays').value.trim()
             });
             document.body.removeChild(modal);
             this.renderChannelList(); this.updateStats();
@@ -748,83 +747,6 @@ class UIHandler {
     // 回看源配置
     // ================================================================
 
-    applyCatchupSelected() {
-        const checkboxes = document.querySelectorAll('#channelList .channel-checkbox:checked');
-        if (checkboxes.length === 0) { this.showToast('没有选中任何频道', 'warning'); return; }
-
-        const catchupType = this.elements.catchupType.value;
-        const indices = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
-        const channels = this.editorConfig.getChannels();
-
-        let count = 0;
-        indices.forEach(idx => {
-            const ch = channels[idx];
-            if (!ch || !ch.url) return;
-            const catchupSource = this.buildCatchupSource(catchupType, ch.url);
-            if (catchupSource) {
-                this.editorConfig.setCatchup(idx, catchupType, catchupSource);
-                count++;
-            }
-        });
-
-        this.renderChannelList();
-        this.showToast(`已为 ${count} 个频道配置回看源`, 'success');
-    }
-
-    applyCatchupAll() {
-        const catchupType = this.elements.catchupType.value;
-        const channels = this.editorConfig.getChannels();
-        if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
-
-        let count = 0;
-        channels.forEach((ch, idx) => {
-            if (!ch.url) return;
-            const catchupSource = this.buildCatchupSource(catchupType, ch.url);
-            if (catchupSource) {
-                this.editorConfig.setCatchup(idx, catchupType, catchupSource);
-                count++;
-            }
-        });
-
-        this.renderChannelList();
-        this.showToast(`已为全部 ${count} 个频道配置回看源`, 'success');
-    }
-
-    /**
-     * 根据回看类型和频道直播源URL，构建 catchup-source
-     * - append: 直播源URL + 追加参数
-     * - default: 前缀(或原URL) + 回看参数后缀
-     */
-    buildCatchupSource(catchupType, channelUrl) {
-        if (catchupType === 'append') {
-            const param = this.elements.catchupAppendParam.value.trim();
-            if (!param) { this.showToast('请填写追加参数', 'warning'); return null; }
-            return channelUrl + param;
-        } else {
-            // default 模式
-            const prefix = this.elements.catchupDefaultPrefix.value.trim();
-            const suffix = this.elements.catchupDefaultSuffix.value.trim();
-            if (!suffix) { this.showToast('请填写回看参数后缀', 'warning'); return null; }
-
-            if (prefix) {
-                // 有前缀替换：用前缀替换原URL的协议+主机部分
-                // 例如原URL: http://xxx/live/cctv1, 前缀: rtsp://112.245.125.39:1554
-                // 结果: rtsp://112.245.125.39:1554/live/cctv1 + suffix
-                try {
-                    const urlObj = new URL(channelUrl);
-                    const pathAndQuery = urlObj.pathname + urlObj.search + urlObj.hash;
-                    return prefix + pathAndQuery + suffix;
-                } catch {
-                    // URL解析失败，直接拼接
-                    return prefix + suffix;
-                }
-            } else {
-                // 无前缀替换：直接用原URL + 后缀
-                return channelUrl + suffix;
-            }
-        }
-    }
-
     clearCatchupAll() {
         if (this.editorConfig.getCount() === 0) { this.showToast('没有频道数据', 'warning'); return; }
         if (!confirm('确定要清除所有频道的回看源配置吗？')) return;
@@ -914,123 +836,206 @@ class UIHandler {
     // 去除所有Logo
     // ================================================================
 
-    clearAllLogos() {
-        const channels = this.editorConfig.getChannels();
-        if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
-
-        if (!confirm('确定要去除所有频道的Logo吗？')) return;
-
-        let cleared = 0;
-        channels.forEach((ch, idx) => {
-            if (ch.logo) {
-                this.editorConfig.updateChannel(idx, { logo: '' });
-                cleared++;
-            }
-        });
-
-        this.renderChannelList();
-        this.showToast(`已去除 ${cleared} 个频道的Logo`, 'success');
-    }
-
     // ================================================================
-    // Logo 规则管理
+    // 清除参数（扩展版，支持清除各种参数）
     // ================================================================
 
-    showLogoRuleManager() {
-        const modal = document.createElement('div'); modal.className = 'modal';
+    showClearParamsModal() {
+        if (document.getElementById('clearParamsModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'clearParamsModal';
         const content = document.createElement('div'); content.className = 'modal-content';
-        content.style.maxWidth = '700px'; content.style.maxHeight = '80vh'; content.style.overflowY = 'auto';
+        content.style.maxWidth = '450px';
 
-        const defaultCount = this.logoMatcher.getDefaultRuleCount();
-        const customRules = this.logoMatcher.getCustomRules();
+        const channels = this.editorConfig.getChannels();
+        const selectedIndices = this.getSelectedChannelIndices();
+        const targetChannels = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+        const targetLabel = selectedIndices.length > 0 ? `选中的 ${selectedIndices.length} 个频道` : `全部 ${channels.length} 个频道`;
 
-        let html = `
-            <h3 style="margin-bottom: 16px;">📐 Logo匹配规则管理</h3>
-            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-                内置规则 ${defaultCount} 条 | 自定义规则 ${customRules.length} 条<br>
-                Logo基础URL: ${this.logoMatcher.baseUrl}
+        content.innerHTML = `
+            <h3 style="margin-bottom: 16px;">🚫 清除参数</h3>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}</div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="tvgId"> tvg-id
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="tvgName"> tvg-name
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="logo"> tvg-logo (Logo)
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="group"> group-title (分类)
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="catchup"> catchup (回看类型)
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="catchupSource"> catchup-source
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="catchupDays"> catchup-days
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <input type="checkbox" class="clear-param-check" data-param="extraAttrs"> 所有额外属性
+                </label>
             </div>
-            <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-bottom: 16px;">
-                <h4 style="margin-bottom: 8px;">➕ 添加新规则</h4>
-                <div class="form-group"><label class="form-label">正则表达式</label><input type="text" id="rulePattern" class="form-control" placeholder="例如: ^CCTV(\\d+)$ 或 ^新频道名"></div>
-                <div class="form-group"><label class="form-label">Logo路径（相对于logo目录）</label><input type="text" id="ruleLogo" class="form-control" placeholder="例如: CCTV\${n}.png 或 新频道名.png"></div>
-                <div class="form-group"><label class="form-label">描述</label><input type="text" id="ruleDesc" class="form-control" placeholder="规则说明"></div>
-                <div class="form-row flex gap-20 flex-wrap">
-                    <div class="form-group" style="flex:1;min-width:100px;"><label class="form-label">优先级</label><input type="number" id="rulePriority" class="form-control" value="20"></div>
-                    <div class="form-group" style="flex:1;min-width:100px;"><label class="form-label">提取捕获组</label><select id="ruleExtract" class="form-control"><option value="0">否</option><option value="1">是</option></select></div>
-                </div>
-                <button id="addRuleBtn" class="btn btn-primary btn-sm">➕ 添加规则</button>
-                <div id="ruleAddMsg" style="margin-top:6px;font-size:12px;"></div>
+            <div class="modal-actions">
+                <button id="doClearParamsBtn" class="btn btn-danger btn-sm">确认清除</button>
+                <button id="cancelClearParamsBtn" class="btn btn-outline btn-sm">取消</button>
             </div>
         `;
 
-        // 自定义规则列表
-        if (customRules.length > 0) {
-            html += `<div style="border-top: 1px solid var(--border-color); padding-top: 12px;"><h4 style="margin-bottom: 8px;">📋 自定义规则</h4>`;
-            customRules.forEach((rule, i) => {
-                const realIndex = this.logoMatcher.getRules().indexOf(rule);
-                html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-color);font-size:13px;">
-                    <div><code>${this.escapeHtml(rule.patternStr)}</code> → <code>${this.escapeHtml(rule.logo)}</code> <span style="color:var(--text-muted);">(${rule.desc || ''}, P${rule.priority || 0})</span></div>
-                    <button class="btn btn-danger btn-sm delete-rule-btn" data-index="${realIndex}" style="padding:2px 8px;font-size:11px;">删除</button>
-                </div>`;
-            });
-            html += `</div>`;
-        }
-
-        // 内置规则预览（折叠）
-        html += `
-            <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
-                <details><summary style="cursor:pointer;font-size:13px;color:var(--text-muted);">查看内置规则 (${defaultCount} 条)</summary>
-                <div style="max-height:200px;overflow-y:auto;margin-top:8px;font-size:12px;">
-        `;
-        this.logoMatcher.getRules().filter(r => !r.custom).forEach(rule => {
-            html += `<div style="padding:2px 0;border-bottom:1px solid var(--border-color);"><code>${this.escapeHtml(rule.pattern.toString())}</code> → <code>${this.escapeHtml(rule.logo)}</code> <span style="color:var(--text-muted);">${rule.desc || ''}</span></div>`;
-        });
-        html += `</div></details></div>`;
-
-        html += `<div class="modal-actions" style="margin-top:16px;"><button id="closeRuleModal" class="btn btn-primary">关闭</button></div>`;
-
-        content.innerHTML = html;
         modal.appendChild(content); document.body.appendChild(modal);
 
-        // 添加规则按钮
-        document.getElementById('addRuleBtn').addEventListener('click', () => {
-            const patternStr = document.getElementById('rulePattern').value.trim();
-            const logo = document.getElementById('ruleLogo').value.trim();
-            const desc = document.getElementById('ruleDesc').value.trim();
-            const priority = parseInt(document.getElementById('rulePriority').value) || 20;
-            const extract = document.getElementById('ruleExtract').value === '1';
-            const msgEl = document.getElementById('ruleAddMsg');
+        document.getElementById('doClearParamsBtn').addEventListener('click', () => {
+            const checks = content.querySelectorAll('.clear-param-check:checked');
+            if (checks.length === 0) { this.showToast('请至少选择一个参数', 'warning'); return; }
 
-            if (!patternStr || !logo) { msgEl.innerHTML = '<span style="color:#ef4444;">正则和Logo路径不能为空</span>'; return; }
-
-            try { new RegExp(patternStr); } catch (e) { msgEl.innerHTML = `<span style="color:#ef4444;">正则语法错误: ${e.message}</span>`; return; }
-
-            const ok = this.logoMatcher.addRule(patternStr, logo, desc, priority, extract);
-            if (ok) {
-                msgEl.innerHTML = '<span style="color:#22c55e;">规则添加成功！</span>';
-                // 刷新弹窗
-                document.body.removeChild(modal);
-                this.showLogoRuleManager();
-            } else {
-                msgEl.innerHTML = '<span style="color:#ef4444;">添加失败</span>';
-            }
-        });
-
-        // 删除规则按钮
-        content.querySelectorAll('.delete-rule-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = parseInt(btn.dataset.index);
-                this.logoMatcher.deleteRule(idx);
-                document.body.removeChild(modal);
-                this.showLogoRuleManager();
+            const params = [...checks].map(c => c.dataset.param);
+            let cleared = 0;
+            targetChannels.forEach(idx => {
+                const ch = channels[idx];
+                const update = {};
+                params.forEach(p => {
+                    if (p === 'extraAttrs') {
+                        if (ch.extraAttrs && Object.keys(ch.extraAttrs).length > 0) { update.extraAttrs = {}; }
+                    } else if (ch[p]) {
+                        update[p] = '';
+                    }
+                });
+                if (Object.keys(update).length > 0) {
+                    this.editorConfig.updateChannel(idx, update);
+                    cleared++;
+                }
             });
+
+            this.renderChannelList(); this.updateStats();
+            document.body.removeChild(modal);
+            this.showToast(`已清除 ${cleared} 个频道的选中参数`, 'success');
         });
 
-        document.getElementById('closeRuleModal').addEventListener('click', () => { document.body.removeChild(modal); });
+        document.getElementById('cancelClearParamsBtn').addEventListener('click', () => { document.body.removeChild(modal); });
         let mouseDownTarget = null;
         modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
         modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    // ================================================================
+    // 回看配置弹窗
+    // ================================================================
+
+    showCatchupConfigModal() {
+        if (document.getElementById('catchupConfigModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'catchupConfigModal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.style.maxWidth = '550px'; content.style.maxHeight = '80vh'; content.style.overflowY = 'auto';
+
+        content.innerHTML = `
+            <h3 style="margin-bottom: 16px;">⏪ 回看源配置</h3>
+            <div class="form-group">
+                <label class="form-label">回看类型</label>
+                <select id="modalCatchupType" class="form-control">
+                    <option value="append">append - 在直播源URL后追加回看参数</option>
+                    <option value="default">default - 基于直播源URL构建回看地址</option>
+                </select>
+            </div>
+            <div id="modalCatchupAppendSection">
+                <div class="form-group">
+                    <label class="form-label">追加参数（拼在直播源URL后面）</label>
+                    <input type="text" id="modalCatchupAppendParam" class="form-control" placeholder="示例: ?playseek=\${(b)yyyyMMddHHmmss}-\${(e)yyyyMMddHHmmss}">
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                    效果：直播源URL + 追加参数 → catchup-source
+                </div>
+            </div>
+            <div id="modalCatchupDefaultSection" class="hidden">
+                <div class="form-group">
+                    <label class="form-label">URL前缀替换（可选）</label>
+                    <input type="text" id="modalCatchupDefaultPrefix" class="form-control" placeholder="留空则保留原直播源URL">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">回看参数后缀</label>
+                    <input type="text" id="modalCatchupDefaultSuffix" class="form-control" placeholder="示例: ?tvdr=\${(b)yyyyMMddHHmmss}GMT-\${(e)yyyyMMddHHmmss}GMT">
+                </div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                    效果：前缀(或原URL) + 回看参数后缀 → catchup-source
+                </div>
+            </div>
+            <div class="flex gap-10 flex-wrap" style="margin-top: 12px;">
+                <button id="modalCatchupSelectedBtn" class="btn btn-secondary btn-sm">配置选中频道</button>
+                <button id="modalCatchupAllBtn" class="btn btn-primary btn-sm">一键全部配置</button>
+                <button id="modalCatchupClearBtn" class="btn btn-danger btn-sm">清除所有回看</button>
+            </div>
+            <div class="modal-actions" style="margin-top: 16px;">
+                <button id="closeCatchupModal" class="btn btn-outline btn-sm">关闭</button>
+            </div>
+        `;
+
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        // 类型切换
+        document.getElementById('modalCatchupType').addEventListener('change', (e) => {
+            const isDefault = e.target.value === 'default';
+            document.getElementById('modalCatchupAppendSection').classList.toggle('hidden', isDefault);
+            document.getElementById('modalCatchupDefaultSection').classList.toggle('hidden', !isDefault);
+        });
+
+        // 配置选中频道
+        document.getElementById('modalCatchupSelectedBtn').addEventListener('click', () => {
+            this.applyCatchupFromModal('selected');
+        });
+
+        // 一键全部配置
+        document.getElementById('modalCatchupAllBtn').addEventListener('click', () => {
+            this.applyCatchupFromModal('all');
+        });
+
+        // 清除所有回看
+        document.getElementById('modalCatchupClearBtn').addEventListener('click', () => {
+            this.clearCatchupAll();
+        });
+
+        document.getElementById('closeCatchupModal').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    applyCatchupFromModal(mode) {
+        const type = document.getElementById('modalCatchupType').value;
+        const channels = this.editorConfig.getChannels();
+        const indices = mode === 'selected' ? this.getSelectedChannelIndices() : channels.map((_, i) => i);
+
+        if (indices.length === 0) { this.showToast('没有选中的频道', 'warning'); return; }
+
+        let configured = 0;
+        indices.forEach(idx => {
+            const ch = channels[idx];
+            if (!ch.url) return;
+
+            let catchupSource = '';
+            if (type === 'append') {
+                const param = document.getElementById('modalCatchupAppendParam').value.trim();
+                if (!param) return;
+                catchupSource = ch.url + param;
+            } else {
+                const prefix = document.getElementById('modalCatchupDefaultPrefix').value.trim();
+                const suffix = document.getElementById('modalCatchupDefaultSuffix').value.trim();
+                if (!suffix) return;
+                const baseUrl = prefix || ch.url;
+                catchupSource = baseUrl + suffix;
+            }
+
+            this.editorConfig.updateChannel(idx, {
+                catchup: type,
+                catchupSource: catchupSource
+            });
+            configured++;
+        });
+
+        this.renderChannelList(); this.updateStats();
+        this.showToast(`已配置 ${configured} 个频道的回看`, 'success');
     }
 
     // ================================================================
@@ -1153,7 +1158,7 @@ class UIHandler {
     // ================================================================
 
     getAccelPrefix() {
-        const input = document.getElementById('accelPrefix');
+        const input = document.getElementById('logoAccelPrefix');
         return input ? input.value.trim() : '';
     }
 

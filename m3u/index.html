@@ -166,59 +166,13 @@
             </article>
 
             <article class="card">
-                <h3>⏪ 回看源配置</h3>
-                <div class="form-group">
-                    <label for="catchupType" class="form-label">回看类型</label>
-                    <select id="catchupType" class="form-control">
-                        <option value="append">append - 在直播源URL后追加回看参数</option>
-                        <option value="default">default - 基于直播源URL构建回看地址</option>
-                    </select>
-                </div>
-
-                <!-- append 模式：只需填写追加的参数 -->
-                <div id="catchupAppendSection">
-                    <div class="form-group">
-                        <label for="catchupAppendParam" class="form-label">追加参数（拼在直播源URL后面）</label>
-                        <input type="text" id="catchupAppendParam" class="form-control" placeholder="示例: ?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}">
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-                        效果：直播源URL + 追加参数 → catchup-source<br>
-                        例：http://xxx/live/cctv1 <strong>+ ?playseek=...</strong> → catchup-source="http://xxx/live/cctv1?playseek=..."
-                    </div>
-                </div>
-
-                <!-- default 模式：基于直播源URL，用前缀+后缀构建 -->
-                <div id="catchupDefaultSection" class="hidden">
-                    <div class="form-group">
-                        <label for="catchupDefaultPrefix" class="form-label">URL前缀替换（可选）</label>
-                        <input type="text" id="catchupDefaultPrefix" class="form-control" placeholder="留空则保留原直播源URL；填写则替换URL的协议+主机部分">
-                    </div>
-                    <div class="form-group">
-                        <label for="catchupDefaultSuffix" class="form-label">回看参数后缀</label>
-                        <input type="text" id="catchupDefaultSuffix" class="form-control" placeholder="示例: ?tvdr=${(b)yyyyMMddHHmmss}GMT-${(e)yyyyMMddHHmmss}GMT&r2h-seek-offset=-28800">
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-                        效果：前缀(或原URL) + 回看参数后缀 → catchup-source<br>
-                        例1（留空前缀）：http://xxx/live/cctv1 <strong>+ ?tvdr=...GMT</strong><br>
-                        例2（替换前缀）：rtsp://112.245.125.39:1554/iptv/... <strong>+ ?tvdr=...GMT</strong>
-                    </div>
-                </div>
-
-                <div class="flex gap-10 flex-wrap">
-                    <button id="catchupSelectedBtn" class="btn btn-secondary">✅ 配置选中频道</button>
-                    <button id="catchupAllBtn" class="btn btn-primary">⚡ 一键全部配置</button>
-                    <button id="catchupClearBtn" class="btn btn-danger">🗑️ 清除所有回看</button>
-                </div>
-            </article>
-
-            <article class="card">
                 <h3>📺 频道列表</h3>
                 <div class="flex flex-between flex-wrap gap-10" style="margin-bottom: 10px;">
                     <div class="search-box" style="flex:1; min-width:200px;">
                         <span class="search-icon">🔍</span>
                         <input type="text" id="channelSearch" class="form-control" placeholder="搜索频道..." aria-label="搜索频道">
                     </div>
-                    <div class="flex gap-10" style="align-items: center;">
+                    <div class="flex gap-10" style="align-items: center; flex-wrap: wrap;">
                         <select id="localProvince" class="form-control" style="width: auto; padding: 4px 8px; font-size: 13px;">
                             <option value="通用" selected>通用</option>
                             <option value="山东">山东</option>
@@ -257,16 +211,19 @@
                         <button id="customClassifyBtn" class="btn btn-primary btn-sm">🏷️ 自定义分组</button>
                         <button id="sortChannelsBtn" class="btn btn-outline btn-sm">🔢 排序</button>
                         <button id="autoMatchLogoBtn" class="btn btn-primary btn-sm">🎯 匹配Logo</button>
-                        <button id="clearLogoBtn" class="btn btn-outline btn-sm">🚫 去除Logo</button>
-                        <button id="logoRuleBtn" class="btn btn-outline btn-sm">📐 Logo规则</button>
-                        <button id="checkLogoBtn" class="btn btn-outline btn-sm">🔍 检测Logo</button>
+                        <button id="clearParamsBtn" class="btn btn-outline btn-sm">🚫 清除参数</button>
+                        <button id="catchupConfigBtn" class="btn btn-outline btn-sm">⏪ 回看配置</button>
                         <button id="deleteSelectedBtn" class="btn btn-danger btn-sm">🗑️ 删除</button>
                     </div>
                 </div>
+                <div class="flex gap-10" style="margin-bottom: 8px; align-items: center; font-size: 12px;">
+                    <span style="color: var(--text-muted);">Logo加速:</span>
+                    <input type="text" id="logoAccelPrefix" class="form-control" style="width: 280px; padding: 2px 6px; font-size: 12px;" value="https://gh-proxy.org/" placeholder="加速前缀">
+                </div>
                 <div id="logoCheckResult" class="hidden" style="margin-bottom: 10px; font-size: 13px;"></div>
-                <div class="table-container">
-                    <table class="table" role="grid" aria-label="频道列表">
-                        <thead id="channelListHead" role="rowgroup"></thead>
+                <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                    <table class="table" role="grid" aria-label="频道列表" style="font-size: 13px;">
+                        <thead id="channelListHead" role="rowgroup" style="position: sticky; top: 0; z-index: 10;"></thead>
                         <tbody id="channelList" role="rowgroup">
                             <tr>
                                 <td colspan="8" class="text-center text-muted">
@@ -304,13 +261,6 @@
                     <div class="form-group" style="flex: 1; min-width: 200px;">
                         <label for="editorEpgUrl" class="form-label">EPG地址 (仅M3U)</label>
                         <input type="text" id="editorEpgUrl" class="form-control" placeholder="https://epg.example.com/epg.xml.gz">
-                    </div>
-                </div>
-                <div class="form-row flex gap-20 flex-wrap">
-                    <div class="form-group" style="flex: 1; min-width: 200px;">
-                        <label for="accelPrefix" class="form-label">加速前缀 (可选)</label>
-                        <input type="text" id="accelPrefix" class="form-control" placeholder="例如: https://gh-proxy.org/">
-                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">自动加在EPG/Logo的GitHub链接前</div>
                     </div>
                 </div>
                 <textarea id="editorOutputText" class="form-control" rows="8" placeholder="编辑后导出结果..." aria-label="导出结果"></textarea>

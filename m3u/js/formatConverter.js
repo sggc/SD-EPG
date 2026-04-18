@@ -80,28 +80,44 @@ class FormatConverter {
         const lines = content.split('\n');
         const channels = [];
 
+        // 已知的标准属性
+        const knownAttrs = ['tvg-id', 'tvg-name', 'tvg-logo', 'group-title', 'catchup', 'catchup-source', 'catchup-days', 'catchup-mode'];
+
         let i = 0;
         while (i < lines.length) {
             if (lines[i].trim().startsWith('#EXTINF:')) {
-                const name = lines[i].split(',')[1].trim();
+                const name = lines[i].split(',')[1]?.trim() || '';
                 const url = lines[i + 1]?.trim() || '';
+                const extinfLine = lines[i];
 
-                const logoMatch = lines[i].match(/tvg-logo="([^"]*)"/);
-                const groupMatch = lines[i].match(/group-title="([^"]*)"/);
-
-                const catchupMatch = lines[i].match(/catchup="([^"]*)"/);
-                const catchupSourceMatch = lines[i].match(/catchup-source="([^"]*)"/);
+                // 提取所有属性
+                const allAttrs = {};
+                const attrRegex = /([a-zA-Z][a-zA-Z0-9_-]*)="([^"]*)"/g;
+                let m;
+                while ((m = attrRegex.exec(extinfLine)) !== null) {
+                    allAttrs[m[1]] = m[2];
+                }
 
                 const channel = {
                     name: name,
                     url: url,
-                    logo: logoMatch ? logoMatch[1] : '',
-                    group: groupMatch ? groupMatch[1] : '',
-                    tvgId: lines[i].match(/tvg-id="([^"]*)"/)?.[1] || '',
-                    tvgName: lines[i].match(/tvg-name="([^"]*)"/)?.[1] || '',
-                    catchup: catchupMatch ? catchupMatch[1] : '',
-                    catchupSource: catchupSourceMatch ? catchupSourceMatch[1] : ''
+                    logo: allAttrs['tvg-logo'] || '',
+                    group: allAttrs['group-title'] || '',
+                    tvgId: allAttrs['tvg-id'] || '',
+                    tvgName: allAttrs['tvg-name'] || '',
+                    catchup: allAttrs['catchup'] || '',
+                    catchupSource: allAttrs['catchup-source'] || '',
+                    catchupDays: allAttrs['catchup-days'] || '',
+                    // 保留所有额外属性
+                    extraAttrs: {}
                 };
+
+                // 收集非标准属性到extraAttrs
+                for (const [key, value] of Object.entries(allAttrs)) {
+                    if (!knownAttrs.includes(key)) {
+                        channel.extraAttrs[key] = value;
+                    }
+                }
 
                 if (this.isValidUrl(channel.url)) {
                     channels.push(channel);
@@ -248,6 +264,19 @@ class FormatConverter {
 
                 if (channel.catchupSource) {
                     m3u += ` catchup-source="${channel.catchupSource}"`;
+                }
+
+                if (channel.catchupDays) {
+                    m3u += ` catchup-days="${channel.catchupDays}"`;
+                }
+
+                // 输出额外属性
+                if (channel.extraAttrs) {
+                    for (const [key, value] of Object.entries(channel.extraAttrs)) {
+                        if (value !== undefined && value !== '') {
+                            m3u += ` ${key}="${value}"`;
+                        }
+                    }
                 }
 
                 m3u += ` group-title="${group}",${channel.name}\n`;

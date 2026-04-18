@@ -6,10 +6,16 @@
 
 class LogoMatcher {
     constructor() {
-        this.baseUrl = 'https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/';
+        this.logoBasePath = 'https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/';
         this.rules = this.getDefaultRules();
         // 从localStorage加载用户自定义规则
         this.loadCustomRules();
+    }
+
+    getBaseUrl() {
+        const accelInput = document.getElementById('logoAccelPrefix');
+        const accel = accelInput ? accelInput.value.trim() : '';
+        return (accel || '') + this.logoBasePath;
     }
 
     // ============================================================
@@ -1390,7 +1396,7 @@ class LogoMatcher {
                 if (rule.extract && m[1] !== undefined) {
                     logoPath = logoPath.replace('${n}', m[1]);
                 }
-                return this.baseUrl + logoPath;
+                return this.getBaseUrl() + logoPath;
             }
         }
 
@@ -1412,7 +1418,7 @@ class LogoMatcher {
                     if (rule.extract && m[1] !== undefined) {
                         logoPath = logoPath.replace('${n}', m[1]);
                     }
-                    return this.baseUrl + logoPath;
+                    return this.getBaseUrl() + logoPath;
                 }
             }
         }
