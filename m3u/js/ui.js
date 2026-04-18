@@ -379,11 +379,11 @@ class UIHandler {
             <th style="width:80px;max-width:80px;">tvg-id</th>
             <th style="width:80px;max-width:80px;">tvg-name</th>
             <th style="width:32px;">Logo</th>
-            <th style="width:70px;">分类</th>
+            <th style="width:80px;">分类</th>
             <th style="width:36px;">回看</th>
-            <th style="width:120px;">频道名称</th>
-            <th>URL</th>
-            <th style="width:48px;">操作</th>
+            <th style="width:100px;">频道名称</th>
+            <th style="width:25%;">URL</th>
+            <th style="width:50px;">操作</th>
         `;
         el.channelListHead.appendChild(headerRow);
         document.getElementById('selectAll')?.addEventListener('change', (e) => {
@@ -408,14 +408,14 @@ class UIHandler {
 
             // tvg-id
             const tvgIdCell = document.createElement('td');
-            tvgIdCell.style.cssText = 'font-size:11px;color:var(--text-muted);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            tvgIdCell.style.cssText = 'font-size:10px;color:var(--text-muted);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgIdCell.textContent = channel.tvgId || '';
             tvgIdCell.title = channel.tvgId || '';
             row.appendChild(tvgIdCell);
 
             // tvg-name
             const tvgNameCell = document.createElement('td');
-            tvgNameCell.style.cssText = 'font-size:11px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            tvgNameCell.style.cssText = 'font-size:10px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgNameCell.textContent = channel.tvgName || '';
             tvgNameCell.title = channel.tvgName || '';
             row.appendChild(tvgNameCell);
@@ -433,8 +433,9 @@ class UIHandler {
 
             // 分类
             const groupCell = document.createElement('td');
+            groupCell.style.cssText = 'max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             const badge = document.createElement('span');
-            badge.className = 'badge'; badge.textContent = channel.group || '未分组'; badge.style.fontSize = '10px';
+            badge.className = 'badge'; badge.textContent = channel.group || '未分组'; badge.style.cssText = 'font-size:9px;padding:2px 6px;letter-spacing:0;';
             groupCell.appendChild(badge); row.appendChild(groupCell);
 
             // 回看
@@ -452,14 +453,14 @@ class UIHandler {
 
             // 频道名称
             const nameCell = document.createElement('td');
-            nameCell.style.cssText = 'font-weight:500;font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            nameCell.style.cssText = 'font-weight:500;font-size:11px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             nameCell.textContent = channel.name || '未命名';
             nameCell.title = channel.name || '';
             row.appendChild(nameCell);
 
             // URL
             const urlCell = document.createElement('td');
-            urlCell.style.cssText = 'font-size:11px;max-width:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            urlCell.style.cssText = 'font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             if (channel.url) {
                 const a = document.createElement('a');
                 a.href = channel.url; a.textContent = channel.url;
@@ -469,14 +470,14 @@ class UIHandler {
 
             // 操作
             const actionCell = document.createElement('td');
-            actionCell.style.whiteSpace = 'nowrap'; actionCell.style.textAlign = 'center'; actionCell.style.padding = '2px 4px';
+            actionCell.style.cssText = 'white-space:nowrap;text-align:center;padding:2px 4px;';
             const editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-outline btn-sm'; editBtn.innerHTML = '✏'; editBtn.style.cssText = 'padding:1px 3px;font-size:10px;';
+            editBtn.className = 'btn btn-outline btn-sm'; editBtn.textContent = '✏'; editBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
             editBtn.addEventListener('click', () => this.editChannel(index));
             actionCell.appendChild(editBtn);
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.innerHTML = '🗑'; deleteBtn.style.cssText = 'padding:1px 3px;font-size:10px;';
+            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.textContent = '🗑'; deleteBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
             deleteBtn.addEventListener('click', () => this.deleteChannel(index));
             actionCell.appendChild(deleteBtn);
