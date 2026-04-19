@@ -42,8 +42,8 @@ class ChannelConverter {
     // 转换输出方法 - 委托给 FormatConverter
     // ============================================================
 
-    convertToM3U(fieldOrder = ['name', 'url', 'logo', 'group'], epgUrl = '') {
-        return this.formatter.convertToM3U(this.channels, fieldOrder, epgUrl);
+    convertToM3U(fieldOrder = ['name', 'url', 'logo', 'group'], epgUrl = '', epgAttr = 'url-tvg') {
+        return this.formatter.convertToM3U(this.channels, fieldOrder, epgUrl, epgAttr);
     }
 
     convertToTXT(fieldOrder = ['name', 'url']) {

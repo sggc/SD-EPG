@@ -63,13 +63,13 @@ class FormatConverter {
             case 'm3u8':
                 return this.parseM3U(content);
             case 'txt':
-                return this.parseTXT(content);
+                return { channels: this.parseTXT(content), epgUrl: '', epgAttr: '' };
             case 'csv':
-                return this.parseCSV(content);
+                return { channels: this.parseCSV(content), epgUrl: '', epgAttr: '' };
             case 'json':
-                return this.parseJSON(content);
+                return { channels: this.parseJSON(content), epgUrl: '', epgAttr: '' };
             case 'xml':
-                return this.parseXML(content);
+                return { channels: this.parseXML(content), epgUrl: '', epgAttr: '' };
             default:
                 throw new Error(`不支持的文件格式: ${extension}`);
         }
@@ -82,6 +82,19 @@ class FormatConverter {
 
         // 已知的标准属性
         const knownAttrs = ['tvg-id', 'tvg-name', 'tvg-logo', 'group-title', 'catchup', 'catchup-source', 'catchup-days', 'catchup-mode'];
+
+        // 提取#EXTM3U行中的EPG信息
+        let epgUrl = '';
+        let epgAttr = '';
+        const extm3uLine = lines.find(l => l.trim().startsWith('#EXTM3U'));
+        if (extm3uLine) {
+            const epgAttrRegex = /(url-tvg|x-tvg-url|url-epg|tvg-url|url-epg)="([^"]*)"/i;
+            const epgMatch = extm3uLine.match(epgAttrRegex);
+            if (epgMatch) {
+                epgAttr = epgMatch[1];
+                epgUrl = epgMatch[2];
+            }
+        }
 
         let i = 0;
         while (i < lines.length) {
@@ -128,7 +141,7 @@ class FormatConverter {
             }
         }
 
-        return channels;
+        return { channels, epgUrl, epgAttr };
     }
 
     parseTXT(content) {

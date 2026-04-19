@@ -94,6 +94,22 @@
                     <label for="epgUrl" class="form-label">EPG节目单地址 (仅M3U格式生效)</label>
                     <input type="text" id="epgUrl" class="form-control" placeholder="例如: https://epg.example.com/epg.xml.gz">
                 </div>
+                <div class="form-row flex gap-20 flex-wrap">
+                    <div class="form-group" style="flex: 0 0 auto; min-width: 130px;">
+                        <label for="epgAttr" class="form-label">EPG属性名</label>
+                        <select id="epgAttr" class="form-control" style="font-size:12px;">
+                            <option value="url-tvg">url-tvg (推荐)</option>
+                            <option value="x-tvg-url">x-tvg-url</option>
+                            <option value="url-epg">url-epg</option>
+                            <option value="tvg-url">tvg-url</option>
+                            <option value="custom">自定义...</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden" id="epgAttrCustomContainer" style="flex: 0 0 auto; min-width: 100px;">
+                        <label for="epgAttrCustom" class="form-label">自定义属性名</label>
+                        <input type="text" id="epgAttrCustom" class="form-control" placeholder="输入属性名" style="font-size:12px;">
+                    </div>
+                </div>
                 <div id="customOrderContainer" class="hidden mt-20">
                     <label class="form-label">选择并拖动字段排序</label>
                     <div id="customOrderFields" class="sortable-fields" role="listbox" aria-label="自定义字段顺序"></div>

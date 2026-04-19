@@ -117,6 +117,13 @@ class UIHandler {
         el.downloadBtn.addEventListener('click', () => this.downloadConverterResult());
         el.convertBtn.addEventListener('click', () => this.convertChannels());
         el.clearBtn.addEventListener('click', () => this.clearConverter());
+
+        // 转换工具 EPG属性名选择
+        const convEpgAttr = document.getElementById('epgAttr');
+        const convEpgAttrCustom = document.getElementById('epgAttrCustomContainer');
+        if (convEpgAttr) convEpgAttr.addEventListener('change', () => {
+            convEpgAttrCustom.classList.toggle('hidden', convEpgAttr.value !== 'custom');
+        });
     }
 
     initEditorEvents() {
@@ -205,17 +212,28 @@ class UIHandler {
 
         let parsedChannels = [];
         let filesProcessed = 0;
+        let sourceEpgUrl = '';
+        let sourceEpgAttr = '';
 
         files.forEach(file => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
                     const ext = file.name.split('.').pop().toLowerCase();
-                    parsedChannels = parsedChannels.concat(this.core.formatter.parseFileContent(e.target.result, ext));
+                    const result = this.core.formatter.parseFileContent(e.target.result, ext);
+                    parsedChannels = parsedChannels.concat(result.channels);
+                    if (result.epgUrl && !sourceEpgUrl) { sourceEpgUrl = result.epgUrl; sourceEpgAttr = result.epgAttr; }
                     filesProcessed++;
                     if (filesProcessed === files.length) {
                         this.converterChannels = this.elements.deduplicate.checked ?
                             this.core.deduplicateChannels(parsedChannels) : parsedChannels;
+                        // 保存原有EPG信息
+                        this.sourceEpgUrl = sourceEpgUrl;
+                        this.sourceEpgAttr = sourceEpgAttr;
+                        // 如果原有EPG信息存在且用户未填，自动填入
+                        if (sourceEpgUrl && !this.elements.epgUrl.value.trim()) {
+                            this.elements.epgUrl.value = sourceEpgUrl;
+                        }
                         this.showToast(`成功解析 ${filesProcessed} 个文件，共 ${this.converterChannels.length} 个频道`, 'success');
                     }
                 } catch (error) {
@@ -234,9 +252,15 @@ class UIHandler {
 
         try {
             const ext = this.core.formatter.detectFormat(text);
-            const parsed = this.core.formatter.parseFileContent(text, ext);
+            const result = this.core.formatter.parseFileContent(text, ext);
             this.converterChannels = this.elements.deduplicate.checked ?
-                this.core.deduplicateChannels(parsed) : parsed;
+                this.core.deduplicateChannels(result.channels) : result.channels;
+            // 保存原有EPG信息
+            this.sourceEpgUrl = result.epgUrl || '';
+            this.sourceEpgAttr = result.epgAttr || '';
+            if (result.epgUrl && !this.elements.epgUrl.value.trim()) {
+                this.elements.epgUrl.value = result.epgUrl;
+            }
             this.showToast(`成功解析文本，共 ${this.converterChannels.length} 个频道`, 'success');
         } catch (error) {
             this.showToast(`解析文本时出错: ${error.message}`, 'error');
@@ -253,11 +277,27 @@ class UIHandler {
         const format = this.elements.outputFormat.value;
         const fieldOrder = this.getFieldOrder();
         const formatter = this.core.formatter;
+
+        // EPG属性名
+        const epgAttrSelect = document.getElementById('epgAttr');
+        let epgAttr = epgAttrSelect ? epgAttrSelect.value : 'url-tvg';
+        if (epgAttr === 'custom') {
+            const customInput = document.getElementById('epgAttrCustom');
+            epgAttr = customInput ? customInput.value.trim() : 'url-tvg';
+            if (!epgAttr) epgAttr = 'url-tvg';
+        }
+
+        // EPG地址：用户自定义优先，没填则用原有的
+        let epgUrl = this.elements.epgUrl.value.trim();
+        if (!epgUrl && this.sourceEpgUrl) {
+            epgUrl = this.sourceEpgUrl;
+        }
+
         let result;
 
         try {
             switch (format) {
-                case 'm3u': result = formatter.convertToM3U(this.converterChannels, fieldOrder, this.elements.epgUrl.value.trim()); break;
+                case 'm3u': result = formatter.convertToM3U(this.converterChannels, fieldOrder, epgUrl, epgAttr); break;
                 case 'txt': result = formatter.convertToTXT(this.converterChannels, fieldOrder); break;
                 case 'csv': result = formatter.convertToCSV(this.converterChannels, fieldOrder); break;
                 case 'json': result = formatter.convertToJSON(this.converterChannels, fieldOrder); break;
@@ -302,13 +342,16 @@ class UIHandler {
 
         let parsedChannels = [];
         let filesProcessed = 0;
+        let sourceEpgUrl = '';
 
         files.forEach(file => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
                     const ext = file.name.split('.').pop().toLowerCase();
-                    parsedChannels = parsedChannels.concat(this.core.formatter.parseFileContent(e.target.result, ext));
+                    const result = this.core.formatter.parseFileContent(e.target.result, ext);
+                    parsedChannels = parsedChannels.concat(result.channels);
+                    if (result.epgUrl && !sourceEpgUrl) sourceEpgUrl = result.epgUrl;
                     filesProcessed++;
                     if (filesProcessed === files.length) {
                         let channels = this.elements.editorDeduplicate.checked ?
@@ -318,6 +361,10 @@ class UIHandler {
                         channels = this.mergeChannels(channels);
 
                         this.editorConfig.setChannels(channels);
+                        // 自动填入原有EPG
+                        if (sourceEpgUrl && !this.elements.editorEpgUrl.value.trim()) {
+                            this.elements.editorEpgUrl.value = sourceEpgUrl;
+                        }
                         this.renderChannelList();
                         this.updateStats();
                         this.showToast(`成功解析 ${filesProcessed} 个文件，共 ${channels.length} 个频道`, 'success');
@@ -338,14 +385,18 @@ class UIHandler {
 
         try {
             const ext = this.core.formatter.detectFormat(text);
-            const parsed = this.core.formatter.parseFileContent(text, ext);
+            const result = this.core.formatter.parseFileContent(text, ext);
             let channels = this.elements.editorDeduplicate.checked ?
-                this.core.deduplicateChannels(parsed) : parsed;
+                this.core.deduplicateChannels(result.channels) : result.channels;
 
             // 融合模式
             channels = this.mergeChannels(channels);
 
             this.editorConfig.setChannels(channels);
+            // 自动填入原有EPG
+            if (result.epgUrl && !this.elements.editorEpgUrl.value.trim()) {
+                this.elements.editorEpgUrl.value = result.epgUrl;
+            }
             this.renderChannelList();
             this.updateStats();
             this.showToast(`成功解析文本，共 ${channels.length} 个频道`, 'success');
