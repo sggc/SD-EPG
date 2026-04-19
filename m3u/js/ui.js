@@ -170,6 +170,13 @@ class UIHandler {
         el.editorClearBtn.addEventListener('click', () => this.clearEditor());
         el.editorExportBtn.addEventListener('click', () => this.exportEditorResult());
         el.editorDownloadBtn.addEventListener('click', () => this.downloadEditorResult());
+
+        // EPG属性名选择 - 自定义时显示输入框
+        const epgAttrSelect = document.getElementById('editorEpgAttr');
+        const epgAttrCustom = document.getElementById('editorEpgAttrCustom');
+        if (epgAttrSelect) epgAttrSelect.addEventListener('change', () => {
+            epgAttrCustom.classList.toggle('hidden', epgAttrSelect.value !== 'custom');
+        });
     }
 
     initCommonEvents() {
@@ -577,6 +584,15 @@ class UIHandler {
         let epgUrl = this.elements.editorEpgUrl.value.trim();
         const formatter = this.core.formatter;
 
+        // 获取EPG属性名
+        const epgAttrSelect = document.getElementById('editorEpgAttr');
+        let epgAttr = epgAttrSelect ? epgAttrSelect.value : 'url-tvg';
+        if (epgAttr === 'custom') {
+            const customInput = document.getElementById('editorEpgAttrCustom');
+            epgAttr = customInput ? customInput.value.trim() : 'url-tvg';
+            if (!epgAttr) epgAttr = 'url-tvg';
+        }
+
         // 应用加速链接
         const processedChannels = this.applyAccelToChannels(channels);
         epgUrl = this.applyAccelToEpg(epgUrl);
@@ -585,7 +601,7 @@ class UIHandler {
 
         try {
             switch (format) {
-                case 'm3u': result = formatter.convertToM3U(processedChannels, ['name', 'url', 'logo', 'group'], epgUrl); break;
+                case 'm3u': result = formatter.convertToM3U(processedChannels, ['name', 'url', 'logo', 'group'], epgUrl, epgAttr); break;
                 case 'txt': result = formatter.convertToTXT(processedChannels, ['name', 'url']); break;
                 case 'csv': result = formatter.convertToCSV(processedChannels, ['name', 'url', 'logo', 'group']); break;
                 case 'json': result = formatter.convertToJSON(processedChannels, ['name', 'url', 'logo', 'group']); break;

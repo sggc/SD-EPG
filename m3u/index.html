@@ -262,6 +262,17 @@
                         <label for="editorEpgUrl" class="form-label">EPG地址 (仅M3U)</label>
                         <input type="text" id="editorEpgUrl" class="form-control" placeholder="https://epg.example.com/epg.xml.gz">
                     </div>
+                    <div class="form-group" style="flex: 0 0 auto; min-width: 130px;">
+                        <label for="editorEpgAttr" class="form-label">EPG属性名</label>
+                        <select id="editorEpgAttr" class="form-control" style="font-size:12px;">
+                            <option value="url-tvg">url-tvg (推荐)</option>
+                            <option value="x-tvg-epg">x-tvg-epg</option>
+                            <option value="url-epg">url-epg</option>
+                            <option value="tvg-url">tvg-url</option>
+                            <option value="custom">自定义...</option>
+                        </select>
+                        <input type="text" id="editorEpgAttrCustom" class="form-control hidden" placeholder="输入属性名" style="margin-top:4px;font-size:12px;">
+                    </div>
                 </div>
                 <textarea id="editorOutputText" class="form-control" rows="8" placeholder="编辑后导出结果..." aria-label="导出结果"></textarea>
                 <div class="action-bar">

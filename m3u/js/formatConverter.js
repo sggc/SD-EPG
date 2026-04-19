@@ -231,10 +231,10 @@ class FormatConverter {
     // 输出方法 - 统一频道对象数组 → 各格式字符串
     // ============================================================
 
-    convertToM3U(channels, fieldOrder = ['name', 'url', 'logo', 'group'], epgUrl = '') {
+    convertToM3U(channels, fieldOrder = ['name', 'url', 'logo', 'group'], epgUrl = '', epgAttr = 'url-tvg') {
         let m3u = '#EXTM3U';
         if (epgUrl) {
-            m3u += ` url-epg="${epgUrl}"`;
+            m3u += ` ${epgAttr}="${epgUrl}"`;
         }
         m3u += '\n';
 
