@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-19 05:20:25",
+  "lastUpdate": "2026-04-19 13:13:24",
   "whitelistChannels": 415,
   "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 90823,
-  "filteredPrograms": 10518,
+  "totalPrograms": 90501,
+  "filteredPrograms": 12008,
   "dateRange": "20260413 ~ 20260420",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 166,
-      "programs": 54686,
+      "programs": 55013,
       "matched": 166
     },
     {
@@ -26,8 +26,8 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 534,
-      "programs": 133013,
-      "matched": 147
+      "programs": 133061,
+      "matched": 142
     },
     {
       "name": "suming",
@@ -61,14 +61,14 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1429,
-      "programs": 333037,
+      "programs": 357613,
       "matched": 33
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15368,
-      "programs": 1398515,
+      "channels": 15367,
+      "programs": 1280721,
       "matched": 12
     },
     {
@@ -82,7 +82,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1129,
-      "programs": 258309,
+      "programs": 258357,
       "matched": 5
     },
     {
@@ -713,7 +713,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 57,
+      "programs": 39,
       "todayPrograms": 19,
       "source": "epgpw",
       "aliases": [],
@@ -733,7 +733,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 102,
+      "programs": 67,
       "todayPrograms": 32,
       "source": "epgpw",
       "aliases": [],
@@ -743,7 +743,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 87,
+      "programs": 57,
       "todayPrograms": 29,
       "source": "epgpw",
       "aliases": [],
@@ -753,7 +753,7 @@
     {
       "id": "Astro QJ",
       "name": "Astro QJ",
-      "programs": 51,
+      "programs": 49,
       "todayPrograms": 24,
       "source": "epgpw",
       "aliases": [],
@@ -1149,8 +1149,8 @@
     {
       "id": "CCTV9",
       "name": "CCTV9",
-      "programs": 227,
-      "todayPrograms": 26,
+      "programs": 228,
+      "todayPrograms": 27,
       "source": "main",
       "aliases": [
         "CCTV-9",
@@ -1439,7 +1439,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 118,
+      "programs": 99,
       "todayPrograms": 50,
       "source": "epgpw",
       "aliases": [],
@@ -1449,7 +1449,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 105,
+      "programs": 67,
       "todayPrograms": 36,
       "source": "epgpw",
       "aliases": [],
@@ -1459,7 +1459,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 67,
+      "programs": 38,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -1499,7 +1499,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 118,
+      "programs": 99,
       "todayPrograms": 50,
       "source": "epgpw",
       "aliases": [],
@@ -1509,7 +1509,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 105,
+      "programs": 67,
       "todayPrograms": 36,
       "source": "epgpw",
       "aliases": [],
@@ -1519,7 +1519,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 67,
+      "programs": 38,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -1923,7 +1923,7 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 111,
+      "programs": 72,
       "todayPrograms": 35,
       "source": "epgpw",
       "aliases": [
@@ -1955,7 +1955,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 59,
+      "programs": 40,
       "todayPrograms": 17,
       "source": "epgpw",
       "aliases": [],
@@ -2266,8 +2266,8 @@
     {
       "id": "优漫卡通",
       "name": "优漫卡通",
-      "programs": 255,
-      "todayPrograms": 29,
+      "programs": 257,
+      "todayPrograms": 31,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -3154,8 +3154,8 @@
     {
       "id": "寰宇新闻台",
       "name": "寰宇新闻台",
-      "programs": 143,
-      "todayPrograms": 25,
+      "programs": 142,
+      "todayPrograms": 24,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -3198,7 +3198,7 @@
       "name": "山东农科",
       "programs": 323,
       "todayPrograms": 52,
-      "source": "erwcc",
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3266,9 +3266,9 @@
     {
       "id": "山东新闻",
       "name": "山东新闻",
-      "programs": 465,
+      "programs": 463,
       "todayPrograms": 68,
-      "source": "erwcc",
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3276,9 +3276,9 @@
     {
       "id": "山东生活",
       "name": "山东生活",
-      "programs": 283,
+      "programs": 282,
       "todayPrograms": 44,
-      "source": "erwcc",
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3286,9 +3286,9 @@
     {
       "id": "山东综艺",
       "name": "山东综艺",
-      "programs": 199,
+      "programs": 195,
       "todayPrograms": 30,
-      "source": "erwcc",
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3296,9 +3296,9 @@
     {
       "id": "山东齐鲁",
       "name": "山东齐鲁",
-      "programs": 286,
+      "programs": 285,
       "todayPrograms": 46,
-      "source": "erwcc",
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4314,8 +4314,8 @@
     {
       "id": "河北卫视",
       "name": "河北卫视",
-      "programs": 315,
-      "todayPrograms": 47,
+      "programs": 314,
+      "todayPrograms": 46,
       "source": "erwcc",
       "aliases": [
         "河北卫视高清"
@@ -5179,8 +5179,8 @@
     {
       "id": "甘肃卫视",
       "name": "甘肃卫视",
-      "programs": 374,
-      "todayPrograms": 58,
+      "programs": 369,
+      "todayPrograms": 53,
       "source": "erwcc",
       "aliases": [],
       "hasGap": false,
@@ -5204,8 +5204,8 @@
     {
       "id": "生活时尚",
       "name": "生活时尚",
-      "programs": 886,
-      "todayPrograms": 97,
+      "programs": 887,
+      "todayPrograms": 98,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -5584,8 +5584,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 777,
-      "todayPrograms": 96,
+      "programs": 781,
+      "todayPrograms": 97,
       "source": "main",
       "aliases": [
         "西藏卫视高清"
