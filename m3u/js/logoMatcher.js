@@ -30,7 +30,7 @@ class LogoMatcher {
             { pattern: /^CCTV16五环/, logo: 'CCTV16五环.png', desc: 'CCTV16五环', priority: 20 },
             { pattern: /^CCTV4欧洲/, logo: 'CCTV4欧洲.png', desc: 'CCTV4欧洲', priority: 20 },
             { pattern: /^CCTV4美洲/, logo: 'CCTV4美洲.png', desc: 'CCTV4美洲', priority: 20 },
-            { pattern: /^CCTV(\d+)/, logo: 'CCTV${n}.png', desc: 'CCTV数字频道', priority: 10, extract: true },
+            { pattern: /^CCTV(\d+)/, logo: 'CCTV${n}.png', desc: 'CCTV数字频道', priority: 30, extract: true },
 
             // CCTV付费/专业频道（中文后缀）
             { pattern: /^CCTV世界地理/, logo: 'CCTV世界地理.png', desc: 'CCTV世界地理', priority: 20 },

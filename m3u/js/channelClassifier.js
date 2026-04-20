@@ -276,7 +276,24 @@ class ChannelClassifier {
 
         for (const rule of this.rules) {
             if (rule.pattern.test(name)) {
-                return { category: rule.category, sortKey: rule.sortKey, province: rule.province || null };
+                let sortKey = rule.sortKey;
+                // CCTV数字频道：生成精确排序键
+                if (sortKey === 'CCTV') {
+                    const m = name.match(/^CCTV(\d+)/i);
+                    if (m) {
+                        const num = parseInt(m[1]);
+                        sortKey = 'CCTV' + String(num).padStart(2, '0');
+                    } else if (/^CCTV5\+/i.test(name)) {
+                        sortKey = 'CCTV05+';
+                    } else if (/^CCTV4K/i.test(name)) {
+                        sortKey = 'CCTV4K';
+                    } else if (/^CCTV4欧洲/i.test(name)) {
+                        sortKey = 'CCTV4E';
+                    } else if (/^CCTV4美洲/i.test(name)) {
+                        sortKey = 'CCTV4A';
+                    }
+                }
+                return { category: rule.category, sortKey, province: rule.province || null };
             }
         }
 

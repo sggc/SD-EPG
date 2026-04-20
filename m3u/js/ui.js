@@ -154,6 +154,14 @@ class UIHandler {
         const clearParamsBtn = document.getElementById('clearParamsBtn');
         if (clearParamsBtn) clearParamsBtn.addEventListener('click', () => this.showClearParamsModal());
 
+        // 赋值按钮
+        const assignFieldsBtn = document.getElementById('assignFieldsBtn');
+        if (assignFieldsBtn) assignFieldsBtn.addEventListener('click', () => this.showAssignFieldsModal());
+
+        // 清洗tvgname按钮
+        const cleanTvgNameBtn = document.getElementById('cleanTvgNameBtn');
+        if (cleanTvgNameBtn) cleanTvgNameBtn.addEventListener('click', () => this.cleanTvgName());
+
         // 回看配置按钮
         const catchupConfigBtn = document.getElementById('catchupConfigBtn');
         if (catchupConfigBtn) catchupConfigBtn.addEventListener('click', () => this.showCatchupConfigModal());
@@ -411,6 +419,8 @@ class UIHandler {
 
     renderChannelList() {
         const el = this.elements;
+        // 记住展开状态
+        const wasExpanded = this._channelListExpanded || false;
         el.channelList.innerHTML = '';
         el.channelListHead.innerHTML = '';
         const oldToggle = document.getElementById('toggleRowsBtn');
@@ -434,13 +444,13 @@ class UIHandler {
         const headerRow = document.createElement('tr');
         headerRow.innerHTML = `
             <th style="width:28px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选" style="margin:0;"></th>
-            <th style="width:80px;max-width:80px;">tvg-id</th>
-            <th style="width:80px;max-width:80px;">tvg-name</th>
+            <th style="width:55px;max-width:55px;">tvg-id</th>
+            <th style="width:55px;max-width:55px;">tvg-name</th>
             <th style="width:32px;">Logo</th>
             <th style="width:80px;">分类</th>
             <th style="width:36px;">回看</th>
-            <th style="width:100px;">频道名称</th>
-            <th style="width:25%;">URL</th>
+            <th style="width:80px;">频道名称</th>
+            <th style="width:35%;">URL</th>
             <th style="width:50px;">操作</th>
         `;
         el.channelListHead.appendChild(headerRow);
@@ -453,7 +463,10 @@ class UIHandler {
 
         filteredChannels.forEach((channel, index) => {
             const row = document.createElement('tr');
-            if (needCollapse && index >= MAX_VISIBLE) { row.className = 'channel-row-hidden'; row.style.display = 'none'; }
+            if (needCollapse && index >= MAX_VISIBLE) {
+                row.className = 'channel-row-hidden';
+                row.style.display = wasExpanded ? '' : 'none';
+            }
 
             // Checkbox
             const checkboxCell = document.createElement('td');
@@ -466,14 +479,14 @@ class UIHandler {
 
             // tvg-id
             const tvgIdCell = document.createElement('td');
-            tvgIdCell.style.cssText = 'font-size:10px;color:var(--text-muted);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            tvgIdCell.style.cssText = 'font-size:10px;color:var(--text-muted);max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgIdCell.textContent = channel.tvgId || '';
             tvgIdCell.title = channel.tvgId || '';
             row.appendChild(tvgIdCell);
 
             // tvg-name
             const tvgNameCell = document.createElement('td');
-            tvgNameCell.style.cssText = 'font-size:10px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            tvgNameCell.style.cssText = 'font-size:10px;max-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             tvgNameCell.textContent = channel.tvgName || '';
             tvgNameCell.title = channel.tvgName || '';
             row.appendChild(tvgNameCell);
@@ -491,7 +504,7 @@ class UIHandler {
 
             // 分类
             const groupCell = document.createElement('td');
-            groupCell.style.cssText = 'max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            groupCell.style.cssText = 'max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;';
             const badge = document.createElement('span');
             badge.className = 'badge'; badge.textContent = channel.group || '未分组'; badge.style.cssText = 'font-size:9px;padding:2px 6px;letter-spacing:0;';
             groupCell.appendChild(badge); row.appendChild(groupCell);
@@ -511,14 +524,14 @@ class UIHandler {
 
             // 频道名称
             const nameCell = document.createElement('td');
-            nameCell.style.cssText = 'font-weight:500;font-size:11px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            nameCell.style.cssText = 'font-weight:500;font-size:12px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             nameCell.textContent = channel.name || '未命名';
             nameCell.title = channel.name || '';
             row.appendChild(nameCell);
 
             // URL
             const urlCell = document.createElement('td');
-            urlCell.style.cssText = 'font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            urlCell.style.cssText = 'font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             if (channel.url) {
                 const a = document.createElement('a');
                 a.href = channel.url; a.textContent = channel.url;
@@ -547,12 +560,11 @@ class UIHandler {
         if (needCollapse) {
             const toggleBtn = document.createElement('button');
             toggleBtn.id = 'toggleRowsBtn'; toggleBtn.className = 'btn btn-outline btn-sm mt-10';
-            toggleBtn.innerHTML = `展开全部 (${filteredChannels.length} 条)`;
-            let expanded = false;
+            toggleBtn.innerHTML = wasExpanded ? '收起' : `展开全部 (${filteredChannels.length} 条)`;
             toggleBtn.addEventListener('click', () => {
-                expanded = !expanded;
-                el.channelList.querySelectorAll('.channel-row-hidden').forEach(r => { r.style.display = expanded ? '' : 'none'; });
-                toggleBtn.innerHTML = expanded ? '收起' : `展开全部 (${filteredChannels.length} 条)`;
+                this._channelListExpanded = !this._channelListExpanded;
+                el.channelList.querySelectorAll('.channel-row-hidden').forEach(r => { r.style.display = this._channelListExpanded ? '' : 'none'; });
+                toggleBtn.innerHTML = this._channelListExpanded ? '收起' : `展开全部 (${filteredChannels.length} 条)`;
             });
             el.channelList.parentElement.parentElement.appendChild(toggleBtn);
         }
@@ -991,6 +1003,122 @@ class UIHandler {
         let mouseDownTarget = null;
         modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
         modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    // ================================================================
+    // 赋值弹窗
+    // ================================================================
+
+    showAssignFieldsModal() {
+        if (document.getElementById('assignFieldsModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'assignFieldsModal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.style.maxWidth = '400px';
+
+        const channels = this.editorConfig.getChannels();
+        const selectedIndices = this.getSelectedChannelIndices();
+        const targetLabel = selectedIndices.length > 0 ? `选中的 ${selectedIndices.length} 个频道` : `全部 ${channels.length} 个频道`;
+
+        content.innerHTML = `
+            <h3 style="margin-bottom: 16px;">📋 字段赋值</h3>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}</div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="name2tvgName" checked> 频道名称 → tvg-name
+                </label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="name2tvgId"> 频道名称 → tvg-id
+                </label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="tvgId2tvgName"> tvg-id → tvg-name
+                </label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="tvgName2tvgId"> tvg-name → tvg-id
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button id="doAssignBtn" class="btn btn-primary btn-sm">确认赋值</button>
+                <button id="cancelAssignBtn" class="btn btn-outline btn-sm">取消</button>
+            </div>
+        `;
+
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        document.getElementById('doAssignBtn').addEventListener('click', () => {
+            const action = content.querySelector('input[name="assignAction"]:checked').value;
+            const indices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+            let count = 0;
+
+            indices.forEach(idx => {
+                const ch = channels[idx];
+                const update = {};
+                switch (action) {
+                    case 'name2tvgName':
+                        if (ch.name && !ch.tvgName) { update.tvgName = ch.name; }
+                        break;
+                    case 'name2tvgId':
+                        if (ch.name && !ch.tvgId) { update.tvgId = ch.name; }
+                        break;
+                    case 'tvgId2tvgName':
+                        if (ch.tvgId && !ch.tvgName) { update.tvgName = ch.tvgId; }
+                        break;
+                    case 'tvgName2tvgId':
+                        if (ch.tvgName && !ch.tvgId) { update.tvgId = ch.tvgName; }
+                        break;
+                }
+                if (Object.keys(update).length > 0) {
+                    this.editorConfig.updateChannel(idx, update);
+                    count++;
+                }
+            });
+
+            this.renderChannelList(); this.updateStats();
+            document.body.removeChild(modal);
+            this.showToast(`已赋值 ${count} 个频道`, 'success');
+        });
+
+        document.getElementById('cancelAssignBtn').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    // ================================================================
+    // 清洗tvgname
+    // ================================================================
+
+    cleanTvgName() {
+        const channels = this.editorConfig.getChannels();
+        if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
+
+        const selectedIndices = this.getSelectedChannelIndices();
+        const indices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+        let count = 0;
+
+        indices.forEach(idx => {
+            const ch = channels[idx];
+            if (!ch.tvgName) return;
+
+            let cleaned = ch.tvgName;
+
+            // 去掉HD/高清/超高清/标清等后缀
+            cleaned = cleaned.replace(/\s*(HD|hd|Hd|4K|4k|UHD|uhd|FHD|fhd|SD|sd)\s*$/g, '');
+            cleaned = cleaned.replace(/\s*(高清|超高清|标清|清)\s*$/g, '');
+            // 去掉"频道"后缀
+            cleaned = cleaned.replace(/频道$/, '');
+            // 去掉多余空格和连字符
+            cleaned = cleaned.replace(/[\s\-_]+/g, ' ').trim();
+            // 去掉首尾的+号后缀（如CCTV5+保留，但其他+1+2去掉）
+            cleaned = cleaned.replace(/\+(\d+)$/g, '');
+
+            if (cleaned !== ch.tvgName && cleaned) {
+                this.editorConfig.updateChannel(idx, { tvgName: cleaned });
+                count++;
+            }
+        });
+
+        this.renderChannelList(); this.updateStats();
+        this.showToast(`已清洗 ${count} 个频道的tvg-name`, 'success');
     }
 
     // ================================================================

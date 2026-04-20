@@ -654,7 +654,7 @@ select.form-control {
     width: 28px;
     height: 28px;
     border-radius: var(--radius-sm);
-    object-fit: cover;
+    object-fit: contain;
     box-shadow: var(--shadow-sm);
     transition: transform var(--transition-fast);
 }
