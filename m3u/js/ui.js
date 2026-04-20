@@ -325,6 +325,9 @@ class UIHandler {
         if (this.converterChannels.length > 0 && !confirm('确定要清空所有数据吗？')) return;
         this.elements.outputText.value = '';
         this.elements.textInput.value = '';
+        // 重置文件输入
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput) fileInput.value = '';
         this.converterChannels = [];
         this.showToast('已清空', 'success');
     }
@@ -447,8 +450,8 @@ class UIHandler {
             <th style="width:55px;max-width:55px;">tvg-id</th>
             <th style="width:55px;max-width:55px;">tvg-name</th>
             <th style="width:32px;">Logo</th>
-            <th style="width:80px;">分类</th>
-            <th style="width:36px;">回看</th>
+            <th style="width:80px;text-align:center;">分类</th>
+            <th style="width:36px;text-align:center;">回看</th>
             <th style="width:80px;">频道名称</th>
             <th style="width:35%;">URL</th>
             <th style="width:50px;">操作</th>
@@ -683,6 +686,9 @@ class UIHandler {
         if (this.editorConfig.getCount() > 0 && !confirm('确定要清空所有数据吗？')) return;
         this.elements.editorOutputText.value = '';
         this.elements.editorTextInput.value = '';
+        // 重置文件输入，允许重新选择相同文件
+        const fileInput = document.getElementById('editorFileInput');
+        if (fileInput) fileInput.value = '';
         this.editorConfig.clear();
         this.renderChannelList(); this.updateStats();
         this.showToast('已清空', 'success');
@@ -1035,6 +1041,12 @@ class UIHandler {
                 <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
                     <input type="radio" name="assignAction" value="tvgName2tvgId"> tvg-name → tvg-id
                 </label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="tvgId2name"> tvg-id → 频道名称
+                </label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                    <input type="radio" name="assignAction" value="tvgName2name"> tvg-name → 频道名称
+                </label>
             </div>
             <div class="modal-actions">
                 <button id="doAssignBtn" class="btn btn-primary btn-sm">确认赋值</button>
@@ -1065,6 +1077,12 @@ class UIHandler {
                     case 'tvgName2tvgId':
                         if (ch.tvgName && !ch.tvgId) { update.tvgId = ch.tvgName; }
                         break;
+                    case 'tvgId2name':
+                        if (ch.tvgId && !ch.name) { update.name = ch.tvgId; }
+                        break;
+                    case 'tvgName2name':
+                        if (ch.tvgName && !ch.name) { update.name = ch.tvgName; }
+                        break;
                 }
                 if (Object.keys(update).length > 0) {
                     this.editorConfig.updateChannel(idx, update);
@@ -1093,32 +1111,82 @@ class UIHandler {
 
         const selectedIndices = this.getSelectedChannelIndices();
         const indices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
-        let count = 0;
 
+        // 先预览清洗结果
+        const preview = [];
         indices.forEach(idx => {
             const ch = channels[idx];
             if (!ch.tvgName) return;
-
-            let cleaned = ch.tvgName;
-
-            // 去掉HD/高清/超高清/标清等后缀
-            cleaned = cleaned.replace(/\s*(HD|hd|Hd|4K|4k|UHD|uhd|FHD|fhd|SD|sd)\s*$/g, '');
-            cleaned = cleaned.replace(/\s*(高清|超高清|标清|清)\s*$/g, '');
-            // 去掉"频道"后缀
-            cleaned = cleaned.replace(/频道$/, '');
-            // 去掉多余空格和连字符
-            cleaned = cleaned.replace(/[\s\-_]+/g, ' ').trim();
-            // 去掉首尾的+号后缀（如CCTV5+保留，但其他+1+2去掉）
-            cleaned = cleaned.replace(/\+(\d+)$/g, '');
-
+            const cleaned = this._doCleanTvgName(ch.tvgName);
             if (cleaned !== ch.tvgName && cleaned) {
-                this.editorConfig.updateChannel(idx, { tvgName: cleaned });
-                count++;
+                preview.push({ idx, from: ch.tvgName, to: cleaned });
             }
         });
 
-        this.renderChannelList(); this.updateStats();
-        this.showToast(`已清洗 ${count} 个频道的tvg-name`, 'success');
+        if (preview.length === 0) { this.showToast('没有需要清洗的tvg-name', 'info'); return; }
+
+        // 二次确认弹窗
+        if (document.getElementById('cleanTvgNameModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'cleanTvgNameModal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.style.maxWidth = '500px'; content.style.maxHeight = '70vh'; content.style.overflowY = 'auto';
+
+        const previewHtml = preview.slice(0, 20).map(p =>
+            `<div style="font-size:11px;padding:2px 0;border-bottom:1px solid var(--border-color);"><span style="color:var(--text-muted);">${this.escapeHtml(p.from)}</span> → <span style="color:var(--secondary-color);">${this.escapeHtml(p.to)}</span></div>`
+        ).join('');
+        const moreNote = preview.length > 20 ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;">...还有 ${preview.length - 20} 条</div>` : '';
+
+        content.innerHTML = `
+            <h3 style="margin-bottom:12px;">🧹 清洗tvg-name确认</h3>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">将清洗 ${preview.length} 个频道，预览如下：</div>
+            <div style="margin-bottom:12px;">${previewHtml}${moreNote}</div>
+            <div class="modal-actions">
+                <button id="doCleanBtn" class="btn btn-primary btn-sm">确认清洗</button>
+                <button id="cancelCleanBtn" class="btn btn-outline btn-sm">取消</button>
+            </div>
+        `;
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        document.getElementById('doCleanBtn').addEventListener('click', () => {
+            preview.forEach(p => {
+                this.editorConfig.updateChannel(p.idx, { tvgName: p.to });
+            });
+            this.renderChannelList(); this.updateStats();
+            document.body.removeChild(modal);
+            this.showToast(`已清洗 ${preview.length} 个频道的tvg-name`, 'success');
+        });
+        document.getElementById('cancelCleanBtn').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    _doCleanTvgName(name) {
+        let cleaned = name;
+
+        // 去掉全角/半角括号及其内容，如（高清）、(HD)、（4K超高清）等
+        // 但保留含4K的括号内容（去掉其他修饰词）
+        cleaned = cleaned.replace(/[（(]\s*([^）)]*?)\s*[）)]/g, (match, inner) => {
+            if (/4K/i.test(inner)) return '4K';
+            return '';
+        });
+
+        // 去掉HD/高清/超高清/标清等后缀（但保留4K）
+        cleaned = cleaned.replace(/\s*(HD|hd|Hd|UHD|uhd|FHD|fhd|SD|sd)\s*$/g, '');
+        cleaned = cleaned.replace(/\s*(高清|超高清|标清)\s*$/g, '');
+        // "清"单独出现时也去掉（如"山东卫视清"）
+        cleaned = cleaned.replace(/清$/g, '');
+
+        // 去掉"频道"后缀
+        cleaned = cleaned.replace(/频道$/, '');
+
+        // 去掉多余空格和连字符
+        cleaned = cleaned.replace(/[\s\-_]+/g, ' ').trim();
+
+        // 去掉+数字后缀（如+1 +2，但CCTV5+保留）
+        cleaned = cleaned.replace(/\+(\d+)$/g, '');
+
+        return cleaned;
     }
 
     // ================================================================
@@ -1336,8 +1404,8 @@ class UIHandler {
     // ================================================================
 
     isMergeMode() {
-        const cb = document.getElementById('editorMergeMode');
-        return cb && cb.checked;
+        // 多文件自动合并，不再需要勾选框
+        return true;
     }
 
     mergeChannels(newChannels) {
