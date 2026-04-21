@@ -1164,6 +1164,25 @@ class UIHandler {
     _doCleanTvgName(name) {
         let cleaned = name;
 
+        // CCTV系列专门清洗：CCTV1, CCTV5+, CCTV4欧洲, CCTV4美洲, CCTV4K
+        const cctvMatch = cleaned.match(/^CCTV[\s\-_]*(\d+)(.*)$/i);
+        if (cctvMatch) {
+            const num = cctvMatch[1];
+            const rest = cctvMatch[2].replace(/[\s\-_]+/g, '').trim();
+            if (num === '5' && rest.startsWith('+')) {
+                cleaned = 'CCTV5+';
+            } else if (num === '4' && /欧洲/i.test(rest)) {
+                cleaned = 'CCTV4欧洲';
+            } else if (num === '4' && /美洲/i.test(rest)) {
+                cleaned = 'CCTV4美洲';
+            } else if (/^4K$/i.test(rest)) {
+                cleaned = 'CCTV4K';
+            } else {
+                cleaned = 'CCTV' + num;
+            }
+            return cleaned;
+        }
+
         // 去掉全角/半角括号及其内容，如（高清）、(HD)、（4K超高清）等
         // 但保留含4K的括号内容（去掉其他修饰词）
         cleaned = cleaned.replace(/[（(]\s*([^）)]*?)\s*[）)]/g, (match, inner) => {
