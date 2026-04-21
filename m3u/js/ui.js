@@ -1180,8 +1180,8 @@ class UIHandler {
         // 去掉"频道"后缀
         cleaned = cleaned.replace(/频道$/, '');
 
-        // 去掉多余空格和连字符
-        cleaned = cleaned.replace(/[\s\-_]+/g, ' ').trim();
+        // 去掉多余空格、连字符和下划线
+        cleaned = cleaned.replace(/[\s\-_]+/g, '').trim();
 
         // 去掉+数字后缀（如+1 +2，但CCTV5+保留）
         cleaned = cleaned.replace(/\+(\d+)$/g, '');
