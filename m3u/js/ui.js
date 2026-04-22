@@ -489,6 +489,8 @@ class UIHandler {
         const needCollapse = filteredChannels.length > MAX_VISIBLE;
 
         filteredChannels.forEach((channel, index) => {
+            // 找到该频道在原始channels数组中的真实索引
+            const realIndex = channels.indexOf(channel);
             const row = document.createElement('tr');
             if (needCollapse && index >= MAX_VISIBLE) {
                 row.className = 'channel-row-hidden';
@@ -499,7 +501,7 @@ class UIHandler {
             const checkboxCell = document.createElement('td');
             checkboxCell.style.textAlign = 'center'; checkboxCell.style.padding = '4px';
             const cb = document.createElement('input');
-            cb.type = 'checkbox'; cb.className = 'form-check-input channel-checkbox'; cb.dataset.index = index;
+            cb.type = 'checkbox'; cb.className = 'form-check-input channel-checkbox'; cb.dataset.index = realIndex;
             cb.style.margin = '0';
             cb.setAttribute('aria-label', `选择 ${channel.name}`);
             checkboxCell.appendChild(cb); row.appendChild(checkboxCell);
@@ -572,12 +574,12 @@ class UIHandler {
             const editBtn = document.createElement('button');
             editBtn.className = 'btn btn-outline btn-sm'; editBtn.textContent = '✏'; editBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
-            editBtn.addEventListener('click', () => this.editChannel(index));
+            editBtn.addEventListener('click', () => this.editChannel(realIndex));
             actionCell.appendChild(editBtn);
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.textContent = '🗑'; deleteBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
-            deleteBtn.addEventListener('click', () => this.deleteChannel(index));
+            deleteBtn.addEventListener('click', () => this.deleteChannel(realIndex));
             actionCell.appendChild(deleteBtn);
             row.appendChild(actionCell);
 
