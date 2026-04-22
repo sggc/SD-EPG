@@ -437,7 +437,13 @@ class UIHandler {
         }
 
         const searchTerm = el.channelSearch.value.toLowerCase();
-        const filteredChannels = searchTerm ? this.editorConfig.searchChannels(searchTerm) : channels;
+        let filteredChannels = searchTerm ? this.editorConfig.searchChannels(searchTerm) : channels;
+
+        // 分类筛选
+        const categoryFilter = this._categoryFilter || '';
+        if (categoryFilter) {
+            filteredChannels = filteredChannels.filter(ch => (ch.group || '未分组') === categoryFilter);
+        }
 
         if (filteredChannels.length === 0) {
             el.channelList.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🔍</div><p class="empty-state-text">没有匹配的频道</p></div></td></tr>`;
@@ -450,7 +456,10 @@ class UIHandler {
             <th style="width:55px;max-width:55px;">tvg-id</th>
             <th style="width:55px;max-width:55px;">tvg-name</th>
             <th style="width:32px;">Logo</th>
-            <th style="width:80px;text-align:center;">分类</th>
+            <th style="width:80px;text-align:center;position:relative;cursor:pointer;user-select:none;" id="categoryFilterTh">
+                <span>分类</span>
+                <span id="categoryFilterIndicator" style="font-size:9px;color:var(--primary-color);margin-left:2px;">▼</span>
+            </th>
             <th style="width:36px;text-align:center;">回看</th>
             <th style="width:80px;">频道名称</th>
             <th style="width:35%;">URL</th>
@@ -460,6 +469,21 @@ class UIHandler {
         document.getElementById('selectAll')?.addEventListener('change', (e) => {
             document.querySelectorAll('.channel-checkbox').forEach(cb => { cb.checked = e.target.checked; });
         });
+
+        // 分类筛选下拉
+        const categoryTh = document.getElementById('categoryFilterTh');
+        if (categoryTh) {
+            categoryTh.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this._showCategoryFilterDropdown(categoryTh, channels);
+            });
+        }
+        // 更新筛选指示器
+        const filterIndicator = document.getElementById('categoryFilterIndicator');
+        if (filterIndicator) {
+            filterIndicator.textContent = this._categoryFilter ? '▼*' : '▼';
+            filterIndicator.style.color = this._categoryFilter ? 'var(--secondary-color)' : 'var(--primary-color)';
+        }
 
         const MAX_VISIBLE = 5;
         const needCollapse = filteredChannels.length > MAX_VISIBLE;
@@ -698,6 +722,61 @@ class UIHandler {
         if (!this.elements.editorOutputText.value) { this.showToast('没有内容可下载，请先导出', 'warning'); return; }
         this.downloadText(this.elements.editorOutputText.value, this.elements.editorOutputFormat.value);
         this.showToast('文件已下载', 'success');
+    }
+
+    // ================================================================
+    // 分类筛选下拉
+    // ================================================================
+
+    _showCategoryFilterDropdown(anchorEl, channels) {
+        // 移除已有下拉
+        const old = document.getElementById('categoryFilterDropdown');
+        if (old) { old.remove(); return; }
+
+        // 收集所有分类及计数
+        const categoryMap = new Map();
+        channels.forEach(ch => {
+            const cat = ch.group || '未分组';
+            categoryMap.set(cat, (categoryMap.get(cat) || 0) + 1);
+        });
+        // 按数量降序排列
+        const categories = [...categoryMap.entries()].sort((a, b) => b[1] - a[1]);
+
+        const dropdown = document.createElement('div');
+        dropdown.id = 'categoryFilterDropdown';
+        dropdown.style.cssText = 'position:fixed;z-index:1000;background:var(--card-bg);border:1px solid var(--border-color);border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);max-height:300px;overflow-y:auto;min-width:120px;padding:4px 0;';
+
+        // 全部选项
+        const allItem = document.createElement('div');
+        allItem.style.cssText = 'padding:5px 12px;cursor:pointer;font-size:12px;white-space:nowrap;' + (!this._categoryFilter ? 'background:var(--primary-color);color:#fff;font-weight:bold;' : '');
+        allItem.textContent = `全部 (${channels.length})`;
+        allItem.addEventListener('click', () => { this._categoryFilter = ''; dropdown.remove(); this.renderChannelList(); });
+        dropdown.appendChild(allItem);
+
+        categories.forEach(([cat, count]) => {
+            const item = document.createElement('div');
+            item.style.cssText = 'padding:5px 12px;cursor:pointer;font-size:12px;white-space:nowrap;' + (this._categoryFilter === cat ? 'background:var(--primary-color);color:#fff;font-weight:bold;' : '');
+            item.textContent = `${cat} (${count})`;
+            item.addEventListener('mouseenter', () => { if (this._categoryFilter !== cat) item.style.background = 'var(--border-color)'; });
+            item.addEventListener('mouseleave', () => { if (this._categoryFilter !== cat) item.style.background = ''; });
+            item.addEventListener('click', () => { this._categoryFilter = cat; dropdown.remove(); this.renderChannelList(); });
+            dropdown.appendChild(item);
+        });
+
+        // 定位
+        const rect = anchorEl.getBoundingClientRect();
+        dropdown.style.left = rect.left + 'px';
+        dropdown.style.top = (rect.bottom + 2) + 'px';
+        document.body.appendChild(dropdown);
+
+        // 点击外部关闭
+        const closeHandler = (e) => {
+            if (!dropdown.contains(e.target) && e.target !== anchorEl) {
+                dropdown.remove();
+                document.removeEventListener('click', closeHandler);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeHandler), 0);
     }
 
     // ================================================================
