@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-23 05:38:32",
+  "lastUpdate": "2026-04-23 13:13:54",
   "whitelistChannels": 415,
   "matchedChannels": 399,
   "unmatchedChannels": 16,
-  "totalPrograms": 90542,
-  "filteredPrograms": 10720,
+  "totalPrograms": 90833,
+  "filteredPrograms": 12020,
   "dateRange": "20260417 ~ 20260424",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 163,
-      "programs": 54686,
+      "programs": 54765,
       "matched": 163
     },
     {
@@ -26,7 +26,7 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 534,
-      "programs": 132402,
+      "programs": 133007,
       "matched": 137
     },
     {
@@ -61,14 +61,14 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1428,
-      "programs": 330115,
-      "matched": 39
+      "programs": 356604,
+      "matched": 33
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15372,
-      "programs": 1490208,
+      "channels": 15371,
+      "programs": 1502917,
       "matched": 13
     },
     {
@@ -76,14 +76,14 @@
       "enabled": true,
       "channels": 453,
       "programs": 18095,
-      "matched": 6
+      "matched": 2
     },
     {
       "name": "loc",
       "enabled": true,
       "channels": 1127,
-      "programs": 258152,
-      "matched": 6
+      "programs": 258757,
+      "matched": 4
     },
     {
       "name": "占位",
@@ -193,61 +193,42 @@
   "lowProgramChannels": [
     {
       "index": 1,
-      "name": "北京IPTV4K",
-      "id": "北京IPTV4K",
-      "todayPrograms": 0
-    },
-    {
-      "index": 2,
       "name": "北京IPTV淘BABY",
       "id": "北京IPTV淘BABY",
       "todayPrograms": 0
     },
     {
-      "index": 3,
+      "index": 2,
       "name": "威海新闻",
       "id": "威海新闻",
       "todayPrograms": 0
     },
     {
-      "index": 4,
+      "index": 3,
       "name": "沾化综合",
       "id": "沾化综合",
       "todayPrograms": 0
     },
     {
-      "index": 5,
+      "index": 4,
       "name": "淄博新闻综合",
       "id": "淄博新闻综合",
       "todayPrograms": 0
     },
     {
-      "index": 6,
-      "name": "爱上4K测试体验",
-      "id": "爱上4K测试体验",
-      "todayPrograms": 0
-    },
-    {
-      "index": 7,
+      "index": 5,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 8,
+      "index": 6,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
     }
   ],
   "gapChannels": [
-    {
-      "id": "北京IPTV4K",
-      "name": "北京IPTV4K",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
     {
       "id": "北京IPTV淘BABY",
       "name": "北京IPTV淘BABY",
@@ -545,13 +526,6 @@
       ]
     },
     {
-      "id": "爱上4K测试体验",
-      "name": "爱上4K测试体验",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
       "id": "禹城综合",
       "name": "禹城综合",
       "gaps": [
@@ -769,7 +743,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 61,
+      "programs": 41,
       "todayPrograms": 20,
       "source": "epgpw",
       "aliases": [],
@@ -789,7 +763,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 98,
+      "programs": 66,
       "todayPrograms": 34,
       "source": "epgpw",
       "aliases": [],
@@ -799,7 +773,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 86,
+      "programs": 56,
       "todayPrograms": 30,
       "source": "epgpw",
       "aliases": [],
@@ -809,7 +783,7 @@
     {
       "id": "Astro QJ",
       "name": "Astro QJ",
-      "programs": 53,
+      "programs": 45,
       "todayPrograms": 23,
       "source": "epgpw",
       "aliases": [],
@@ -1423,8 +1397,8 @@
     {
       "id": "CGTN",
       "name": "CGTN",
-      "programs": 362,
-      "todayPrograms": 45,
+      "programs": 363,
+      "todayPrograms": 46,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -1495,7 +1469,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 117,
+      "programs": 99,
       "todayPrograms": 50,
       "source": "epgpw",
       "aliases": [],
@@ -1505,7 +1479,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 115,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1515,7 +1489,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 114,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1555,7 +1529,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 117,
+      "programs": 99,
       "todayPrograms": 50,
       "source": "epgpw",
       "aliases": [],
@@ -1565,7 +1539,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 115,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1575,7 +1549,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 114,
+      "programs": 77,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1645,8 +1619,8 @@
     {
       "id": "Love Nature 4K",
       "name": "Love Nature 4K",
-      "programs": 163,
-      "todayPrograms": 28,
+      "programs": 162,
+      "todayPrograms": 27,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -1979,7 +1953,7 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 126,
+      "programs": 84,
       "todayPrograms": 42,
       "source": "epgpw",
       "aliases": [
@@ -2011,7 +1985,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 75,
+      "programs": 50,
       "todayPrograms": 25,
       "source": "epgpw",
       "aliases": [],
@@ -2069,7 +2043,7 @@
     {
       "id": "东方财经",
       "name": "东方财经",
-      "programs": 264,
+      "programs": 308,
       "todayPrograms": 45,
       "source": "main",
       "aliases": [],
@@ -2513,18 +2487,12 @@
     {
       "id": "北京IPTV4K",
       "name": "北京IPTV4K",
-      "programs": 75,
-      "todayPrograms": 0,
+      "programs": 89,
+      "todayPrograms": 14,
       "source": "erwcc",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "北京IPTV淘BABY",
@@ -2545,9 +2513,9 @@
     {
       "id": "北京IPTV淘剧场",
       "name": "北京IPTV淘剧场",
-      "programs": 64,
-      "todayPrograms": 32,
-      "source": "liliu",
+      "programs": 239,
+      "todayPrograms": 33,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2555,9 +2523,9 @@
     {
       "id": "北京IPTV淘娱乐",
       "name": "北京IPTV淘娱乐",
-      "programs": 28,
-      "todayPrograms": 22,
-      "source": "liliu",
+      "programs": 155,
+      "todayPrograms": 23,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2565,9 +2533,9 @@
     {
       "id": "北京IPTV淘电影",
       "name": "北京IPTV淘电影",
-      "programs": 25,
-      "todayPrograms": 13,
-      "source": "liliu",
+      "programs": 98,
+      "todayPrograms": 14,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2575,9 +2543,9 @@
     {
       "id": "北京IPTV萌宠TV",
       "name": "北京IPTV萌宠TV",
-      "programs": 61,
-      "todayPrograms": 31,
-      "source": "liliu",
+      "programs": 224,
+      "todayPrograms": 32,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2595,8 +2563,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 357,
-      "todayPrograms": 37,
+      "programs": 375,
+      "todayPrograms": 56,
       "source": "main",
       "aliases": [
         "北京卫视高清"
@@ -2607,8 +2575,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 357,
-      "todayPrograms": 37,
+      "programs": 375,
+      "todayPrograms": 56,
       "source": "main",
       "aliases": [
         "北京卫视-4K",
@@ -2881,8 +2849,8 @@
     {
       "id": "四川卫视",
       "name": "四川卫视",
-      "programs": 236,
-      "todayPrograms": 30,
+      "programs": 237,
+      "todayPrograms": 31,
       "source": "erwcc",
       "aliases": [
         "四川卫视高清"
@@ -2893,8 +2861,8 @@
     {
       "id": "四川卫视4K",
       "name": "四川卫视4K",
-      "programs": 236,
-      "todayPrograms": 30,
+      "programs": 237,
+      "todayPrograms": 31,
       "source": "erwcc",
       "aliases": [
         "四川卫视-4K",
@@ -3212,8 +3180,8 @@
     {
       "id": "寰宇新闻台",
       "name": "寰宇新闻台",
-      "programs": 143,
-      "todayPrograms": 24,
+      "programs": 142,
+      "todayPrograms": 23,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -3242,8 +3210,8 @@
     {
       "id": "山东体育",
       "name": "山东体育",
-      "programs": 291,
-      "todayPrograms": 36,
+      "programs": 287,
+      "todayPrograms": 35,
       "source": "main",
       "aliases": [
         "山东体育休闲"
@@ -4843,8 +4811,8 @@
     {
       "id": "海南卫视",
       "name": "海南卫视",
-      "programs": 369,
-      "todayPrograms": 57,
+      "programs": 362,
+      "todayPrograms": 50,
       "source": "erwcc",
       "aliases": [
         "海南卫视高清"
@@ -5176,20 +5144,14 @@
     {
       "id": "爱上4K测试体验",
       "name": "爱上4K测试体验",
-      "programs": 89,
-      "todayPrograms": 0,
+      "programs": 103,
+      "todayPrograms": 14,
       "source": "erwcc",
       "aliases": [
         "爱上4K"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "爱体育",
@@ -5264,8 +5226,8 @@
     {
       "id": "甘肃卫视",
       "name": "甘肃卫视",
-      "programs": 368,
-      "todayPrograms": 57,
+      "programs": 363,
+      "todayPrograms": 52,
       "source": "erwcc",
       "aliases": [],
       "hasGap": false,
@@ -5648,8 +5610,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 723,
-      "todayPrograms": 100,
+      "programs": 726,
+      "todayPrograms": 101,
       "source": "main",
       "aliases": [
         "西藏卫视高清"
