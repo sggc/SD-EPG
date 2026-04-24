@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-04-24 13:19:28",
+  "lastUpdate": "2026-04-24 17:55:58",
   "whitelistChannels": 415,
   "matchedChannels": 398,
   "unmatchedChannels": 17,
-  "totalPrograms": 90521,
-  "filteredPrograms": 11746,
+  "totalPrograms": 90579,
+  "filteredPrograms": 11666,
   "dateRange": "20260418 ~ 20260425",
   "aliasCount": 428,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "main",
       "enabled": true,
       "channels": 163,
-      "programs": 54493,
+      "programs": 54488,
       "matched": 163
     },
     {
@@ -27,13 +27,13 @@
       "enabled": true,
       "channels": 534,
       "programs": 132946,
-      "matched": 138
+      "matched": 141
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 217,
-      "programs": 42112,
+      "programs": 42119,
       "matched": 61
     },
     {
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 453,
-      "programs": 18087,
+      "programs": 18916,
       "matched": 4
     },
     {
@@ -83,7 +83,7 @@
       "enabled": true,
       "channels": 1127,
       "programs": 259276,
-      "matched": 6
+      "matched": 5
     },
     {
       "name": "占位",
@@ -258,13 +258,6 @@
     {
       "id": "北京IPTV淘BABY",
       "name": "北京IPTV淘BABY",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "北京IPTV淘娱乐",
-      "name": "北京IPTV淘娱乐",
       "gaps": [
         "07:00-22:00"
       ]
@@ -826,8 +819,8 @@
     {
       "id": "CCTV1",
       "name": "CCTV1",
-      "programs": 320,
-      "todayPrograms": 40,
+      "programs": 321,
+      "todayPrograms": 41,
       "source": "main",
       "aliases": [
         "CCTV-1",
@@ -921,8 +914,8 @@
     {
       "id": "CCTV14",
       "name": "CCTV14",
-      "programs": 135,
-      "todayPrograms": 18,
+      "programs": 136,
+      "todayPrograms": 19,
       "source": "main",
       "aliases": [
         "CCTV-14",
@@ -1018,8 +1011,8 @@
     {
       "id": "CCTV3",
       "name": "CCTV3",
-      "programs": 235,
-      "todayPrograms": 36,
+      "programs": 234,
+      "todayPrograms": 33,
       "source": "main",
       "aliases": [
         "CCTV-3",
@@ -1552,9 +1545,9 @@
     {
       "id": "CHC影迷电影",
       "name": "CHC影迷电影",
-      "programs": 91,
-      "todayPrograms": 13,
-      "source": "erwcc",
+      "programs": 121,
+      "todayPrograms": 16,
+      "source": "main",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2038,9 +2031,9 @@
     {
       "id": "东南卫视",
       "name": "东南卫视",
-      "programs": 212,
-      "todayPrograms": 26,
-      "source": "main",
+      "programs": 330,
+      "todayPrograms": 33,
+      "source": "erwcc",
       "aliases": [
         "东南卫视高清"
       ],
@@ -2277,8 +2270,8 @@
     {
       "id": "云南卫视",
       "name": "云南卫视",
-      "programs": 283,
-      "todayPrograms": 35,
+      "programs": 285,
+      "todayPrograms": 37,
       "source": "main",
       "aliases": [],
       "hasGap": false,
@@ -2382,8 +2375,8 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 291,
-      "todayPrograms": 37,
+      "programs": 292,
+      "todayPrograms": 38,
       "source": "main",
       "aliases": [
         "兵团卫视高清"
@@ -2562,18 +2555,12 @@
     {
       "id": "北京IPTV淘娱乐",
       "name": "北京IPTV淘娱乐",
-      "programs": 139,
-      "todayPrograms": 7,
-      "source": "erwcc",
+      "programs": 42,
+      "todayPrograms": 24,
+      "source": "liliu",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "北京IPTV淘电影",
@@ -2608,8 +2595,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 382,
-      "todayPrograms": 63,
+      "programs": 369,
+      "todayPrograms": 50,
       "source": "main",
       "aliases": [
         "北京卫视高清"
@@ -2620,8 +2607,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 382,
-      "todayPrograms": 63,
+      "programs": 369,
+      "todayPrograms": 50,
       "source": "main",
       "aliases": [
         "北京卫视-4K",
@@ -3111,8 +3098,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 319,
-      "todayPrograms": 42,
+      "programs": 315,
+      "todayPrograms": 40,
       "source": "main",
       "aliases": [
         "宁夏卫视高清"
@@ -3388,9 +3375,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 145,
-      "todayPrograms": 17,
-      "source": "main",
+      "programs": 226,
+      "todayPrograms": 35,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3684,7 +3671,7 @@
     {
       "id": "张店综合",
       "name": "张店综合",
-      "programs": 37,
+      "programs": 44,
       "todayPrograms": 7,
       "source": "suming",
       "aliases": [],
@@ -4815,9 +4802,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 301,
-      "todayPrograms": 39,
-      "source": "main",
+      "programs": 277,
+      "todayPrograms": 35,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清"
       ],
@@ -4827,9 +4814,9 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 301,
-      "todayPrograms": 39,
-      "source": "main",
+      "programs": 277,
+      "todayPrograms": 35,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视-4K",
         "浙江卫视4K超高清",
@@ -6087,8 +6074,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 237,
-      "todayPrograms": 26,
+      "programs": 233,
+      "todayPrograms": 27,
       "source": "main",
       "aliases": [
         "青海卫视高清"
@@ -6362,8 +6349,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 250,
-      "todayPrograms": 34,
+      "programs": 247,
+      "todayPrograms": 31,
       "source": "main",
       "aliases": [
         "黑龙江卫视高清"
