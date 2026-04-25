@@ -27,6 +27,7 @@ class LogoMatcher {
             // === CCTV 系列 ===
             { pattern: /^CCTV5\+/, logo: 'CCTV5+.png', desc: 'CCTV5+频道', priority: 35 },
             { pattern: /^CCTV4K/, logo: 'CCTV4K.png', desc: 'CCTV4K频道', priority: 35 },
+            { pattern: /^CCTV8K/, logo: 'CCTV8K.png', desc: 'CCTV8K频道', priority: 35 },
             { pattern: /^CCTV16五环/, logo: 'CCTV16五环.png', desc: 'CCTV16五环', priority: 35 },
             { pattern: /^CCTV4欧洲/, logo: 'CCTV4欧洲.png', desc: 'CCTV4欧洲', priority: 35 },
             { pattern: /^CCTV4美洲/, logo: 'CCTV4美洲.png', desc: 'CCTV4美洲', priority: 35 },

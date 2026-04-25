@@ -654,6 +654,7 @@ class UIHandler {
         const channel = this.editorConfig.getChannel(index);
         if (confirm(`确定要删除频道 "${channel.name}" 吗？`)) {
             this.editorConfig.deleteChannel(index);
+            this._checkCategoryFilter();
             this.renderChannelList(); this.updateStats();
             this.showToast('频道已删除', 'success');
         }
@@ -665,8 +666,19 @@ class UIHandler {
         if (confirm(`确定要删除选中的 ${checkboxes.length} 个频道吗？`)) {
             const indices = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
             this.editorConfig.deleteChannels(indices);
+            this._checkCategoryFilter();
             this.renderChannelList(); this.updateStats();
             this.showToast(`已删除 ${indices.length} 个频道`, 'success');
+        }
+    }
+
+    // 检查当前筛选分类是否还有频道，没有则自动取消筛选
+    _checkCategoryFilter() {
+        if (!this._categoryFilter) return;
+        const channels = this.editorConfig.getChannels();
+        const hasChannelInCategory = channels.some(ch => (ch.group || '未分组') === this._categoryFilter);
+        if (!hasChannelInCategory) {
+            this._categoryFilter = '';
         }
     }
 
