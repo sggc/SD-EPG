@@ -532,7 +532,9 @@ class UIHandler {
             if (channel.logo) {
                 const img = document.createElement('img');
                 img.src = channel.logo; img.className = 'channel-logo'; img.alt = '';
+                img.style.cursor = 'pointer';
                 img.onerror = () => { img.style.display = 'none'; };
+                img.addEventListener('click', (e) => { e.stopPropagation(); this._showLogoPreview(channel.logo); });
                 logoCell.appendChild(img);
             }
             row.appendChild(logoCell);
@@ -680,6 +682,18 @@ class UIHandler {
         if (!hasChannelInCategory) {
             this._categoryFilter = '';
         }
+    }
+
+    // Logo放大预览
+    _showLogoPreview(logoUrl) {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:center;justify-content:center;cursor:pointer;';
+        const img = document.createElement('img');
+        img.src = logoUrl;
+        img.style.cssText = 'max-width:300px;max-height:300px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.4);background:#e8e8e8;padding:8px;';
+        overlay.appendChild(img);
+        overlay.addEventListener('click', () => overlay.remove());
+        document.body.appendChild(overlay);
     }
 
     // ================================================================
