@@ -329,6 +329,12 @@ class UIHandler {
         const fileInput = document.getElementById('fileInput');
         if (fileInput) fileInput.value = '';
         this.converterChannels = [];
+        // 清空源EPG信息
+        this.sourceEpgUrl = '';
+        this.sourceEpgAttr = '';
+        // 清空文件列表显示
+        const fileList = document.getElementById('fileList');
+        if (fileList) fileList.innerHTML = '';
         this.showToast('已清空', 'success');
     }
 
@@ -423,7 +429,7 @@ class UIHandler {
     renderChannelList() {
         const el = this.elements;
         // 记住展开状态
-        const wasExpanded = this._channelListExpanded || false;
+        const wasExpanded = this._channelListExpanded !== undefined ? this._channelListExpanded : true;
         el.channelList.innerHTML = '';
         el.channelListHead.innerHTML = '';
         const oldToggle = document.getElementById('toggleRowsBtn');
@@ -715,6 +721,14 @@ class UIHandler {
         // 重置文件输入，允许重新选择相同文件
         const fileInput = document.getElementById('editorFileInput');
         if (fileInput) fileInput.value = '';
+        // 清空融合缓存
+        this.mergedChannels = [];
+        // 清空源EPG信息
+        this.sourceEpgUrl = '';
+        this.sourceEpgAttr = '';
+        // 清空文件列表显示
+        const fileList = document.getElementById('editorFileList');
+        if (fileList) fileList.innerHTML = '';
         this.editorConfig.clear();
         this.renderChannelList(); this.updateStats();
         this.showToast('已清空', 'success');
@@ -1314,7 +1328,7 @@ class UIHandler {
                     <input type="text" id="modalCatchupAppendParam" class="form-control" placeholder="示例: ?playseek=\${(b)yyyyMMddHHmmss}-\${(e)yyyyMMddHHmmss}">
                 </div>
                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
-                    效果：直播源URL + 追加参数 → catchup-source
+                    效果：catchup="append" catchup-source="追加参数"（播放器会自动拼在直播源URL后）
                 </div>
             </div>
             <div id="modalCatchupDefaultSection" class="hidden">
@@ -1386,7 +1400,8 @@ class UIHandler {
             if (type === 'append') {
                 const param = document.getElementById('modalCatchupAppendParam').value.trim();
                 if (!param) return;
-                catchupSource = ch.url + param;
+                // append模式：catchup-source就是尾部参数本身
+                catchupSource = param;
             } else {
                 const prefix = document.getElementById('modalCatchupDefaultPrefix').value.trim();
                 const suffix = document.getElementById('modalCatchupDefaultSuffix').value.trim();
