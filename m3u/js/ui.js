@@ -469,7 +469,7 @@ class UIHandler {
             <th style="width:36px;text-align:center;">回看</th>
             <th style="width:80px;">频道名称</th>
             <th style="width:35%;">URL</th>
-            <th style="width:50px;">操作</th>
+            <th style="width:78px;">操作</th>
         `;
         el.channelListHead.appendChild(headerRow);
         document.getElementById('selectAll')?.addEventListener('change', (e) => {
@@ -578,7 +578,7 @@ class UIHandler {
 
             // 操作
             const actionCell = document.createElement('td');
-            actionCell.style.cssText = 'white-space:nowrap;text-align:center;padding:2px 4px;';
+            actionCell.style.cssText = 'white-space:nowrap;text-align:center;padding:2px 2px;';
             const editBtn = document.createElement('button');
             editBtn.className = 'btn btn-outline btn-sm'; editBtn.textContent = '✏'; editBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
@@ -589,6 +589,45 @@ class UIHandler {
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
             deleteBtn.addEventListener('click', () => this.deleteChannel(realIndex));
             actionCell.appendChild(deleteBtn);
+            const moveBtn = document.createElement('button');
+            moveBtn.className = 'btn btn-outline btn-sm'; moveBtn.textContent = '⇅'; moveBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;cursor:grab;';
+            moveBtn.setAttribute('aria-label', `移动 ${channel.name}`);
+            moveBtn.setAttribute('draggable', 'true');
+            moveBtn.dataset.realIndex = realIndex;
+            moveBtn.addEventListener('dragstart', (e) => {
+                e.stopPropagation();
+                this._dragSourceIndex = realIndex;
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', String(realIndex));
+                row.classList.add('dragging');
+            });
+            moveBtn.addEventListener('dragend', () => {
+                row.classList.remove('dragging');
+                this._dragSourceIndex = null;
+                el.channelList.querySelectorAll('.drag-over').forEach(r => r.classList.remove('drag-over'));
+            });
+            actionCell.appendChild(moveBtn);
+
+            row.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                row.classList.add('drag-over');
+            });
+            row.addEventListener('dragleave', () => {
+                row.classList.remove('drag-over');
+            });
+            row.addEventListener('drop', (e) => {
+                e.preventDefault();
+                row.classList.remove('drag-over');
+                const fromIndex = this._dragSourceIndex;
+                if (fromIndex === null || fromIndex === undefined) return;
+                const toIndex = realIndex;
+                if (fromIndex === toIndex) return;
+                this.editorConfig.moveChannel(fromIndex, toIndex);
+                this.renderChannelList();
+                this.showToast('频道已移动', 'success');
+            });
+
             row.appendChild(actionCell);
 
             el.channelList.appendChild(row);
@@ -1679,6 +1718,7 @@ class UIHandler {
                 }
             });
 
+            this._checkCategoryFilter();
             this.renderChannelList();
             this.updateStats();
             this.showToast(`已将 ${changed} 个频道设为"${groupName}"`, 'success');
@@ -1699,6 +1739,7 @@ class UIHandler {
                 }
             });
 
+            this._checkCategoryFilter();
             this.renderChannelList();
             this.updateStats();
             this.showToast(`已将"${from}"重命名为"${to}"（${changed}个频道）`, 'success');

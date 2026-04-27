@@ -1280,3 +1280,12 @@ select.form-control {
         border: 1px solid #ddd;
     }
 }
+
+.channel-list tr.dragging {
+    opacity: 0.4;
+    background: var(--primary-light) !important;
+}
+
+.channel-list tr.drag-over {
+    border-top: 2px solid var(--primary-color);
+}

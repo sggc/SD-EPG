@@ -82,6 +82,18 @@ class ChannelConfig {
         return sortedIndices.length;
     }
 
+    /**
+     * 移动频道（从 fromIndex 移动到 toIndex）
+     */
+    moveChannel(fromIndex, toIndex) {
+        if (fromIndex < 0 || fromIndex >= this.channels.length) return false;
+        if (toIndex < 0 || toIndex >= this.channels.length) return false;
+        if (fromIndex === toIndex) return false;
+        const [channel] = this.channels.splice(fromIndex, 1);
+        this.channels.splice(toIndex, 0, channel);
+        return true;
+    }
+
     // ============================================================
     // Logo 配置
     // ============================================================
