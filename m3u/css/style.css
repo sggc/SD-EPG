@@ -1286,6 +1286,10 @@ select.form-control {
     background: var(--primary-light) !important;
 }
 
-.channel-list tr.drag-over {
+.channel-list tr.drag-over-top {
     border-top: 2px solid var(--primary-color);
+}
+
+.channel-list tr.drag-over-bottom {
+    border-bottom: 2px solid var(--primary-color);
 }

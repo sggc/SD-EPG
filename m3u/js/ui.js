@@ -580,12 +580,12 @@ class UIHandler {
             const actionCell = document.createElement('td');
             actionCell.style.cssText = 'white-space:nowrap;text-align:center;padding:2px 2px;';
             const editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-outline btn-sm'; editBtn.textContent = '✏'; editBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
+            editBtn.className = 'btn btn-outline btn-sm'; editBtn.textContent = '✏'; editBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;margin-right:3px;';
             editBtn.setAttribute('aria-label', `编辑 ${channel.name}`);
             editBtn.addEventListener('click', () => this.editChannel(realIndex));
             actionCell.appendChild(editBtn);
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.textContent = '🗑'; deleteBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;';
+            deleteBtn.className = 'btn btn-danger btn-sm'; deleteBtn.textContent = '🗑'; deleteBtn.style.cssText = 'padding:2px 5px;font-size:11px;line-height:1;margin-right:3px;';
             deleteBtn.setAttribute('aria-label', `删除 ${channel.name}`);
             deleteBtn.addEventListener('click', () => this.deleteChannel(realIndex));
             actionCell.appendChild(deleteBtn);
@@ -604,25 +604,39 @@ class UIHandler {
             moveBtn.addEventListener('dragend', () => {
                 row.classList.remove('dragging');
                 this._dragSourceIndex = null;
-                el.channelList.querySelectorAll('.drag-over').forEach(r => r.classList.remove('drag-over'));
+                el.channelList.querySelectorAll('.drag-over-top,.drag-over-bottom').forEach(r => { r.classList.remove('drag-over-top'); r.classList.remove('drag-over-bottom'); });
             });
             actionCell.appendChild(moveBtn);
 
             row.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
-                row.classList.add('drag-over');
+                const rect = row.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+                row.classList.remove('drag-over-top', 'drag-over-bottom');
+                if (e.clientY < midY) {
+                    row.classList.add('drag-over-top');
+                } else {
+                    row.classList.add('drag-over-bottom');
+                }
             });
             row.addEventListener('dragleave', () => {
-                row.classList.remove('drag-over');
+                row.classList.remove('drag-over-top', 'drag-over-bottom');
             });
             row.addEventListener('drop', (e) => {
                 e.preventDefault();
-                row.classList.remove('drag-over');
+                const isBefore = row.classList.contains('drag-over-top');
+                row.classList.remove('drag-over-top', 'drag-over-bottom');
                 const fromIndex = this._dragSourceIndex;
                 if (fromIndex === null || fromIndex === undefined) return;
-                const toIndex = realIndex;
+                let toIndex = realIndex;
                 if (fromIndex === toIndex) return;
+                if (isBefore && fromIndex < toIndex) {
+                    toIndex -= 1;
+                } else if (!isBefore && fromIndex > toIndex) {
+                    toIndex += 1;
+                }
+                if (fromIndex === toIndex || toIndex < 0 || toIndex >= this.editorConfig.getChannels().length) return;
                 this.editorConfig.moveChannel(fromIndex, toIndex);
                 this.renderChannelList();
                 this.showToast('频道已移动', 'success');
