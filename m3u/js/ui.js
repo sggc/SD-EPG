@@ -17,6 +17,11 @@ class UIHandler {
         // 融合模式：累积的频道数据
         this.mergedChannels = [];
 
+        // 撤销/恢复栈
+        this._undoStack = [];
+        this._redoStack = [];
+        this._maxUndoSize = 50;
+
         this.elements = {
             // 转换工具元素
             dropArea: document.getElementById('dropArea'),
@@ -173,6 +178,16 @@ class UIHandler {
         // 排序按钮
         const sortChannelsBtn = document.getElementById('sortChannelsBtn');
         if (sortChannelsBtn) sortChannelsBtn.addEventListener('click', () => this.showSortModal());
+
+        // 撤销/恢复按钮
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        if (undoBtn) undoBtn.addEventListener('click', () => this.undo());
+        if (redoBtn) redoBtn.addEventListener('click', () => this.redo());
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); this.undo(); }
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); this.redo(); }
+        });
 
         // 本地省份选择 - 选择后立即刷新列表
         const localProvince = document.getElementById('localProvince');
@@ -637,6 +652,7 @@ class UIHandler {
                     toIndex += 1;
                 }
                 if (fromIndex === toIndex || toIndex < 0 || toIndex >= this.editorConfig.getChannels().length) return;
+                this._saveSnapshot();
                 this.editorConfig.moveChannel(fromIndex, toIndex);
                 this.renderChannelList();
                 this.showToast('频道已移动', 'success');
@@ -682,6 +698,7 @@ class UIHandler {
         modal.appendChild(content); document.body.appendChild(modal);
 
         document.getElementById('save-edit').addEventListener('click', () => {
+            this._saveSnapshot();
             this.editorConfig.updateChannel(index, {
                 name: document.getElementById('edit-name').value.trim(),
                 url: document.getElementById('edit-url').value.trim(),
@@ -708,6 +725,7 @@ class UIHandler {
     deleteChannel(index) {
         const channel = this.editorConfig.getChannel(index);
         if (confirm(`确定要删除频道 "${channel.name}" 吗？`)) {
+            this._saveSnapshot();
             this.editorConfig.deleteChannel(index);
             this._checkCategoryFilter();
             this.renderChannelList(); this.updateStats();
@@ -720,6 +738,7 @@ class UIHandler {
         if (checkboxes.length === 0) { this.showToast('没有选中任何频道', 'warning'); return; }
         if (confirm(`确定要删除选中的 ${checkboxes.length} 个频道吗？`)) {
             const indices = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
+            this._saveSnapshot();
             this.editorConfig.deleteChannels(indices);
             this._checkCategoryFilter();
             this.renderChannelList(); this.updateStats();
@@ -735,6 +754,49 @@ class UIHandler {
         if (!hasChannelInCategory) {
             this._categoryFilter = '';
         }
+    }
+
+    _saveSnapshot() {
+        const snapshot = JSON.parse(JSON.stringify(this.editorConfig.getChannels()));
+        this._undoStack.push(snapshot);
+        if (this._undoStack.length > this._maxUndoSize) {
+            this._undoStack.shift();
+        }
+        this._redoStack = [];
+        this._updateUndoRedoButtons();
+    }
+
+    undo() {
+        if (this._undoStack.length === 0) return;
+        const current = JSON.parse(JSON.stringify(this.editorConfig.getChannels()));
+        this._redoStack.push(current);
+        const prev = this._undoStack.pop();
+        this.editorConfig.setChannels(prev);
+        this._checkCategoryFilter();
+        this.renderChannelList();
+        this.updateStats();
+        this._updateUndoRedoButtons();
+        this.showToast('已撤销', 'success');
+    }
+
+    redo() {
+        if (this._redoStack.length === 0) return;
+        const current = JSON.parse(JSON.stringify(this.editorConfig.getChannels()));
+        this._undoStack.push(current);
+        const next = this._redoStack.pop();
+        this.editorConfig.setChannels(next);
+        this._checkCategoryFilter();
+        this.renderChannelList();
+        this.updateStats();
+        this._updateUndoRedoButtons();
+        this.showToast('已恢复', 'success');
+    }
+
+    _updateUndoRedoButtons() {
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        if (undoBtn) undoBtn.disabled = this._undoStack.length === 0;
+        if (redoBtn) redoBtn.disabled = this._redoStack.length === 0;
     }
 
     // Logo放大预览
@@ -1010,6 +1072,7 @@ class UIHandler {
     clearCatchupAll() {
         if (this.editorConfig.getCount() === 0) { this.showToast('没有频道数据', 'warning'); return; }
         if (!confirm('确定要清除所有频道的回看源配置吗？')) return;
+        this._saveSnapshot();
         this.editorConfig.clearCatchupAll();
         this.renderChannelList();
         this.showToast('已清除所有回看源配置', 'success');
@@ -1084,6 +1147,7 @@ class UIHandler {
         if (matched === 0) { this.showToast('没有匹配到任何Logo', 'warning'); return; }
 
         // 应用匹配结果
+        this._saveSnapshot();
         results.forEach(r => {
             this.editorConfig.setLogo(r.index, r.logo);
         });
@@ -1157,6 +1221,7 @@ class UIHandler {
             if (checks.length === 0) { this.showToast('请至少选择一个参数', 'warning'); return; }
 
             const params = [...checks].map(c => c.dataset.param);
+            this._saveSnapshot();
             let cleared = 0;
             targetIndices.forEach(idx => {
                 const ch = channels[idx];
@@ -1233,6 +1298,7 @@ class UIHandler {
         document.getElementById('doAssignBtn').addEventListener('click', () => {
             const action = content.querySelector('input[name="assignAction"]:checked').value;
             const indices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+            this._saveSnapshot();
             let count = 0;
 
             indices.forEach(idx => {
@@ -1322,6 +1388,7 @@ class UIHandler {
         modal.appendChild(content); document.body.appendChild(modal);
 
         document.getElementById('doCleanBtn').addEventListener('click', () => {
+            this._saveSnapshot();
             preview.forEach(p => {
                 this.editorConfig.updateChannel(p.idx, { tvgName: p.to });
             });
@@ -1470,6 +1537,7 @@ class UIHandler {
 
         if (indices.length === 0) { this.showToast('没有选中的频道', 'warning'); return; }
 
+        this._saveSnapshot();
         let configured = 0;
         indices.forEach(idx => {
             const ch = channels[idx];
@@ -1561,6 +1629,7 @@ class UIHandler {
         }
 
         // 逐个分类并更新分组
+        this._saveSnapshot();
         let changed = 0;
         channels.forEach((ch, idx) => {
             const name = (ch.tvgName && ch.tvgName.trim()) || ch.name;
@@ -1677,7 +1746,7 @@ class UIHandler {
         content.innerHTML = `
             <h3 style="margin-top:0;">🏷️ 自定义分组</h3>
             <p style="font-size:13px; color:var(--text-muted);">
-                ${selectedIdxes.length > 0 ? `已选中 <b>${selectedIdxes.length}</b> 个频道` : '未选中频道，将应用到全部频道'}
+                ${selectedIdxes.length > 0 ? `已选中 <b>${selectedIdxes.length}</b> 个频道` : '未选中频道'}
             </p>
             <div class="form-group" style="margin-top:12px;">
                 <label class="form-label">选择或输入分组名称</label>
@@ -1687,6 +1756,9 @@ class UIHandler {
                         ${groups.map(g => `<option value="${g}">${g}</option>`).join('')}
                     </select>
                     <input type="text" id="customGroupInput" class="form-control" style="flex:1;" placeholder="或输入新分组名">
+                </div>
+                <div style="margin-top:8px;text-align:right;">
+                    <button id="customGroupApplyBtn" class="btn btn-primary btn-sm">应用分组</button>
                 </div>
             </div>
             <div class="form-group" style="margin-top:12px;">
@@ -1699,10 +1771,11 @@ class UIHandler {
                     <span style="color:var(--text-muted);">→</span>
                     <input type="text" id="renameGroupTo" class="form-control" style="flex:1;" placeholder="新名称">
                 </div>
+                <div style="margin-top:8px;text-align:right;">
+                    <button id="renameGroupApplyBtn" class="btn btn-outline btn-sm">重命名</button>
+                </div>
             </div>
             <div class="modal-actions">
-                <button id="customGroupApplyBtn" class="btn btn-primary">应用分组</button>
-                <button id="renameGroupApplyBtn" class="btn btn-outline">重命名</button>
                 <button id="customGroupCancelBtn" class="btn btn-outline">关闭</button>
             </div>
         `;
@@ -1718,12 +1791,14 @@ class UIHandler {
 
         // 应用分组
         content.querySelector('#customGroupApplyBtn').addEventListener('click', () => {
+            if (selectedIdxes.length === 0) { this.showToast('请先选择频道再应用分组', 'warning'); return; }
             const selectVal = content.querySelector('#customGroupSelect').value;
             const inputVal = content.querySelector('#customGroupInput').value.trim();
             const groupName = inputVal || selectVal;
             if (!groupName) { this.showToast('请选择或输入分组名称', 'warning'); return; }
 
-            const targets = selectedIdxes.length > 0 ? selectedIdxes : channels.map((_, i) => i);
+            this._saveSnapshot();
+            const targets = selectedIdxes;
             let changed = 0;
             targets.forEach(idx => {
                 if (channels[idx].group !== groupName) {
@@ -1745,6 +1820,7 @@ class UIHandler {
             const to = content.querySelector('#renameGroupTo').value.trim();
             if (!from || !to) { this.showToast('请选择原分组并输入新名称', 'warning'); return; }
 
+            this._saveSnapshot();
             let changed = 0;
             channels.forEach((ch, idx) => {
                 if (ch.group === from) {
@@ -1853,6 +1929,7 @@ class UIHandler {
             const groupOrder = [...list.querySelectorAll('li')].map(li => li.dataset.group);
 
             // 按分组顺序排列频道
+            this._saveSnapshot();
             const sorted = [...channels];
             sorted.sort((a, b) => {
                 const aIdx = groupOrder.indexOf(a.group);
