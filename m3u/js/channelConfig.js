@@ -94,6 +94,19 @@ class ChannelConfig {
         return true;
     }
 
+    /**
+     * 批量移动频道（将 fromIndices 对应的频道移到 toIndex 位置）
+     * fromIndices 中的频道会保持原有的相对顺序
+     */
+    moveChannels(fromIndices, toIndex) {
+        const sorted = [...fromIndices].sort((a, b) => a - b);
+        const moved = sorted.map(i => this.channels[i]);
+        sorted.sort((a, b) => b - a).forEach(i => this.channels.splice(i, 1));
+        const adjustedTo = Math.min(toIndex, this.channels.length);
+        this.channels.splice(adjustedTo, 0, ...moved);
+        return moved.length;
+    }
+
     // ============================================================
     // Logo 配置
     // ============================================================

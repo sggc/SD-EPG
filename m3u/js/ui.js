@@ -611,15 +611,26 @@ class UIHandler {
             moveBtn.dataset.realIndex = realIndex;
             moveBtn.addEventListener('dragstart', (e) => {
                 e.stopPropagation();
-                this._dragSourceIndex = realIndex;
+                const selectedIndices = this.getSelectedChannelIndices();
+                if (selectedIndices.length > 1 && selectedIndices.includes(realIndex)) {
+                    this._dragSourceIndices = [...selectedIndices].sort((a, b) => a - b);
+                } else {
+                    this._dragSourceIndices = [realIndex];
+                }
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/plain', String(realIndex));
-                row.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', String(this._dragSourceIndices.length));
+                if (this._dragSourceIndices.length > 1) {
+                    el.channelList.querySelectorAll('tr').forEach(r => {
+                        const cb = r.querySelector('.channel-checkbox');
+                        if (cb && cb.checked) r.classList.add('dragging');
+                    });
+                } else {
+                    row.classList.add('dragging');
+                }
             });
             moveBtn.addEventListener('dragend', () => {
-                row.classList.remove('dragging');
-                this._dragSourceIndex = null;
-                el.channelList.querySelectorAll('.drag-over-top,.drag-over-bottom').forEach(r => { r.classList.remove('drag-over-top'); r.classList.remove('drag-over-bottom'); });
+                el.channelList.querySelectorAll('.dragging,.drag-over-top,.drag-over-bottom').forEach(r => { r.classList.remove('dragging', 'drag-over-top', 'drag-over-bottom'); });
+                this._dragSourceIndices = null;
             });
             actionCell.appendChild(moveBtn);
 
@@ -642,20 +653,31 @@ class UIHandler {
                 e.preventDefault();
                 const isBefore = row.classList.contains('drag-over-top');
                 row.classList.remove('drag-over-top', 'drag-over-bottom');
-                const fromIndex = this._dragSourceIndex;
-                if (fromIndex === null || fromIndex === undefined) return;
+                const fromIndices = this._dragSourceIndices;
+                if (!fromIndices || fromIndices.length === 0) return;
                 let toIndex = realIndex;
-                if (fromIndex === toIndex) return;
-                if (isBefore && fromIndex < toIndex) {
-                    toIndex -= 1;
-                } else if (!isBefore && fromIndex > toIndex) {
-                    toIndex += 1;
+                const allChannels = this.editorConfig.getChannels();
+                if (fromIndices.includes(toIndex)) return;
+                if (isBefore) {
+                    const beforeCount = fromIndices.filter(i => i < toIndex).length;
+                    toIndex -= beforeCount;
+                } else {
+                    const beforeCount = fromIndices.filter(i => i <= toIndex).length;
+                    toIndex -= (beforeCount - 1);
+                    if (toIndex > fromIndices.filter(i => i > toIndex).length + toIndex) {
+                        toIndex = fromIndices.filter(i => i > toIndex).length + toIndex;
+                    }
                 }
-                if (fromIndex === toIndex || toIndex < 0 || toIndex >= this.editorConfig.getChannels().length) return;
+                toIndex = Math.max(0, Math.min(toIndex, allChannels.length - fromIndices.length));
+                if (fromIndices.length === 1 && fromIndices[0] === toIndex) return;
                 this._saveSnapshot();
-                this.editorConfig.moveChannel(fromIndex, toIndex);
+                if (fromIndices.length === 1) {
+                    this.editorConfig.moveChannel(fromIndices[0], toIndex);
+                } else {
+                    this.editorConfig.moveChannels(fromIndices, toIndex);
+                }
                 this.renderChannelList();
-                this.showToast('频道已移动', 'success');
+                this.showToast(`已移动 ${fromIndices.length} 个频道`, 'success');
             });
 
             row.appendChild(actionCell);

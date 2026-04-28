@@ -251,50 +251,46 @@ class FormatConverter {
         }
         m3u += '\n';
 
-        const groupedChannels = this.groupChannels(channels);
+        channels.forEach(channel => {
+            const group = channel.group || '未分组';
+            m3u += `#EXTINF:-1`;
 
-        for (const group in groupedChannels) {
+            if (channel.tvgId) {
+                m3u += ` tvg-id="${channel.tvgId}"`;
+            }
 
-            groupedChannels[group].forEach(channel => {
-                m3u += `#EXTINF:-1`;
+            if (channel.tvgName) {
+                m3u += ` tvg-name="${channel.tvgName}"`;
+            }
 
-                if (channel.tvgId) {
-                    m3u += ` tvg-id="${channel.tvgId}"`;
-                }
+            if (channel.logo) {
+                m3u += ` tvg-logo="${channel.logo}"`;
+            }
 
-                if (channel.tvgName) {
-                    m3u += ` tvg-name="${channel.tvgName}"`;
-                }
+            if (channel.catchup) {
+                m3u += ` catchup="${channel.catchup}"`;
+            }
 
-                if (channel.logo) {
-                    m3u += ` tvg-logo="${channel.logo}"`;
-                }
+            if (channel.catchupSource) {
+                m3u += ` catchup-source="${channel.catchupSource}"`;
+            }
 
-                if (channel.catchup) {
-                    m3u += ` catchup="${channel.catchup}"`;
-                }
+            if (channel.catchupDays) {
+                m3u += ` catchup-days="${channel.catchupDays}"`;
+            }
 
-                if (channel.catchupSource) {
-                    m3u += ` catchup-source="${channel.catchupSource}"`;
-                }
-
-                if (channel.catchupDays) {
-                    m3u += ` catchup-days="${channel.catchupDays}"`;
-                }
-
-                // 输出额外属性
-                if (channel.extraAttrs) {
-                    for (const [key, value] of Object.entries(channel.extraAttrs)) {
-                        if (value !== undefined && value !== '') {
-                            m3u += ` ${key}="${value}"`;
-                        }
+            // 输出额外属性
+            if (channel.extraAttrs) {
+                for (const [key, value] of Object.entries(channel.extraAttrs)) {
+                    if (value !== undefined && value !== '') {
+                        m3u += ` ${key}="${value}"`;
                     }
                 }
+            }
 
-                m3u += ` group-title="${group}",${channel.name}\n`;
-                m3u += `${channel.url}\n`;
-            });
-        }
+            m3u += ` group-title="${group}",${channel.name}\n`;
+            m3u += `${channel.url}\n`;
+        });
 
         return m3u;
     }
