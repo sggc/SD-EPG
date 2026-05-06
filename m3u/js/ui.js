@@ -1328,22 +1328,22 @@ class UIHandler {
                 const update = {};
                 switch (action) {
                     case 'name2tvgName':
-                        if (ch.name && !ch.tvgName) { update.tvgName = ch.name; }
+                        if (ch.name) { update.tvgName = ch.name; }
                         break;
                     case 'name2tvgId':
-                        if (ch.name && !ch.tvgId) { update.tvgId = ch.name; }
+                        if (ch.name) { update.tvgId = ch.name; }
                         break;
                     case 'tvgId2tvgName':
-                        if (ch.tvgId && !ch.tvgName) { update.tvgName = ch.tvgId; }
+                        if (ch.tvgId) { update.tvgName = ch.tvgId; }
                         break;
                     case 'tvgName2tvgId':
-                        if (ch.tvgName && !ch.tvgId) { update.tvgId = ch.tvgName; }
+                        if (ch.tvgName) { update.tvgId = ch.tvgName; }
                         break;
                     case 'tvgId2name':
-                        if (ch.tvgId && !ch.name) { update.name = ch.tvgId; }
+                        if (ch.tvgId) { update.name = ch.tvgId; }
                         break;
                     case 'tvgName2name':
-                        if (ch.tvgName && !ch.name) { update.name = ch.tvgName; }
+                        if (ch.tvgName) { update.name = ch.tvgName; }
                         break;
                 }
                 if (Object.keys(update).length > 0) {
