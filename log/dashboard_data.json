@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-05-07 05:46:35",
+  "lastUpdate": "2026-05-07 10:18:14",
   "whitelistChannels": 406,
   "matchedChannels": 391,
   "unmatchedChannels": 15,
-  "totalPrograms": 89391,
+  "totalPrograms": 89396,
   "filteredPrograms": 10607,
   "dateRange": "20260501 ~ 20260508",
-  "aliasCount": 437,
+  "aliasCount": 444,
   "epgSources": [
     {
       "name": "plsy1",
@@ -26,7 +26,7 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 526,
-      "programs": 130232,
+      "programs": 130273,
       "matched": 143
     },
     {
@@ -1204,7 +1204,8 @@
       "aliases": [
         "世界地理",
         "央视世界地理",
-        "CCTV-世界地理"
+        "CCTV-世界地理",
+        "世界地理高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -1218,7 +1219,8 @@
       "aliases": [
         "兵器科技",
         "央视兵器科技",
-        "CCTV-兵器科技"
+        "CCTV-兵器科技",
+        "兵器科技高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -1244,7 +1246,8 @@
       "aliases": [
         "央视台球",
         "台球",
-        "CCTV-央视台球"
+        "CCTV-央视台球",
+        "央视台球高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -1348,7 +1351,8 @@
       "aliases": [
         "风云足球",
         "央视风云足球",
-        "CCTV-风云足球"
+        "CCTV-风云足球",
+        "风云足球高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -1362,7 +1366,8 @@
       "aliases": [
         "风云音乐",
         "央视风云音乐",
-        "CCTV-风云音乐"
+        "CCTV-风云音乐",
+        "风云音乐高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -2823,8 +2828,8 @@
     {
       "id": "四川卫视",
       "name": "四川卫视",
-      "programs": 243,
-      "todayPrograms": 34,
+      "programs": 245,
+      "todayPrograms": 36,
       "source": "erwcc",
       "aliases": [
         "四川卫视高清",
@@ -3520,8 +3525,8 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 248,
-      "todayPrograms": 37,
+      "programs": 247,
+      "todayPrograms": 36,
       "source": "erwcc",
       "aliases": [
         "广西卫视高清"
@@ -3907,7 +3912,8 @@
         "欢笑剧场4K",
         "欢笑剧场超高清",
         "多彩文体",
-        "多彩文体4K"
+        "多彩文体4K",
+        "多彩文体超高清"
       ],
       "hasGap": false,
       "gaps": []
@@ -3969,7 +3975,9 @@
       "programs": 173,
       "todayPrograms": 25,
       "source": "erwcc",
-      "aliases": [],
+      "aliases": [
+        "武术世界高清"
+      ],
       "hasGap": false,
       "gaps": []
     },
@@ -5653,8 +5661,8 @@
     {
       "id": "重庆卫视",
       "name": "重庆卫视",
-      "programs": 274,
-      "todayPrograms": 36,
+      "programs": 278,
+      "todayPrograms": 40,
       "source": "erwcc",
       "aliases": [
         "重庆卫视高清"
