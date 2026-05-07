@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-05-07 13:43:43",
+  "lastUpdate": "2026-05-07 18:35:46",
   "whitelistChannels": 406,
   "matchedChannels": 391,
   "unmatchedChannels": 15,
-  "totalPrograms": 89139,
-  "filteredPrograms": 12157,
+  "totalPrograms": 89203,
+  "filteredPrograms": 12096,
   "dateRange": "20260501 ~ 20260508",
   "aliasCount": 444,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54834,
+      "programs": 54812,
       "matched": 155
     },
     {
@@ -27,7 +27,7 @@
       "enabled": true,
       "channels": 526,
       "programs": 130273,
-      "matched": 138
+      "matched": 140
     },
     {
       "name": "suming",
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 448,
-      "programs": 18262,
+      "programs": 18827,
       "matched": 1
     },
     {
@@ -419,7 +419,7 @@
         "16:25-16:40",
         "16:55-17:35",
         "19:00-19:50",
-        "21:35-22:00"
+        "21:40-22:00"
       ]
     },
     {
@@ -427,7 +427,7 @@
       "name": "泰安综合",
       "gaps": [
         "08:05-11:00",
-        "13:35-17:20",
+        "13:50-17:20",
         "17:30-17:50",
         "20:50-22:00"
       ]
@@ -819,8 +819,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 172,
-      "todayPrograms": 21,
+      "programs": 173,
+      "todayPrograms": 22,
       "source": "plsy1",
       "aliases": [
         "CCTV-11",
@@ -1056,7 +1056,7 @@
     {
       "id": "CCTV5",
       "name": "CCTV5",
-      "programs": 175,
+      "programs": 174,
       "todayPrograms": 24,
       "source": "plsy1",
       "aliases": [
@@ -2127,7 +2127,7 @@
       "id": "中国教育4",
       "name": "中国教育4",
       "programs": 495,
-      "todayPrograms": 53,
+      "todayPrograms": 54,
       "source": "plsy1",
       "aliases": [
         "中国教育-4",
@@ -2332,7 +2332,7 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 296,
+      "programs": 297,
       "todayPrograms": 37,
       "source": "plsy1",
       "aliases": [
@@ -2366,8 +2366,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 413,
-      "todayPrograms": 51,
+      "programs": 414,
+      "todayPrograms": 52,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -2764,8 +2764,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 285,
-      "todayPrograms": 36,
+      "programs": 287,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -3002,8 +3002,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 321,
-      "todayPrograms": 40,
+      "programs": 320,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "宁夏卫视高清"
@@ -3175,7 +3175,7 @@
       "id": "山东卫视",
       "name": "山东卫视",
       "programs": 249,
-      "todayPrograms": 31,
+      "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
         "山东卫视高清",
@@ -3264,9 +3264,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 152,
-      "todayPrograms": 16,
-      "source": "plsy1",
+      "programs": 225,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4314,8 +4314,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 354,
-      "todayPrograms": 47,
+      "programs": 347,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
         "河南卫视高清"
@@ -4382,8 +4382,8 @@
     {
       "id": "泰安经济生活",
       "name": "泰安经济生活",
-      "programs": 193,
-      "todayPrograms": 28,
+      "programs": 194,
+      "todayPrograms": 29,
       "source": "plsy1",
       "aliases": [],
       "hasGap": true,
@@ -4424,17 +4424,17 @@
           "duration": 50
         },
         {
-          "start": "21:35",
+          "start": "21:40",
           "stop": "22:00",
-          "duration": 25
+          "duration": 20
         }
       ]
     },
     {
       "id": "泰安综合",
       "name": "泰安综合",
-      "programs": 194,
-      "todayPrograms": 37,
+      "programs": 195,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "TATV-1"
@@ -4447,9 +4447,9 @@
           "duration": 175
         },
         {
-          "start": "13:35",
+          "start": "13:50",
           "stop": "17:20",
-          "duration": 225
+          "duration": 210
         },
         {
           "start": "17:30",
@@ -4705,9 +4705,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 245,
+      "programs": 246,
       "todayPrograms": 40,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清",
         "浙江卫视-4K",
@@ -4843,8 +4843,8 @@
     {
       "id": "湖南卫视",
       "name": "湖南卫视",
-      "programs": 299,
-      "todayPrograms": 38,
+      "programs": 301,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
         "湖南卫视高清",
@@ -5639,8 +5639,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 379,
-      "todayPrograms": 58,
+      "programs": 376,
+      "todayPrograms": 55,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -5979,8 +5979,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 266,
-      "todayPrograms": 34,
+      "programs": 257,
+      "todayPrograms": 33,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -6198,8 +6198,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 248,
-      "todayPrograms": 29,
+      "programs": 250,
+      "todayPrograms": 31,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
