@@ -1,9 +1,9 @@
 {
-  "lastUpdate": "2026-05-08 13:14:11",
-  "whitelistChannels": 406,
-  "matchedChannels": 390,
-  "unmatchedChannels": 16,
-  "totalPrograms": 89393,
+  "lastUpdate": "2026-05-08 17:55:45",
+  "whitelistChannels": 408,
+  "matchedChannels": 391,
+  "unmatchedChannels": 17,
+  "totalPrograms": 89878,
   "filteredPrograms": 12112,
   "dateRange": "20260502 ~ 20260509",
   "aliasCount": 444,
@@ -12,7 +12,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54689,
+      "programs": 54674,
       "matched": 155
     },
     {
@@ -27,13 +27,13 @@
       "enabled": true,
       "channels": 526,
       "programs": 130688,
-      "matched": 139
+      "matched": 140
     },
     {
       "name": "suming",
       "enabled": true,
-      "channels": 212,
-      "programs": 59194,
+      "channels": 213,
+      "programs": 59201,
       "matched": 59
     },
     {
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 445,
-      "programs": 17929,
+      "programs": 18756,
       "matched": 1
     },
     {
@@ -191,6 +191,11 @@
     {
       "id": "澳门莲花",
       "name": "澳门莲花",
+      "aliases": []
+    },
+    {
+      "id": "1905电影网",
+      "name": "1905电影网",
       "aliases": []
     }
   ],
@@ -818,8 +823,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 174,
-      "todayPrograms": 20,
+      "programs": 175,
+      "todayPrograms": 21,
       "source": "plsy1",
       "aliases": [
         "CCTV-11",
@@ -2080,6 +2085,16 @@
       "gaps": []
     },
     {
+      "id": "中国天气",
+      "name": "中国天气",
+      "programs": 483,
+      "todayPrograms": 69,
+      "source": "erwcc",
+      "aliases": [],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "中国教育1",
       "name": "中国教育1",
       "programs": 628,
@@ -2331,8 +2346,8 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 298,
-      "todayPrograms": 38,
+      "programs": 299,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "兵团卫视高清"
@@ -2763,8 +2778,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 286,
-      "todayPrograms": 37,
+      "programs": 287,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -4302,8 +4317,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 340,
-      "todayPrograms": 39,
+      "programs": 341,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
         "河南卫视高清"
@@ -4826,8 +4841,8 @@
     {
       "id": "湖南卫视",
       "name": "湖南卫视",
-      "programs": 296,
-      "todayPrograms": 35,
+      "programs": 300,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "湖南卫视高清",
@@ -5622,8 +5637,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 384,
-      "todayPrograms": 56,
+      "programs": 381,
+      "todayPrograms": 53,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -6176,8 +6191,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 250,
-      "todayPrograms": 34,
+      "programs": 247,
+      "todayPrograms": 31,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
