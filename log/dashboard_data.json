@@ -1,9 +1,9 @@
 {
-  "lastUpdate": "2026-05-08 17:55:45",
-  "whitelistChannels": 408,
+  "lastUpdate": "2026-05-08 18:40:15",
+  "whitelistChannels": 411,
   "matchedChannels": 391,
-  "unmatchedChannels": 17,
-  "totalPrograms": 89878,
+  "unmatchedChannels": 20,
+  "totalPrograms": 89915,
   "filteredPrograms": 12112,
   "dateRange": "20260502 ~ 20260509",
   "aliasCount": 444,
@@ -12,7 +12,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54674,
+      "programs": 54757,
       "matched": 155
     },
     {
@@ -196,6 +196,21 @@
     {
       "id": "1905电影网",
       "name": "1905电影网",
+      "aliases": []
+    },
+    {
+      "id": "峨眉电影4K",
+      "name": "峨眉电影4K",
+      "aliases": []
+    },
+    {
+      "id": "CHC华诚影视",
+      "name": "CHC华诚影视",
+      "aliases": []
+    },
+    {
+      "id": "中国电影频道北美版",
+      "name": "中国电影频道北美版",
       "aliases": []
     }
   ],
@@ -434,7 +449,7 @@
         "08:05-11:00",
         "13:35-17:20",
         "17:30-17:50",
-        "20:50-22:00"
+        "20:56-22:00"
       ]
     },
     {
@@ -977,7 +992,7 @@
     {
       "id": "CCTV3",
       "name": "CCTV3",
-      "programs": 214,
+      "programs": 212,
       "todayPrograms": 21,
       "source": "plsy1",
       "aliases": [
@@ -2097,7 +2112,7 @@
     {
       "id": "中国教育1",
       "name": "中国教育1",
-      "programs": 628,
+      "programs": 646,
       "todayPrograms": 63,
       "source": "plsy1",
       "aliases": [
@@ -4037,7 +4052,7 @@
     {
       "id": "江苏卫视",
       "name": "江苏卫视",
-      "programs": 259,
+      "programs": 264,
       "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
@@ -4432,7 +4447,7 @@
       "id": "泰安综合",
       "name": "泰安综合",
       "programs": 200,
-      "todayPrograms": 36,
+      "todayPrograms": 37,
       "source": "plsy1",
       "aliases": [
         "TATV-1"
@@ -4455,9 +4470,9 @@
           "duration": 20
         },
         {
-          "start": "20:50",
+          "start": "20:56",
           "stop": "22:00",
-          "duration": 70
+          "duration": 64
         }
       ]
     },
@@ -4841,7 +4856,7 @@
     {
       "id": "湖南卫视",
       "name": "湖南卫视",
-      "programs": 300,
+      "programs": 305,
       "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
@@ -5530,7 +5545,7 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 727,
+      "programs": 726,
       "todayPrograms": 96,
       "source": "plsy1",
       "aliases": [
@@ -5572,8 +5587,8 @@
     {
       "id": "贵州卫视",
       "name": "贵州卫视",
-      "programs": 400,
-      "todayPrograms": 46,
+      "programs": 407,
+      "todayPrograms": 53,
       "source": "plsy1",
       "aliases": [
         "贵州卫视高清"
@@ -5637,8 +5652,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 381,
-      "todayPrograms": 53,
+      "programs": 380,
+      "todayPrograms": 52,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -5972,8 +5987,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 258,
-      "todayPrograms": 27,
+      "programs": 268,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -6191,8 +6206,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 247,
-      "todayPrograms": 31,
+      "programs": 243,
+      "todayPrograms": 27,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
