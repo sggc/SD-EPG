@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-05-09 13:31:44",
+  "lastUpdate": "2026-05-09 17:44:25",
   "whitelistChannels": 411,
   "matchedChannels": 392,
   "unmatchedChannels": 19,
-  "totalPrograms": 89863,
-  "filteredPrograms": 12332,
+  "totalPrograms": 89928,
+  "filteredPrograms": 12314,
   "dateRange": "20260503 ~ 20260510",
   "aliasCount": 444,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54520,
+      "programs": 54498,
       "matched": 155
     },
     {
@@ -27,13 +27,13 @@
       "enabled": true,
       "channels": 524,
       "programs": 130662,
-      "matched": 141
+      "matched": 142
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 212,
-      "programs": 59101,
+      "programs": 59324,
       "matched": 59
     },
     {
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 444,
-      "programs": 17673,
+      "programs": 18813,
       "matched": 1
     },
     {
@@ -1502,8 +1502,8 @@
     {
       "id": "CHC家庭影院",
       "name": "CHC家庭影院",
-      "programs": 199,
-      "todayPrograms": 25,
+      "programs": 198,
+      "todayPrograms": 24,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -2774,8 +2774,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 286,
-      "todayPrograms": 33,
+      "programs": 293,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -2996,8 +2996,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 320,
-      "todayPrograms": 40,
+      "programs": 319,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "宁夏卫视高清"
@@ -3258,9 +3258,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 148,
-      "todayPrograms": 17,
-      "source": "plsy1",
+      "programs": 217,
+      "todayPrograms": 32,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5607,8 +5607,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 392,
-      "todayPrograms": 56,
+      "programs": 390,
+      "todayPrograms": 54,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -5927,8 +5927,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 267,
-      "todayPrograms": 33,
+      "programs": 261,
+      "todayPrograms": 27,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -6146,8 +6146,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 248,
-      "todayPrograms": 33,
+      "programs": 247,
+      "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
