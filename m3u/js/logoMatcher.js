@@ -299,6 +299,7 @@ class LogoMatcher {
             // === 广东 ===
             { pattern: /^广东经济科教/, logo: '广东/广东经济科教.png', desc: '广东经济科教', priority: 25 },
             { pattern: /^广东岭南戏曲/, logo: '广东/广东岭南戏曲.png', desc: '广东岭南戏曲', priority: 25 },
+            { pattern: /^岭南戏曲/, logo: '广东/广东岭南戏曲.png', desc: '岭南戏曲', priority: 25 },
             { pattern: /^广东民生/, logo: '广东/广东民生.png', desc: '广东民生', priority: 25 },
             { pattern: /^广东少儿/, logo: '广东/广东少儿.png', desc: '广东少儿', priority: 25 },
             { pattern: /^广东体育/, logo: '广东/广东体育.png', desc: '广东体育', priority: 25 },
@@ -309,6 +310,7 @@ class LogoMatcher {
             { pattern: /^广东移动/, logo: '广东/广东移动.png', desc: '广东移动', priority: 25 },
             { pattern: /^广东珠江/, logo: '广东/广东珠江.png', desc: '广东珠江', priority: 25 },
             { pattern: /^广东现代教育/, logo: '广东/广东现代教育.png', desc: '广东现代教育', priority: 25 },
+            { pattern: /^现代教育/, logo: '广东/广东现代教育.png', desc: '现代教育', priority: 25 },
 
             { pattern: /^广州综合/, logo: '广东/广州综合.png', desc: '广州综合', priority: 25 },
             { pattern: /^广州竞赛/, logo: '广东/广州竞赛.png', desc: '广州竞赛', priority: 25 },
@@ -357,6 +359,7 @@ class LogoMatcher {
             { pattern: /^广东大湾区卫视/, logo: '广东/广东大湾区卫视.png', desc: '广东大湾区卫视', priority: 25 },
             { pattern: /^大湾区卫视/, logo: '广东/广东大湾区卫视.png', desc: '大湾区卫视', priority: 25 },
             { pattern: /^广东南方购物/, logo: '广东/广东南方购物.png', desc: '广东南方购物', priority: 25 },
+            { pattern: /^南方购物/, logo: '广东/广东南方购物.png', desc: '南方购物', priority: 25 },
             { pattern: /^东莞生活资讯/, logo: '广东/东莞生活资讯.png', desc: '东莞生活资讯', priority: 25 },
             { pattern: /^东莞新闻综合/, logo: '广东/东莞新闻综合.png', desc: '东莞新闻综合', priority: 25 },
             { pattern: /^佛山综合/, logo: '广东/佛山综合.png', desc: '佛山综合', priority: 25 },
