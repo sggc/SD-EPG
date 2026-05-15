@@ -355,6 +355,7 @@ class LogoMatcher {
             { pattern: /^惠州2/, logo: '广东/惠州-2.png', desc: '惠州2', priority: 25 },
             { pattern: /^德庆综合/, logo: '广东/德庆综合.png', desc: '德庆综合', priority: 25 },
             { pattern: /^广东大湾区卫视/, logo: '广东/广东大湾区卫视.png', desc: '广东大湾区卫视', priority: 25 },
+            { pattern: /^大湾区卫视/, logo: '广东/广东大湾区卫视.png', desc: '大湾区卫视', priority: 25 },
             { pattern: /^广东南方购物/, logo: '广东/广东南方购物.png', desc: '广东南方购物', priority: 25 },
             { pattern: /^东莞生活资讯/, logo: '广东/东莞生活资讯.png', desc: '东莞生活资讯', priority: 25 },
             { pattern: /^东莞新闻综合/, logo: '广东/东莞新闻综合.png', desc: '东莞新闻综合', priority: 25 },
