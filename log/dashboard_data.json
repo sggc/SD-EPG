@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-05-16 13:38:20",
+  "lastUpdate": "2026-05-16 17:52:07",
   "whitelistChannels": 420,
   "matchedChannels": 402,
   "unmatchedChannels": 18,
-  "totalPrograms": 91740,
-  "filteredPrograms": 14637,
+  "totalPrograms": 91814,
+  "filteredPrograms": 14625,
   "dateRange": "20260510 ~ 20260517",
   "aliasCount": 471,
   "epgSources": [
@@ -12,7 +12,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53305,
+      "programs": 53298,
       "matched": 162
     },
     {
@@ -27,7 +27,7 @@
       "enabled": true,
       "channels": 522,
       "programs": 130574,
-      "matched": 143
+      "matched": 145
     },
     {
       "name": "suming",
@@ -75,7 +75,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 463,
-      "programs": 19333,
+      "programs": 20376,
       "matched": 2
     },
     {
@@ -866,8 +866,8 @@
     {
       "id": "CCTV14",
       "name": "CCTV14",
-      "programs": 135,
-      "todayPrograms": 13,
+      "programs": 136,
+      "todayPrograms": 14,
       "source": "plsy1",
       "aliases": [
         "CCTV-14",
@@ -2346,8 +2346,8 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 292,
-      "todayPrograms": 36,
+      "programs": 293,
+      "todayPrograms": 37,
       "source": "plsy1",
       "aliases": [
         "兵团卫视高清"
@@ -2381,7 +2381,7 @@
       "id": "农林卫视",
       "name": "农林卫视",
       "programs": 400,
-      "todayPrograms": 52,
+      "todayPrograms": 53,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -2554,8 +2554,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 383,
-      "todayPrograms": 58,
+      "programs": 367,
+      "todayPrograms": 45,
       "source": "plsy1",
       "aliases": [
         "北京卫视高清",
@@ -2571,8 +2571,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 383,
-      "todayPrograms": 58,
+      "programs": 367,
+      "todayPrograms": 45,
       "source": "plsy1",
       "aliases": [
         "北京卫视4K超高清",
@@ -3320,9 +3320,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 148,
-      "todayPrograms": 17,
-      "source": "plsy1",
+      "programs": 207,
+      "todayPrograms": 32,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4418,8 +4418,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 360,
-      "todayPrograms": 38,
+      "programs": 369,
+      "todayPrograms": 47,
       "source": "plsy1",
       "aliases": [
         "河南卫视高清"
@@ -4793,9 +4793,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 243,
-      "todayPrograms": 28,
-      "source": "plsy1",
+      "programs": 262,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清",
         "浙江卫视-4K",
@@ -4809,9 +4809,9 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 243,
-      "todayPrograms": 28,
-      "source": "plsy1",
+      "programs": 262,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视4K超高清",
         "浙江卫视超高清",
@@ -5636,7 +5636,7 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 764,
+      "programs": 763,
       "todayPrograms": 98,
       "source": "plsy1",
       "aliases": [
@@ -5748,8 +5748,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 421,
-      "todayPrograms": 58,
+      "programs": 418,
+      "todayPrograms": 55,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -5758,9 +5758,9 @@
     {
       "id": "重庆卫视",
       "name": "重庆卫视",
-      "programs": 261,
-      "todayPrograms": 41,
-      "source": "erwcc",
+      "programs": 265,
+      "todayPrograms": 38,
+      "source": "plsy1",
       "aliases": [
         "重庆卫视高清"
       ],
@@ -6287,8 +6287,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 237,
-      "todayPrograms": 33,
+      "programs": 235,
+      "todayPrograms": 31,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
