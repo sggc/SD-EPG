@@ -100,7 +100,6 @@ class FormatConverter {
         while (i < lines.length) {
             if (lines[i].trim().startsWith('#EXTINF:')) {
                 const name = lines[i].split(',')[1]?.trim() || '';
-                const url = lines[i + 1]?.trim() || '';
                 const extinfLine = lines[i];
 
                 // 提取所有属性
@@ -111,31 +110,42 @@ class FormatConverter {
                     allAttrs[m[1]] = m[2];
                 }
 
-                const channel = {
-                    name: name,
-                    url: url,
-                    logo: allAttrs['tvg-logo'] || '',
-                    group: allAttrs['group-title'] || '',
-                    tvgId: allAttrs['tvg-id'] || '',
-                    tvgName: allAttrs['tvg-name'] || '',
-                    catchup: allAttrs['catchup'] || '',
-                    catchupSource: allAttrs['catchup-source'] || '',
-                    catchupDays: allAttrs['catchup-days'] || '',
-                    // 保留所有额外属性
-                    extraAttrs: {}
-                };
-
-                // 收集非标准属性到extraAttrs
-                for (const [key, value] of Object.entries(allAttrs)) {
-                    if (!knownAttrs.includes(key)) {
-                        channel.extraAttrs[key] = value;
+                // 收集EXTINF后面所有连续的URL行作为多源
+                const urls = [];
+                let j = i + 1;
+                while (j < lines.length) {
+                    const line = lines[j].trim();
+                    if (line && !line.startsWith('#')) {
+                        if (this.isValidUrl(line)) urls.push(line);
+                        j++;
+                    } else {
+                        break;
                     }
                 }
 
-                if (this.isValidUrl(channel.url)) {
+                // 每个URL生成一个独立的频道对象
+                urls.forEach(url => {
+                    const channel = {
+                        name: name,
+                        url: url,
+                        logo: allAttrs['tvg-logo'] || '',
+                        group: allAttrs['group-title'] || '',
+                        tvgId: allAttrs['tvg-id'] || '',
+                        tvgName: allAttrs['tvg-name'] || '',
+                        catchup: allAttrs['catchup'] || '',
+                        catchupSource: allAttrs['catchup-source'] || '',
+                        catchupDays: allAttrs['catchup-days'] || '',
+                        extraAttrs: {}
+                    };
+                    for (const [key, value] of Object.entries(allAttrs)) {
+                        if (!knownAttrs.includes(key)) {
+                            channel.extraAttrs[key] = value;
+                        }
+                    }
                     channels.push(channel);
-                }
-                i += 2;
+                });
+
+                i = j;
             } else {
                 i++;
             }
