@@ -474,6 +474,7 @@ class UIHandler {
         const headerRow = document.createElement('tr');
         headerRow.innerHTML = `
             <th style="width:28px;"><input type="checkbox" id="selectAll" class="form-check-input" aria-label="全选" style="margin:0;"></th>
+            <th style="width:32px;">#</th>
             <th style="width:55px;max-width:55px;">tvg-id</th>
             <th style="width:55px;max-width:55px;">tvg-name</th>
             <th style="width:32px;">Logo</th>
@@ -526,6 +527,12 @@ class UIHandler {
             cb.style.margin = '0';
             cb.setAttribute('aria-label', `选择 ${channel.name}`);
             checkboxCell.appendChild(cb); row.appendChild(checkboxCell);
+
+            // 序号
+            const indexCell = document.createElement('td');
+            indexCell.style.cssText = 'text-align:center;font-size:11px;color:var(--text-muted);padding:4px;';
+            indexCell.textContent = realIndex + 1;
+            row.appendChild(indexCell);
 
             // tvg-id
             const tvgIdCell = document.createElement('td');
@@ -1163,19 +1170,56 @@ class UIHandler {
         const channels = this.editorConfig.getChannels();
         if (channels.length === 0) { this.showToast('没有频道数据', 'warning'); return; }
 
-        const overwrite = confirm('是否覆盖已有Logo的频道？\n\n确定 = 覆盖所有频道Logo\n取消 = 仅匹配无Logo的频道');
-        const { matched, results } = this.logoMatcher.matchAll(channels, overwrite);
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        const dialog = document.createElement('div');
+        dialog.style.cssText = 'background:var(--card-bg);border-radius:12px;padding:24px;min-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.3);';
 
-        if (matched === 0) { this.showToast('没有匹配到任何Logo', 'warning'); return; }
+        dialog.innerHTML = `
+            <h3 style="margin:0 0 16px 0;font-size:16px;">🎯 匹配Logo</h3>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">图标库地址（替换默认logo基础路径）</label>
+                <input type="text" id="logoBasePathInput" class="form-control" style="width:100%;padding:4px 8px;font-size:12px;"
+                    value="${this.logoMatcher.logoBasePath}" placeholder="https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/">
+                <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">默认: https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/</div>
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">加速前缀（可选，拼在图标库地址前面）</label>
+                <input type="text" id="logoAccelPrefix" class="form-control" style="width:100%;padding:4px 8px;font-size:12px;"
+                    value="https://gh-proxy.org/" placeholder="如 https://gh-proxy.org/">
+            </div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;">
+                <button id="matchAllBtn" class="btn btn-primary btn-sm">匹配所有</button>
+                <button id="matchMissingBtn" class="btn btn-primary btn-sm">只匹配没有的</button>
+                <button id="matchCancelBtn" class="btn btn-outline btn-sm">取消</button>
+            </div>
+        `;
+        overlay.appendChild(dialog);
+        document.body.appendChild(overlay);
 
-        // 应用匹配结果
-        this._saveSnapshot();
-        results.forEach(r => {
-            this.editorConfig.setLogo(r.index, r.logo);
-        });
+        const close = () => overlay.remove();
+        dialog.querySelector('#matchCancelBtn').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
 
-        this.renderChannelList();
-        this.showToast(`已为 ${matched} 个频道自动匹配Logo`, 'success');
+        const doMatch = (overwrite) => {
+            const basePathInput = dialog.querySelector('#logoBasePathInput').value.trim();
+            const accelInput = dialog.querySelector('#logoAccelPrefix').value.trim();
+            this.logoMatcher.logoBasePath = basePathInput || 'https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/';
+            this.logoMatcher._accelPrefix = accelInput;
+            close();
+
+            const { matched, results } = this.logoMatcher.matchAll(channels, overwrite);
+            if (matched === 0) { this.showToast('没有匹配到任何Logo', 'warning'); return; }
+            this._saveSnapshot();
+            results.forEach(r => {
+                this.editorConfig.setLogo(r.index, r.logo);
+            });
+            this.renderChannelList();
+            this.showToast(`已为 ${matched} 个频道自动匹配Logo`, 'success');
+        };
+
+        dialog.querySelector('#matchAllBtn').addEventListener('click', () => doMatch(true));
+        dialog.querySelector('#matchMissingBtn').addEventListener('click', () => doMatch(false));
     }
 
     // ================================================================
@@ -1712,7 +1756,7 @@ class UIHandler {
 
     getAccelPrefix() {
         const input = document.getElementById('logoAccelPrefix');
-        return input ? input.value.trim() : '';
+        return input ? input.value.trim() : (this.logoMatcher._accelPrefix || '');
     }
 
     applyAccelToUrl(url) {

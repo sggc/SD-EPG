@@ -14,7 +14,7 @@ class LogoMatcher {
 
     getBaseUrl() {
         const accelInput = document.getElementById('logoAccelPrefix');
-        const accel = accelInput ? accelInput.value.trim() : '';
+        const accel = accelInput ? accelInput.value.trim() : (this._accelPrefix || '');
         return (accel || '') + this.logoBasePath;
     }
 
