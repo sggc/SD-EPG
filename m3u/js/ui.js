@@ -1471,7 +1471,13 @@ class UIHandler {
     _doCleanTvgName(name) {
         let cleaned = name;
 
-        // CCTV系列专门清洗：CCTV1, CCTV5+, CCTV4欧洲, CCTV4美洲, CCTV4K
+        // CCTV系列专门清洗：CCTV4K, CCTV8K, CCTV5+, CCTV4欧洲, CCTV4美洲
+        const cctvKMatch = cleaned.match(/^CCTV[\s\-_]*(4K|8K)/i);
+        if (cctvKMatch) {
+            cleaned = 'CCTV' + cctvKMatch[1].toUpperCase();
+            return cleaned;
+        }
+
         const cctvMatch = cleaned.match(/^CCTV[\s\-_]*(\d+)(.*)$/i);
         if (cctvMatch) {
             const num = cctvMatch[1];
@@ -1482,8 +1488,6 @@ class UIHandler {
                 cleaned = 'CCTV4欧洲';
             } else if (num === '4' && /美洲/i.test(rest)) {
                 cleaned = 'CCTV4美洲';
-            } else if (/^4K$/i.test(rest)) {
-                cleaned = 'CCTV4K';
             } else {
                 cleaned = 'CCTV' + num;
             }
