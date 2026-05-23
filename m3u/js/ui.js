@@ -1507,6 +1507,9 @@ class UIHandler {
         // "清"单独出现时也去掉（如"山东卫视清"）
         cleaned = cleaned.replace(/清$/g, '');
 
+        // 去掉码率后缀（如 -18M、-27M、_20M、 15M 等）
+        cleaned = cleaned.replace(/[\s\-_]\d+M$/i, '');
+
         // 去掉"频道"后缀
         cleaned = cleaned.replace(/频道$/, '');
 

@@ -178,6 +178,10 @@ class LogoMatcher {
             { pattern: /^爱生活/, logo: '爱生活.png', desc: '爱生活', priority: 20 },
             { pattern: /^爱电影/, logo: '爱电影.png', desc: '爱电影', priority: 20 },
             { pattern: /^爱综艺/, logo: '爱综艺.png', desc: '爱综艺', priority: 20 },
+            { pattern: /^IPTV3\+/, logo: '爱综艺.png', desc: 'IPTV3+→爱综艺', priority: 20 },
+            { pattern: /^IPTV5\+/, logo: '爱体育.png', desc: 'IPTV5+→爱体育', priority: 20 },
+            { pattern: /^IPTV6\+/, logo: '爱电影.png', desc: 'IPTV6+→爱电影', priority: 20 },
+            { pattern: /^IPTV8\+/, logo: '爱大剧.png', desc: 'IPTV8+→爱大剧', priority: 20 },
 
             // === 纯中文频道名匹配（清洗后名称，无需$结尾） ===
             { pattern: /^中华特产/, logo: '中华特产.png', desc: '中华特产', priority: 20 },
