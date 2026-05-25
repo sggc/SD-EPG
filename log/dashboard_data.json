@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-05-26 04:46:01",
+  "lastUpdate": "2026-05-26 05:53:52",
   "whitelistChannels": 420,
-  "matchedChannels": 400,
-  "unmatchedChannels": 20,
-  "totalPrograms": 94630,
+  "matchedChannels": 401,
+  "unmatchedChannels": 19,
+  "totalPrograms": 94656,
   "filteredPrograms": 12895,
   "dateRange": "20260520 ~ 20260527",
-  "aliasCount": 467,
+  "aliasCount": 469,
   "epgSources": [
     {
       "name": "plsy1",
@@ -61,7 +61,7 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1412,
-      "programs": 332757,
+      "programs": 340782,
       "matched": 32
     },
     {
@@ -74,9 +74,9 @@
     {
       "name": "liliu",
       "enabled": true,
-      "channels": 0,
-      "programs": 0,
-      "matched": 0
+      "channels": 463,
+      "programs": 19302,
+      "matched": 2
     },
     {
       "name": "loc",
@@ -94,14 +94,6 @@
     }
   ],
   "unmatchedList": [
-    {
-      "id": "凤凰卫视电影台",
-      "name": "凤凰卫视电影台",
-      "aliases": [
-        "凤凰电影",
-        "凤凰卫视电影"
-      ]
-    },
     {
       "id": "威海海洋生活",
       "name": "威海海洋生活",
@@ -2765,6 +2757,19 @@
         "凤凰中文",
         "凤凰卫视",
         "凤凰中文台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "凤凰卫视电影台",
+      "name": "凤凰卫视电影台",
+      "programs": 26,
+      "todayPrograms": 13,
+      "source": "liliu",
+      "aliases": [
+        "凤凰电影",
+        "凤凰电影台"
       ],
       "hasGap": false,
       "gaps": []
