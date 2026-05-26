@@ -43,6 +43,8 @@ const SVGs = {
     edit: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
     lock: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     user: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    film: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>`,
+    percent: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`,
     logout: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`
 };
 
@@ -132,9 +134,9 @@ pages.home = async function() {
         <section class="stats-section">
             <div class="stat-card"><div class="stat-icon channels">${SVGs.tv}</div><div class="stat-content"><span class="stat-value">${stats.whitelistChannels.toLocaleString()}</span><span class="stat-label">白名单频道</span></div></div>
             <div class="stat-card"><div class="stat-icon matched">${SVGs.check}</div><div class="stat-content"><span class="stat-value">${stats.matchedChannels.toLocaleString()}</span><span class="stat-label">成功匹配</span></div></div>
-            <div class="stat-card"><div class="stat-icon programs">${SVGs.file}</div><div class="stat-content"><span class="stat-value">${stats.totalPrograms.toLocaleString()}</span><span class="stat-label">总节目数</span></div></div>
+            <div class="stat-card"><div class="stat-icon programs">${SVGs.film}</div><div class="stat-content"><span class="stat-value">${stats.totalPrograms.toLocaleString()}</span><span class="stat-label">总节目数</span></div></div>
             <div class="stat-card"><div class="stat-icon sources">${SVGs.globe}</div><div class="stat-content"><span class="stat-value">${stats.epgSources.filter(s=>!s.disabled).length}</span><span class="stat-label">EPG 数据源</span></div></div>
-            <div class="stat-card"><div class="stat-icon desc-rate">${SVGs.file}</div><div class="stat-content"><span class="stat-value">${stats.descMatchRate || 0}%</span><span class="stat-label">描述匹配率</span></div></div>
+            <div class="stat-card"><div class="stat-icon desc-rate">${SVGs.percent}</div><div class="stat-content"><span class="stat-value">${stats.descMatchRate || 0}%</span><span class="stat-label">描述匹配率</span></div></div>
             <div class="stat-card"><div class="stat-icon date">${SVGs.calendar}</div><div class="stat-content"><span class="stat-value">${fdr(stats.dateRange)}</span><span class="stat-label">数据日期范围</span></div></div>
         </section>
 
