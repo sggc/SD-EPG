@@ -123,7 +123,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .stat-icon.desc-rate { background: rgba(139,92,246,0.1); color: #7c3aed; }
 .stat-icon.date { background: rgba(20,184,166,0.1); color: #14b8a6; }
 .stat-content { display: flex; flex-direction: column; min-width: 0; flex: 1; align-items: center; justify-content: center; text-align: center; }
-.stat-value { font-size: var(--text-lg); font-weight: 700; line-height: 1.2; color: var(--text); }
+.stat-value { font-size: var(--text-lg); font-weight: 700; line-height: 1.2; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 .stat-label { font-size: var(--text-xs); color: var(--text-muted); margin-top: 0.125rem; }
 
 /* EPG Links */
