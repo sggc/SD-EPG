@@ -110,6 +110,21 @@ const App = {
             if (loginBtn) loginBtn.style.display = '';
             if (userMenu) userMenu.style.display = 'none';
         }
+    },
+
+    toggleNav() {
+        const nav = document.getElementById('main-nav');
+        const backdrop = document.getElementById('nav-backdrop');
+        if (!nav) return;
+        const isOpen = nav.classList.toggle('open');
+        if (backdrop) backdrop.classList.toggle('show', isOpen);
+    },
+
+    closeNav() {
+        const nav = document.getElementById('main-nav');
+        const backdrop = document.getElementById('nav-backdrop');
+        if (nav) nav.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('show');
     }
 };
 

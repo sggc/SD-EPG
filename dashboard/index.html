@@ -17,7 +17,10 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 <span>SD-EPG</span>
             </a>
-            <nav class="nav" id="main-nav">
+            <button class="hamburger-btn" id="hamburger-btn" onclick="App.toggleNav()" title="菜单">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <nav class="nav" id="main-nav" onclick="App.closeNav()">
                 <a href="#/" class="nav-link" data-route="/">首页</a>
                 <a href="#/channels" class="nav-link" data-route="/channels">频道列表</a>
                 <a href="#/details" class="nav-link" data-route="/details">详细信息</a>
@@ -56,6 +59,8 @@
             </div>
         </div>
     </header>
+
+    <div class="nav-backdrop" id="nav-backdrop" onclick="App.closeNav()" style="display:none"></div>
 
     <main id="app-content">
         <div class="loading-container">

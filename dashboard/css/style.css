@@ -90,6 +90,10 @@ button { cursor: pointer; font-family: inherit; }
 .dropdown-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; color: var(--text); width: 100%; background: none; border: none; text-align: left; cursor: pointer; font-size: var(--text-sm); }
 .dropdown-item:hover { background: var(--bg-hover); text-decoration: none; }
 
+.hamburger-btn { display: none; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+.hamburger-btn:hover { background: var(--bg-hover); color: var(--text); border-color: var(--primary); }
+.nav-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 99; }
+
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
 .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; width: 90%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
@@ -447,7 +451,11 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .login-text p { font-size: var(--text-xs); color: var(--text-muted); }
 
 @media (max-width: 900px) {
-    .nav { display: none; }
+    .hamburger-btn { display: flex; }
+    .nav { display: none; position: fixed; top: 0; left: 0; bottom: 0; width: 250px; flex-direction: column; background: var(--bg-card); border-right: 1px solid var(--border); box-shadow: var(--shadow-lg); z-index: 100; padding: 1rem 0.75rem; gap: 0.25rem; overflow-y: auto; }
+    .nav.open { display: flex; }
+    .nav .nav-link { padding: 0.75rem 1rem; font-size: 0.9rem; border-radius: var(--radius-sm); }
+    .nav-backdrop.show { display: block; }
     .username { display: none; }
 }
 @media (max-width: 768px) {
