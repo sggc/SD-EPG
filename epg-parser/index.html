@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPG 电子节目单解析工具</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-top">
+            <div class="header-left">
+                <span class="dot"></span>
+                <h1>EPG 电子节目单解析工具</h1>
+            </div>
+            <div class="header-actions">
+                <input type="file" id="file-input" accept=".xml,.xml.gz,.gz" style="display:none">
+                <button class="btn" id="btn-load-file">📂 打开文件</button>
+                <button class="btn" id="btn-load-url">🌐 从URL获取</button>
+                <button class="btn" id="btn-export">📤 导出</button>
+                <button class="btn btn-sm" id="btn-reset" title="重置所有筛选">🔄 重置</button>
+                <span class="file-info" id="file-info">未加载文件</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-label">频道</div>
+            <div class="stat-value" id="stat-channels">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">节目</div>
+            <div class="stat-value" id="stat-programmes">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">含简介</div>
+            <div class="stat-value" id="stat-with-desc">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">别名</div>
+            <div class="stat-value" id="stat-aliases">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">日期范围</div>
+            <div class="stat-value" id="stat-date-range" style="font-size:13px">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">天数</div>
+            <div class="stat-value" id="stat-dates">--</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">match率</div>
+            <div class="stat-value" id="stat-rate">--%</div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <aside class="channel-panel">
+            <div class="panel-header">
+                <div class="search-wrap">
+                    <input type="text" id="ch-search" placeholder="🔍 搜索频道...">
+                    <button class="clear-btn" id="ch-search-clear">✕</button>
+                </div>
+                <select id="global-date" style="width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font);margin-bottom:6px;background:var(--bg-card)">
+                    <option value="全部">全部</option>
+                </select>
+            </div>
+            <div class="ch-summary" id="ch-summary"></div>
+            <div class="ch-list-header">
+                <span style="text-align:left">频道名称</span>
+                <span>别名</span>
+                <span>节目</span>
+                <span>简介</span>
+                <span>match率</span>
+            </div>
+            <div class="channel-list" id="ch-list">
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <h3>加载 EPG 数据</h3>
+                    <p>拖放 XML / XML.gz 文件到此处，或点击"打开文件"/"从URL获取"按钮加载 EPG 数据</p>
+                </div>
+            </div>
+        </aside>
+
+        <div class="resizer" id="resizer-h"></div>
+
+        <section class="detail-panel">
+            <div class="channel-info" id="ch-info-content">
+                <div class="empty-state">
+                    <div class="empty-icon">👈</div>
+                    <p>选择左侧频道查看详情</p>
+                </div>
+            </div>
+
+            <div class="prog-section">
+                <div class="prog-filters">
+                    <label>日期：</label>
+                    <select id="local-date">
+                        <option value="全部">全部</option>
+                    </select>
+                    <label>简介：</label>
+                    <select id="desc-filter">
+                        <option value="all">全部</option>
+                        <option value="has_desc">有简介</option>
+                        <option value="no_desc">无简介</option>
+                    </select>
+                    <span class="prog-count" id="prog-count"></span>
+                </div>
+                <div class="prog-table-header">
+                    <span>日期</span>
+                    <span>开始</span>
+                    <span>结束</span>
+                    <span>时长</span>
+                    <span style="text-align:left">节目名称</span>
+                    <span>简介</span>
+                </div>
+                <div class="prog-table-wrap" id="prog-list"></div>
+            </div>
+
+            <div class="resizer-v" id="resizer-v"></div>
+
+            <div class="bottom-panels" id="bottom-panels">
+                <div class="prog-detail" id="prog-detail-content">
+                    <div class="empty-state">
+                        <p>选择节目查看详情</p>
+                    </div>
+                </div>
+                <div class="missing-panel">
+                    <div class="mp-header">
+                        <h4>⚠ 缺失简介的节目</h4>
+                        <span class="mp-count" id="missing-count"></span>
+                    </div>
+                    <ul class="missing-list" id="missing-list"></ul>
+                    <div class="mp-actions">
+                        <button class="btn btn-sm" id="copy-missing-btn">📋 复制缺失列表</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="status-bar">
+        <span id="status-text">就绪 — 拖放文件到页面，或点击按钮加载 EPG 数据</span>
+    </div>
+
+    <div class="modal-overlay" id="url-modal" style="display:none">
+        <div class="modal">
+            <div class="modal-header">
+                <span>从URL获取EPG</span>
+                <button class="modal-close" id="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <label>EPG URL：</label>
+                <input type="url" id="url-input" placeholder="https://example.com/epg.xml.gz">
+                <label>历史记录（双击使用）：</label>
+                <div class="url-history-list" id="url-history-list"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="modal-cancel">取消</button>
+                <button class="btn btn-primary" id="modal-load">📥 获取</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay" style="display:none">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p id="loading-text">正在加载...</p>
+        </div>
+    </div>
+
+    <div id="drop-overlay">📂 释放文件以加载</div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/epg-parser.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+const HISTORY_KEY = 'epg_parser_history';
+const MAX_HISTORY = 20;
+
+function formatFileSize(bytes) {
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let n = bytes;
+    for (const u of units) {
+        if (n < 1024) return n.toFixed(1) + ' ' + u;
+        n /= 1024;
+    }
+    return n.toFixed(1) + ' TB';
+}
+
+function parseXmltvTime(s) {
+    try {
+        const clean = s.trim();
+        const parts = clean.split(' ');
+        const dtStr = parts[0];
+        if (dtStr.length < 14) return null;
+        const year = +dtStr.slice(0, 4);
+        const month = +dtStr.slice(4, 6) - 1;
+        const day = +dtStr.slice(6, 8);
+        const hour = +dtStr.slice(8, 10);
+        const min = +dtStr.slice(10, 12);
+        const sec = +dtStr.slice(12, 14);
+        return new Date(year, month, day, hour, min, sec);
+    } catch (e) {
+        return null;
+    }
+}
+
+function formatXmltvTime(s) {
+    const dt = parseXmltvTime(s);
+    if (!dt) return s;
+    const tz = s.trim().split(' ')[1] || '';
+    const y = dt.getFullYear();
+    const m = String(dt.getMonth() + 1).padStart(2, '0');
+    const d = String(dt.getDate()).padStart(2, '0');
+    const h = String(dt.getHours()).padStart(2, '0');
+    const min = String(dt.getMinutes()).padStart(2, '0');
+    const sec = String(dt.getSeconds()).padStart(2, '0');
+    return `${y}-${m}-${d} ${h}:${min}:${sec}` + (tz ? ` (${tz})` : '');
+}
+
+function calcDuration(startDt, stopDt) {
+    if (!startDt || !stopDt) return '';
+    const m = Math.round((stopDt - startDt) / 60000);
+    if (m >= 60) {
+        return Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0') + 'm';
+    }
+    return m + '\u5206\u949F';
+}
+
+function loadHistory() {
+    try {
+        const raw = localStorage.getItem(HISTORY_KEY);
+        return raw ? JSON.parse(raw) : { urls: [], saved: [] };
+    } catch (e) {
+        return { urls: [], saved: [] };
+    }
+}
+
+function saveHistory(data) {
+    try {
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
+    } catch (e) {}
+}
+
+function addHistoryUrl(url) {
+    const h = loadHistory();
+    const urls = h.urls || [];
+    const idx = urls.indexOf(url);
+    if (idx !== -1) urls.splice(idx, 1);
+    urls.unshift(url);
+    if (urls.length > MAX_HISTORY) urls.length = MAX_HISTORY;
+    h.urls = urls;
+    saveHistory(h);
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}

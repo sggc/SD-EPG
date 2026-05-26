@@ -46,6 +46,7 @@ jobs:
           cp 404.html deploy/
           cp -r dashboard/build deploy/dashboard
           cp -r m3u deploy/m3u
+          cp -r epg-parser deploy/epg-parser
 
       - name: List deploy output
         run: ls -la deploy/ && ls -la deploy/dashboard/

@@ -17,6 +17,8 @@
             --secondary-glow: rgba(124, 58, 237, 0.15);
             --success: #16a34a;
             --success-glow: rgba(22, 163, 74, 0.15);
+            --warning: #ea580c;
+            --warning-glow: rgba(234, 88, 12, 0.12);
             --bg: #f8fafc;
             --bg-card: #ffffff;
             --bg-card-hover: #f1f5f9;
@@ -38,7 +40,8 @@
             background: var(--bg);
             background-image:
                 radial-gradient(ellipse 80% 60% at 50% 0%, var(--primary-glow) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 100% 100%, var(--secondary-glow) 0%, transparent 50%);
+                radial-gradient(ellipse 60% 50% at 100% 100%, var(--secondary-glow) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 0% 100%, var(--warning-glow) 0%, transparent 50%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
@@ -50,7 +53,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1100px;
             width: 100%;
             text-align: center;
         }
@@ -106,7 +109,7 @@
 
         .cards {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
@@ -141,6 +144,7 @@
 
         .card-epg::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
         .card-m3u::before { background: linear-gradient(90deg, var(--success), #14b8a6); }
+        .card-parser::before { background: linear-gradient(90deg, var(--warning), #f97316); }
 
         .card:hover {
             transform: translateY(-4px);
@@ -171,6 +175,10 @@
 
         .card-m3u .card-icon {
             background: linear-gradient(135deg, rgba(22, 163, 74, 0.1), rgba(20, 184, 166, 0.1));
+        }
+
+        .card-parser .card-icon {
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(249, 115, 22, 0.1));
         }
 
         .card h2 {
@@ -210,6 +218,11 @@
             color: var(--success);
         }
 
+        .tag-parser {
+            background: rgba(234, 88, 12, 0.08);
+            color: var(--warning);
+        }
+
         .footer {
             color: var(--text-dim);
             font-size: 0.8rem;
@@ -224,6 +237,10 @@
         .footer a:hover {
             color: var(--primary-hover);
             text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .cards { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
@@ -261,6 +278,16 @@
                     <span class="tag tag-m3u">M3U</span>
                     <span class="tag tag-m3u">格式转换</span>
                     <span class="tag tag-m3u">频道编辑</span>
+                </div>
+            </a>
+            <a href="epg-parser/" class="card card-parser">
+                <div class="card-icon">🔬</div>
+                <h2>EPG 解析工具</h2>
+                <p>XML / GZ 电子节目单解析，频道与节目数据浏览分析</p>
+                <div class="card-tags">
+                    <span class="tag tag-parser">XMLTV</span>
+                    <span class="tag tag-parser">数据解析</span>
+                    <span class="tag tag-parser">Web工具</span>
                 </div>
             </a>
         </div>
