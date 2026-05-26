@@ -123,7 +123,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .stat-icon.desc-rate { background: rgba(139,92,246,0.1); color: #7c3aed; }
 .stat-icon.date { background: rgba(20,184,166,0.1); color: #14b8a6; }
 .stat-content { display: flex; flex-direction: column; min-width: 0; flex: 1; align-items: center; justify-content: center; text-align: center; }
-.stat-value { font-size: var(--text-lg); font-weight: 700; line-height: 1.2; }
+.stat-value { font-size: var(--text-lg); font-weight: 700; line-height: 1.2; color: var(--text); }
 .stat-label { font-size: var(--text-xs); color: var(--text-muted); margin-top: 0.125rem; }
 
 /* EPG Links */
@@ -334,8 +334,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .log-preview pre { margin: 0; padding: 1rem; font-size: 0.75rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
 
 /* Details Page */
-.source-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; max-height: 240px; overflow: hidden; }
-.source-list.expanded { max-height: none; overflow: visible; }
+.source-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; }
 .source-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-elevated); border-radius: 8px; gap: 0.75rem; border: 1px solid transparent; transition: all 0.2s; }
 .source-row:hover { background: var(--bg-hover); border-color: var(--border); }
 .source-row.disabled-row { opacity: 0.5; }

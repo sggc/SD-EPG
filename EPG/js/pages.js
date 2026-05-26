@@ -623,7 +623,7 @@ pages.details = async function() {
 
         let stats = { whitelistChannels:0, matchedChannels:0, unmatchedChannels:0, totalPrograms:0, filteredPrograms:0, dateRange:'', lastUpdate:'', epgSources:[], unmatchedList:[], lowProgramChannels:[], gapChannels:[], aliasCount:0, descMatchRate:0 };
         let descMatchStats = null, descDbStats = null;
-        let showAllLow = false, showAllGaps = false, showAllSources = false;
+        let showAllLow = false, showAllGaps = false;
 
         if (unifiedData) {
             const os = unifiedData['总体统计'] || {};
@@ -654,7 +654,7 @@ pages.details = async function() {
             let html = `<div class="page-header"><h1>详细信息</h1><p class="subtitle">EPG 数据源、统计与下载</p></div>`;
 
             html += `<section class="sources-section"><div class="card"><div class="card-header"><h2>${SVGs.globe} EPG 源状态</h2><span class="badge">${stats.epgSources.length} 个源</span></div>
-                <div class="source-list${showAllSources?' expanded':''}">`;
+                <div class="source-list">`;
             for (const s of stats.epgSources) {
                 html += `<div class="source-row${s.disabled?' disabled-row':''}"><div class="source-info">
                     <span class="source-name-badge ${sourceNameClass(s.name)}">${h(s.name)}</span>${s.disabled?'<span class="disabled-tag">已禁用</span>':''}</div>`;
@@ -666,8 +666,6 @@ pages.details = async function() {
                 }
                 html += `</div>`;
             }
-            html += `</div>`;
-            if (stats.epgSources.length > 6) html += `<button class="load-more-btn" onclick="window._detShowAllSources()">${showAllSources?'收起':`显示全部 ${stats.epgSources.length} 个源`}</button>`;
             html += `</div></section>`;
 
             if (descMatchStats || descDbStats) {
@@ -732,7 +730,6 @@ pages.details = async function() {
             main.innerHTML = html;
         }
 
-        window._detShowAllSources = function() { showAllSources = !showAllSources; render(); };
         window._detShowAllLow = function() { showAllLow = !showAllLow; render(); };
         window._detShowAllGaps = function() { showAllGaps = !showAllGaps; render(); };
 
