@@ -208,7 +208,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .channel-stats-inline .s { display: flex; flex-direction: column; align-items: center; }
 .channel-stats-inline .sn { font-size: 1rem; font-weight: 700; }
 .channel-stats-inline .sl { font-size: 0.6rem; color: var(--text-muted); }
-.desc-rate { width: 100%; height: 4px; background: var(--bg-hover); border-radius: 2px; margin: 4px 0 2px; overflow: hidden; }
+.channel-card .desc-rate { width: 100%; height: 4px; background: var(--bg-hover); border-radius: 2px; margin: 4px 0 2px; overflow: hidden; }
 .desc-rate-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
 .desc-rate-text { font-size: 0.65rem; font-weight: 600; }
 .aliases { display: flex; flex-wrap: wrap; gap: 0.25rem; }
