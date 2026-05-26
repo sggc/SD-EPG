@@ -83,4 +83,3 @@ const Theme = {
     }
 };
 
-const DataCache = {};
