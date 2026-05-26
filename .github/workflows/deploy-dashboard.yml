@@ -26,6 +26,7 @@ jobs:
           cp index.html deploy/
           cp 404.html deploy/
           cp -r EPG deploy/epg
+          cp -r dashboard deploy/dashboard
           cp -r m3u deploy/m3u
           cp -r epg-parser deploy/epg-parser
 
