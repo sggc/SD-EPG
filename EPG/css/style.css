@@ -113,17 +113,17 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 
 /* Stats Section */
 .stats-section { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
-.stat-card { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.2s ease; min-height: 72px; }
+.stat-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.25rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.2s ease; }
 .stat-card:hover { border-color: var(--border-light); box-shadow: var(--shadow-sm); }
-.stat-icon { width: 40px; height: 40px; min-width: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
+.stat-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
 .stat-icon.channels { background: rgba(37,99,235,0.1); color: var(--primary); }
 .stat-icon.matched { background: rgba(22,163,74,0.1); color: var(--success); }
 .stat-icon.programs { background: rgba(139,92,246,0.1); color: #7c3aed; }
 .stat-icon.sources { background: rgba(217,119,6,0.1); color: var(--warning); }
 .stat-icon.desc-rate { background: rgba(139,92,246,0.1); color: #7c3aed; }
 .stat-icon.date { background: rgba(20,184,166,0.1); color: #14b8a6; }
-.stat-content { display: flex; flex-direction: column; min-width: 0; flex: 1; align-items: center; justify-content: center; text-align: center; }
-.stat-value { display: block; font-size: var(--text-lg); font-weight: 700; line-height: 1.2; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.stat-content { display: flex; flex-direction: column; align-items: center; }
+.stat-value { font-size: var(--text-lg); font-weight: 700; line-height: 1.2; color: var(--text); }
 .stat-label { font-size: var(--text-xs); color: var(--text-muted); margin-top: 0.125rem; }
 
 /* EPG Links */
