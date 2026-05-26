@@ -7,18 +7,21 @@
         (function(l) {
             var path = l.pathname;
             var base = '/SD-EPG';
-            var dashboardBase = base + '/dashboard/';
+            var epgBase = base + '/epg/';
             var m3uBase = base + '/m3u/';
+            var epgParserBase = base + '/epg-parser/';
 
-            if (path.startsWith(dashboardBase)) {
-                var rest = path.slice(dashboardBase.length);
+            if (path.startsWith(epgBase)) {
+                var rest = path.slice(epgBase.length);
                 if (rest) {
-                    l.replace(dashboardBase + '?' + rest + l.hash);
+                    l.replace(epgBase + '?' + rest + l.hash);
                 } else {
-                    l.replace(dashboardBase);
+                    l.replace(epgBase);
                 }
             } else if (path.startsWith(m3uBase)) {
                 l.replace(m3uBase + l.hash);
+            } else if (path.startsWith(epgParserBase)) {
+                l.replace(epgParserBase + l.hash);
             } else {
                 l.replace(base + '/');
             }

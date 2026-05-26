@@ -19,37 +19,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
-      - name: Install dependencies
-        working-directory: dashboard
-        run: npm install
-      
-      - name: Build
-        working-directory: dashboard
-        env:
-          NODE_ENV: production
-        run: npm run build
-      
-      - name: List build output
-        working-directory: dashboard
-        run: ls -la build/
-      
-      - name: Copy m3u tool and landing page to deploy directory
+
+      - name: Copy all static files to deploy directory
         run: |
           mkdir -p deploy
           cp index.html deploy/
           cp 404.html deploy/
-          cp -r dashboard/build deploy/dashboard
+          cp -r EPG deploy/epg
           cp -r m3u deploy/m3u
           cp -r epg-parser deploy/epg-parser
 
       - name: List deploy output
-        run: ls -la deploy/ && ls -la deploy/dashboard/
+        run: ls -la deploy/ && ls -la deploy/epg/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
