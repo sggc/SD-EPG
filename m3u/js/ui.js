@@ -634,10 +634,56 @@ class UIHandler {
                 } else {
                     row.classList.add('dragging');
                 }
+
+                const scrollContainer = el.channelList.closest('.table-container');
+                this._dragScrollContainer = scrollContainer;
+                this._lastDragMouseY = e.clientY;
+                this._dragOriginScrollX = window.scrollX;
+                this._dragOriginScrollY = window.scrollY;
+
+                document.addEventListener('dragover', this._handleDragOverDoc = (de) => {
+                    this._lastDragMouseY = de.clientY;
+                });
+
+                const autoScroll = () => {
+                    if (!this._dragScrollContainer) return;
+                    const container = this._dragScrollContainer;
+                    const rect = container.getBoundingClientRect();
+                    const mouseY = this._lastDragMouseY;
+                    const threshold = 60;
+                    const maxSpeed = 15;
+                    const minSpeed = 2;
+
+                    if (mouseY >= rect.top && mouseY <= rect.bottom) {
+                        if (mouseY < rect.top + threshold && container.scrollTop > 0) {
+                            const dist = (rect.top + threshold) - mouseY;
+                            const ratio = dist / threshold;
+                            container.scrollTop -= minSpeed + (maxSpeed - minSpeed) * ratio;
+                        } else if (mouseY > rect.bottom - threshold && container.scrollTop < container.scrollHeight - container.clientHeight) {
+                            const dist = mouseY - (rect.bottom - threshold);
+                            const ratio = dist / threshold;
+                            container.scrollTop += minSpeed + (maxSpeed - minSpeed) * ratio;
+                        }
+                    }
+
+                    window.scrollTo(this._dragOriginScrollX, this._dragOriginScrollY);
+                    this._autoScrollRAF = requestAnimationFrame(autoScroll);
+                };
+                this._autoScrollRAF = requestAnimationFrame(autoScroll);
             });
             moveBtn.addEventListener('dragend', () => {
                 el.channelList.querySelectorAll('.dragging,.drag-over-top,.drag-over-bottom').forEach(r => { r.classList.remove('dragging', 'drag-over-top', 'drag-over-bottom'); });
                 this._dragSourceIndices = null;
+
+                if (this._handleDragOverDoc) {
+                    document.removeEventListener('dragover', this._handleDragOverDoc);
+                    this._handleDragOverDoc = null;
+                }
+                if (this._autoScrollRAF) {
+                    cancelAnimationFrame(this._autoScrollRAF);
+                    this._autoScrollRAF = null;
+                }
+                this._dragScrollContainer = null;
             });
             actionCell.appendChild(moveBtn);
 
