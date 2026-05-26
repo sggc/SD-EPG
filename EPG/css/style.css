@@ -345,6 +345,10 @@ main { max-width: 1200px; margin: 0 auto; padding: 0 1rem 2rem; }
 .source-name-badge.sggc { background: rgba(22,163,74,0.15); color: #16a34a; }
 .source-name-badge.other { background: rgba(100,116,139,0.15); color: #64748b; }
 .source-stats { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.source-stats .stat-item { display: flex; flex-direction: column; align-items: center; padding: 0.3rem 0.5rem; background: var(--bg-card); border-radius: 6px; min-width: 50px; }
+.source-stats .stat-item.highlight { background: rgba(59,130,246,0.08); }
+.stat-num { font-size: 0.8rem; font-weight: 700; line-height: 1.1; color: var(--text); }
+.stat-text { font-size: 0.6rem; color: var(--text-muted); }
 .disabled-tag { font-size: var(--text-xs); padding: 0.125rem 0.375rem; background: rgba(220,38,38,0.1); color: var(--danger); border-radius: 4px; font-weight: 500; flex-shrink: 0; }
 .desc-log-section { display: block; width: 100%; margin-bottom: 1rem; }
 .desc-log-section .card { width: 100%; max-width: 100%; margin-bottom: 1rem; }
