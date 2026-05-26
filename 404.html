@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+        (function(l) {
+            var path = l.pathname;
+            var base = '/SD-EPG';
+            var dashboardBase = base + '/dashboard/';
+            var m3uBase = base + '/m3u/';
+
+            if (path.startsWith(dashboardBase)) {
+                var rest = path.slice(dashboardBase.length);
+                if (rest) {
+                    l.replace(dashboardBase + '?' + rest + l.hash);
+                } else {
+                    l.replace(dashboardBase);
+                }
+            } else if (path.startsWith(m3uBase)) {
+                l.replace(m3uBase + l.hash);
+            } else {
+                l.replace(base + '/');
+            }
+        }(window.location));
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>

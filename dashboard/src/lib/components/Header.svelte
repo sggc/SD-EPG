@@ -56,7 +56,7 @@
 
 <header class="header">
 	<div class="header-content">
-		<a href="./" class="logo">
+		<a href="../" class="logo" title="返回首页">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 				<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
 				<line x1="8" y1="21" x2="16" y2="21"/>
@@ -72,6 +72,7 @@
 				<a href="./config" class="nav-link" class:active={isActive('/config')}>配置管理</a>
 			{/if}
 			<a href="./database" class="nav-link" class:active={isActive('/database')}>数据库</a>
+			<a href="../m3u/" class="nav-link" target="_blank">M3U工具</a>
 		</nav>
 
 		<div class="user-section">
