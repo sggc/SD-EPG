@@ -1451,7 +1451,7 @@ class LogoMatcher {
             { pattern: /^天津IPTV/, logo: '天津/天津IPTV.png', desc: '天津IPTV', priority: 25 },
             { pattern: /^天津少儿/, logo: '天津/天津少儿.png', desc: '天津少儿', priority: 25 },
             // === 重庆 ===
-            { pattern: /^重庆/, logo: '重庆/重庆.png', desc: '重庆', priority: 25 },
+            { pattern: /^重庆/, logo: '重庆/重庆.png', desc: '重庆', priority: 15 },
             { pattern: /^重庆时尚生活/, logo: '重庆/重庆时尚生活.png', desc: '重庆时尚生活', priority: 25 },
             { pattern: /^重庆科教/, logo: '重庆/重庆科教.png', desc: '重庆科教', priority: 25 },
             { pattern: /^重庆移动/, logo: '重庆/重庆移动.png', desc: '重庆移动', priority: 25 },
