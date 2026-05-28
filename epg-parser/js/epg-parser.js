@@ -22,10 +22,11 @@ class EPGParser {
             return await this._fetchWithRetry(url);
         } catch (e) {
             if (proxyUrl) {
-                const target = encodeURIComponent(url);
                 const proxyFetchUrl = proxyUrl.includes('{url}')
-                    ? proxyUrl.replace('{url}', target)
-                    : proxyUrl + target;
+                    ? proxyUrl.replace('{url}', url)
+                    : proxyUrl.includes('{encoded}')
+                    ? proxyUrl.replace('{encoded}', encodeURIComponent(url))
+                    : proxyUrl + url;
                 try {
                     return await this._fetchWithRetry(proxyFetchUrl);
                 } catch (e2) {
