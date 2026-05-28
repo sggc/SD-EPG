@@ -8,6 +8,7 @@ class EPGUI {
         this._initDomRefs();
         this._bindEvents();
         this._initDragDrop();
+        this._restoreProxyPrefs();
     }
 
     _initDomRefs() {
@@ -50,6 +51,7 @@ class EPGUI {
             urlModal: $('#url-modal'),
             urlInput: $('#url-input'),
             urlHistoryList: $('#url-history-list'),
+            proxyUrl: $('#proxy-url'),
         };
     }
 
@@ -153,9 +155,11 @@ class EPGUI {
             return;
         }
         this._hideUrlModal();
+        this._saveProxyPref();
         this._showLoading('\u6B63\u5728\u4E0B\u8F7D EPG \u6570\u636E...');
         try {
-            const size = await this.parser.parseUrl(url);
+            const proxyUrl = this.el.proxyUrl.value.trim();
+            const size = await this.parser.parseUrl(url, proxyUrl);
             addHistoryUrl(url);
             const sizeStr = formatFileSize(size);
             const shortUrl = url.length > 50 ? url.slice(0, 50) + '...' : url;
@@ -603,6 +607,20 @@ class EPGUI {
         h.urls = (h.urls || []).filter(u => u !== url);
         h.saved = (h.saved || []).filter(u => u !== url);
         saveHistory(h);
+    }
+
+    _saveProxyPref() {
+        const proxyUrl = this.el.proxyUrl.value.trim();
+        try {
+            localStorage.setItem('epg_proxy_url', proxyUrl);
+        } catch (e) {}
+    }
+
+    _restoreProxyPrefs() {
+        try {
+            const saved = localStorage.getItem('epg_proxy_url');
+            if (saved) this.el.proxyUrl.value = saved;
+        } catch (e) {}
     }
 }
 

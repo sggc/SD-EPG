@@ -17,7 +17,26 @@ class EPGParser {
         this._parseContent(content);
     }
 
-    async parseUrl(url) {
+    async parseUrl(url, proxyUrl = '') {
+        try {
+            return await this._fetchWithRetry(url);
+        } catch (e) {
+            if (proxyUrl) {
+                const target = encodeURIComponent(url);
+                const proxyFetchUrl = proxyUrl.includes('{url}')
+                    ? proxyUrl.replace('{url}', target)
+                    : proxyUrl + target;
+                try {
+                    return await this._fetchWithRetry(proxyFetchUrl);
+                } catch (e2) {
+                    throw new Error('\u76F4\u8FDE\u548C\u4EE3\u7406\u5747\u5931\u8D25: ' + e.message);
+                }
+            }
+            throw e;
+        }
+    }
+
+    async _fetchWithRetry(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error('HTTP ' + response.status + ': ' + response.statusText);
 
