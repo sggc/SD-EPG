@@ -19,8 +19,8 @@ class EPGParser {
 
     async parseUrl(url, proxyUrl = '') {
         const FALLBACK_PROXIES = [
+            'http://localhost:8999/proxy?url={encoded}',
             'https://api.allorigins.win/raw?url={encoded}',
-            'https://cors-anywhere.herokuapp.com/{url}',
             'https://cors.eu.org/',
             'https://corsproxy.io/?',
         ];
