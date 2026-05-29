@@ -18,23 +18,43 @@ class EPGParser {
     }
 
     async parseUrl(url, proxyUrl = '') {
+        const FALLBACK_PROXIES = [
+            'https://api.allorigins.win/raw?url={encoded}',
+            'https://cors-anywhere.herokuapp.com/{url}',
+            'https://cors.eu.org/',
+            'https://corsproxy.io/?',
+        ];
+
         try {
             return await this._fetchWithRetry(url);
-        } catch (e) {
-            if (proxyUrl) {
-                const proxyFetchUrl = proxyUrl.includes('{url}')
-                    ? proxyUrl.replace('{url}', url)
-                    : proxyUrl.includes('{encoded}')
-                    ? proxyUrl.replace('{encoded}', encodeURIComponent(url))
-                    : proxyUrl + url;
+        } catch (directErr) {
+            const proxies = [];
+            if (proxyUrl) proxies.push(proxyUrl);
+            proxies.push(...FALLBACK_PROXIES);
+
+            const tried = [];
+            for (const p of proxies) {
+                const proxyFetchUrl = this._buildProxyUrl(p, url);
                 try {
                     return await this._fetchWithRetry(proxyFetchUrl);
-                } catch (e2) {
-                    throw new Error('\u76F4\u8FDE\u548C\u4EE3\u7406\u5747\u5931\u8D25: ' + e.message);
+                } catch (proxyErr) {
+                    tried.push(p.replace(/\{.*?\}/g, '') + ' \u2192 ' + proxyErr.message);
                 }
             }
-            throw e;
+            throw new Error(
+                '\u76F4\u8FDE\u5931\u8D25(' + directErr.message + ')\n' +
+                '\u5DF2\u5C1D\u8BD5 ' + tried.length + ' \u4E2A\u4EE3\u7406\u5747\u5931\u8D25:\n' +
+                tried.map(t => '  \u2022 ' + t).join('\n')
+            );
         }
+    }
+
+    _buildProxyUrl(proxyUrl, url) {
+        if (proxyUrl.includes('{url}'))
+            return proxyUrl.replace('{url}', url);
+        if (proxyUrl.includes('{encoded}'))
+            return proxyUrl.replace('{encoded}', encodeURIComponent(url));
+        return proxyUrl + url;
     }
 
     async _fetchWithRetry(url) {

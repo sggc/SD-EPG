@@ -154,8 +154,8 @@
             <div class="modal-body">
                 <label>EPG URL：</label>
                 <input type="url" id="url-input" placeholder="https://example.com/epg.xml.gz">
-                <label style="margin-top:8px;font-size:12px;color:var(--text-muted)">CORS代理（直连失败时自动使用，可选）：</label>
-                <input type="url" id="proxy-url" value="https://corsproxy.io/?" style="font-size:12px;margin-bottom:2px">
+                <label style="margin-top:8px;font-size:12px;color:var(--text-muted)">自定义代理（可选，直连失败后优先尝试，之后自动退避内置代理）：</label>
+                <input type="url" id="proxy-url" placeholder="留空则自动使用内置代理" style="font-size:12px;margin-bottom:2px">
                 <label>历史记录（双击使用）：</label>
                 <div class="url-history-list" id="url-history-list"></div>
             </div>
