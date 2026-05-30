@@ -39,5 +39,13 @@ jobs:
           echo "No changes"
         else
           git commit -m "更新Desc数据库 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add database/desc_database.json log/desc_database_log.txt
+            git commit -m "更新Desc数据库 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M')"
+          fi
           git push
         fi

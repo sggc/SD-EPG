@@ -60,17 +60,19 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        git stash push -u -m "Temporarily stash EPG files" || true
-        
-        git pull --rebase --allow-unrelated-histories -X ours origin ${{ github.ref_name }}
-        
-        git stash pop || true
-        
         git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
         
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data [skip ci]"
-          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
+            git commit -m "Update EPG data [skip ci]"
+          fi
+          git push
           echo "EPG 文件已成功提交并推送"
         else
           echo "无 EPG 文件变更，跳过提交和推送"

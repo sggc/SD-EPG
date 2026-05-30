@@ -45,5 +45,13 @@ jobs:
           echo "No changes to false EPG"
         else
           git commit -m "生成虚假EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add EPG/false.xml.gz log/false_epg_log.json
+            git commit -m "生成虚假EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
           git push
         fi

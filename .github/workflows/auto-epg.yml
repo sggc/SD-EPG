@@ -72,6 +72,14 @@ jobs:
           echo "No changes to aggregated EPG"
         else
           git commit -m "EPG聚合 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add EPG/sggc.xml.gz log/aggregation_log.txt log/dashboard_data.json
+            git commit -m "EPG聚合 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
           git push
         fi
     
@@ -97,6 +105,14 @@ jobs:
           echo "No desc changes"
         else
           git commit -m "EPG+Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json
+            git commit -m "EPG+Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
           git push
         fi
     
@@ -119,5 +135,13 @@ jobs:
           echo "No unified data changes"
         else
           git commit -m "数据合并 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add log/unified_dashboard_data.json
+            git commit -m "数据合并 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
           git push
         fi

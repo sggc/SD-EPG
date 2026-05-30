@@ -68,8 +68,20 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add EPG/ database/ Debug/
-          git diff --staged --quiet || git commit -m "Update EPG - $(date '+%Y-%m-%d %H:%M:%S')"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update EPG - $(date '+%Y-%m-%d %H:%M:%S')"
+            git fetch origin ${{ github.ref_name }}
+            if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+              echo "::warning::Rebase failed, falling back to reset+recommit"
+              git rebase --abort
+              git reset --soft origin/${{ github.ref_name }}
+              git add EPG/ database/ Debug/
+              git commit -m "Update EPG - $(date '+%Y-%m-%d %H:%M:%S')"
+            fi
+            git push
+          fi
 
       - name: Upload backup
         if: always()
