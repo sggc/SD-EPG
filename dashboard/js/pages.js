@@ -152,20 +152,26 @@ pages.home = async function() {
 
         if (stats.allChannels.length > 0) {
             let sq = '', sf = 'all', showAll = false;
-            function renderChannels() {
+
+            function renderChannelTable() {
                 let filtered = stats.allChannels;
                 if (sq.trim()) { const q = sq.toLowerCase(); filtered = filtered.filter(ch => (ch.name||'').toLowerCase().includes(q) || (ch.id||'').toLowerCase().includes(q) || ch.aliases.some(a=>a.toLowerCase().includes(q))); }
                 if (sf === 'matched') filtered = filtered.filter(ch => ch.programs > 0);
                 else if (sf === 'unmatched') filtered = filtered.filter(ch => !ch.programs || ch.programs === 0);
                 const displayed = showAll ? filtered : filtered.slice(0, 50);
-                let t = `<div class="channels-header">
-                    <div class="channels-title">${SVGs.tv}<h2>频道列表</h2><span class="channels-count">${filtered.length} / ${stats.allChannels.length}</span></div>
-                    <div class="channels-controls">
-                        <div class="search-box">${SVGs.search}<input type="text" placeholder="搜索频道名称、ID..." value="${h(sq)}" id="home-search"/><button class="clear-btn" id="home-clear" style="display:${sq?'flex':'none'}" onclick="window._homeClear()">✕</button></div>
-                        <div class="filter-tabs"><button class="filter-tab${sf==='all'?' active':''}" onclick="window._homeFilter('all')">全部</button><button class="filter-tab${sf==='matched'?' active':''}" onclick="window._homeFilter('matched')">已匹配</button><button class="filter-tab${sf==='unmatched'?' active':''}" onclick="window._homeFilter('unmatched')">未匹配</button></div>
-                    </div>
-                </div>
-                <div class="channels-table">
+
+                const countEl = document.getElementById('home-channels-count');
+                if (countEl) countEl.textContent = `${filtered.length} / ${stats.allChannels.length}`;
+
+                const tabsEl = document.getElementById('home-filter-tabs');
+                if (tabsEl) {
+                    tabsEl.innerHTML = `<button class="filter-tab${sf==='all'?' active':''}" onclick="window._homeFilter('all')">全部</button><button class="filter-tab${sf==='matched'?' active':''}" onclick="window._homeFilter('matched')">已匹配</button><button class="filter-tab${sf==='unmatched'?' active':''}" onclick="window._homeFilter('unmatched')">未匹配</button>`;
+                }
+
+                const clearBtn = document.getElementById('home-clear');
+                if (clearBtn) clearBtn.style.display = sq ? 'flex' : 'none';
+
+                let t = `<div class="channels-table">
                     <div class="channels-table-header"><span class="col-id">ID</span><span class="col-name">频道名称</span><span class="col-total">总节目</span><span class="col-today">今日</span><span class="col-desc">描述匹配</span><span class="col-source">数据源</span></div>
                     <div class="channels-table-body${showAll?' expanded':''}">`;
                 for (const ch of displayed) {
@@ -175,13 +181,29 @@ pages.home = async function() {
                 }
                 t += `</div></div>`;
                 if (filtered.length > 50) t += `<button class="load-more-btn" onclick="window._homeToggleAll()">${showAll?'收起':`显示全部 ${filtered.length} 个频道`}</button>`;
-                document.getElementById('home-channels').innerHTML = t;
-                const si = document.getElementById('home-search');
-                if (si) si.addEventListener('input', function() { sq = this.value; renderChannels(); });
+                document.getElementById('home-channels-table').innerHTML = t;
             }
-            window._homeClear = function() { sq = ''; renderChannels(); };
-            window._homeFilter = function(f) { sf = f; renderChannels(); };
-            window._homeToggleAll = function() { showAll = !showAll; renderChannels(); };
+
+            function renderChannels() {
+                let t = `<div class="channels-header">
+                    <div class="channels-title">${SVGs.tv}<h2>频道列表</h2><span class="channels-count" id="home-channels-count">${stats.allChannels.length} / ${stats.allChannels.length}</span></div>
+                    <div class="channels-controls">
+                        <div class="search-box">${SVGs.search}<input type="text" placeholder="搜索频道名称、ID..." value="${h(sq)}" id="home-search"/><button class="clear-btn" id="home-clear" style="display:${sq?'flex':'none'}" onclick="window._homeClear()">✕</button></div>
+                        <div class="filter-tabs" id="home-filter-tabs"><button class="filter-tab${sf==='all'?' active':''}" onclick="window._homeFilter('all')">全部</button><button class="filter-tab${sf==='matched'?' active':''}" onclick="window._homeFilter('matched')">已匹配</button><button class="filter-tab${sf==='unmatched'?' active':''}" onclick="window._homeFilter('unmatched')">未匹配</button></div>
+                    </div>
+                </div>
+                <div id="home-channels-table"></div>`;
+                document.getElementById('home-channels').innerHTML = t;
+
+                const si = document.getElementById('home-search');
+                if (si) {
+                    si.addEventListener('input', function() { sq = this.value; renderChannelTable(); });
+                }
+                renderChannelTable();
+            }
+            window._homeClear = function() { sq = ''; const si = document.getElementById('home-search'); if (si) si.value = ''; renderChannelTable(); };
+            window._homeFilter = function(f) { sf = f; renderChannelTable(); };
+            window._homeToggleAll = function() { showAll = !showAll; renderChannelTable(); };
             renderChannels();
         }
     } catch(e) { main.innerHTML = errorView(e.message); }
@@ -208,10 +230,7 @@ pages.channels = async function() {
             return chs;
         }
 
-        function render() {
-            const filtered = getFiltered();
-            const paginated = filtered.slice((page-1)*pageSz, page*pageSz);
-            const totalPages = Math.ceil(filtered.length / pageSz);
+        function renderHeader() {
             let html = `<div class="page-header"><h1>频道列表</h1><p class="subtitle">EPG 数据源频道详情</p></div>
             <div class="stats-bar">
                 <div class="stat-item highlight"><span class="stat-value">${stats['白名单频道数']||0}</span><span class="stat-label">总频道</span></div>
@@ -221,12 +240,33 @@ pages.channels = async function() {
                 <div class="stat-item highlight"><span class="stat-value">${meta['数据日期范围']||'-'}</span><span class="stat-label">数据日期</span></div>
             </div>
             <div class="filters">
-                <div class="search-box-simple">${SVGs.search}<input type="text" placeholder="搜索频道..." value="${h(searchQ)}" id="ch-search" oninput="window._chSearch(this.value)"/></div>
-                <div class="source-filters"><button class="source-btn${selectedSrc==='all'?' active':''}" onclick="window._chSrc('all')">全部</button>`;
+                <div class="search-box-simple">${SVGs.search}<input type="text" placeholder="搜索频道..." value="${h(searchQ)}" id="ch-search"/></div>
+                <div class="source-filters" id="ch-source-filters"></div>
+            </div>
+            <div id="ch-grid" class="channels-grid"></div>
+            <div id="ch-pagination"></div>`;
+            main.innerHTML = html;
+            bindSearchEvents();
+        }
+
+        function renderFilters() {
+            const container = document.getElementById('ch-source-filters');
+            if (!container) return;
+            let html = `<button class="source-btn${selectedSrc==='all'?' active':''}" onclick="window._chSrc('all')">全部</button>`;
             for (const s of sources) {
                 html += `<button class="source-btn${selectedSrc===s['名称']?' active':''}" onclick="window._chSrc('${s['名称']}')" style="--source-color:${sourceBadgeColor(s['名称'])}">${s['名称']}<span class="count">${s['已匹配数']}</span></button>`;
             }
-            html += `</div></div><div class="channels-grid">`;
+            container.innerHTML = html;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const paginated = filtered.slice((page-1)*pageSz, page*pageSz);
+            const totalPages = Math.ceil(filtered.length / pageSz);
+
+            const grid = document.getElementById('ch-grid');
+            if (!grid) return;
+            let html = '';
             for (const ch of paginated) {
                 const hasGap = ch['存在时间空隙'];
                 const hasDesc = ch['有描述数据'];
@@ -250,16 +290,38 @@ pages.channels = async function() {
                 if (hasGap) html += `<div class="gap-warning">${SVGs.warning}<span>存在时间空隙</span></div>`;
                 html += `</div>`;
             }
-            html += `</div>`;
-            if (totalPages > 1) {
-                html += `<div class="pagination"><button class="page-btn"${page<=1?' disabled':''} onclick="window._chPage(${page-1})">上一页</button><span class="page-info">${page} / ${totalPages}</span><button class="page-btn"${page>=totalPages?' disabled':''} onclick="window._chPage(${page+1})">下一页</button></div>`;
+            grid.innerHTML = html;
+
+            const pagination = document.getElementById('ch-pagination');
+            if (pagination) {
+                if (totalPages > 1) {
+                    pagination.innerHTML = `<div class="pagination"><button class="page-btn"${page<=1?' disabled':''} onclick="window._chPage(${page-1})">上一页</button><span class="page-info">${page} / ${totalPages}</span><button class="page-btn"${page>=totalPages?' disabled':''} onclick="window._chPage(${page+1})">下一页</button></div>`;
+                } else {
+                    pagination.innerHTML = '';
+                }
             }
-            main.innerHTML = html;
         }
 
-        window._chSearch = function(v) { searchQ = v; page = 1; render(); };
-        window._chSrc = function(s) { selectedSrc = s; page = 1; render(); };
-        window._chPage = function(p) { page = p; render(); };
+        function bindSearchEvents() {
+            const searchInput = document.getElementById('ch-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    searchQ = this.value;
+                    page = 1;
+                    renderGrid();
+                });
+            }
+        }
+
+        function render() {
+            renderHeader();
+            renderFilters();
+            renderGrid();
+        }
+
+        window._chSearch = function(v) { searchQ = v; page = 1; renderGrid(); };
+        window._chSrc = function(s) { selectedSrc = s; page = 1; renderFilters(); renderGrid(); };
+        window._chPage = function(p) { page = p; renderGrid(); };
         render();
     } catch(e) { main.innerHTML = errorView(e.message); }
 };
@@ -345,33 +407,11 @@ pages.config = async function() {
                 } else if (activeTab === 'channels') {
                     const channels = configData.channels || {};
                     const entries = Object.entries(channels);
-                    let filtered = entries;
-                    if (channelSearch.trim()) {
-                        const q = channelSearch.toLowerCase();
-                        filtered = entries.filter(([id, ch]) => id.toLowerCase().includes(q) || (ch.n||'').toLowerCase().includes(q));
-                    }
                     html += `<div class="section"><div class="editor-header" style="border-bottom:none;margin-bottom:0.5rem"><h4 style="margin:0">频道配置 (${entries.length})</h4><div class="header-actions">
-                        <div class="search-box-small">${SVGs.search}<input type="text" placeholder="搜索频道..." value="${h(channelSearch)}" id="cfg-ch-search" oninput="window._cfgChannelSearch(this.value)"/></div>
+                        <div class="search-box-small">${SVGs.search}<input type="text" placeholder="搜索频道..." value="${h(channelSearch)}" id="cfg-ch-search"/></div>
                         <button class="btn btn-primary btn-sm" onclick="window._cfgOpenAddChannel()">+ 新增频道</button></div></div>`;
-                    if (cfgAddChannelOpen) {
-                        html += `<div class="add-channel-bar"><div class="add-channel-form">
-                            <input type="text" placeholder="频道ID (如: CCTV-1)" id="cfg-new-id" class="input-id" value="${h(cfgNewId)}"/>
-                            <input type="text" placeholder="标准名称 (如: 央视综合)" id="cfg-new-name" class="input-name" value="${h(cfgNewName)}"/>
-                            <button class="btn btn-primary btn-sm" onclick="window._cfgConfirmAddChannel()">添加</button>
-                            <button class="btn btn-secondary btn-sm" onclick="window._cfgCancelAddChannel()">取消</button></div></div>`;
-                    }
-                    html += `<div class="channels-editor">`;
-                    for (const [id, ch] of filtered) {
-                        html += `<div class="channel-edit-card">
-                            <div class="channel-edit-header"><span class="channel-id-mono">${h(id)}</span><button class="btn btn-danger-xs" onclick="window._cfgRemoveChannel('${h(id)}')">✕</button></div>
-                            <div class="form-group"><label>标准名称</label><input type="text" value="${h(ch.n||'')}" oninput="window._cfgUpdateChannelN('${h(id)}',this.value)"/></div>
-                            <div class="alias-section"><div class="alias-header"><label>别名 (a)</label><button class="btn btn-secondary btn-xs" onclick="window._cfgAddAlias('${h(id)}','a')">+添加</button></div>`;
-                        (ch.a||[]).forEach((a, ai) => { html += `<div class="alias-row"><input type="text" value="${h(a)}" oninput="window._cfgUpdateAlias('${h(id)}','a',${ai},this.value)"/><button class="btn-danger-xs" onclick="window._cfgRemoveAlias('${h(id)}','a',${ai})">✕</button></div>`; });
-                        html += `</div><div class="alias-section"><div class="alias-header"><label>扩展名 (x)</label><button class="btn btn-secondary btn-xs" onclick="window._cfgAddAlias('${h(id)}','x')">+添加</button></div>`;
-                        (ch.x||[]).forEach((x, xi) => { html += `<div class="alias-row"><input type="text" value="${h(x)}" oninput="window._cfgUpdateAlias('${h(id)}','x',${xi},this.value)"/><button class="btn-danger-xs" onclick="window._cfgRemoveAlias('${h(id)}','x',${xi})">✕</button></div>`; });
-                        html += `</div></div>`;
-                    }
-                    html += `</div></div>`;
+                    html += `<div id="cfg-add-channel-area"></div>`;
+                    html += `<div id="cfg-channels-editor" class="channels-editor"></div></div>`;
                 }
             } else if (selectedConfig.type === 'provinces') {
                 html += `<div class="section"><div class="editor-header" style="border-bottom:none;margin-bottom:0.5rem"><h4 style="margin:0">省份列表 (${(configData.provinces||[]).length})</h4><button class="btn btn-sm" style="background:rgba(59,130,246,0.1);color:var(--primary);border:1px solid rgba(59,130,246,0.2)" onclick="window._cfgAddProvince()">+ 添加省份</button></div>`;
@@ -389,6 +429,11 @@ pages.config = async function() {
         }
         html += `</div></div>`;
         main.innerHTML = html;
+
+        if (selectedConfig && selectedConfig.type === 'epg' && activeTab === 'channels') {
+            bindConfigSearchEvents();
+            renderChannelEditor();
+        }
     }
 
     let cfgAddChannelOpen = false, cfgNewId = '', cfgNewName = '';
@@ -443,10 +488,58 @@ pages.config = async function() {
         if (val !== undefined) obj[keys[keys.length-1]] = val;
     }
 
+    function renderChannelEditor() {
+        const channels = configData.channels || {};
+        const entries = Object.entries(channels);
+        let filtered = entries;
+        if (channelSearch.trim()) {
+            const q = channelSearch.toLowerCase();
+            filtered = entries.filter(([id, ch]) => id.toLowerCase().includes(q) || (ch.n||'').toLowerCase().includes(q));
+        }
+
+        const addArea = document.getElementById('cfg-add-channel-area');
+        if (addArea) {
+            if (cfgAddChannelOpen) {
+                addArea.innerHTML = `<div class="add-channel-bar"><div class="add-channel-form">
+                    <input type="text" placeholder="频道ID (如: CCTV-1)" id="cfg-new-id" class="input-id" value="${h(cfgNewId)}"/>
+                    <input type="text" placeholder="标准名称 (如: 央视综合)" id="cfg-new-name" class="input-name" value="${h(cfgNewName)}"/>
+                    <button class="btn btn-primary btn-sm" onclick="window._cfgConfirmAddChannel()">添加</button>
+                    <button class="btn btn-secondary btn-sm" onclick="window._cfgCancelAddChannel()">取消</button></div></div>`;
+            } else {
+                addArea.innerHTML = '';
+            }
+        }
+
+        const editor = document.getElementById('cfg-channels-editor');
+        if (!editor) return;
+        let html = '';
+        for (const [id, ch] of filtered) {
+            html += `<div class="channel-edit-card">
+                <div class="channel-edit-header"><span class="channel-id-mono">${h(id)}</span><button class="btn btn-danger-xs" onclick="window._cfgRemoveChannel('${h(id)}')">✕</button></div>
+                <div class="form-group"><label>标准名称</label><input type="text" value="${h(ch.n||'')}" oninput="window._cfgUpdateChannelN('${h(id)}',this.value)"/></div>
+                <div class="alias-section"><div class="alias-header"><label>别名 (a)</label><button class="btn btn-secondary btn-xs" onclick="window._cfgAddAlias('${h(id)}','a')">+添加</button></div>`;
+            (ch.a||[]).forEach((a, ai) => { html += `<div class="alias-row"><input type="text" value="${h(a)}" oninput="window._cfgUpdateAlias('${h(id)}','a',${ai},this.value)"/><button class="btn-danger-xs" onclick="window._cfgRemoveAlias('${h(id)}','a',${ai})">✕</button></div>`; });
+            html += `</div><div class="alias-section"><div class="alias-header"><label>扩展名 (x)</label><button class="btn btn-secondary btn-xs" onclick="window._cfgAddAlias('${h(id)}','x')">+添加</button></div>`;
+            (ch.x||[]).forEach((x, xi) => { html += `<div class="alias-row"><input type="text" value="${h(x)}" oninput="window._cfgUpdateAlias('${h(id)}','x',${xi},this.value)"/><button class="btn-danger-xs" onclick="window._cfgRemoveAlias('${h(id)}','x',${xi})">✕</button></div>`; });
+            html += `</div></div>`;
+        }
+        editor.innerHTML = html;
+    }
+
+    function bindConfigSearchEvents() {
+        const searchInput = document.getElementById('cfg-ch-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                channelSearch = this.value;
+                renderChannelEditor();
+            });
+        }
+    }
+
     window._cfgSelect = function(path) { const c = configs.find(x => x.path === path); if (c) selectConfig(c); };
     window._cfgTab = function(t) { activeTab = t; render(); };
     window._cfgSave = function() { saveConfig(); };
-    window._cfgChannelSearch = function(v) { channelSearch = v; render(); };
+    window._cfgChannelSearch = function(v) { channelSearch = v; renderChannelEditor(); };
 
     window._cfgAddDescSource = function() { configData.desc_sources = [...(configData.desc_sources||[]), {name:'',url:'',compressed:true}]; render(); };
     window._cfgRemoveDescSource = function(i) { configData.desc_sources = configData.desc_sources.filter((_,j) => j!==i); render(); };
@@ -505,7 +598,7 @@ pages.database = async function() {
     let selectedDb = null, dbContent = null, searchQuery = '', loadingDb = false, error = null;
     let currentPage = 1, pageSize = 20, expandedItems = new Set();
 
-    function render() {
+    function renderStatic() {
         let html = `<div class="page-header"><h1>数据库浏览</h1><p class="subtitle">查看节目描述和匹配数据</p></div><div class="db-layout">
             <div class="db-list card"><h3>数据库文件</h3><div class="db-items">`;
         for (const db of dbFiles) {
@@ -515,74 +608,108 @@ pages.database = async function() {
                 <div class="db-item-info"><span class="db-name">${db.name}</span><span class="db-desc">${db.description}</span><span class="db-size">${db.size}</span></div>
             </button>`;
         }
-        html += `</div></div><div class="db-content card">`;
+        html += `</div></div><div class="db-content card" id="db-content-area">`;
 
         if (selectedDb) {
             html += `<div class="content-header"><div class="content-title"><h3>${selectedDb.name}</h3><p class="content-desc" style="font-size:var(--text-xs);color:var(--text-muted)">${selectedDb.description} (${selectedDb.size})</p></div>`;
-            if (dbContent) {
-                let st = '';
-                if (Array.isArray(dbContent)) {
-                    const chSet = new Set(dbContent.map(i => i.channel));
-                    st = `<div class="stats-row"><div class="s"><span class="sv">${chSet.size}</span><span class="sl">频道</span></div><div class="s"><span class="sv">${dbContent.length.toLocaleString()}</span><span class="sl">节目</span></div></div>`;
-                } else if (Array.isArray(dbContent.processed)) {
-                    st = `<div class="stats-row"><div class="s"><span class="sv">${dbContent.processed.length.toLocaleString()}</span><span class="sl">记录</span></div></div>`;
-                } else if (dbContent.items && Array.isArray(dbContent.items)) {
-                    st = `<div class="stats-row"><div class="s"><span class="sv">${dbContent.items.length.toLocaleString()}</span><span class="sl">记录</span></div></div>`;
-                }
-                html += st;
-            }
-            html += `</div>`;
-
-            if (loadingDb) {
-                html += `<div class="loading-container"><div class="loading-spinner"></div><span class="loading-text">正在加载 ${selectedDb.name}...</span></div>`;
-            } else if (error) {
-                html += `<div class="error-message">${h(error)}</div><button class="btn btn-secondary" onclick="window._dbSelect('${selectedDb.path}')">重试</button>`;
-            } else if (dbContent && Array.isArray(dbContent)) {
-                html += `<div class="search-box">${SVGs.search}<input type="text" placeholder="搜索频道或节目..." value="${h(searchQuery)}" oninput="window._dbSearch(this.value)"/></div>`;
-
-                const channelMap = new Map();
-                for (const item of dbContent) {
-                    if (searchQuery) {
-                        const q = searchQuery.toLowerCase();
-                        if (!(item.channel||'').toLowerCase().includes(q) && !(item.title||'').toLowerCase().includes(q) && !(item.desc||'').toLowerCase().includes(q)) continue;
-                    }
-                    const ch = item.channel || '未知频道';
-                    if (!channelMap.has(ch)) channelMap.set(ch, []);
-                    channelMap.get(ch).push(item);
-                }
-                const entries = Array.from(channelMap.entries()).map(([c,p]) => ({ channel:c, count:p.length, programs:p }));
-                const totalPages = Math.ceil(entries.length/pageSize);
-                const paginated = entries.slice((currentPage-1)*pageSize, currentPage*pageSize);
-
-                html += `<div class="entries-list">`;
-                for (const e of paginated) {
-                    const expanded = expandedItems.has(e.channel);
-                    html += `<div class="entry-item"><div class="entry-header" onclick="window._dbToggle('${h(e.channel)}')">
-                        <div class="entry-info"><span class="entry-channel">${h(e.channel)}</span><span class="entry-count">${e.count} 个节目</span></div>
-                        <svg class="entry-arrow${expanded?' rotated':''}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>`;
-                    if (expanded && e.programs.length) {
-                        html += `<div class="programs-list">`;
-                        const show = e.programs.slice(0, 10);
-                        for (const p of show) {
-                            html += `<div class="program-item"><div class="program-name">${h(p.title||'未知节目')}</div><div class="program-desc">${h(p.desc||'暂无描述')}</div></div>`;
-                        }
-                        if (e.programs.length > 10) html += `<div class="more-hint">仅显示前 10 个节目，共 ${e.programs.length} 个</div>`;
-                        html += `</div>`;
-                    }
-                    html += `</div>`;
-                }
-                html += `</div>`;
-                if (totalPages > 1) {
-                    html += `<div class="pagination"><button class="page-btn"${currentPage<=1?' disabled':''} onclick="window._dbPage(${currentPage-1})">上一页</button><span class="page-info">${currentPage} / ${totalPages}</span><button class="page-btn"${currentPage>=totalPages?' disabled':''} onclick="window._dbPage(${currentPage+1})">下一页</button></div>`;
-                }
-            } else if (dbContent) {
-                html += `<div class="json-preview"><pre>${h(JSON.stringify(dbContent, null, 2))}</pre></div>`;
-            }
+            html += `<div id="db-stats-area"></div></div>`;
+            html += `<div id="db-dynamic-content"></div>`;
         } else {
             html += `<div class="empty-state">${SVGs.db}<p>选择左侧数据库查看内容</p></div>`;
         }
         html += `</div></div>`;
         main.innerHTML = html;
+    }
+
+    function renderDbDynamic() {
+        const contentArea = document.getElementById('db-dynamic-content');
+        if (!contentArea) return;
+
+        const statsArea = document.getElementById('db-stats-area');
+        if (statsArea && dbContent) {
+            let st = '';
+            if (Array.isArray(dbContent)) {
+                const chSet = new Set(dbContent.map(i => i.channel));
+                st = `<div class="stats-row"><div class="s"><span class="sv">${chSet.size}</span><span class="sl">频道</span></div><div class="s"><span class="sv">${dbContent.length.toLocaleString()}</span><span class="sl">节目</span></div></div>`;
+            } else if (Array.isArray(dbContent.processed)) {
+                st = `<div class="stats-row"><div class="s"><span class="sv">${dbContent.processed.length.toLocaleString()}</span><span class="sl">记录</span></div></div>`;
+            } else if (dbContent.items && Array.isArray(dbContent.items)) {
+                st = `<div class="stats-row"><div class="s"><span class="sv">${dbContent.items.length.toLocaleString()}</span><span class="sl">记录</span></div></div>`;
+            }
+            statsArea.innerHTML = st;
+        }
+
+        if (loadingDb) {
+            contentArea.innerHTML = `<div class="loading-container"><div class="loading-spinner"></div><span class="loading-text">正在加载 ${selectedDb.name}...</span></div>`;
+            return;
+        }
+
+        if (error) {
+            contentArea.innerHTML = `<div class="error-message">${h(error)}</div><button class="btn btn-secondary" onclick="window._dbSelect('${selectedDb.path}')">重试</button>`;
+            return;
+        }
+
+        if (dbContent && Array.isArray(dbContent)) {
+            let html = `<div class="search-box">${SVGs.search}<input type="text" placeholder="搜索频道或节目..." value="${h(searchQuery)}" id="db-search-input"/></div>`;
+
+            const channelMap = new Map();
+            for (const item of dbContent) {
+                if (searchQuery) {
+                    const q = searchQuery.toLowerCase();
+                    if (!(item.channel||'').toLowerCase().includes(q) && !(item.title||'').toLowerCase().includes(q) && !(item.desc||'').toLowerCase().includes(q)) continue;
+                }
+                const ch = item.channel || '未知频道';
+                if (!channelMap.has(ch)) channelMap.set(ch, []);
+                channelMap.get(ch).push(item);
+            }
+            const entries = Array.from(channelMap.entries()).map(([c,p]) => ({ channel:c, count:p.length, programs:p }));
+            const totalPages = Math.ceil(entries.length/pageSize);
+            const paginated = entries.slice((currentPage-1)*pageSize, currentPage*pageSize);
+
+            html += `<div class="entries-list">`;
+            for (const e of paginated) {
+                const expanded = expandedItems.has(e.channel);
+                html += `<div class="entry-item"><div class="entry-header" onclick="window._dbToggle('${h(e.channel)}')">
+                    <div class="entry-info"><span class="entry-channel">${h(e.channel)}</span><span class="entry-count">${e.count} 个节目</span></div>
+                    <svg class="entry-arrow${expanded?' rotated':''}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>`;
+                if (expanded && e.programs.length) {
+                    html += `<div class="programs-list">`;
+                    const show = e.programs.slice(0, 10);
+                    for (const p of show) {
+                        html += `<div class="program-item"><div class="program-name">${h(p.title||'未知节目')}</div><div class="program-desc">${h(p.desc||'暂无描述')}</div></div>`;
+                    }
+                    if (e.programs.length > 10) html += `<div class="more-hint">仅显示前 10 个节目，共 ${e.programs.length} 个</div>`;
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            }
+            html += `</div>`;
+            if (totalPages > 1) {
+                html += `<div class="pagination"><button class="page-btn"${currentPage<=1?' disabled':''} onclick="window._dbPage(${currentPage-1})">上一页</button><span class="page-info">${currentPage} / ${totalPages}</span><button class="page-btn"${currentPage>=totalPages?' disabled':''} onclick="window._dbPage(${currentPage+1})">下一页</button></div>`;
+            }
+            contentArea.innerHTML = html;
+            bindDbSearchEvents();
+        } else if (dbContent) {
+            contentArea.innerHTML = `<div class="json-preview"><pre>${h(JSON.stringify(dbContent, null, 2))}</pre></div>`;
+        }
+    }
+
+    function bindDbSearchEvents() {
+        const searchInput = document.getElementById('db-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                searchQuery = this.value;
+                currentPage = 1;
+                renderDbDynamic();
+            });
+        }
+    }
+
+    function render() {
+        renderStatic();
+        if (selectedDb) {
+            renderDbDynamic();
+        }
     }
 
     async function selectDatabase(db) {
@@ -593,15 +720,15 @@ pages.database = async function() {
             dbContent = JSON.parse(text);
         } catch(e) { error = e.message; }
         loadingDb = false;
-        render();
+        renderDbDynamic();
     }
 
     window._dbSelect = function(path) { const d = dbFiles.find(x => x.path === path); if (d) selectDatabase(d); };
-    window._dbSearch = function(v) { searchQuery = v; currentPage = 1; render(); };
-    window._dbPage = function(p) { currentPage = p; render(); };
+    window._dbSearch = function(v) { searchQuery = v; currentPage = 1; renderDbDynamic(); };
+    window._dbPage = function(p) { currentPage = p; renderDbDynamic(); };
     window._dbToggle = function(channel) {
         if (expandedItems.has(channel)) expandedItems.delete(channel); else expandedItems.add(channel);
-        render();
+        renderDbDynamic();
     };
 
     render();
@@ -863,44 +990,17 @@ pages.epgConfig = async function() {
                     <button class="btn btn-primary" onclick="window._epgSave()"${saving||!hasChanges()?' disabled':''}>${saving?'保存中...':'保存更改'}</button>
                     <button class="btn btn-secondary" onclick="window._epgReload()"${saving?' disabled':''}>重置</button></div></div>`;
             } else if (activeTab === 'channels') {
-                const channels = getChannelList();
                 html += `<div class="card"><div class="card-header"><h2>频道配置 (${Object.keys(config.channels||{}).length})</h2>
                     <div class="header-actions">
-                        <input type="text" class="search-input" placeholder="搜索频道..." value="${h(searchChannel)}" id="epg-ch-search" oninput="window._epgSearch(this.value)" style="width:200px"/>
+                        <input type="text" class="search-input" placeholder="搜索频道..." value="${h(searchChannel)}" id="epg-ch-search" style="width:200px"/>
                         <button class="btn btn-primary" onclick="window._epgAddChannelModal()">${SVGs.plus} 添加频道</button></div></div>
                     <div class="channel-hint"><p><strong>字段说明：</strong></p><ul>
                         <li><strong>频道 ID</strong>：频道的唯一标识符</li><li><strong>n (name)</strong>：频道主名称</li>
                         <li><strong>a (alias)</strong>：从外部匹配 EPG 时用到的名称</li><li><strong>x (extend)</strong>：扩展别名，适应不同名称变体</li></ul></div>
-                    <div class="sources-list">`;
-                for (const ch of channels) {
-                    if (editingChannel === ch.id) {
-                        html += `<div class="channel-editor-box">
-                            <div class="editor-row"><label>频道 ID:</label><input type="text" class="editor-input" value="${h(editData.id)}" id="epg-edit-id"/></div>
-                            <div class="editor-row"><label>名称:</label><input type="text" class="editor-input" value="${h(editData.n)}" id="epg-edit-n"/></div>
-                            <div class="editor-row"><label>别名:</label><div class="tags-input">`;
-                        (editData.a||[]).forEach((a, ai) => { html += `<span class="tag">${h(a)}<button onclick="window._epgRemoveAlias(${ai})">&times;</button></span>`; });
-                        html += `<input type="text" placeholder="添加别名..." id="epg-new-alias" value="${h(newAlias)}" onkeydown="if(event.key==='Enter'){event.preventDefault();window._epgAddAlias()}"/></div></div>
-                            <div class="editor-row"><label>扩展:</label><div class="tags-input">`;
-                        (editData.x||[]).forEach((x, xi) => { html += `<span class="tag">${h(x)}<button onclick="window._epgRemoveExtend(${xi})">&times;</button></span>`; });
-                        html += `<input type="text" placeholder="添加扩展..." id="epg-new-extend" value="${h(newExtend)}" onkeydown="if(event.key==='Enter'){event.preventDefault();window._epgAddExtend()}"/></div></div>
-                            <div class="editor-actions">
-                                <button class="btn btn-primary btn-sm" onclick="window._epgSaveChannel()">保存</button>
-                                <button class="btn btn-secondary btn-sm" onclick="window._epgCancelEdit()">取消</button>
-                                <button class="btn btn-danger btn-sm" onclick="window._epgRemoveChannelEdit()">删除</button></div></div>`;
-                    } else {
-                        html += `<div class="channel-item">
-                            <div class="channel-main"><span class="channel-id-label">${h(ch.id)}</span><span class="channel-name-text">${h(ch.n)}</span></div>
-                            <div class="channel-aliases-inline">`;
-                        if ((ch.a||[]).length) html += `<span class="alias-group"><span class="alias-label">a:</span>${ch.a.map(a=>h(a)).join(', ')}</span>`;
-                        if ((ch.x||[]).length) html += `<span class="alias-group extend"><span class="alias-label">x:</span>${ch.x.slice(0,3).map(x=>h(x)).join(', ')}${ch.x.length>3?`<span class="more">+${ch.x.length-3}</span>`:''}</span>`;
-                        html += `</div><div class="channel-actions">
-                            <button class="btn-icon" onclick="window._epgStartEdit('${h(ch.id)}')">${SVGs.edit}</button>
-                            <button class="btn-icon danger" onclick="window._epgRemoveChannel('${h(ch.id)}')">${SVGs.trash}</button></div></div>`;
-                    }
-                }
-                html += `</div><div class="actions" style="margin-top:1rem">
-                    <button class="btn btn-primary" onclick="window._epgSave()"${saving||!hasChanges()?' disabled':''}>${saving?'保存中...':'保存更改'}</button>
-                    <button class="btn btn-secondary" onclick="window._epgReload()"${saving?' disabled':''}>重置</button></div></div>`;
+                    <div id="epg-channels-list" class="sources-list"></div>
+                    <div class="actions" style="margin-top:1rem">
+                        <button class="btn btn-primary" onclick="window._epgSave()"${saving||!hasChanges()?' disabled':''}>${saving?'保存中...':'保存更改'}</button>
+                        <button class="btn btn-secondary" onclick="window._epgReload()"${saving?' disabled':''}>重置</button></div></div>`;
             } else {
                 const configJson = JSON.stringify(config, null, 2);
                 html += `<div class="card"><div class="card-header"><h2>JSON 编辑器</h2></div>
@@ -909,6 +1009,55 @@ pages.epgConfig = async function() {
             }
         }
         main.innerHTML = html;
+
+        if (activeTab === 'channels') {
+            bindEpgSearchEvents();
+            renderEpgChannelsList();
+        }
+    }
+
+    function renderEpgChannelsList() {
+        const container = document.getElementById('epg-channels-list');
+        if (!container) return;
+        const channels = getChannelList();
+        let html = '';
+        for (const ch of channels) {
+            if (editingChannel === ch.id) {
+                html += `<div class="channel-editor-box">
+                    <div class="editor-row"><label>频道 ID:</label><input type="text" class="editor-input" value="${h(editData.id)}" id="epg-edit-id"/></div>
+                    <div class="editor-row"><label>名称:</label><input type="text" class="editor-input" value="${h(editData.n)}" id="epg-edit-n"/></div>
+                    <div class="editor-row"><label>别名:</label><div class="tags-input">`;
+                (editData.a||[]).forEach((a, ai) => { html += `<span class="tag">${h(a)}<button onclick="window._epgRemoveAlias(${ai})">&times;</button></span>`; });
+                html += `<input type="text" placeholder="添加别名..." id="epg-new-alias" value="${h(newAlias)}" onkeydown="if(event.key==='Enter'){event.preventDefault();window._epgAddAlias()}"/></div></div>
+                    <div class="editor-row"><label>扩展:</label><div class="tags-input">`;
+                (editData.x||[]).forEach((x, xi) => { html += `<span class="tag">${h(x)}<button onclick="window._epgRemoveExtend(${xi})">&times;</button></span>`; });
+                html += `<input type="text" placeholder="添加扩展..." id="epg-new-extend" value="${h(newExtend)}" onkeydown="if(event.key==='Enter'){event.preventDefault();window._epgAddExtend()}"/></div></div>
+                    <div class="editor-actions">
+                        <button class="btn btn-primary btn-sm" onclick="window._epgSaveChannel()">保存</button>
+                        <button class="btn btn-secondary btn-sm" onclick="window._epgCancelEdit()">取消</button>
+                        <button class="btn btn-danger btn-sm" onclick="window._epgRemoveChannelEdit()">删除</button></div></div>`;
+            } else {
+                html += `<div class="channel-item">
+                    <div class="channel-main"><span class="channel-id-label">${h(ch.id)}</span><span class="channel-name-text">${h(ch.n)}</span></div>
+                    <div class="channel-aliases-inline">`;
+                if ((ch.a||[]).length) html += `<span class="alias-group"><span class="alias-label">a:</span>${ch.a.map(a=>h(a)).join(', ')}</span>`;
+                if ((ch.x||[]).length) html += `<span class="alias-group extend"><span class="alias-label">x:</span>${ch.x.slice(0,3).map(x=>h(x)).join(', ')}${ch.x.length>3?`<span class="more">+${ch.x.length-3}</span>`:''}</span>`;
+                html += `</div><div class="channel-actions">
+                    <button class="btn-icon" onclick="window._epgStartEdit('${h(ch.id)}')">${SVGs.edit}</button>
+                    <button class="btn-icon danger" onclick="window._epgRemoveChannel('${h(ch.id)}')">${SVGs.trash}</button></div></div>`;
+            }
+        }
+        container.innerHTML = html;
+    }
+
+    function bindEpgSearchEvents() {
+        const searchInput = document.getElementById('epg-ch-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                searchChannel = this.value;
+                renderEpgChannelsList();
+            });
+        }
     }
 
     async function saveConfig() {
@@ -927,7 +1076,7 @@ pages.epgConfig = async function() {
     window._epgReload = function() { loadConfig(); };
     window._epgTab = function(t) { activeTab = t; render(); };
     window._epgSave = function() { saveConfig(); };
-    window._epgSearch = function(v) { searchChannel = v; render(); };
+    window._epgSearch = function(v) { searchChannel = v; renderEpgChannelsList(); };
 
     window._epgToggleSource = function(i) { config.epg_sources[i].enabled = !config.epg_sources[i].enabled; };
     window._epgUpdateSource = function(i, f, v) { config.epg_sources[i][f] = v; };
