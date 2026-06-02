@@ -17,44 +17,24 @@ class EPGParser {
         this._parseContent(content);
     }
 
-    async parseUrl(url, proxyUrl = '') {
-        const FALLBACK_PROXIES = [
-            'http://localhost:8999/proxy?url={encoded}',
-            'https://api.allorigins.win/raw?url={encoded}',
-            'https://cors.eu.org/',
-            'https://corsproxy.io/?',
-        ];
+    async parseUrl(url) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('HTTP ' + response.status + ': ' + response.statusText);
 
-        try {
-            return await this._fetchWithRetry(url);
-        } catch (directErr) {
-            const proxies = [];
-            if (proxyUrl) proxies.push(proxyUrl);
-            proxies.push(...FALLBACK_PROXIES);
+        const buffer = await response.arrayBuffer();
+        let content;
 
-            const tried = [];
-            for (const p of proxies) {
-                const proxyFetchUrl = this._buildProxyUrl(p, url);
-                try {
-                    return await this._fetchWithRetry(proxyFetchUrl);
-                } catch (proxyErr) {
-                    tried.push(p.replace(/\{.*?\}/g, '') + ' \u2192 ' + proxyErr.message);
-                }
-            }
-            throw new Error(
-                '\u76F4\u8FDE\u5931\u8D25(' + directErr.message + ')\n' +
-                '\u5DF2\u5C1D\u8BD5 ' + tried.length + ' \u4E2A\u4EE3\u7406\u5747\u5931\u8D25:\n' +
-                tried.map(t => '  \u2022 ' + t).join('\n')
-            );
+        const contentType = response.headers.get('Content-Type') || '';
+        const isGz = url.toLowerCase().endsWith('.gz') || contentType.includes('gzip');
+
+        if (isGz) {
+            content = await this._decompressGzip(new Uint8Array(buffer));
+        } else {
+            content = new TextDecoder().decode(buffer);
         }
-    }
 
-    _buildProxyUrl(proxyUrl, url) {
-        if (proxyUrl.includes('{url}'))
-            return proxyUrl.replace('{url}', url);
-        if (proxyUrl.includes('{encoded}'))
-            return proxyUrl.replace('{encoded}', encodeURIComponent(url));
-        return proxyUrl + url;
+        this._parseContent(content);
+        return buffer.byteLength;
     }
 
     async _fetchWithRetry(url) {
@@ -76,6 +56,7 @@ class EPGParser {
         this._parseContent(content);
         return buffer.byteLength;
     }
+
 
     _parseContent(xmlText) {
         this.channels = {};
