@@ -1,4 +1,4 @@
-name: TVMAO EPG
+name: TVMAO & SDGD EPG
 
 on:
   schedule:
@@ -31,20 +31,29 @@ jobs:
           pip install requests beautifulsoup4 lxml
         fi
         
-    - name: Run EPG Crawler
+    - name: Run TVMAO EPG Crawler
       run: |
         python scripts/tvmao_epg_crawler.py --province 370000 --output EPG --log-dir log
+        
+    - name: Run SDGD EPG Crawler
+      env:
+        SDGD_TOKEN: ${{ secrets.SDGD_TOKEN }}
+      run: |
+        python scripts/fetch_epg_sdgd.py
         
     - name: Display results
       run: |
         echo "生成的文件:"
         ls -lh EPG/
         echo ""
-        echo "文件内容预览 (前50行):"
+        echo "文件内容预览:"
         if [ -f "EPG/tvmao.xml" ]; then
-          head -n 50 EPG/tvmao.xml
-        else
-          echo "警告：tvmao.xml 文件未生成"
+          echo "=== tvmao.xml (前30行) ==="
+          head -n 30 EPG/tvmao.xml
+        fi
+        if [ -f "EPG/sdgd.xml.gz" ]; then
+          echo "=== sdgd.xml.gz (解压后前30行) ==="
+          zcat EPG/sdgd.xml.gz | head -n 30
         fi
         
     - name: Upload EPG files
@@ -60,17 +69,17 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
         
         if ! git diff --cached --quiet; then
-          git commit -m "Update EPG data [skip ci]"
+          git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
           git fetch origin ${{ github.ref_name }}
           if ! git rebase origin/${{ github.ref_name }} -X theirs; then
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
-            git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
-            git commit -m "Update EPG data [skip ci]"
+            git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
+            git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
           fi
           git push
           echo "EPG 文件已成功提交并推送"
