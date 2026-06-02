@@ -22,7 +22,6 @@ from pathlib import Path
 from threading import Lock
 
 BASE_URL = "https://api-lc.sdcabletv.cn:4443"
-APP_ID = "wxe3fd175210436676"
 
 print_lock = Lock()
 
@@ -70,6 +69,8 @@ def load_token():
 
 def get_headers(token):
     """构建请求头"""
+    app_id = os.environ.get('SDGD_APP_ID', '')
+    referer = f"https://servicewechat.com/{app_id}/47/page-frame.html" if app_id else "https://servicewechat.com/"
     return {
         "token": token,
         "Content-Type": "application/json",
@@ -79,7 +80,7 @@ def get_headers(token):
                       "MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI "
                       "MiniProgramEnv/Windows WindowsWechat/WMPF "
                       "WindowsWechat(0x63090a13) UnifiedPCWindowsWechat(0xf2541923) XWEB/19841",
-        "Referer": f"https://servicewechat.com/{APP_ID}/47/page-frame.html",
+        "Referer": referer,
     }
 
 

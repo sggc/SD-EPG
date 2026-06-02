@@ -38,6 +38,7 @@ jobs:
     - name: Run SDGD EPG Crawler
       env:
         SDGD_TOKEN: ${{ secrets.SDGD_TOKEN }}
+        SDGD_APP_ID: ${{ secrets.SDGD_APP_ID }}
       run: |
         python scripts/fetch_epg_sdgd.py
         
