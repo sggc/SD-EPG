@@ -37,27 +37,6 @@ class EPGParser {
         return buffer.byteLength;
     }
 
-    async _fetchWithRetry(url) {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('HTTP ' + response.status + ': ' + response.statusText);
-
-        const buffer = await response.arrayBuffer();
-        let content;
-
-        const contentType = response.headers.get('Content-Type') || '';
-        const isGz = url.toLowerCase().endsWith('.gz') || contentType.includes('gzip');
-
-        if (isGz) {
-            content = await this._decompressGzip(new Uint8Array(buffer));
-        } else {
-            content = new TextDecoder().decode(buffer);
-        }
-
-        this._parseContent(content);
-        return buffer.byteLength;
-    }
-
-
     _parseContent(xmlText) {
         this.channels = {};
         this.programmes = {};
