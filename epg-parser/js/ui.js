@@ -82,8 +82,14 @@ class EPGUI {
         document.getElementById('modal-load').addEventListener('click', () => this._loadFromUrl());
         document.getElementById('modal-close').addEventListener('click', () => this._hideUrlModal());
 
-        this.el.urlModal.addEventListener('click', (e) => {
-            if (e.target === this.el.urlModal) this._hideUrlModal();
+        this.el.urlModal.addEventListener('mousedown', (e) => {
+            if (e.target === this.el.urlModal) this._modalMouseDownOnOverlay = true;
+        });
+        this.el.urlModal.addEventListener('mouseup', (e) => {
+            if (e.target === this.el.urlModal && this._modalMouseDownOnOverlay) {
+                this._hideUrlModal();
+            }
+            this._modalMouseDownOnOverlay = false;
         });
 
         this.el.urlInput.addEventListener('keydown', (e) => {
@@ -164,7 +170,13 @@ class EPGUI {
         } catch (e) {
             this._hideLoading();
             this.el.statusText.textContent = '\u274C ' + e.message;
-            alert('\u52A0\u8F7D\u5931\u8D25: ' + e.message);
+            let msg = '\u52A0\u8F7D\u5931\u8D25: ' + e.message;
+            if (e.name === 'TypeError' || e.message.includes('fetch') || e.message.includes('Failed to fetch')) {
+                msg += '\n\n\u53EF\u80FD\u539F\u56E0\uFF1A\u6D4F\u89C8\u5668\u8DE8\u57DF\u9650\u5236 (CORS)\u3002\n' +
+                       '\u8BE5 URL \u670D\u52A1\u5668\u672A\u5141\u8BB8\u76F4\u63A5\u4ECE\u6D4F\u89C8\u5668\u8BF7\u6C42\uFF0C\n' +
+                       '\u5EFA\u8BAE\u5148\u4E0B\u8F7D\u6587\u4EF6\u540E\u901A\u8FC7\u201C\u6253\u5F00\u6587\u4EF6\u201D\u52A0\u8F7D\u3002';
+            }
+            alert(msg);
         }
     }
 
