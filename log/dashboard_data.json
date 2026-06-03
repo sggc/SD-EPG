@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-06-03 18:20:53",
-  "whitelistChannels": 433,
-  "matchedChannels": 414,
-  "unmatchedChannels": 19,
-  "totalPrograms": 97411,
+  "lastUpdate": "2026-06-03 19:26:53",
+  "whitelistChannels": 444,
+  "matchedChannels": 421,
+  "unmatchedChannels": 23,
+  "totalPrograms": 98923,
   "filteredPrograms": 13848,
   "dateRange": "20260528 ~ 20260604",
-  "aliasCount": 472,
+  "aliasCount": 479,
   "epgSources": [
     {
       "name": "SD-GD",
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53233,
+      "programs": 53442,
       "matched": 81
     },
     {
@@ -34,7 +34,7 @@
       "enabled": true,
       "channels": 521,
       "programs": 130407,
-      "matched": 108
+      "matched": 114
     },
     {
       "name": "suming",
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 290,
       "programs": 16615,
-      "matched": 2
+      "matched": 3
     },
     {
       "name": "mxdyeah",
@@ -215,6 +215,34 @@
       "name": "中国电影频道北美版",
       "aliases": [
         ""
+      ]
+    },
+    {
+      "id": "河南中华功夫",
+      "name": "河南中华功夫",
+      "aliases": [
+        "河南中华功夫频道"
+      ]
+    },
+    {
+      "id": "河南收藏天下",
+      "name": "河南收藏天下",
+      "aliases": [
+        "河南收藏天下频道"
+      ]
+    },
+    {
+      "id": "河南移动电视",
+      "name": "河南移动电视",
+      "aliases": [
+        "河南移动电视"
+      ]
+    },
+    {
+      "id": "河南戏曲",
+      "name": "河南戏曲",
+      "aliases": [
+        "河南戏曲"
       ]
     }
   ],
@@ -2347,7 +2375,7 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 289,
+      "programs": 285,
       "todayPrograms": 36,
       "source": "plsy1",
       "aliases": [
@@ -3242,7 +3270,7 @@
     {
       "id": "山东农科",
       "name": "山东农科",
-      "programs": 358,
+      "programs": 408,
       "todayPrograms": 51,
       "source": "plsy1",
       "aliases": [],
@@ -3583,8 +3611,8 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 202,
-      "todayPrograms": 23,
+      "programs": 191,
+      "todayPrograms": 22,
       "source": "plsy1",
       "aliases": [
         "广西卫视高清"
@@ -4426,6 +4454,30 @@
       "gaps": []
     },
     {
+      "id": "河南乡村",
+      "name": "河南乡村",
+      "programs": 290,
+      "todayPrograms": 41,
+      "source": "erwcc",
+      "aliases": [
+        "河南乡村频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南公共",
+      "name": "河南公共",
+      "programs": 296,
+      "todayPrograms": 42,
+      "source": "erwcc",
+      "aliases": [
+        "河南公共频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
       "id": "河南卫视",
       "name": "河南卫视",
       "programs": 309,
@@ -4433,6 +4485,66 @@
       "source": "SD-GD",
       "aliases": [
         "河南卫视高清"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南新闻",
+      "name": "河南新闻",
+      "programs": 193,
+      "todayPrograms": 33,
+      "source": "erwcc",
+      "aliases": [
+        "河南新闻频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南民生",
+      "name": "河南民生",
+      "programs": 182,
+      "todayPrograms": 26,
+      "source": "erwcc",
+      "aliases": [
+        "河南民生频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南法制",
+      "name": "河南法制",
+      "programs": 40,
+      "todayPrograms": 20,
+      "source": "zmt",
+      "aliases": [
+        "河南法制频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南电视剧",
+      "name": "河南电视剧",
+      "programs": 261,
+      "todayPrograms": 37,
+      "source": "erwcc",
+      "aliases": [
+        "河南电视剧频道"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "河南都市",
+      "name": "河南都市",
+      "programs": 205,
+      "todayPrograms": 30,
+      "source": "erwcc",
+      "aliases": [
+        "河南都市频道"
       ],
       "hasGap": false,
       "gaps": []
@@ -4974,8 +5086,8 @@
     {
       "id": "游戏风云",
       "name": "游戏风云",
-      "programs": 326,
-      "todayPrograms": 42,
+      "programs": 325,
+      "todayPrograms": 41,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -5747,8 +5859,8 @@
     {
       "id": "贵州卫视",
       "name": "贵州卫视",
-      "programs": 438,
-      "todayPrograms": 49,
+      "programs": 450,
+      "todayPrograms": 61,
       "source": "plsy1",
       "aliases": [
         "贵州卫视高清"
@@ -5822,8 +5934,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 434,
-      "todayPrograms": 55,
+      "programs": 433,
+      "todayPrograms": 54,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
