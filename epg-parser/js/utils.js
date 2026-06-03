@@ -17,16 +17,32 @@ function parseXmltvTime(s) {
         const parts = clean.split(' ');
         const dtStr = parts[0];
         if (dtStr.length < 14) return null;
-        const year = +dtStr.slice(0, 4);
-        const month = +dtStr.slice(4, 6) - 1;
-        const day = +dtStr.slice(6, 8);
-        const hour = +dtStr.slice(8, 10);
-        const min = +dtStr.slice(10, 12);
-        const sec = +dtStr.slice(12, 14);
-        return new Date(year, month, day, hour, min, sec);
+        const year = dtStr.slice(0, 4);
+        const month = dtStr.slice(4, 6);
+        const day = dtStr.slice(6, 8);
+        const hour = dtStr.slice(8, 10);
+        const min = dtStr.slice(10, 12);
+        const sec = dtStr.slice(12, 14);
+
+        let tzStr = parts[1] || '';
+        if (tzStr.length === 5 && (tzStr[0] === '+' || tzStr[0] === '-')) {
+            tzStr = tzStr.slice(0, 3) + ':' + tzStr.slice(3);
+        }
+
+        const isoStr = `${year}-${month}-${day}T${hour}:${min}:${sec}${tzStr}`;
+        const dt = new Date(isoStr);
+        return isNaN(dt) ? null : dt;
     } catch (e) {
         return null;
     }
+}
+
+function formatDateStr(dt) {
+    if (!dt) return '';
+    const y = dt.getFullYear();
+    const m = String(dt.getMonth() + 1).padStart(2, '0');
+    const d = String(dt.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
 }
 
 function formatXmltvTime(s) {

@@ -327,7 +327,7 @@ class EPGUI {
     _renderLocalDates(chId) {
         const progs = this.parser.programmes[chId] || [];
         const dates = new Set();
-        progs.forEach(p => { if (p.start_dt) dates.add(p.start_dt.toISOString().slice(0, 10)); });
+        progs.forEach(p => { if (p.start_dt) dates.add(formatDateStr(p.start_dt)); });
         const sorted = [...dates].sort();
 
         const sel = this.el.localDate;
@@ -362,11 +362,11 @@ class EPGUI {
         const progs = this.parser.programmes[this.currentChannelId] || [];
 
         for (const p of progs) {
-            if (dateFilter !== '\u5168\u90E8' && p.start_dt && p.start_dt.toISOString().slice(0, 10) !== dateFilter) continue;
+            if (dateFilter !== '\u5168\u90E8' && p.start_dt && formatDateStr(p.start_dt) !== dateFilter) continue;
             if (descFilter === 'has_desc' && !p.desc) continue;
             if (descFilter === 'no_desc' && p.desc) continue;
 
-            const dateStr = p.start_dt ? p.start_dt.toISOString().slice(0, 10) : '';
+            const dateStr = p.start_dt ? formatDateStr(p.start_dt) : '';
             const startStr = p.start_dt
                 ? p.start_dt.toTimeString().slice(0, 8)
                 : p.start.slice(9, 15);
@@ -443,7 +443,7 @@ class EPGUI {
 
         const allMissing = [];
         for (const p of progs) {
-            if (dateFilter !== '\u5168\u90E8' && p.start_dt && p.start_dt.toISOString().slice(0, 10) !== dateFilter) continue;
+            if (dateFilter !== '\u5168\u90E8' && p.start_dt && formatDateStr(p.start_dt) !== dateFilter) continue;
             if (!p.desc) allMissing.push(p.title);
         }
 

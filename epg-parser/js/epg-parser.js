@@ -153,7 +153,7 @@ class EPGParser {
         for (const chId in this.programmes) {
             for (const p of this.programmes[chId]) {
                 if (p.start_dt) {
-                    dates.add(p.start_dt.toISOString().slice(0, 10));
+                    dates.add(formatDateStr(p.start_dt));
                 }
             }
         }
@@ -163,7 +163,7 @@ class EPGParser {
     getChannelDateStats(chId, dateStr) {
         const progs = this.programmes[chId] || [];
         const filtered = dateStr && dateStr !== '\u5168\u90E8'
-            ? progs.filter(p => p.start_dt && p.start_dt.toISOString().slice(0, 10) === dateStr)
+            ? progs.filter(p => p.start_dt && formatDateStr(p.start_dt) === dateStr)
             : progs;
 
         const total = filtered.length;
@@ -195,7 +195,7 @@ class EPGParser {
             totalDesc += chDesc;
 
             for (const p of progs) {
-                if (p.start_dt) allDates.add(p.start_dt.toISOString().slice(0, 10));
+                if (p.start_dt) allDates.add(formatDateStr(p.start_dt));
             }
 
             channelStats.push({
@@ -232,7 +232,7 @@ class EPGParser {
         const dateMap = {};
         for (const p of progs) {
             if (p.start_dt) {
-                const ds = p.start_dt.toISOString().slice(0, 10);
+                const ds = formatDateStr(p.start_dt);
                 if (!dateMap[ds]) dateMap[ds] = { prog: 0, desc: 0 };
                 dateMap[ds].prog++;
                 if (p.desc) dateMap[ds].desc++;
