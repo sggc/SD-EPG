@@ -17,7 +17,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Lock
 
@@ -287,8 +287,10 @@ def create_xmltv(channels, all_programs):
                 prog_elem = ET.SubElement(root, 'programme')
 
                 if start_ts and end_ts:
-                    start_dt = datetime.fromtimestamp(int(start_ts) / 1000)
-                    end_dt = datetime.fromtimestamp(int(end_ts) / 1000)
+                    # 显式使用北京时间(+0800)，避免系统时区差异导致的时间偏移
+                    beijing_tz = timezone(timedelta(hours=8))
+                    start_dt = datetime.fromtimestamp(int(start_ts) / 1000, tz=beijing_tz)
+                    end_dt = datetime.fromtimestamp(int(end_ts) / 1000, tz=beijing_tz)
 
                     prog_elem.set('start', start_dt.strftime('%Y%m%d%H%M%S +0800'))
                     prog_elem.set('stop', end_dt.strftime('%Y%m%d%H%M%S +0800'))
