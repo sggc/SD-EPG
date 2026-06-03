@@ -257,38 +257,48 @@ def create_xmltv(channels, all_programs):
     root.set('generator-info-name', 'SDGD EPG 7+1 Fetcher')
     root.set('generator-info-url', 'https://github.com/epg-fetcher')
     root.set('date', datetime.now().strftime('%Y%m%d%H%M%S +0800'))
-    
+
     for ch in channels:
         channel_elem = ET.SubElement(root, 'channel')
         channel_id = ch.get('channelId', '')
         channel_elem.set('id', channel_id)
-        
+
         clean_name = clean_channel_name(ch.get('channelName', ''))
         name_elem = ET.SubElement(channel_elem, 'display-name')
         name_elem.text = clean_name
-    
+
     total_programs = 0
+    # 用于去重: (channel_id, start_ts, end_ts, title)
+    seen = set()
+
     for channel_id, days_programs in all_programs.items():
         for date_str, programs in days_programs.items():
             for prog in programs:
-                prog_elem = ET.SubElement(root, 'programme')
-                
                 start_ts = prog.get('startTimeStamps')
                 end_ts = prog.get('endTimeStamps')
-                
+                title = prog.get('epgName', '')
+
+                # 去重键
+                dup_key = (channel_id, start_ts, end_ts, title)
+                if dup_key in seen:
+                    continue
+                seen.add(dup_key)
+
+                prog_elem = ET.SubElement(root, 'programme')
+
                 if start_ts and end_ts:
                     start_dt = datetime.fromtimestamp(int(start_ts) / 1000)
                     end_dt = datetime.fromtimestamp(int(end_ts) / 1000)
-                    
+
                     prog_elem.set('start', start_dt.strftime('%Y%m%d%H%M%S +0800'))
                     prog_elem.set('stop', end_dt.strftime('%Y%m%d%H%M%S +0800'))
-                
+
                 prog_elem.set('channel', channel_id)
-                
+
                 title_elem = ET.SubElement(prog_elem, 'title')
                 title_elem.set('lang', 'zh')
-                title_elem.text = prog.get('epgName', '')
-                
+                title_elem.text = title
+
                 episode_type = prog.get('episodeType', '')
                 if episode_type:
                     category_elem = ET.SubElement(prog_elem, 'category')
@@ -302,7 +312,7 @@ def create_xmltv(channels, all_programs):
                         'variety': '综艺'
                     }
                     category_elem.text = category_type_map.get(episode_type, episode_type)
-                
+
                 episode_num = prog.get('episodeNumber', 0)
                 try:
                     episode_num = int(episode_num) if episode_num else 0
@@ -312,9 +322,9 @@ def create_xmltv(channels, all_programs):
                     episode_elem = ET.SubElement(prog_elem, 'episode-num')
                     episode_elem.set('system', 'onscreen')
                     episode_elem.text = str(episode_num)
-                
+
                 total_programs += 1
-    
+
     return root, total_programs
 
 
