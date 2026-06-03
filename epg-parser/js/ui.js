@@ -173,9 +173,10 @@ class EPGUI {
             this.el.statusText.textContent = '\u274C ' + e.message;
             let msg = '\u52A0\u8F7D\u5931\u8D25: ' + e.message;
             if (e.name === 'TypeError' || e.message.includes('fetch') || e.message.includes('Failed to fetch')) {
-                msg += '\n\n\u53EF\u80FD\u539F\u56E0\uFF1A\u6D4F\u89C8\u5668\u8DE8\u57DF\u9650\u5236 (CORS)\u3002\n' +
-                       '\u8BE5 URL \u670D\u52A1\u5668\u672A\u5141\u8BB8\u76F4\u63A5\u4ECE\u6D4F\u89C8\u5668\u8BF7\u6C42\uFF0C\n' +
-                       '\u5EFA\u8BAE\u5148\u4E0B\u8F7D\u6587\u4EF6\u540E\u901A\u8FC7\u201C\u6253\u5F00\u6587\u4EF6\u201D\u52A0\u8F7D\u3002';
+                msg += '\n\n\u53EF\u80FD\u539F\u56E0\uFF1A\u6D4F\u89C8\u5668\u5B89\u5168\u7B56\u7565\u963B\u6B62\u3002\n' +
+                       '\u25CF CORS \u8DE8\u57DF\u9650\u5236\uFF1A\u8BE5 URL \u670D\u52A1\u5668\u672A\u5141\u8BB8\u76F4\u63A5\u4ECE\u6D4F\u89C8\u5668\u8BF7\u6C42\u3002\n' +
+                       '\u25CF HTTPS \u9875\u9762\u4E0D\u80FD\u8BF7\u6C42 HTTP \u8D44\u6E90\uFF08\u6DF7\u5408\u5185\u5BB9\u9650\u5236\uFF09\u3002\n\n' +
+                       '\u5EFA\u8BAE\uFF1A\u5148\u4E0B\u8F7D\u6587\u4EF6\u540E\u901A\u8FC7\u201C\u6253\u5F00\u6587\u4EF6\u201D\u52A0\u8F7D\u3002';
             }
             alert(msg);
         }
