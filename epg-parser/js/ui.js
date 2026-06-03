@@ -158,8 +158,7 @@ class EPGUI {
             alert('\u8BF7\u8F93\u5165\u6709\u6548\u7684 HTTP/HTTPS URL');
             return;
         }
-        // \u5C06 GitHub raw \u8DF3\u8F6C\u94FE\u63A5\u8F6C\u6362\u4E3A\u76F4\u8FDE\u683C\u5F0F\uFF0C\u907F\u514D 302 \u5E26\u6765\u7684 CORS \u95EE\u9898
-        url = url.replace(/^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/raw\/(.*)$/, 'https://raw.githubusercontent.com/$1/$2/$3');
+        url = normalizeUrl(url);
         this._hideUrlModal();
         this._showLoading('\u6B63\u5728\u4E0B\u8F7D EPG \u6570\u636E...');
         try {

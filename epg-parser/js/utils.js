@@ -98,3 +98,8 @@ function escapeHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+
+function normalizeUrl(url) {
+    // GitHub raw \u8DF3\u8F6C\u94FE\u63A5\u8F6C\u6362\u4E3A\u76F4\u8FDE\uFF0C\u907F\u514D 302 CORS \u95EE\u9898
+    return url.replace(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/raw\/(.*)$/, 'https://raw.githubusercontent.com/$1/$2/$3');
+}

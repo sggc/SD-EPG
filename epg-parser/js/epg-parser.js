@@ -18,14 +18,15 @@ class EPGParser {
     }
 
     async parseUrl(url) {
-        const response = await fetch(url);
+        const finalUrl = normalizeUrl(url);
+        const response = await fetch(finalUrl);
         if (!response.ok) throw new Error('HTTP ' + response.status + ': ' + response.statusText);
 
         const buffer = await response.arrayBuffer();
         let content;
 
         const contentType = response.headers.get('Content-Type') || '';
-        const isGz = url.toLowerCase().endsWith('.gz') || contentType.includes('gzip');
+        const isGz = finalUrl.toLowerCase().endsWith('.gz') || contentType.includes('gzip');
 
         if (isGz) {
             content = await this._decompressGzip(new Uint8Array(buffer));
