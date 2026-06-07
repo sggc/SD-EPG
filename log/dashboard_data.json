@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-07 05:47:06",
+  "lastUpdate": "2026-06-07 14:44:52",
   "whitelistChannels": 442,
   "matchedChannels": 421,
   "unmatchedChannels": 21,
-  "totalPrograms": 94653,
-  "filteredPrograms": 18645,
+  "totalPrograms": 94251,
+  "filteredPrograms": 19905,
   "dateRange": "20260601 ~ 20260608",
   "aliasCount": 525,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 53278,
+      "programs": 53362,
       "matched": 69
     },
     {
@@ -33,7 +33,7 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 522,
-      "programs": 130529,
+      "programs": 130570,
       "matched": 107
     },
     {
@@ -68,14 +68,14 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1464,
-      "programs": 346696,
+      "programs": 374701,
       "matched": 35
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 16211,
-      "programs": 1451226,
+      "channels": 16215,
+      "programs": 1379595,
       "matched": 15
     },
     {
@@ -89,7 +89,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1113,
-      "programs": 258167,
+      "programs": 258208,
       "matched": 4
     },
     {
@@ -253,18 +253,6 @@
     },
     {
       "index": 4,
-      "name": "澳视体育",
-      "id": "澳视体育",
-      "todayPrograms": 0
-    },
-    {
-      "index": 5,
-      "name": "澳视综艺",
-      "id": "澳视综艺",
-      "todayPrograms": 0
-    },
-    {
-      "index": 6,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
@@ -539,29 +527,17 @@
       ]
     },
     {
-      "id": "滨州民生",
-      "name": "滨州民生",
-      "gaps": [
-        "07:00-07:15",
-        "07:35-08:25",
-        "08:44-11:48",
-        "12:28-18:30",
-        "18:50-21:00",
-        "21:35-22:00"
-      ]
-    },
-    {
       "id": "澳视体育",
       "name": "澳视体育",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
@@ -727,7 +703,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 58,
+      "programs": 39,
       "todayPrograms": 18,
       "source": "epgpw",
       "aliases": [],
@@ -747,7 +723,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 94,
+      "programs": 63,
       "todayPrograms": 28,
       "source": "epgpw",
       "aliases": [],
@@ -757,7 +733,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 85,
+      "programs": 56,
       "todayPrograms": 28,
       "source": "epgpw",
       "aliases": [],
@@ -1499,7 +1475,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 109,
+      "programs": 92,
       "todayPrograms": 46,
       "source": "epgpw",
       "aliases": [],
@@ -1509,7 +1485,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 114,
+      "programs": 75,
       "todayPrograms": 40,
       "source": "epgpw",
       "aliases": [],
@@ -1519,7 +1495,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 91,
+      "programs": 63,
       "todayPrograms": 27,
       "source": "epgpw",
       "aliases": [],
@@ -1559,7 +1535,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 109,
+      "programs": 92,
       "todayPrograms": 46,
       "source": "epgpw",
       "aliases": [],
@@ -1569,7 +1545,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 114,
+      "programs": 75,
       "todayPrograms": 40,
       "source": "epgpw",
       "aliases": [],
@@ -1579,7 +1555,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 91,
+      "programs": 63,
       "todayPrograms": 27,
       "source": "epgpw",
       "aliases": [],
@@ -1983,7 +1959,7 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 106,
+      "programs": 69,
       "todayPrograms": 31,
       "source": "epgpw",
       "aliases": [
@@ -2015,7 +1991,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 61,
+      "programs": 41,
       "todayPrograms": 18,
       "source": "epgpw",
       "aliases": [],
@@ -2403,8 +2379,8 @@
     {
       "id": "公视",
       "name": "公视",
-      "programs": 207,
-      "todayPrograms": 32,
+      "programs": 229,
+      "todayPrograms": 50,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2765,8 +2741,8 @@
     {
       "id": "华视新闻资讯",
       "name": "华视新闻资讯",
-      "programs": 146,
-      "todayPrograms": 27,
+      "programs": 142,
+      "todayPrograms": 23,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -3271,8 +3247,8 @@
     {
       "id": "寰宇新闻台",
       "name": "寰宇新闻台",
-      "programs": 142,
-      "todayPrograms": 24,
+      "programs": 141,
+      "todayPrograms": 23,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -5212,45 +5188,14 @@
     {
       "id": "滨州民生",
       "name": "滨州民生",
-      "programs": 114,
-      "todayPrograms": 11,
-      "source": "suming",
+      "programs": 28,
+      "todayPrograms": 28,
+      "source": "epgpw",
       "aliases": [
         "滨州民生频道"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "07:15",
-          "duration": 15
-        },
-        {
-          "start": "07:35",
-          "stop": "08:25",
-          "duration": 50
-        },
-        {
-          "start": "08:44",
-          "stop": "11:48",
-          "duration": 184
-        },
-        {
-          "start": "12:28",
-          "stop": "18:30",
-          "duration": 362
-        },
-        {
-          "start": "18:50",
-          "stop": "21:00",
-          "duration": 130
-        },
-        {
-          "start": "21:35",
-          "stop": "22:00",
-          "duration": 25
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "潍坊公共",
@@ -5307,16 +5252,16 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 15,
-      "todayPrograms": 0,
+      "programs": 12,
+      "todayPrograms": 12,
       "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -5333,16 +5278,16 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 17,
-      "todayPrograms": 0,
+      "programs": 14,
+      "todayPrograms": 14,
       "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -6002,8 +5947,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 412,
-      "todayPrograms": 55,
+      "programs": 409,
+      "todayPrograms": 52,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -6539,8 +6484,8 @@
     {
       "id": "龙华电影",
       "name": "龙华电影",
-      "programs": 102,
-      "todayPrograms": 20,
+      "programs": 82,
+      "todayPrograms": 10,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
