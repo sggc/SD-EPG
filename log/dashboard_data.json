@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-09 06:16:33",
+  "lastUpdate": "2026-06-09 14:30:09",
   "whitelistChannels": 442,
   "matchedChannels": 421,
   "unmatchedChannels": 21,
-  "totalPrograms": 93431,
-  "filteredPrograms": 20889,
+  "totalPrograms": 93133,
+  "filteredPrograms": 21627,
   "dateRange": "20260603 ~ 20260610",
   "aliasCount": 525,
   "epgSources": [
@@ -33,7 +33,7 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 522,
-      "programs": 130907,
+      "programs": 130963,
       "matched": 105
     },
     {
@@ -67,15 +67,15 @@
     {
       "name": "mxdyeah",
       "enabled": true,
-      "channels": 1464,
-      "programs": 345313,
+      "channels": 1465,
+      "programs": 356818,
       "matched": 34
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 16168,
-      "programs": 1325060,
+      "channels": 16176,
+      "programs": 1665145,
       "matched": 14
     },
     {
@@ -89,7 +89,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1115,
-      "programs": 257470,
+      "programs": 257526,
       "matched": 3
     },
     {
@@ -247,30 +247,18 @@
     },
     {
       "index": 3,
-      "name": "澳视体育",
-      "id": "澳视体育",
-      "todayPrograms": 0
-    },
-    {
-      "index": 4,
-      "name": "澳视综艺",
-      "id": "澳视综艺",
-      "todayPrograms": 0
-    },
-    {
-      "index": 5,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 6,
+      "index": 4,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
     },
     {
-      "index": 7,
+      "index": 5,
       "name": "青岛QTV-3",
       "id": "青岛QTV-3",
       "todayPrograms": 4
@@ -549,14 +537,14 @@
       "id": "澳视体育",
       "name": "澳视体育",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
@@ -763,7 +751,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 63,
+      "programs": 42,
       "todayPrograms": 20,
       "source": "epgpw",
       "aliases": [],
@@ -783,7 +771,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 106,
+      "programs": 71,
       "todayPrograms": 35,
       "source": "epgpw",
       "aliases": [],
@@ -793,7 +781,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 82,
+      "programs": 54,
       "todayPrograms": 27,
       "source": "epgpw",
       "aliases": [],
@@ -803,7 +791,7 @@
     {
       "id": "Astro QJ",
       "name": "Astro QJ",
-      "programs": 50,
+      "programs": 43,
       "todayPrograms": 22,
       "source": "epgpw",
       "aliases": [],
@@ -1535,7 +1523,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 111,
+      "programs": 94,
       "todayPrograms": 48,
       "source": "epgpw",
       "aliases": [],
@@ -1545,7 +1533,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 110,
+      "programs": 75,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1555,7 +1543,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 109,
+      "programs": 73,
       "todayPrograms": 36,
       "source": "epgpw",
       "aliases": [],
@@ -1595,7 +1583,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 111,
+      "programs": 94,
       "todayPrograms": 48,
       "source": "epgpw",
       "aliases": [],
@@ -1605,7 +1593,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 110,
+      "programs": 75,
       "todayPrograms": 38,
       "source": "epgpw",
       "aliases": [],
@@ -1615,7 +1603,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 109,
+      "programs": 73,
       "todayPrograms": 36,
       "source": "epgpw",
       "aliases": [],
@@ -1685,8 +1673,8 @@
     {
       "id": "Love Nature 4K",
       "name": "Love Nature 4K",
-      "programs": 163,
-      "todayPrograms": 28,
+      "programs": 162,
+      "todayPrograms": 27,
       "source": "mxdyeah",
       "aliases": [],
       "hasGap": false,
@@ -2019,8 +2007,8 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 91,
-      "todayPrograms": 41,
+      "programs": 84,
+      "todayPrograms": 42,
       "source": "epgpw",
       "aliases": [
         "TVBJADE(HD)"
@@ -2051,7 +2039,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 73,
+      "programs": 50,
       "todayPrograms": 25,
       "source": "epgpw",
       "aliases": [],
@@ -5317,16 +5305,16 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 15,
-      "todayPrograms": 0,
+      "programs": 14,
+      "todayPrograms": 14,
       "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -5343,16 +5331,16 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 15,
-      "todayPrograms": 0,
+      "programs": 16,
+      "todayPrograms": 16,
       "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
