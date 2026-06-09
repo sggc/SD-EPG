@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-09 14:30:09",
-  "whitelistChannels": 442,
-  "matchedChannels": 421,
-  "unmatchedChannels": 21,
-  "totalPrograms": 93133,
-  "filteredPrograms": 21627,
+  "lastUpdate": "2026-06-09 19:31:55",
+  "whitelistChannels": 445,
+  "matchedChannels": 422,
+  "unmatchedChannels": 23,
+  "totalPrograms": 93321,
+  "filteredPrograms": 21015,
   "dateRange": "20260603 ~ 20260610",
   "aliasCount": 525,
   "epgSources": [
@@ -34,13 +34,13 @@
       "enabled": true,
       "channels": 522,
       "programs": 130963,
-      "matched": 105
+      "matched": 106
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 243,
-      "programs": 71129,
+      "programs": 64648,
       "matched": 56
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 463,
-      "programs": 18773,
+      "programs": 19458,
       "matched": 2
     },
     {
@@ -229,6 +229,19 @@
       "name": "河南移动电视",
       "aliases": [
         "河南移动电视"
+      ]
+    },
+    {
+      "id": "中天新闻",
+      "name": "中天新闻",
+      "aliases": []
+    },
+    {
+      "id": "Astro欢喜台",
+      "name": "Astro欢喜台",
+      "aliases": [
+        "欢喜台",
+        "Astro 欢喜台"
       ]
     }
   ],
@@ -2095,6 +2108,16 @@
         "东方卫视超高清",
         "东方卫视-4K"
       ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "东方影视",
+      "name": "东方影视",
+      "programs": 188,
+      "todayPrograms": 33,
+      "source": "erwcc",
+      "aliases": [],
       "hasGap": false,
       "gaps": []
     },
