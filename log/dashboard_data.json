@@ -1,9 +1,9 @@
 {
-  "lastUpdate": "2026-06-10 14:46:01",
+  "lastUpdate": "2026-06-10 19:49:03",
   "whitelistChannels": 445,
   "matchedChannels": 424,
   "unmatchedChannels": 21,
-  "totalPrograms": 96293,
+  "totalPrograms": 96315,
   "filteredPrograms": 18960,
   "dateRange": "20260604 ~ 20260611",
   "aliasCount": 526,
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 53959,
+      "programs": 54281,
       "matched": 69
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 472,
-      "programs": 88350,
+      "programs": 88406,
       "matched": 63
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 463,
-      "programs": 19691,
+      "programs": 20484,
       "matched": 2
     },
     {
@@ -250,12 +250,6 @@
     },
     {
       "index": 3,
-      "name": "齐河综合",
-      "id": "齐河综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 4,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -707,7 +701,11 @@
       "id": "齐河综合",
       "name": "齐河综合",
       "gaps": [
-        "07:00-22:00"
+        "07:12-12:03",
+        "12:15-18:30",
+        "19:35-19:49",
+        "20:19-20:34",
+        "20:46-22:00"
       ]
     },
     {
@@ -1063,7 +1061,7 @@
     {
       "id": "CCTV4欧洲",
       "name": "CCTV4欧洲",
-      "programs": 329,
+      "programs": 331,
       "todayPrograms": 46,
       "source": "plsy1",
       "aliases": [
@@ -1079,7 +1077,7 @@
     {
       "id": "CCTV4美洲",
       "name": "CCTV4美洲",
-      "programs": 342,
+      "programs": 343,
       "todayPrograms": 46,
       "source": "plsy1",
       "aliases": [
@@ -5545,7 +5543,7 @@
     {
       "id": "生活时尚",
       "name": "生活时尚",
-      "programs": 817,
+      "programs": 818,
       "todayPrograms": 103,
       "source": "plsy1",
       "aliases": [],
@@ -6028,8 +6026,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 400,
-      "todayPrograms": 54,
+      "programs": 398,
+      "todayPrograms": 52,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -6573,16 +6571,36 @@
     {
       "id": "齐河综合",
       "name": "齐河综合",
-      "programs": 62,
-      "todayPrograms": 0,
+      "programs": 82,
+      "todayPrograms": 9,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
+          "start": "07:12",
+          "stop": "12:03",
+          "duration": 291
+        },
+        {
+          "start": "12:15",
+          "stop": "18:30",
+          "duration": 375
+        },
+        {
+          "start": "19:35",
+          "stop": "19:49",
+          "duration": 14
+        },
+        {
+          "start": "20:19",
+          "stop": "20:34",
+          "duration": 15
+        },
+        {
+          "start": "20:46",
           "stop": "22:00",
-          "duration": 900
+          "duration": 74
         }
       ]
     },
