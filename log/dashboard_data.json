@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-11 15:11:36",
+  "lastUpdate": "2026-06-11 20:18:27",
   "whitelistChannels": 445,
-  "matchedChannels": 424,
-  "unmatchedChannels": 21,
-  "totalPrograms": 96530,
-  "filteredPrograms": 19333,
+  "matchedChannels": 425,
+  "unmatchedChannels": 20,
+  "totalPrograms": 96556,
+  "filteredPrograms": 19357,
   "dateRange": "20260605 ~ 20260612",
   "aliasCount": 526,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54106,
+      "programs": 54136,
       "matched": 69
     },
     {
@@ -39,9 +39,9 @@
     {
       "name": "suming",
       "enabled": true,
-      "channels": 472,
-      "programs": 94910,
-      "matched": 63
+      "channels": 473,
+      "programs": 95781,
+      "matched": 64
     },
     {
       "name": "tv-sou",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 19594,
+      "programs": 20404,
       "matched": 2
     },
     {
@@ -135,13 +135,6 @@
       "name": "黄岛综合",
       "aliases": [
         "黄岛综合"
-      ]
-    },
-    {
-      "id": "岱岳综合",
-      "name": "岱岳综合",
-      "aliases": [
-        "岱岳综合"
       ]
     },
     {
@@ -296,6 +289,19 @@
         "19:40-19:52",
         "20:14-20:59",
         "21:05-21:50"
+      ]
+    },
+    {
+      "id": "岱岳综合",
+      "name": "岱岳综合",
+      "gaps": [
+        "07:15-12:30",
+        "12:45-13:15",
+        "13:20-15:10",
+        "15:15-17:05",
+        "17:10-18:25",
+        "19:50-20:35",
+        "20:45-21:30"
       ]
     },
     {
@@ -2261,7 +2267,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 120,
+      "programs": 121,
       "todayPrograms": 24,
       "source": "suming",
       "aliases": [],
@@ -2347,8 +2353,8 @@
     {
       "id": "乐游",
       "name": "乐游",
-      "programs": 531,
-      "todayPrograms": 68,
+      "programs": 530,
+      "todayPrograms": 67,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -3519,6 +3525,52 @@
       "aliases": [],
       "hasGap": false,
       "gaps": []
+    },
+    {
+      "id": "岱岳综合",
+      "name": "岱岳综合",
+      "programs": 30,
+      "todayPrograms": 15,
+      "source": "suming",
+      "aliases": [],
+      "hasGap": true,
+      "gaps": [
+        {
+          "start": "07:15",
+          "stop": "12:30",
+          "duration": 315
+        },
+        {
+          "start": "12:45",
+          "stop": "13:15",
+          "duration": 30
+        },
+        {
+          "start": "13:20",
+          "stop": "15:10",
+          "duration": 110
+        },
+        {
+          "start": "15:15",
+          "stop": "17:05",
+          "duration": 110
+        },
+        {
+          "start": "17:10",
+          "stop": "18:25",
+          "duration": 75
+        },
+        {
+          "start": "19:50",
+          "stop": "20:35",
+          "duration": 45
+        },
+        {
+          "start": "20:45",
+          "stop": "21:30",
+          "duration": 45
+        }
+      ]
     },
     {
       "id": "峨眉电影4K",
@@ -6088,8 +6140,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 394,
-      "todayPrograms": 44,
+      "programs": 390,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
