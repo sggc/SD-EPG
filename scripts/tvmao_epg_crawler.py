@@ -15,6 +15,7 @@ from xml.dom import minidom
 import os
 import time
 import argparse
+import json
 
 
 class TvmaoEPGCrawler:
@@ -357,7 +358,7 @@ class TvmaoEPGCrawler:
     def save_log(self, log_dir='log'):
         """保存抓取日志到 log 目录"""
         os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(log_dir, 'tvmao.txt')
+        log_path = os.path.join(log_dir, f'tvmao_{self.province_id}.txt')
         
         # 获取今天的日期和统计
         today_str = self.today_date.strftime('%Y-%m-%d')
@@ -424,13 +425,13 @@ class TvmaoEPGCrawler:
         pretty_xml = '\n'.join(lines)
 
         # 保存 XML
-        xml_path = os.path.join(self.output_dir, 'tvmao.xml')
+        xml_path = os.path.join(self.output_dir, f'tvmao_{self.province_id}.xml')
         with open(xml_path, 'w', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {xml_path}")
 
         # 保存压缩版
-        gz_path = os.path.join(self.output_dir, 'tvmao.xml.gz')
+        gz_path = os.path.join(self.output_dir, f'tvmao_{self.province_id}.xml.gz')
         with gzip.open(gz_path, 'wt', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {gz_path}")
@@ -445,17 +446,42 @@ class TvmaoEPGCrawler:
 
 def main():
     parser = argparse.ArgumentParser(description='电视猫 EPG 爬虫')
-    parser.add_argument('--province', default='370000', help='省份代码 (默认: 370000 山东)')
+    parser.add_argument('--province', default=None, help='省份代码 (默认: 读取配置文件)')
     parser.add_argument('--output', default='EPG', help='输出目录 (默认: EPG)')
     parser.add_argument('--log-dir', default='log', help='日志目录 (默认: log)')
     args = parser.parse_args()
 
-    crawler = TvmaoEPGCrawler(province_id=args.province, output_dir=args.output)
-    if crawler.crawl():
-        crawler.save()
-        crawler.save_log(args.log_dir)
+    # 确定要抓取的省份列表
+    if args.province:
+        provinces = [{'id': args.province, 'name': ''}]
+    else:
+        # 读取配置文件
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'provinces.json')
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+            provinces = [p for p in config.get('provinces', []) if p.get('enabled', False)]
+            if not provinces:
+                print("配置文件中没有启用的省份，使用默认省份 370000")
+                provinces = [{'id': '370000', 'name': '山东'}]
+        except Exception as e:
+            print(f"读取配置文件失败: {e}，使用默认省份 370000")
+            provinces = [{'id': '370000', 'name': '山东'}]
 
-    print("\n完成!")
+    # 依次抓取每个省份
+    for prov in provinces:
+        prov_id = prov['id']
+        prov_name = prov.get('name', '')
+        print(f"\n{'='*60}")
+        print(f"开始抓取省份: {prov_name} ({prov_id})")
+        print(f"{'='*60}")
+
+        crawler = TvmaoEPGCrawler(province_id=prov_id, output_dir=args.output)
+        if crawler.crawl():
+            crawler.save()
+            crawler.save_log(args.log_dir)
+
+    print("\n全部完成!")
 
 
 if __name__ == '__main__':
