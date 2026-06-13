@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-06-13 16:29:05",
+  "lastUpdate": "2026-06-13 17:54:26",
   "whitelistChannels": 495,
   "matchedChannels": 473,
   "unmatchedChannels": 22,
   "totalPrograms": 104533,
   "filteredPrograms": 14800,
   "dateRange": "20260607 ~ 20260614",
-  "aliasCount": 569,
+  "aliasCount": 574,
   "epgSources": [
     {
       "name": "SD-GD",
@@ -97,6 +97,13 @@
       "enabled": true,
       "channels": 11,
       "programs": 792,
+      "matched": 0
+    },
+    {
+      "name": "",
+      "enabled": true,
+      "channels": 0,
+      "programs": 0,
       "matched": 0
     }
   ],
@@ -2903,7 +2910,8 @@
       "todayPrograms": 23,
       "source": "tv-mao",
       "aliases": [
-        "十堰经济频道"
+        "十堰经济频道",
+        "十堰经济旅游"
       ],
       "hasGap": true,
       "gaps": [
@@ -3363,7 +3371,8 @@
       "todayPrograms": 23,
       "source": "tv-mao",
       "aliases": [
-        "孝感公共频道"
+        "孝感公共频道",
+        "孝感生活"
       ],
       "hasGap": false,
       "gaps": []
@@ -3399,7 +3408,8 @@
       "todayPrograms": 27,
       "source": "tv-mao",
       "aliases": [
-        "孝感新闻频道"
+        "孝感新闻频道",
+        "孝感新闻综合"
       ],
       "hasGap": false,
       "gaps": []
@@ -6487,7 +6497,8 @@
       "todayPrograms": 25,
       "source": "tv-mao",
       "aliases": [
-        "襄阳经济频道"
+        "襄阳经济频道",
+        "襄阳经济生活"
       ],
       "hasGap": false,
       "gaps": []
@@ -7101,7 +7112,8 @@
       "todayPrograms": 21,
       "source": "tv-mao",
       "aliases": [
-        "黄石新闻频道"
+        "黄石新闻频道",
+        "黄石新闻综合"
       ],
       "hasGap": false,
       "gaps": []
