@@ -222,6 +222,10 @@ pages.channels = async function() {
 
         function getFiltered() {
             let chs = allChannels;
+            const enabledSources = new Set(sources.map(s => s['名称']));
+            if (enabledSources.size > 0) {
+                chs = chs.filter(c => enabledSources.has(c['数据源']));
+            }
             if (selectedSrc !== 'all') chs = chs.filter(c => c['数据源'] === selectedSrc);
             if (searchQ) {
                 const q = searchQ.toLowerCase();
@@ -410,7 +414,6 @@ pages.config = async function() {
                     html += `<div class="section"><div class="editor-header" style="border-bottom:none;margin-bottom:0.5rem"><h4 style="margin:0">频道配置 (${entries.length})</h4><div class="header-actions">
                         <div class="search-box-small">${SVGs.search}<input type="text" placeholder="搜索频道..." value="${h(channelSearch)}" id="cfg-ch-search"/></div>
                         <button class="btn btn-primary btn-sm" onclick="window._cfgOpenAddChannel()">+ 新增频道</button></div></div>`;
-                    html += `<div id="cfg-add-channel-area"></div>`;
                     html += `<div id="cfg-channels-editor" class="channels-editor"></div></div>`;
                 }
             } else if (selectedConfig.type === 'provinces') {
@@ -436,7 +439,7 @@ pages.config = async function() {
         }
     }
 
-    let cfgAddChannelOpen = false, cfgNewId = '', cfgNewName = '';
+
 
     async function selectConfig(config) {
         selectedConfig = config; error = null; configData = null; activeTab = 'sources'; channelSearch = '';
@@ -497,19 +500,6 @@ pages.config = async function() {
             filtered = entries.filter(([id, ch]) => id.toLowerCase().includes(q) || (ch.n||'').toLowerCase().includes(q));
         }
 
-        const addArea = document.getElementById('cfg-add-channel-area');
-        if (addArea) {
-            if (cfgAddChannelOpen) {
-                addArea.innerHTML = `<div class="add-channel-bar"><div class="add-channel-form">
-                    <input type="text" placeholder="频道ID (如: CCTV-1)" id="cfg-new-id" class="input-id" value="${h(cfgNewId)}"/>
-                    <input type="text" placeholder="标准名称 (如: 央视综合)" id="cfg-new-name" class="input-name" value="${h(cfgNewName)}"/>
-                    <button class="btn btn-primary btn-sm" onclick="window._cfgConfirmAddChannel()">添加</button>
-                    <button class="btn btn-secondary btn-sm" onclick="window._cfgCancelAddChannel()">取消</button></div></div>`;
-            } else {
-                addArea.innerHTML = '';
-            }
-        }
-
         const editor = document.getElementById('cfg-channels-editor');
         if (!editor) return;
         let html = '';
@@ -556,16 +546,32 @@ pages.config = async function() {
     window._cfgRemoveProvince = function(i) { configData.provinces = configData.provinces.filter((_,j) => j!==i); render(); };
     window._cfgUpdateProvince = function(i,f,v) { configData.provinces[i][f] = v; };
 
-    window._cfgOpenAddChannel = function() { cfgAddChannelOpen = true; cfgNewId = ''; cfgNewName = ''; render(); };
-    window._cfgCancelAddChannel = function() { cfgAddChannelOpen = false; render(); };
+    window._cfgOpenAddChannel = function() {
+        const modal = document.getElementById('add-channel-modal');
+        if (modal) {
+            document.getElementById('cfg-modal-id').value = '';
+            document.getElementById('cfg-modal-n').value = '';
+            document.getElementById('cfg-modal-a').value = '';
+            document.getElementById('cfg-modal-x').value = '';
+            modal.style.display = 'flex';
+            setTimeout(() => document.getElementById('cfg-modal-id').focus(), 100);
+        }
+    };
+    window._cfgCloseAddChannelModal = function() {
+        const modal = document.getElementById('add-channel-modal');
+        if (modal) modal.style.display = 'none';
+    };
     window._cfgConfirmAddChannel = function() {
-        const idEl = document.getElementById('cfg-new-id'); const nameEl = document.getElementById('cfg-new-name');
-        const id = (idEl? idEl.value : cfgNewId).trim();
+        const id = (document.getElementById('cfg-modal-id')||{}).value.trim();
+        const name = (document.getElementById('cfg-modal-n')||{}).value.trim();
+        const aliases = (document.getElementById('cfg-modal-a')||{}).value.split(',').map(s=>s.trim()).filter(Boolean);
+        const extendsArr = (document.getElementById('cfg-modal-x')||{}).value.split(',').map(s=>s.trim()).filter(Boolean);
         if (!id) return;
         if (!configData.channels) configData.channels = {};
         if (configData.channels[id]) { alert('频道ID已存在'); return; }
-        configData.channels[id] = { n: (nameEl? nameEl.value : cfgNewName).trim() || id, a: [], x: [] };
-        cfgAddChannelOpen = false; render();
+        configData.channels[id] = { n: name || id, a: aliases, x: extendsArr };
+        window._cfgCloseAddChannelModal();
+        renderChannelEditor();
     };
 
     window._cfgRemoveChannel = function(id) { delete configData.channels[id]; render(); };
@@ -778,7 +784,7 @@ pages.details = async function() {
         function render() {
             let html = `<div class="page-header"><h1>详细信息</h1><p class="subtitle">EPG 数据源、统计与下载</p></div>`;
 
-            html += `<section class="sources-section"><div class="card"><div class="card-header"><h2>${SVGs.globe} EPG 源状态</h2><span class="badge">${stats.epgSources.length} 个源</span></div>
+            html += `<section class="sources-section"><div class="card"><div class="card-header"><h2>${SVGs.globe} EPG 源状态</h2><span class="badge">${stats.epgSources.filter(s => !s.disabled).length} 个源</span></div>
                 <div class="source-list">`;
             for (const s of stats.epgSources) {
                 html += `<div class="source-row${s.disabled?' disabled-row':''}"><div class="source-info">

@@ -91,6 +91,39 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="add-channel-modal" style="display:none" onclick="if(event.target===this)window._cfgCloseAddChannelModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">新增频道</h3>
+                <button class="modal-close" onclick="window._cfgCloseAddChannelModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label">频道 ID</label>
+                    <input type="text" class="input-field" id="cfg-modal-id" placeholder="如: CCTV-1" onkeydown="if(event.key==='Enter'){event.preventDefault();window._cfgConfirmAddChannel()}"/>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">标准名称</label>
+                    <input type="text" class="input-field" id="cfg-modal-n" placeholder="如: 央视综合" onkeydown="if(event.key==='Enter'){event.preventDefault();window._cfgConfirmAddChannel()}"/>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">别名 (a) <span style="color:var(--text-muted);font-weight:400">多个用逗号分隔</span></label>
+                    <input type="text" class="input-field" id="cfg-modal-a" placeholder="如: 中央1台, CCTV1" onkeydown="if(event.key==='Enter'){event.preventDefault();window._cfgConfirmAddChannel()}"/>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">扩展名 (x) <span style="color:var(--text-muted);font-weight:400">多个用逗号分隔</span></label>
+                    <input type="text" class="input-field" id="cfg-modal-x" placeholder="如: cctv1hd, cctv-1" onkeydown="if(event.key==='Enter'){event.preventDefault();window._cfgConfirmAddChannel()}"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="window._cfgCloseAddChannelModal()">取消</button>
+                <button class="btn btn-primary" onclick="window._cfgConfirmAddChannel()">添加</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/api.js"></script>
     <script src="js/store.js"></script>
     <script src="js/pages.js"></script>
