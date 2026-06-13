@@ -61,12 +61,10 @@ jobs:
         ls -lh EPG/
         echo ""
         echo "文件内容预览:"
-        for f in EPG/tvmao_*.xml; do
-          if [ -f "$f" ]; then
-            echo "=== $f (前30行) ==="
-            head -n 30 "$f"
-          fi
-        done
+        if [ -f "EPG/tvmao.xml" ]; then
+          echo "=== tvmao.xml (前30行) ==="
+          head -n 30 EPG/tvmao.xml
+        fi
         if [ -f "EPG/sdgd.xml.gz" ]; then
           echo "=== sdgd.xml.gz (解压后前30行) ==="
           zcat EPG/sdgd.xml.gz | head -n 30
@@ -85,7 +83,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        git add EPG/tvmao_*.xml EPG/tvmao_*.xml.gz EPG/sdgd.xml.gz log/tvmao_*.txt
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
 
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
@@ -94,7 +92,7 @@ jobs:
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
-            git add EPG/tvmao_*.xml EPG/tvmao_*.xml.gz EPG/sdgd.xml.gz log/tvmao_*.txt
+            git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
             git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
           fi
           git push

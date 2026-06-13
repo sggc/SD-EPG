@@ -355,10 +355,15 @@ class TvmaoEPGCrawler:
 
         return root
 
+    def merge(self, other):
+        """合并另一个 crawler 的频道和节目数据"""
+        self.channels.update(other.channels)
+        self.programs.extend(other.programs)
+
     def save_log(self, log_dir='log'):
         """保存抓取日志到 log 目录"""
         os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(log_dir, f'tvmao_{self.province_id}.txt')
+        log_path = os.path.join(log_dir, 'tvmao.txt')
         
         # 获取今天的日期和统计
         today_str = self.today_date.strftime('%Y-%m-%d')
@@ -425,13 +430,13 @@ class TvmaoEPGCrawler:
         pretty_xml = '\n'.join(lines)
 
         # 保存 XML
-        xml_path = os.path.join(self.output_dir, f'tvmao_{self.province_id}.xml')
+        xml_path = os.path.join(self.output_dir, 'tvmao.xml')
         with open(xml_path, 'w', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {xml_path}")
 
         # 保存压缩版
-        gz_path = os.path.join(self.output_dir, f'tvmao_{self.province_id}.xml.gz')
+        gz_path = os.path.join(self.output_dir, 'tvmao.xml.gz')
         with gzip.open(gz_path, 'wt', encoding='utf-8') as f:
             f.write(pretty_xml)
         print(f"已保存: {gz_path}")
@@ -468,7 +473,8 @@ def main():
             print(f"读取配置文件失败: {e}，使用默认省份 370000")
             provinces = [{'id': '370000', 'name': '山东'}]
 
-    # 依次抓取每个省份
+    # 依次抓取每个省份，合并到主 crawler
+    main_crawler = None
     for prov in provinces:
         prov_id = prov['id']
         prov_name = prov.get('name', '')
@@ -478,8 +484,14 @@ def main():
 
         crawler = TvmaoEPGCrawler(province_id=prov_id, output_dir=args.output)
         if crawler.crawl():
-            crawler.save()
-            crawler.save_log(args.log_dir)
+            if main_crawler is None:
+                main_crawler = crawler
+            else:
+                main_crawler.merge(crawler)
+
+    if main_crawler:
+        main_crawler.save()
+        main_crawler.save_log(args.log_dir)
 
     print("\n全部完成!")
 
