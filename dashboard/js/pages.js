@@ -574,13 +574,13 @@ pages.config = async function() {
     window._cfgAddAlias = function(id, type) {
         const ch = configData.channels[id];
         configData.channels[id] = { ...ch, [type]: [...(ch[type]||[]), ''] };
-        render();
+        renderChannelEditor();
     };
     window._cfgUpdateAlias = function(id, type, idx, v) { configData.channels[id][type][idx] = v; };
     window._cfgRemoveAlias = function(id, type, idx) {
         const ch = configData.channels[id];
         configData.channels[id] = { ...ch, [type]: ch[type].filter((_,i) => i!==idx) };
-        render();
+        renderChannelEditor();
     };
 
     render();
@@ -1115,14 +1115,14 @@ pages.epgConfig = async function() {
     window._epgRemoveChannelEdit = function() { delete config.channels[editingChannel]; editingChannel = null; render(); };
     window._epgAddAlias = function() {
         const el = document.getElementById('epg-new-alias'); const v = (el? el.value : newAlias).trim();
-        if (v) { editData.a = [...editData.a, v]; newAlias = ''; render(); }
+        if (v) { editData.a = [...editData.a, v]; newAlias = ''; renderEpgChannelsList(); }
     };
-    window._epgRemoveAlias = function(i) { editData.a = editData.a.filter((_,j) => j!==i); render(); };
+    window._epgRemoveAlias = function(i) { editData.a = editData.a.filter((_,j) => j!==i); renderEpgChannelsList(); };
     window._epgAddExtend = function() {
         const el = document.getElementById('epg-new-extend'); const v = (el? el.value : newExtend).trim();
-        if (v) { editData.x = [...editData.x, v]; newExtend = ''; render(); }
+        if (v) { editData.x = [...editData.x, v]; newExtend = ''; renderEpgChannelsList(); }
     };
-    window._epgRemoveExtend = function(i) { editData.x = editData.x.filter((_,j) => j!==i); render(); };
+    window._epgRemoveExtend = function(i) { editData.x = editData.x.filter((_,j) => j!==i); renderEpgChannelsList(); };
     window._epgSaveJson = function() {
         const ta = document.getElementById('epg-json-editor');
         if (ta) { try { config = JSON.parse(ta.value); } catch(e) { error = 'JSON 格式错误'; render(); return; } }
