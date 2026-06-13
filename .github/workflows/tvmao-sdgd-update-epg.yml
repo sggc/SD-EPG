@@ -4,6 +4,17 @@ on:
   schedule:
     - cron: '0 18 * * *'
   workflow_dispatch:
+    inputs:
+      run_tvmao:
+        description: '运行 TVMAO 抓取'
+        required: true
+        default: true
+        type: boolean
+      run_sdgd:
+        description: '运行 SDGD 抓取'
+        required: true
+        default: true
+        type: boolean
 
 jobs:
   crawl:
@@ -32,10 +43,12 @@ jobs:
         fi
         
     - name: Run TVMAO EPG Crawler
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_tvmao == 'true' }}
       run: |
-        python scripts/tvmao_epg_crawler.py --province 370000 --output EPG --log-dir log
-        
+        python scripts/tvmao_epg_crawler.py --output EPG --log-dir log
+
     - name: Run SDGD EPG Crawler
+      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_sdgd == 'true' }}
       env:
         SDGD_TOKEN: ${{ secrets.SDGD_TOKEN }}
         SDGD_APP_ID: ${{ secrets.SDGD_APP_ID }}
@@ -48,10 +61,12 @@ jobs:
         ls -lh EPG/
         echo ""
         echo "文件内容预览:"
-        if [ -f "EPG/tvmao.xml" ]; then
-          echo "=== tvmao.xml (前30行) ==="
-          head -n 30 EPG/tvmao.xml
-        fi
+        for f in EPG/tvmao_*.xml; do
+          if [ -f "$f" ]; then
+            echo "=== $f (前30行) ==="
+            head -n 30 "$f"
+          fi
+        done
         if [ -f "EPG/sdgd.xml.gz" ]; then
           echo "=== sdgd.xml.gz (解压后前30行) ==="
           zcat EPG/sdgd.xml.gz | head -n 30
@@ -70,8 +85,8 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
-        
+        git add EPG/tvmao_*.xml EPG/tvmao_*.xml.gz EPG/sdgd.xml.gz log/tvmao_*.txt
+
         if ! git diff --cached --quiet; then
           git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
           git fetch origin ${{ github.ref_name }}
@@ -79,7 +94,7 @@ jobs:
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
-            git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
+            git add EPG/tvmao_*.xml EPG/tvmao_*.xml.gz EPG/sdgd.xml.gz log/tvmao_*.txt
             git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
           fi
           git push
