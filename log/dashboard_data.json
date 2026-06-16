@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2026-06-16 15:46:37",
+  "lastUpdate": "2026-06-16 21:04:43",
   "whitelistChannels": 495,
-  "matchedChannels": 472,
-  "unmatchedChannels": 23,
-  "totalPrograms": 100683,
+  "matchedChannels": 473,
+  "unmatchedChannels": 22,
+  "totalPrograms": 100701,
   "filteredPrograms": 19492,
   "dateRange": "20260610 ~ 20260617",
-  "aliasCount": 573,
+  "aliasCount": 575,
   "epgSources": [
     {
       "name": "SD-GD",
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 55258,
+      "programs": 55265,
       "matched": 69
     },
     {
@@ -81,9 +81,9 @@
     {
       "name": "liliu",
       "enabled": true,
-      "channels": 0,
-      "programs": 0,
-      "matched": 0
+      "channels": 461,
+      "programs": 20958,
+      "matched": 2
     },
     {
       "name": "loc",
@@ -108,14 +108,6 @@
     }
   ],
   "unmatchedList": [
-    {
-      "id": "凤凰卫视电影台",
-      "name": "凤凰卫视电影台",
-      "aliases": [
-        "凤凰电影",
-        "凤凰卫视电影"
-      ]
-    },
     {
       "id": "威海海洋生活",
       "name": "威海海洋生活",
@@ -1164,7 +1156,7 @@
     {
       "id": "CCTV4欧洲",
       "name": "CCTV4欧洲",
-      "programs": 330,
+      "programs": 329,
       "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
@@ -1180,7 +1172,7 @@
     {
       "id": "CCTV4美洲",
       "name": "CCTV4美洲",
-      "programs": 332,
+      "programs": 331,
       "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
@@ -2610,6 +2602,19 @@
         "凤凰中文",
         "凤凰卫视",
         "凤凰中文台"
+      ],
+      "hasGap": false,
+      "gaps": []
+    },
+    {
+      "id": "凤凰卫视电影台",
+      "name": "凤凰卫视电影台",
+      "programs": 25,
+      "todayPrograms": 13,
+      "source": "liliu",
+      "aliases": [
+        "凤凰电影",
+        "凤凰电影台"
       ],
       "hasGap": false,
       "gaps": []
@@ -6674,8 +6679,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 367,
-      "todayPrograms": 43,
+      "programs": 362,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
