@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-17 15:30:54",
+  "lastUpdate": "2026-06-17 20:31:23",
   "whitelistChannels": 495,
   "matchedChannels": 472,
   "unmatchedChannels": 23,
-  "totalPrograms": 100663,
-  "filteredPrograms": 19364,
+  "totalPrograms": 100616,
+  "filteredPrograms": 19322,
   "dateRange": "20260611 ~ 20260618",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 55695,
+      "programs": 55897,
       "matched": 69
     },
     {
@@ -34,7 +34,7 @@
       "enabled": true,
       "channels": 522,
       "programs": 131730,
-      "matched": 116
+      "matched": 117
     },
     {
       "name": "suming",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 20050,
+      "programs": 20677,
       "matched": 2
     },
     {
@@ -1545,8 +1545,8 @@
     {
       "id": "CGTN俄语",
       "name": "CGTN俄语",
-      "programs": 376,
-      "todayPrograms": 47,
+      "programs": 377,
+      "todayPrograms": 48,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -1555,9 +1555,9 @@
     {
       "id": "CGTN法语",
       "name": "CGTN法语",
-      "programs": 327,
+      "programs": 285,
       "todayPrograms": 41,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6669,8 +6669,8 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 362,
-      "todayPrograms": 48,
+      "programs": 356,
+      "todayPrograms": 42,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
