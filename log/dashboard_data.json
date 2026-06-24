@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-24 14:27:32",
+  "lastUpdate": "2026-06-24 19:18:06",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 98914,
-  "filteredPrograms": 19592,
+  "totalPrograms": 99207,
+  "filteredPrograms": 18957,
   "dateRange": "20260618 ~ 20260625",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54565,
+      "programs": 54523,
       "matched": 69
     },
     {
@@ -39,8 +39,8 @@
     {
       "name": "suming",
       "enabled": true,
-      "channels": 471,
-      "programs": 134403,
+      "channels": 470,
+      "programs": 124384,
       "matched": 63
     },
     {
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 291,
       "programs": 17049,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 19119,
+      "programs": 19588,
       "matched": 3
     },
     {
@@ -304,12 +304,6 @@
     },
     {
       "index": 8,
-      "name": "齐河综合",
-      "id": "齐河综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 9,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -837,7 +831,11 @@
       "id": "齐河综合",
       "name": "齐河综合",
       "gaps": [
-        "07:00-22:00"
+        "07:12-12:03",
+        "12:15-18:30",
+        "19:35-19:49",
+        "20:19-20:34",
+        "20:46-22:00"
       ]
     },
     {
@@ -2357,7 +2355,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 199,
+      "programs": 200,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -4974,9 +4972,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 28,
+      "programs": 95,
       "todayPrograms": 13,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5891,9 +5889,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 16,
+      "programs": 122,
       "todayPrograms": 16,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5917,9 +5915,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 17,
+      "programs": 116,
       "todayPrograms": 17,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -7323,16 +7321,36 @@
     {
       "id": "齐河综合",
       "name": "齐河综合",
-      "programs": 62,
-      "todayPrograms": 0,
+      "programs": 82,
+      "todayPrograms": 9,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
+          "start": "07:12",
+          "stop": "12:03",
+          "duration": 291
+        },
+        {
+          "start": "12:15",
+          "stop": "18:30",
+          "duration": 375
+        },
+        {
+          "start": "19:35",
+          "stop": "19:49",
+          "duration": 14
+        },
+        {
+          "start": "20:19",
+          "stop": "20:34",
+          "duration": 15
+        },
+        {
+          "start": "20:46",
           "stop": "22:00",
-          "duration": 900
+          "duration": 74
         }
       ]
     },
