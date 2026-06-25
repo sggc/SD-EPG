@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-25 14:29:44",
+  "lastUpdate": "2026-06-25 19:09:04",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 98041,
-  "filteredPrograms": 20033,
+  "totalPrograms": 98347,
+  "filteredPrograms": 19375,
   "dateRange": "20260619 ~ 20260626",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54435,
+      "programs": 54418,
       "matched": 69
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 133255,
+      "programs": 124080,
       "matched": 63
     },
     {
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 292,
       "programs": 17076,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
@@ -76,13 +76,13 @@
       "enabled": true,
       "channels": 15802,
       "programs": 1375325,
-      "matched": 15
+      "matched": 14
     },
     {
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 18563,
+      "programs": 19405,
       "matched": 3
     },
     {
@@ -274,36 +274,30 @@
     },
     {
       "index": 3,
-      "name": "招远综合",
-      "id": "招远综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 4,
       "name": "桓台综合",
       "id": "桓台综合",
       "todayPrograms": 0
     },
     {
-      "index": 5,
+      "index": 4,
       "name": "淄博新闻综合",
       "id": "淄博新闻综合",
       "todayPrograms": 0
     },
     {
-      "index": 6,
+      "index": 5,
       "name": "爱上4K测试体验",
       "id": "爱上4K测试体验",
       "todayPrograms": 0
     },
     {
-      "index": 7,
+      "index": 6,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 8,
+      "index": 7,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -437,7 +431,9 @@
       "id": "招远综合",
       "name": "招远综合",
       "gaps": [
-        "07:00-22:00"
+        "07:40-12:00",
+        "12:40-18:20",
+        "20:15-21:40"
       ]
     },
     {
@@ -2355,7 +2351,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 199,
+      "programs": 200,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -4198,16 +4194,26 @@
     {
       "id": "招远综合",
       "name": "招远综合",
-      "programs": 49,
-      "todayPrograms": 0,
+      "programs": 82,
+      "todayPrograms": 17,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "start": "07:40",
+          "stop": "12:00",
+          "duration": 260
+        },
+        {
+          "start": "12:40",
+          "stop": "18:20",
+          "duration": 340
+        },
+        {
+          "start": "20:15",
+          "stop": "21:40",
+          "duration": 85
         }
       ]
     },
@@ -4971,9 +4977,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 29,
+      "programs": 96,
       "todayPrograms": 15,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5919,9 +5925,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 19,
+      "programs": 125,
       "todayPrograms": 19,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5945,9 +5951,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 18,
+      "programs": 117,
       "todayPrograms": 18,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
