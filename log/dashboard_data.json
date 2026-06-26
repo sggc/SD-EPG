@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-26 14:32:17",
+  "lastUpdate": "2026-06-26 19:15:26",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 97255,
-  "filteredPrograms": 20084,
+  "totalPrograms": 97735,
+  "filteredPrograms": 19471,
   "dateRange": "20260620 ~ 20260627",
   "aliasCount": 575,
   "epgSources": [
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 133204,
+      "programs": 123296,
       "matched": 64
     },
     {
@@ -62,27 +62,27 @@
       "enabled": true,
       "channels": 291,
       "programs": 16825,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1409,
       "programs": 360244,
-      "matched": 35
+      "matched": 34
     },
     {
       "name": "epgpw",
       "enabled": true,
       "channels": 15788,
       "programs": 1319263,
-      "matched": 15
+      "matched": 13
     },
     {
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 18231,
+      "programs": 18918,
       "matched": 4
     },
     {
@@ -2342,7 +2342,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 199,
+      "programs": 200,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -2824,9 +2824,9 @@
     {
       "id": "北京影视",
       "name": "北京影视",
-      "programs": 31,
+      "programs": 214,
       "todayPrograms": 31,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4112,7 +4112,7 @@
     {
       "id": "张店综合",
       "name": "张店综合",
-      "programs": 49,
+      "programs": 56,
       "todayPrograms": 7,
       "source": "suming",
       "aliases": [],
@@ -4906,7 +4906,7 @@
     {
       "id": "河东综合",
       "name": "河东综合",
-      "programs": 77,
+      "programs": 88,
       "todayPrograms": 11,
       "source": "suming",
       "aliases": [],
@@ -4974,9 +4974,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 27,
+      "programs": 96,
       "todayPrograms": 14,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5886,9 +5886,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 17,
+      "programs": 125,
       "todayPrograms": 17,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5912,9 +5912,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 19,
+      "programs": 120,
       "todayPrograms": 19,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
