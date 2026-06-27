@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-27 14:05:17",
+  "lastUpdate": "2026-06-27 18:24:02",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 98173,
-  "filteredPrograms": 19456,
+  "totalPrograms": 98454,
+  "filteredPrograms": 18825,
   "dateRange": "20260621 ~ 20260628",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53941,
+      "programs": 53929,
       "matched": 68
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 132024,
+      "programs": 123106,
       "matched": 63
     },
     {
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 292,
       "programs": 16917,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 18001,
+      "programs": 18716,
       "matched": 4
     },
     {
@@ -2353,7 +2353,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 198,
+      "programs": 199,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -4964,9 +4964,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 26,
+      "programs": 96,
       "todayPrograms": 13,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5860,9 +5860,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 19,
+      "programs": 127,
       "todayPrograms": 19,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5886,9 +5886,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 18,
+      "programs": 120,
       "todayPrograms": 18,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
