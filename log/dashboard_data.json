@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-28 14:39:25",
+  "lastUpdate": "2026-06-28 18:35:46",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 96708,
-  "filteredPrograms": 19653,
+  "totalPrograms": 97149,
+  "filteredPrograms": 19164,
   "dateRange": "20260622 ~ 20260629",
   "aliasCount": 575,
   "epgSources": [
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 132263,
+      "programs": 122753,
       "matched": 64
     },
     {
@@ -62,27 +62,27 @@
       "enabled": true,
       "channels": 293,
       "programs": 8820,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1410,
       "programs": 351405,
-      "matched": 36
+      "matched": 35
     },
     {
       "name": "epgpw",
       "enabled": true,
       "channels": 15688,
       "programs": 1265602,
-      "matched": 16
+      "matched": 13
     },
     {
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 17933,
+      "programs": 18527,
       "matched": 4
     },
     {
@@ -2314,7 +2314,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 198,
+      "programs": 199,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -2849,9 +2849,9 @@
     {
       "id": "北京财经",
       "name": "北京财经",
-      "programs": 28,
+      "programs": 178,
       "todayPrograms": 28,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4952,9 +4952,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 13,
+      "programs": 96,
       "todayPrograms": 13,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5874,9 +5874,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 19,
+      "programs": 123,
       "todayPrograms": 19,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5894,9 +5894,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 19,
+      "programs": 122,
       "todayPrograms": 19,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
