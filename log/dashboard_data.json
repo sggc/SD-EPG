@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-06-30 14:35:42",
+  "lastUpdate": "2026-06-30 19:22:10",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 97097,
-  "filteredPrograms": 19461,
+  "totalPrograms": 97384,
+  "filteredPrograms": 18884,
   "dateRange": "20260624 ~ 20260701",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53899,
+      "programs": 53832,
       "matched": 68
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 131746,
+      "programs": 122715,
       "matched": 63
     },
     {
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 291,
       "programs": 16867,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 461,
-      "programs": 19509,
+      "programs": 20312,
       "matched": 4
     },
     {
@@ -2357,7 +2357,7 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 199,
+      "programs": 200,
       "todayPrograms": 25,
       "source": "suming",
       "aliases": [],
@@ -4974,9 +4974,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 22,
-      "todayPrograms": 9,
-      "source": "zmt",
+      "programs": 96,
+      "todayPrograms": 14,
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5861,9 +5861,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 15,
+      "programs": 120,
       "todayPrograms": 15,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5887,9 +5887,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 11,
+      "programs": 118,
       "todayPrograms": 11,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
