@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-07-02 14:13:01",
+  "lastUpdate": "2026-07-02 19:01:55",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 98042,
-  "filteredPrograms": 19931,
+  "totalPrograms": 98304,
+  "filteredPrograms": 19285,
   "dateRange": "20260626 ~ 20260703",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53858,
+      "programs": 53899,
       "matched": 68
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 132814,
+      "programs": 122286,
       "matched": 63
     },
     {
@@ -62,7 +62,7 @@
       "enabled": true,
       "channels": 291,
       "programs": 16773,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 462,
-      "programs": 19548,
+      "programs": 20461,
       "matched": 3
     },
     {
@@ -4941,9 +4941,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 29,
+      "programs": 95,
       "todayPrograms": 14,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5854,9 +5854,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 12,
+      "programs": 113,
       "todayPrograms": 12,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -5880,9 +5880,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 15,
+      "programs": 112,
       "todayPrograms": 15,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -6390,8 +6390,8 @@
     {
       "id": "茶",
       "name": "茶",
-      "programs": 124,
-      "todayPrograms": 15,
+      "programs": 122,
+      "todayPrograms": 13,
       "source": "plsy1",
       "aliases": [
         "茶频道",
