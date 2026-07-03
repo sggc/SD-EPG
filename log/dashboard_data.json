@@ -1,9 +1,9 @@
 {
-  "lastUpdate": "2026-07-03 05:49:58",
+  "lastUpdate": "2026-07-03 14:06:13",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 97357,
+  "totalPrograms": 97947,
   "filteredPrograms": 18715,
   "dateRange": "20260627 ~ 20260704",
   "aliasCount": 575,
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53567,
+      "programs": 53758,
       "matched": 68
     },
     {
@@ -33,14 +33,14 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 525,
-      "programs": 129929,
+      "programs": 129999,
       "matched": 116
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 122286,
+      "programs": 129398,
       "matched": 63
     },
     {
@@ -48,7 +48,7 @@
       "enabled": true,
       "channels": 72,
       "programs": 3323,
-      "matched": 27
+      "matched": 26
     },
     {
       "name": "tv-mao",
@@ -68,7 +68,7 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1415,
-      "programs": 335428,
+      "programs": 335498,
       "matched": 34
     },
     {
@@ -89,7 +89,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1111,
-      "programs": 252309,
+      "programs": 252379,
       "matched": 6
     },
     {
@@ -316,42 +316,12 @@
     },
     {
       "index": 10,
-      "name": "青岛QTV-1",
-      "id": "青岛QTV-1",
-      "todayPrograms": 0
-    },
-    {
-      "index": 11,
-      "name": "青岛QTV-2",
-      "id": "青岛QTV-2",
-      "todayPrograms": 0
-    },
-    {
-      "index": 12,
-      "name": "青岛QTV-3",
-      "id": "青岛QTV-3",
-      "todayPrograms": 0
-    },
-    {
-      "index": 13,
-      "name": "青岛QTV-4",
-      "id": "青岛QTV-4",
-      "todayPrograms": 0
-    },
-    {
-      "index": 14,
-      "name": "青岛QTV-5",
-      "id": "青岛QTV-5",
-      "todayPrograms": 0
-    },
-    {
-      "index": 15,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 16,
+      "index": 11,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -785,35 +755,38 @@
       "id": "青岛QTV-1",
       "name": "青岛QTV-1",
       "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "青岛QTV-2",
-      "name": "青岛QTV-2",
-      "gaps": [
-        "07:00-22:00"
+        "07:00-07:16",
+        "08:04-08:32",
+        "09:16-11:27",
+        "12:45-13:01",
+        "13:53-15:30",
+        "19:59-21:35"
       ]
     },
     {
       "id": "青岛QTV-3",
       "name": "青岛QTV-3",
       "gaps": [
-        "07:00-22:00"
+        "07:00-08:20",
+        "08:45-13:40",
+        "13:56-18:55",
+        "21:16-22:00"
       ]
     },
     {
       "id": "青岛QTV-4",
       "name": "青岛QTV-4",
       "gaps": [
-        "07:00-22:00"
+        "17:35-19:05"
       ]
     },
     {
       "id": "青岛QTV-5",
       "name": "青岛QTV-5",
       "gaps": [
-        "07:00-22:00"
+        "07:00-07:12",
+        "08:15-11:29",
+        "12:00-15:57"
       ]
     },
     {
@@ -2257,7 +2230,7 @@
     {
       "id": "东营公共",
       "name": "东营公共",
-      "programs": 150,
+      "programs": 172,
       "todayPrograms": 22,
       "source": "suming",
       "aliases": [
@@ -2468,7 +2441,7 @@
     {
       "id": "乐游",
       "name": "乐游",
-      "programs": 611,
+      "programs": 615,
       "todayPrograms": 77,
       "source": "plsy1",
       "aliases": [],
@@ -3563,7 +3536,7 @@
     {
       "id": "定陶综合",
       "name": "定陶综合",
-      "programs": 199,
+      "programs": 226,
       "todayPrograms": 28,
       "source": "suming",
       "aliases": [],
@@ -3862,7 +3835,7 @@
     {
       "id": "岱岳综合",
       "name": "岱岳综合",
-      "programs": 105,
+      "programs": 120,
       "todayPrograms": 15,
       "source": "suming",
       "aliases": [],
@@ -3918,7 +3891,7 @@
     {
       "id": "崂山综合",
       "name": "崂山综合",
-      "programs": 72,
+      "programs": 82,
       "todayPrograms": 12,
       "source": "suming",
       "aliases": [],
@@ -3954,7 +3927,7 @@
     {
       "id": "平度综合",
       "name": "平度综合",
-      "programs": 139,
+      "programs": 159,
       "todayPrograms": 20,
       "source": "suming",
       "aliases": [],
@@ -4152,7 +4125,7 @@
     {
       "id": "张店综合",
       "name": "张店综合",
-      "programs": 47,
+      "programs": 46,
       "todayPrograms": 7,
       "source": "suming",
       "aliases": [],
@@ -4306,7 +4279,7 @@
     {
       "id": "日照公共",
       "name": "日照公共",
-      "programs": 103,
+      "programs": 117,
       "todayPrograms": 15,
       "source": "suming",
       "aliases": [],
@@ -4388,7 +4361,7 @@
     {
       "id": "昌乐综合",
       "name": "昌乐综合",
-      "programs": 104,
+      "programs": 119,
       "todayPrograms": 15,
       "source": "suming",
       "aliases": [],
@@ -4446,7 +4419,7 @@
     {
       "id": "曲阜综合",
       "name": "曲阜综合",
-      "programs": 54,
+      "programs": 61,
       "todayPrograms": 8,
       "source": "suming",
       "aliases": [],
@@ -4472,7 +4445,7 @@
     {
       "id": "桓台综合",
       "name": "桓台综合",
-      "programs": 72,
+      "programs": 89,
       "todayPrograms": 17,
       "source": "suming",
       "aliases": [],
@@ -4503,7 +4476,7 @@
     {
       "id": "梨园",
       "name": "梨园",
-      "programs": 84,
+      "programs": 95,
       "todayPrograms": 12,
       "source": "suming",
       "aliases": [
@@ -4543,7 +4516,7 @@
     {
       "id": "武城综合",
       "name": "武城综合",
-      "programs": 22,
+      "programs": 24,
       "todayPrograms": 4,
       "source": "suming",
       "aliases": [],
@@ -5267,7 +5240,7 @@
     {
       "id": "泰山综合",
       "name": "泰山综合",
-      "programs": 143,
+      "programs": 164,
       "todayPrograms": 21,
       "source": "suming",
       "aliases": [],
@@ -5310,7 +5283,7 @@
     {
       "id": "济南娱乐",
       "name": "济南娱乐",
-      "programs": 57,
+      "programs": 66,
       "todayPrograms": 9,
       "source": "suming",
       "aliases": [
@@ -5322,7 +5295,7 @@
     {
       "id": "济南少儿",
       "name": "济南少儿",
-      "programs": 119,
+      "programs": 136,
       "todayPrograms": 17,
       "source": "suming",
       "aliases": [
@@ -5404,7 +5377,7 @@
     {
       "id": "济宁公共",
       "name": "济宁公共",
-      "programs": 93,
+      "programs": 120,
       "todayPrograms": 26,
       "source": "suming",
       "aliases": [],
@@ -5442,7 +5415,7 @@
     {
       "id": "济宁综合",
       "name": "济宁综合",
-      "programs": 138,
+      "programs": 158,
       "todayPrograms": 19,
       "source": "suming",
       "aliases": [
@@ -5512,7 +5485,7 @@
     {
       "id": "淄博影视",
       "name": "淄博影视",
-      "programs": 23,
+      "programs": 26,
       "todayPrograms": 3,
       "source": "suming",
       "aliases": [
@@ -6145,7 +6118,7 @@
     {
       "id": "禹城综合",
       "name": "禹城综合",
-      "programs": 63,
+      "programs": 72,
       "todayPrograms": 9,
       "source": "suming",
       "aliases": [],
@@ -6171,7 +6144,7 @@
     {
       "id": "禹城综艺",
       "name": "禹城综艺",
-      "programs": 42,
+      "programs": 48,
       "todayPrograms": 6,
       "source": "suming",
       "aliases": [],
@@ -6341,7 +6314,7 @@
     {
       "id": "胶州综合",
       "name": "胶州综合",
-      "programs": 187,
+      "programs": 215,
       "todayPrograms": 26,
       "source": "suming",
       "aliases": [],
@@ -6423,7 +6396,7 @@
     {
       "id": "莱西综合",
       "name": "莱西综合",
-      "programs": 62,
+      "programs": 70,
       "todayPrograms": 10,
       "source": "suming",
       "aliases": [],
@@ -6626,7 +6599,7 @@
     {
       "id": "邹城综合",
       "name": "邹城综合",
-      "programs": 98,
+      "programs": 114,
       "todayPrograms": 16,
       "source": "suming",
       "aliases": [],
@@ -6657,7 +6630,7 @@
     {
       "id": "都市剧场",
       "name": "都市剧场",
-      "programs": 401,
+      "programs": 399,
       "todayPrograms": 48,
       "source": "plsy1",
       "aliases": [],
@@ -6741,7 +6714,7 @@
     {
       "id": "长岛综合",
       "name": "长岛综合",
-      "programs": 84,
+      "programs": 96,
       "todayPrograms": 12,
       "source": "suming",
       "aliases": [],
@@ -6789,7 +6762,7 @@
     {
       "id": "陵城综合",
       "name": "陵城综合",
-      "programs": 132,
+      "programs": 151,
       "todayPrograms": 19,
       "source": "suming",
       "aliases": [],
@@ -6854,8 +6827,8 @@
     {
       "id": "青岛QTV-1",
       "name": "青岛QTV-1",
-      "programs": 181,
-      "todayPrograms": 0,
+      "programs": 212,
+      "todayPrograms": 31,
       "source": "suming",
       "aliases": [
         "青岛新闻综合频道",
@@ -6867,35 +6840,54 @@
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "07:16",
+          "duration": 16
+        },
+        {
+          "start": "08:04",
+          "stop": "08:32",
+          "duration": 28
+        },
+        {
+          "start": "09:16",
+          "stop": "11:27",
+          "duration": 131
+        },
+        {
+          "start": "12:45",
+          "stop": "13:01",
+          "duration": 16
+        },
+        {
+          "start": "13:53",
+          "stop": "15:30",
+          "duration": 97
+        },
+        {
+          "start": "19:59",
+          "stop": "21:35",
+          "duration": 96
         }
       ]
     },
     {
       "id": "青岛QTV-2",
       "name": "青岛QTV-2",
-      "programs": 251,
-      "todayPrograms": 0,
+      "programs": 294,
+      "todayPrograms": 43,
       "source": "suming",
       "aliases": [
         "青岛生活服务频道",
         "QTV-2"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "青岛QTV-3",
       "name": "青岛QTV-3",
-      "programs": 30,
-      "todayPrograms": 0,
+      "programs": 35,
+      "todayPrograms": 5,
       "source": "suming",
       "aliases": [
         "青岛影视频道",
@@ -6905,16 +6897,31 @@
       "gaps": [
         {
           "start": "07:00",
+          "stop": "08:20",
+          "duration": 80
+        },
+        {
+          "start": "08:45",
+          "stop": "13:40",
+          "duration": 295
+        },
+        {
+          "start": "13:56",
+          "stop": "18:55",
+          "duration": 299
+        },
+        {
+          "start": "21:16",
           "stop": "22:00",
-          "duration": 900
+          "duration": 44
         }
       ]
     },
     {
       "id": "青岛QTV-4",
       "name": "青岛QTV-4",
-      "programs": 189,
-      "todayPrograms": 0,
+      "programs": 220,
+      "todayPrograms": 31,
       "source": "suming",
       "aliases": [
         "青岛财经资讯频道",
@@ -6923,17 +6930,17 @@
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "start": "17:35",
+          "stop": "19:05",
+          "duration": 90
         }
       ]
     },
     {
       "id": "青岛QTV-5",
       "name": "青岛QTV-5",
-      "programs": 153,
-      "todayPrograms": 0,
+      "programs": 175,
+      "todayPrograms": 22,
       "source": "suming",
       "aliases": [
         "青岛教育频道",
@@ -6943,8 +6950,18 @@
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "07:12",
+          "duration": 12
+        },
+        {
+          "start": "08:15",
+          "stop": "11:29",
+          "duration": 194
+        },
+        {
+          "start": "12:00",
+          "stop": "15:57",
+          "duration": 237
         }
       ]
     },
@@ -6993,7 +7010,7 @@
     {
       "id": "鱼台生活",
       "name": "鱼台生活",
-      "programs": 94,
+      "programs": 107,
       "todayPrograms": 14,
       "source": "suming",
       "aliases": [],
@@ -7049,7 +7066,7 @@
     {
       "id": "鱼台综合",
       "name": "鱼台综合",
-      "programs": 113,
+      "programs": 129,
       "todayPrograms": 16,
       "source": "suming",
       "aliases": [],
@@ -7109,7 +7126,7 @@
     {
       "id": "黄岛生活",
       "name": "黄岛生活",
-      "programs": 157,
+      "programs": 179,
       "todayPrograms": 23,
       "source": "suming",
       "aliases": [],
@@ -7243,7 +7260,7 @@
     {
       "id": "齐河综合",
       "name": "齐河综合",
-      "programs": 71,
+      "programs": 82,
       "todayPrograms": 11,
       "source": "suming",
       "aliases": [],
@@ -7329,7 +7346,7 @@
     {
       "id": "龙口综合",
       "name": "龙口综合",
-      "programs": 274,
+      "programs": 314,
       "todayPrograms": 40,
       "source": "suming",
       "aliases": [],
