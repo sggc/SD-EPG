@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-07-03 14:06:13",
+  "lastUpdate": "2026-07-03 18:50:35",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 97947,
-  "filteredPrograms": 18715,
+  "totalPrograms": 97956,
+  "filteredPrograms": 17992,
   "dateRange": "20260627 ~ 20260704",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53758,
+      "programs": 53741,
       "matched": 68
     },
     {
@@ -40,7 +40,7 @@
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 129398,
+      "programs": 116570,
       "matched": 63
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 460,
-      "programs": 19356,
+      "programs": 20262,
       "matched": 5
     },
     {
@@ -90,7 +90,7 @@
       "enabled": true,
       "channels": 1111,
       "programs": 252379,
-      "matched": 6
+      "matched": 5
     },
     {
       "name": "占位",
@@ -274,54 +274,48 @@
     },
     {
       "index": 3,
-      "name": "招远综合",
-      "id": "招远综合",
-      "todayPrograms": 0
-    },
-    {
-      "index": 4,
       "name": "沂水生活",
       "id": "沂水生活",
       "todayPrograms": 0
     },
     {
-      "index": 5,
+      "index": 4,
       "name": "沂水综合",
       "id": "沂水综合",
       "todayPrograms": 0
     },
     {
-      "index": 6,
+      "index": 5,
       "name": "沾化综合",
       "id": "沾化综合",
       "todayPrograms": 0
     },
     {
-      "index": 7,
+      "index": 6,
       "name": "淄博新闻综合",
       "id": "淄博新闻综合",
       "todayPrograms": 0
     },
     {
-      "index": 8,
+      "index": 7,
       "name": "澳视体育",
       "id": "澳视体育",
       "todayPrograms": 0
     },
     {
-      "index": 9,
+      "index": 8,
       "name": "澳视综艺",
       "id": "澳视综艺",
       "todayPrograms": 0
     },
     {
-      "index": 10,
+      "index": 9,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 11,
+      "index": 10,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -331,13 +325,6 @@
     {
       "id": "动画",
       "name": "动画",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "北京IPTV淘娱乐",
-      "name": "北京IPTV淘娱乐",
       "gaps": [
         "07:00-22:00"
       ]
@@ -463,7 +450,9 @@
       "id": "招远综合",
       "name": "招远综合",
       "gaps": [
-        "07:00-22:00"
+        "07:40-12:00",
+        "12:40-18:10",
+        "20:15-22:00"
       ]
     },
     {
@@ -2750,18 +2739,12 @@
     {
       "id": "北京IPTV淘娱乐",
       "name": "北京IPTV淘娱乐",
-      "programs": 71,
-      "todayPrograms": 7,
-      "source": "erwcc",
+      "programs": 38,
+      "todayPrograms": 21,
+      "source": "liliu",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "北京IPTV淘电影",
@@ -4209,16 +4192,26 @@
     {
       "id": "招远综合",
       "name": "招远综合",
-      "programs": 33,
-      "todayPrograms": 0,
+      "programs": 64,
+      "todayPrograms": 16,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
+          "start": "07:40",
+          "stop": "12:00",
+          "duration": 260
+        },
+        {
+          "start": "12:40",
+          "stop": "18:10",
+          "duration": 330
+        },
+        {
+          "start": "20:15",
           "stop": "22:00",
-          "duration": 900
+          "duration": 105
         }
       ]
     },
@@ -4884,7 +4877,7 @@
     {
       "id": "河东综合",
       "name": "河东综合",
-      "programs": 77,
+      "programs": 88,
       "todayPrograms": 11,
       "source": "suming",
       "aliases": [],
