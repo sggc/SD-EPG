@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-07-04 13:57:05",
+  "lastUpdate": "2026-07-04 18:26:33",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 102723,
-  "filteredPrograms": 12688,
+  "totalPrograms": 102684,
+  "filteredPrograms": 11430,
   "dateRange": "20260628 ~ 20260705",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53881,
+      "programs": 53859,
       "matched": 162
     },
     {
@@ -34,13 +34,13 @@
       "enabled": true,
       "channels": 525,
       "programs": 130153,
-      "matched": 160
+      "matched": 164
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 123078,
+      "programs": 110734,
       "matched": 72
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 460,
-      "programs": 19119,
+      "programs": 20180,
       "matched": 3
     },
     {
@@ -1686,7 +1686,7 @@
     {
       "id": "CCTV1",
       "name": "CCTV1",
-      "programs": 334,
+      "programs": 336,
       "todayPrograms": 42,
       "source": "plsy1",
       "aliases": [
@@ -1728,8 +1728,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 173,
-      "todayPrograms": 22,
+      "programs": 174,
+      "todayPrograms": 23,
       "source": "plsy1",
       "aliases": [
         "CCTV-11",
@@ -3418,8 +3418,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 405,
-      "todayPrograms": 51,
+      "programs": 406,
+      "todayPrograms": 52,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -3946,8 +3946,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 294,
-      "todayPrograms": 33,
+      "programs": 300,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -4660,9 +4660,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 143,
-      "todayPrograms": 17,
-      "source": "plsy1",
+      "programs": 221,
+      "todayPrograms": 32,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4933,8 +4933,8 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 215,
-      "todayPrograms": 25,
+      "programs": 216,
+      "todayPrograms": 26,
       "source": "plsy1",
       "aliases": [
         "广西卫视高清"
@@ -5923,8 +5923,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 368,
-      "todayPrograms": 49,
+      "programs": 360,
+      "todayPrograms": 41,
       "source": "plsy1",
       "aliases": [
         "河南卫视高清",
@@ -6465,9 +6465,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 323,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 279,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清",
         "浙江卫视-4K",
@@ -6481,9 +6481,9 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 323,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 279,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视4K超高清",
         "浙江卫视超高清",
@@ -6674,9 +6674,9 @@
     {
       "id": "湖北卫视",
       "name": "湖北卫视",
-      "programs": 261,
-      "todayPrograms": 32,
-      "source": "plsy1",
+      "programs": 232,
+      "todayPrograms": 30,
+      "source": "erwcc",
       "aliases": [
         "湖北卫视高清"
       ],
@@ -7775,8 +7775,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 733,
-      "todayPrograms": 98,
+      "programs": 731,
+      "todayPrograms": 97,
       "source": "plsy1",
       "aliases": [
         "西藏卫视高清"
@@ -8258,8 +8258,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 257,
-      "todayPrograms": 34,
+      "programs": 256,
+      "todayPrograms": 33,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
