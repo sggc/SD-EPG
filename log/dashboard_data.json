@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-07-05 14:17:01",
+  "lastUpdate": "2026-07-05 18:28:31",
   "whitelistChannels": 495,
   "matchedChannels": 471,
   "unmatchedChannels": 24,
-  "totalPrograms": 102523,
-  "filteredPrograms": 12602,
+  "totalPrograms": 102343,
+  "filteredPrograms": 11342,
   "dateRange": "20260629 ~ 20260706",
   "aliasCount": 575,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 53861,
+      "programs": 53877,
       "matched": 162
     },
     {
@@ -34,13 +34,13 @@
       "enabled": true,
       "channels": 525,
       "programs": 130192,
-      "matched": 159
+      "matched": 164
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 470,
-      "programs": 116837,
+      "programs": 104085,
       "matched": 72
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 460,
-      "programs": 19431,
+      "programs": 19933,
       "matched": 3
     },
     {
@@ -1826,8 +1826,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 172,
-      "todayPrograms": 24,
+      "programs": 173,
+      "todayPrograms": 25,
       "source": "plsy1",
       "aliases": [
         "CCTV-11",
@@ -2129,7 +2129,7 @@
     {
       "id": "CCTV6",
       "name": "CCTV6",
-      "programs": 153,
+      "programs": 154,
       "todayPrograms": 19,
       "source": "plsy1",
       "aliases": [
@@ -2556,8 +2556,8 @@
     {
       "id": "CHC影迷电影",
       "name": "CHC影迷电影",
-      "programs": 120,
-      "todayPrograms": 13,
+      "programs": 121,
+      "todayPrograms": 14,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -3217,7 +3217,7 @@
       "id": "中国教育4",
       "name": "中国教育4",
       "programs": 426,
-      "todayPrograms": 57,
+      "todayPrograms": 56,
       "source": "plsy1",
       "aliases": [
         "中国教育-4",
@@ -3482,8 +3482,8 @@
     {
       "id": "兵团卫视",
       "name": "兵团卫视",
-      "programs": 313,
-      "todayPrograms": 40,
+      "programs": 314,
+      "todayPrograms": 41,
       "source": "plsy1",
       "aliases": [
         "兵团卫视高清"
@@ -3494,9 +3494,9 @@
     {
       "id": "内蒙古卫视",
       "name": "内蒙古卫视",
-      "programs": 306,
+      "programs": 273,
       "todayPrograms": 36,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [
         "内蒙古卫视高清"
       ],
@@ -3516,8 +3516,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 408,
-      "todayPrograms": 52,
+      "programs": 405,
+      "todayPrograms": 49,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -3696,9 +3696,9 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 397,
-      "todayPrograms": 62,
-      "source": "plsy1",
+      "programs": 268,
+      "todayPrograms": 44,
+      "source": "erwcc",
       "aliases": [
         "北京卫视高清",
         "北京卫视-4K",
@@ -3713,9 +3713,9 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 397,
-      "todayPrograms": 62,
-      "source": "plsy1",
+      "programs": 268,
+      "todayPrograms": 44,
+      "source": "erwcc",
       "aliases": [
         "北京卫视4K超高清",
         "北京卫视超高清",
@@ -4044,8 +4044,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 305,
-      "todayPrograms": 34,
+      "programs": 307,
+      "todayPrograms": 36,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -4792,9 +4792,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 148,
-      "todayPrograms": 16,
-      "source": "plsy1",
+      "programs": 217,
+      "todayPrograms": 32,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5065,9 +5065,9 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 219,
-      "todayPrograms": 25,
-      "source": "plsy1",
+      "programs": 240,
+      "todayPrograms": 35,
+      "source": "erwcc",
       "aliases": [
         "广西卫视高清"
       ],
@@ -5766,7 +5766,7 @@
     {
       "id": "江苏卫视",
       "name": "江苏卫视",
-      "programs": 285,
+      "programs": 291,
       "todayPrograms": 35,
       "source": "plsy1",
       "aliases": [
@@ -5782,7 +5782,7 @@
     {
       "id": "江苏卫视4K",
       "name": "江苏卫视4K",
-      "programs": 285,
+      "programs": 291,
       "todayPrograms": 35,
       "source": "plsy1",
       "aliases": [
@@ -6044,8 +6044,8 @@
     {
       "id": "河南卫视",
       "name": "河南卫视",
-      "programs": 352,
-      "todayPrograms": 41,
+      "programs": 360,
+      "todayPrograms": 49,
       "source": "plsy1",
       "aliases": [
         "河南卫视高清",
@@ -6596,8 +6596,8 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 327,
-      "todayPrograms": 37,
+      "programs": 326,
+      "todayPrograms": 36,
       "source": "plsy1",
       "aliases": [
         "浙江卫视高清",
@@ -6612,8 +6612,8 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 327,
-      "todayPrograms": 37,
+      "programs": 326,
+      "todayPrograms": 36,
       "source": "plsy1",
       "aliases": [
         "浙江卫视4K超高清",
@@ -7923,7 +7923,7 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 758,
+      "programs": 757,
       "todayPrograms": 97,
       "source": "plsy1",
       "aliases": [
@@ -8402,8 +8402,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 261,
-      "todayPrograms": 30,
+      "programs": 260,
+      "todayPrograms": 29,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -8717,8 +8717,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 255,
-      "todayPrograms": 33,
+      "programs": 257,
+      "todayPrograms": 35,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
