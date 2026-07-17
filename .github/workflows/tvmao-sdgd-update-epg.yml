@@ -17,8 +17,10 @@ on:
         type: boolean
 
 jobs:
-  crawl:
+  # TVMAO 抓取任务
+  crawl-tvmao:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.run_tvmao == 'true' }}
     
     steps:
     - name: Checkout repository
@@ -43,60 +45,114 @@ jobs:
         fi
         
     - name: Run TVMAO EPG Crawler
-      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_tvmao == 'true' }}
       run: |
         python scripts/tvmao_epg_crawler.py --output EPG --log-dir log
+      
+    - name: Upload TVMAO files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-tvmao
+        path: |
+          EPG/tvmao.xml
+          EPG/tvmao.xml.gz
+          log/tvmao.txt
+        retention-days: 7
+        if-no-files-found: warn
+        
+    - name: Commit and push TVMAO files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
 
+        if ! git diff --cached --quiet; then
+          git commit -m "Update TVMAO EPG data [skip ci]"
+          git pull --rebase -X theirs origin ${{ github.ref_name }} || true
+          git push
+          echo "TVMAO EPG 文件已成功提交并推送"
+        else
+          echo "无 TVMAO EPG 文件变更，跳过提交和推送"
+        fi
+
+  # SDGD 抓取任务
+  crawl-sdgd:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.run_sdgd == 'true' }}
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        else
+          pip install requests
+        fi
+        
     - name: Run SDGD EPG Crawler
-      if: ${{ github.event_name == 'schedule' || github.event.inputs.run_sdgd == 'true' }}
       env:
         SDGD_TOKEN: ${{ secrets.SDGD_TOKEN }}
         SDGD_APP_ID: ${{ secrets.SDGD_APP_ID }}
       run: |
         python scripts/fetch_epg_sdgd.py
-        
-    - name: Display results
+      continue-on-error: true  # 即使失败也继续，不阻塞后续步骤
+      
+    - name: Check SDGD output
+      id: check_sdgd
       run: |
-        echo "生成的文件:"
-        ls -lh EPG/
-        echo ""
-        echo "文件内容预览:"
-        if [ -f "EPG/tvmao.xml" ]; then
-          echo "=== tvmao.xml (前30行) ==="
-          head -n 30 EPG/tvmao.xml
-        fi
         if [ -f "EPG/sdgd.xml.gz" ]; then
-          echo "=== sdgd.xml.gz (解压后前30行) ==="
-          zcat EPG/sdgd.xml.gz | head -n 30
+          echo "sdgd_success=true" >> $GITHUB_OUTPUT
+        else
+          echo "sdgd_success=false" >> $GITHUB_OUTPUT
+          echo "::warning::SDGD EPG 文件未生成，可能是抓取失败"
         fi
         
-    - name: Upload EPG files
+    - name: Upload SDGD files
+      if: steps.check_sdgd.outputs.sdgd_success == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: epg-files
-        path: EPG/
+        name: epg-sdgd
+        path: EPG/sdgd.xml.gz
         retention-days: 7
         if-no-files-found: warn
         
-    - name: Commit and push EPG files
+    - name: Commit and push SDGD files
+      if: steps.check_sdgd.outputs.sdgd_success == 'true'
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
+        git add EPG/sdgd.xml.gz
 
         if ! git diff --cached --quiet; then
-          git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
-          git fetch origin ${{ github.ref_name }}
-          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
-            echo "::warning::Rebase failed, falling back to reset+recommit"
-            git rebase --abort
-            git reset --soft origin/${{ github.ref_name }}
-            git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz log/tvmao.txt
-            git commit -m "Update EPG data (tvmao + sdgd) [skip ci]"
-          fi
+          git commit -m "Update SDGD EPG data [skip ci]"
+          git pull --rebase -X theirs origin ${{ github.ref_name }} || true
           git push
-          echo "EPG 文件已成功提交并推送"
+          echo "SDGD EPG 文件已成功提交并推送"
         else
-          echo "无 EPG 文件变更，跳过提交和推送"
+          echo "无 SDGD EPG 文件变更，跳过提交和推送"
         fi
+
+  # 汇总显示结果（可选）
+  summary:
+    needs: [crawl-tvmao, crawl-sdgd]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: Summary
+      run: |
+        echo "TVMAO 任务结果: ${{ needs.crawl-tvmao.result }}"
+        echo "SDGD 任务结果: ${{ needs.crawl-sdgd.result }}"
