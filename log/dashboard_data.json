@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-07-23 13:36:58",
+  "lastUpdate": "2026-07-23 18:35:43",
   "whitelistChannels": 495,
   "matchedChannels": 469,
   "unmatchedChannels": 26,
-  "totalPrograms": 100437,
-  "filteredPrograms": 16223,
+  "totalPrograms": 100633,
+  "filteredPrograms": 15361,
   "dateRange": "20260717 ~ 20260724",
   "aliasCount": 573,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 54936,
+      "programs": 54924,
       "matched": 163
     },
     {
@@ -34,13 +34,13 @@
       "enabled": true,
       "channels": 525,
       "programs": 128936,
-      "matched": 160
+      "matched": 163
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 404,
-      "programs": 109127,
+      "programs": 101581,
       "matched": 64
     },
     {
@@ -62,27 +62,27 @@
       "enabled": true,
       "channels": 288,
       "programs": 17257,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1411,
       "programs": 344935,
-      "matched": 39
+      "matched": 38
     },
     {
       "name": "epgpw",
       "enabled": true,
       "channels": 15669,
       "programs": 1444338,
-      "matched": 20
+      "matched": 19
     },
     {
       "name": "liliu",
       "enabled": true,
       "channels": 460,
-      "programs": 19808,
+      "programs": 20521,
       "matched": 3
     },
     {
@@ -1119,8 +1119,8 @@
     {
       "id": "CCTV11",
       "name": "CCTV11",
-      "programs": 182,
-      "todayPrograms": 21,
+      "programs": 183,
+      "todayPrograms": 22,
       "source": "plsy1",
       "aliases": [
         "CCTV-11",
@@ -2785,8 +2785,8 @@
     {
       "id": "农林卫视",
       "name": "农林卫视",
-      "programs": 379,
-      "todayPrograms": 38,
+      "programs": 394,
+      "todayPrograms": 53,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -2959,8 +2959,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 348,
-      "todayPrograms": 53,
+      "programs": 334,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "北京卫视高清",
@@ -2976,8 +2976,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 348,
-      "todayPrograms": 53,
+      "programs": 334,
+      "todayPrograms": 39,
       "source": "plsy1",
       "aliases": [
         "北京卫视4K超高清",
@@ -3301,8 +3301,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 296,
-      "todayPrograms": 36,
+      "programs": 298,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -3671,8 +3671,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 333,
-      "todayPrograms": 43,
+      "programs": 330,
+      "todayPrograms": 40,
       "source": "plsy1",
       "aliases": [
         "宁夏卫视高清"
@@ -3990,9 +3990,9 @@
     {
       "id": "山西卫视",
       "name": "山西卫视",
-      "programs": 147,
-      "todayPrograms": 17,
-      "source": "plsy1",
+      "programs": 223,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4264,8 +4264,8 @@
     {
       "id": "广西卫视",
       "name": "广西卫视",
-      "programs": 205,
-      "todayPrograms": 24,
+      "programs": 206,
+      "todayPrograms": 25,
       "source": "plsy1",
       "aliases": [
         "广西卫视高清"
@@ -5189,9 +5189,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 14,
+      "programs": 93,
       "todayPrograms": 14,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5721,9 +5721,9 @@
     {
       "id": "浙江卫视",
       "name": "浙江卫视",
-      "programs": 330,
-      "todayPrograms": 44,
-      "source": "plsy1",
+      "programs": 275,
+      "todayPrograms": 40,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视高清",
         "浙江卫视-4K",
@@ -5737,9 +5737,9 @@
     {
       "id": "浙江卫视4K",
       "name": "浙江卫视4K",
-      "programs": 330,
-      "todayPrograms": 44,
-      "source": "plsy1",
+      "programs": 275,
+      "todayPrograms": 40,
+      "source": "erwcc",
       "aliases": [
         "浙江卫视4K超高清",
         "浙江卫视超高清",
@@ -5830,8 +5830,8 @@
     {
       "id": "深圳卫视",
       "name": "深圳卫视",
-      "programs": 467,
-      "todayPrograms": 62,
+      "programs": 466,
+      "todayPrograms": 61,
       "source": "plsy1",
       "aliases": [
         "深圳卫视高清",
@@ -5846,8 +5846,8 @@
     {
       "id": "深圳卫视4K",
       "name": "深圳卫视4K",
-      "programs": 467,
-      "todayPrograms": 62,
+      "programs": 466,
+      "todayPrograms": 61,
       "source": "plsy1",
       "aliases": [
         "深圳卫视4K超高清",
@@ -6121,9 +6121,9 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 15,
+      "programs": 101,
       "todayPrograms": 15,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -6147,9 +6147,9 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 16,
+      "programs": 101,
       "todayPrograms": 16,
-      "source": "epgpw",
+      "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
@@ -6811,7 +6811,7 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 744,
+      "programs": 743,
       "todayPrograms": 100,
       "source": "plsy1",
       "aliases": [
@@ -7282,8 +7282,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 253,
-      "todayPrograms": 34,
+      "programs": 245,
+      "todayPrograms": 26,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -7568,8 +7568,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 247,
-      "todayPrograms": 29,
+      "programs": 250,
+      "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
