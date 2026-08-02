@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-08-02 05:38:43",
+  "lastUpdate": "2026-08-02 13:39:20",
   "whitelistChannels": 495,
   "matchedChannels": 469,
   "unmatchedChannels": 26,
-  "totalPrograms": 96710,
-  "filteredPrograms": 15938,
+  "totalPrograms": 94765,
+  "filteredPrograms": 16232,
   "dateRange": "20260727 ~ 20260803",
   "aliasCount": 573,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 163,
-      "programs": 55339,
+      "programs": 55517,
       "matched": 163
     },
     {
@@ -33,14 +33,14 @@
       "name": "erwcc",
       "enabled": true,
       "channels": 525,
-      "programs": 128550,
+      "programs": 128581,
       "matched": 160
     },
     {
       "name": "suming",
       "enabled": true,
       "channels": 748,
-      "programs": 107795,
+      "programs": 89662,
       "matched": 118
     },
     {
@@ -48,35 +48,35 @@
       "enabled": true,
       "channels": 72,
       "programs": 3323,
-      "matched": 28
+      "matched": 31
     },
     {
       "name": "tv-mao",
       "enabled": true,
       "channels": 135,
       "programs": 6057,
-      "matched": 64
+      "matched": 65
     },
     {
       "name": "zmt",
       "enabled": true,
       "channels": 287,
       "programs": 8662,
-      "matched": 7
+      "matched": 6
     },
     {
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1411,
-      "programs": 324587,
+      "programs": 324783,
       "matched": 31
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15862,
-      "programs": 1223510,
-      "matched": 16
+      "channels": 15861,
+      "programs": 1129758,
+      "matched": 15
     },
     {
       "name": "liliu",
@@ -89,7 +89,7 @@
       "name": "loc",
       "enabled": true,
       "channels": 1111,
-      "programs": 253281,
+      "programs": 253312,
       "matched": 5
     },
     {
@@ -282,135 +282,286 @@
     },
     {
       "index": 2,
+      "name": "中天新闻",
+      "id": "中天新闻",
+      "todayPrograms": 0
+    },
+    {
+      "index": 3,
       "name": "中视购物",
       "id": "中视购物",
       "todayPrograms": 0
     },
     {
-      "index": 3,
+      "index": 4,
       "name": "优购物",
       "id": "优购物",
       "todayPrograms": 0
     },
     {
-      "index": 4,
+      "index": 5,
       "name": "南国都市",
       "id": "南国都市",
       "todayPrograms": 0
     },
     {
-      "index": 5,
+      "index": 6,
       "name": "国学频道",
       "id": "国学频道",
       "todayPrograms": 0
     },
     {
-      "index": 6,
+      "index": 7,
       "name": "好享购物",
       "id": "好享购物",
       "todayPrograms": 0
     },
     {
-      "index": 7,
+      "index": 8,
       "name": "威海新闻",
       "id": "威海新闻",
       "todayPrograms": 0
     },
     {
-      "index": 8,
+      "index": 9,
+      "name": "娱乐新闻",
+      "id": "娱乐新闻",
+      "todayPrograms": 0
+    },
+    {
+      "index": 10,
+      "name": "定陶综合",
+      "id": "定陶综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 11,
+      "name": "岱岳综合",
+      "id": "岱岳综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 12,
+      "name": "崂山综合",
+      "id": "崂山综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 13,
+      "name": "平度综合",
+      "id": "平度综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 14,
+      "name": "张店综合",
+      "id": "张店综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 15,
+      "name": "招远综合",
+      "id": "招远综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 16,
+      "name": "日照公共",
+      "id": "日照公共",
+      "todayPrograms": 0
+    },
+    {
+      "index": 17,
       "name": "时尚购物",
       "id": "时尚购物",
       "todayPrograms": 0
     },
     {
-      "index": 9,
+      "index": 18,
+      "name": "昌乐综合",
+      "id": "昌乐综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 19,
+      "name": "曲阜综合",
+      "id": "曲阜综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 20,
+      "name": "桓台综合",
+      "id": "桓台综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 21,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 0
     },
     {
-      "index": 10,
+      "index": 22,
+      "name": "沂水生活",
+      "id": "沂水生活",
+      "todayPrograms": 0
+    },
+    {
+      "index": 23,
+      "name": "沂水综合",
+      "id": "沂水综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 24,
+      "name": "河东综合",
+      "id": "河东综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 25,
       "name": "沾化综合",
       "id": "沾化综合",
       "todayPrograms": 0
     },
     {
-      "index": 11,
+      "index": 26,
+      "name": "泰山综合",
+      "id": "泰山综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 27,
+      "name": "济宁公共",
+      "id": "济宁公共",
+      "todayPrograms": 0
+    },
+    {
+      "index": 28,
+      "name": "淄博影视",
+      "id": "淄博影视",
+      "todayPrograms": 0
+    },
+    {
+      "index": 29,
       "name": "淄博新闻综合",
       "id": "淄博新闻综合",
       "todayPrograms": 0
     },
     {
-      "index": 12,
+      "index": 30,
       "name": "滨城TV",
       "id": "滨城TV",
       "todayPrograms": 0
     },
     {
-      "index": 13,
+      "index": 31,
       "name": "滨州公共",
       "id": "滨州公共",
       "todayPrograms": 0
     },
     {
-      "index": 14,
-      "name": "澳视体育",
-      "id": "澳视体育",
-      "todayPrograms": 0
-    },
-    {
-      "index": 15,
-      "name": "澳视综艺",
-      "id": "澳视综艺",
-      "todayPrograms": 0
-    },
-    {
-      "index": 16,
+      "index": 32,
       "name": "生态环境",
       "id": "生态环境",
       "todayPrograms": 0
     },
     {
-      "index": 17,
+      "index": 33,
+      "name": "禹城综合",
+      "id": "禹城综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 34,
+      "name": "禹城综艺",
+      "id": "禹城综艺",
+      "todayPrograms": 0
+    },
+    {
+      "index": 35,
       "name": "聚鲨环球精选",
       "id": "聚鲨环球精选",
       "todayPrograms": 0
     },
     {
-      "index": 18,
+      "index": 36,
+      "name": "胶州综合",
+      "id": "胶州综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 37,
+      "name": "莱西综合",
+      "id": "莱西综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 38,
       "name": "足球频道",
       "id": "足球频道",
       "todayPrograms": 0
     },
     {
-      "index": 19,
-      "name": "青岛QTV-1",
-      "id": "青岛QTV-1",
+      "index": 39,
+      "name": "邹城综合",
+      "id": "邹城综合",
       "todayPrograms": 0
     },
     {
-      "index": 20,
-      "name": "青岛QTV-3",
-      "id": "青岛QTV-3",
+      "index": 40,
+      "name": "长岛综合",
+      "id": "长岛综合",
       "todayPrograms": 0
     },
     {
-      "index": 21,
-      "name": "青岛QTV-5",
-      "id": "青岛QTV-5",
+      "index": 41,
+      "name": "陵城综合",
+      "id": "陵城综合",
       "todayPrograms": 0
     },
     {
-      "index": 22,
-      "name": "淄博影视",
-      "id": "淄博影视",
-      "todayPrograms": 3
+      "index": 42,
+      "name": "鱼台生活",
+      "id": "鱼台生活",
+      "todayPrograms": 0
+    },
+    {
+      "index": 43,
+      "name": "鱼台综合",
+      "id": "鱼台综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 44,
+      "name": "黄岛生活",
+      "id": "黄岛生活",
+      "todayPrograms": 0
+    },
+    {
+      "index": 45,
+      "name": "齐河综合",
+      "id": "齐河综合",
+      "todayPrograms": 0
+    },
+    {
+      "index": 46,
+      "name": "龙口综合",
+      "id": "龙口综合",
+      "todayPrograms": 0
     }
   ],
   "gapChannels": [
     {
       "id": "中医药",
       "name": "中医药",
+      "gaps": [
+        "07:00-22:00"
+      ]
+    },
+    {
+      "id": "中天新闻",
+      "name": "中天新闻",
       "gaps": [
         "07:00-22:00"
       ]
@@ -486,6 +637,13 @@
       ]
     },
     {
+      "id": "娱乐新闻",
+      "name": "娱乐新闻",
+      "gaps": [
+        "07:00-22:00"
+      ]
+    },
+    {
       "id": "安多卫视",
       "name": "安多卫视",
       "gaps": [
@@ -496,89 +654,49 @@
       "id": "定陶综合",
       "name": "定陶综合",
       "gaps": [
-        "07:05-07:30",
-        "08:07-08:53",
-        "08:56-09:45",
-        "09:47-10:33",
-        "10:35-11:20",
-        "11:22-11:57",
-        "12:12-12:40",
-        "12:42-13:27",
-        "13:30-14:15",
-        "14:17-15:02",
-        "15:04-15:50",
-        "15:53-16:40",
-        "16:42-17:27",
-        "17:30-18:26",
-        "19:40-19:52",
-        "20:15-21:30",
-        "21:34-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "岱岳综合",
       "name": "岱岳综合",
       "gaps": [
-        "07:15-12:30",
-        "12:45-13:15",
-        "13:20-15:10",
-        "15:15-17:05",
-        "17:10-18:25",
-        "19:50-20:35",
-        "20:45-21:30"
+        "07:00-22:00"
       ]
     },
     {
       "id": "崂山综合",
       "name": "崂山综合",
       "gaps": [
-        "07:30-08:00",
-        "08:20-12:00",
-        "12:20-18:30",
-        "20:10-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "平度综合",
       "name": "平度综合",
       "gaps": [
-        "07:12-07:44",
-        "08:40-11:26",
-        "11:30-12:00",
-        "12:40-14:15",
-        "15:00-17:23",
-        "17:33-17:56",
-        "20:44-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "张店综合",
       "name": "张店综合",
       "gaps": [
-        "07:25-12:02",
-        "12:30-18:30",
-        "19:32-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "招远综合",
       "name": "招远综合",
       "gaps": [
-        "07:20-12:00",
-        "12:25-18:20",
-        "20:35-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "日照公共",
       "name": "日照公共",
       "gaps": [
-        "08:30-11:20",
-        "13:20-17:00",
-        "17:48-18:10",
-        "18:30-19:00",
-        "19:15-19:45",
-        "21:30-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -592,30 +710,21 @@
       "id": "昌乐综合",
       "name": "昌乐综合",
       "gaps": [
-        "07:11-11:45",
-        "12:10-13:10",
-        "13:15-17:15",
-        "17:25-18:10",
-        "20:15-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "曲阜综合",
       "name": "曲阜综合",
       "gaps": [
-        "07:01-12:00",
-        "12:30-18:30",
-        "20:00-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "桓台综合",
       "name": "桓台综合",
       "gaps": [
-        "07:20-12:00",
-        "12:20-14:00",
-        "14:47-18:30",
-        "20:43-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -636,32 +745,21 @@
       "id": "沂水生活",
       "name": "沂水生活",
       "gaps": [
-        "07:00-07:11",
-        "07:35-12:40",
-        "12:55-18:52",
-        "19:45-20:30",
-        "20:50-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "沂水综合",
       "name": "沂水综合",
       "gaps": [
-        "07:01-07:40",
-        "08:10-08:55",
-        "09:30-12:20",
-        "12:40-18:00",
-        "19:38-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "河东综合",
       "name": "河东综合",
       "gaps": [
-        "07:00-11:45",
-        "12:15-16:58",
-        "17:10-18:30",
-        "20:05-21:40"
+        "07:00-22:00"
       ]
     },
     {
@@ -710,10 +808,7 @@
       "id": "泰山综合",
       "name": "泰山综合",
       "gaps": [
-        "07:30-08:00",
-        "08:16-12:30",
-        "13:08-18:30",
-        "20:20-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -721,6 +816,13 @@
       "name": "济南体育",
       "gaps": [
         "07:00-07:26"
+      ]
+    },
+    {
+      "id": "济南少儿",
+      "name": "济南少儿",
+      "gaps": [
+        "07:00-14:02"
       ]
     },
     {
@@ -734,18 +836,14 @@
       "id": "济宁公共",
       "name": "济宁公共",
       "gaps": [
-        "09:45-12:00",
-        "15:00-16:10",
-        "17:20-19:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "淄博影视",
       "name": "淄博影视",
       "gaps": [
-        "07:00-11:00",
-        "11:30-18:10",
-        "18:30-21:40"
+        "07:00-22:00"
       ]
     },
     {
@@ -770,27 +868,10 @@
       ]
     },
     {
-      "id": "滨州民生",
-      "name": "滨州民生",
-      "gaps": [
-        "07:00-07:15",
-        "07:35-08:25",
-        "08:44-11:48",
-        "12:26-22:00"
-      ]
-    },
-    {
       "id": "澳视体育",
       "name": "澳视体育",
       "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "澳视综艺",
-      "name": "澳视综艺",
-      "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
@@ -804,20 +885,14 @@
       "id": "禹城综合",
       "name": "禹城综合",
       "gaps": [
-        "07:00-11:00",
-        "11:30-18:30",
-        "20:20-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "禹城综艺",
       "name": "禹城综艺",
       "gaps": [
-        "07:00-07:25",
-        "08:00-11:30",
-        "12:00-17:30",
-        "18:00-21:00",
-        "21:20-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -831,14 +906,7 @@
       "id": "胶州综合",
       "name": "胶州综合",
       "gaps": [
-        "07:01-07:26",
-        "07:31-08:00",
-        "08:15-09:00",
-        "09:28-11:52",
-        "12:32-13:02",
-        "13:07-17:56",
-        "18:01-18:30",
-        "21:05-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -852,8 +920,7 @@
       "id": "莱西综合",
       "name": "莱西综合",
       "gaps": [
-        "07:09-18:25",
-        "19:32-22:00"
+        "07:00-22:00"
       ]
     },
     {
@@ -874,47 +941,42 @@
       "id": "邹城综合",
       "name": "邹城综合",
       "gaps": [
-        "08:00-12:00",
-        "12:25-12:55",
-        "14:00-18:15",
-        "20:05-21:40"
+        "07:00-22:00"
       ]
     },
     {
       "id": "长岛综合",
       "name": "长岛综合",
       "gaps": [
-        "09:18-12:30",
-        "12:55-15:50",
-        "16:00-18:30",
-        "20:10-21:00",
-        "21:15-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "陵城综合",
       "name": "陵城综合",
       "gaps": [
-        "07:09-07:31",
-        "07:58-09:55",
-        "10:21-12:00",
-        "12:38-15:37",
-        "16:00-18:30",
-        "21:10-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "青岛QTV-1",
       "name": "青岛QTV-1",
       "gaps": [
-        "07:00-22:00"
+        "09:33-11:30",
+        "12:56-13:11",
+        "14:15-16:50",
+        "19:56-21:33"
       ]
     },
     {
       "id": "青岛QTV-3",
       "name": "青岛QTV-3",
       "gaps": [
-        "07:00-22:00"
+        "07:00-08:18",
+        "08:33-13:53",
+        "14:38-20:00",
+        "20:02-20:53",
+        "21:13-22:00"
       ]
     },
     {
@@ -929,73 +991,44 @@
       "id": "青岛QTV-5",
       "name": "青岛QTV-5",
       "gaps": [
-        "07:00-22:00"
+        "07:00-07:11",
+        "12:00-15:57",
+        "19:00-20:30"
       ]
     },
     {
       "id": "鱼台生活",
       "name": "鱼台生活",
       "gaps": [
-        "07:01-07:28",
-        "07:40-08:26",
-        "08:28-11:33",
-        "11:35-12:05",
-        "12:07-12:20",
-        "12:53-13:58",
-        "14:53-17:57",
-        "18:16-20:36",
-        "20:48-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "鱼台综合",
       "name": "鱼台综合",
       "gaps": [
-        "07:11-07:38",
-        "07:40-12:30",
-        "12:46-18:22",
-        "20:45-21:30",
-        "21:40-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "黄岛生活",
       "name": "黄岛生活",
       "gaps": [
-        "07:50-11:10",
-        "11:35-12:00",
-        "12:35-16:00",
-        "16:50-17:15",
-        "17:30-18:30",
-        "20:00-20:30",
-        "21:35-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "齐河综合",
       "name": "齐河综合",
       "gaps": [
-        "07:12-12:02",
-        "12:14-18:30",
-        "19:35-19:50",
-        "20:20-22:00"
+        "07:00-22:00"
       ]
     },
     {
       "id": "龙口综合",
       "name": "龙口综合",
       "gaps": [
-        "07:06-07:52",
-        "07:59-08:46",
-        "08:50-09:37",
-        "09:42-10:29",
-        "10:33-11:20",
-        "12:36-13:23",
-        "13:30-14:16",
-        "14:22-15:08",
-        "15:16-16:01",
-        "16:08-16:54",
-        "20:28-21:30"
+        "07:00-22:00"
       ]
     }
   ],
@@ -1013,7 +1046,7 @@
     {
       "id": "8TV",
       "name": "8TV",
-      "programs": 61,
+      "programs": 39,
       "todayPrograms": 19,
       "source": "epgpw",
       "aliases": [],
@@ -1033,7 +1066,7 @@
     {
       "id": "Astro AEC",
       "name": "Astro AEC",
-      "programs": 110,
+      "programs": 68,
       "todayPrograms": 31,
       "source": "epgpw",
       "aliases": [],
@@ -1043,7 +1076,7 @@
     {
       "id": "Astro AOD",
       "name": "Astro AOD",
-      "programs": 93,
+      "programs": 62,
       "todayPrograms": 30,
       "source": "epgpw",
       "aliases": [],
@@ -1785,7 +1818,7 @@
     {
       "id": "CHANNEL 5",
       "name": "CHANNEL 5",
-      "programs": 97,
+      "programs": 82,
       "todayPrograms": 41,
       "source": "epgpw",
       "aliases": [],
@@ -1795,7 +1828,7 @@
     {
       "id": "CHANNEL 8",
       "name": "CHANNEL 8",
-      "programs": 113,
+      "programs": 74,
       "todayPrograms": 37,
       "source": "epgpw",
       "aliases": [],
@@ -1805,7 +1838,7 @@
     {
       "id": "CHANNEL U",
       "name": "CHANNEL U",
-      "programs": 89,
+      "programs": 62,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -1845,7 +1878,7 @@
     {
       "id": "Channel 5",
       "name": "Channel 5",
-      "programs": 97,
+      "programs": 82,
       "todayPrograms": 41,
       "source": "epgpw",
       "aliases": [],
@@ -1855,7 +1888,7 @@
     {
       "id": "Channel 8",
       "name": "Channel 8",
-      "programs": 113,
+      "programs": 74,
       "todayPrograms": 37,
       "source": "epgpw",
       "aliases": [],
@@ -1865,7 +1898,7 @@
     {
       "id": "Channel U",
       "name": "Channel U",
-      "programs": 89,
+      "programs": 62,
       "todayPrograms": 26,
       "source": "epgpw",
       "aliases": [],
@@ -2269,7 +2302,7 @@
     {
       "id": "TVBJADE",
       "name": "TVBJADE",
-      "programs": 112,
+      "programs": 75,
       "todayPrograms": 37,
       "source": "epgpw",
       "aliases": [
@@ -2291,7 +2324,7 @@
     {
       "id": "iQIYI",
       "name": "iQIYI",
-      "programs": 44,
+      "programs": 25,
       "todayPrograms": 17,
       "source": "epgpw",
       "aliases": [],
@@ -2323,8 +2356,8 @@
     {
       "id": "东方卫视",
       "name": "东方卫视",
-      "programs": 321,
-      "todayPrograms": 38,
+      "programs": 317,
+      "todayPrograms": 34,
       "source": "erwcc",
       "aliases": [
         "东方卫视高清",
@@ -2339,8 +2372,8 @@
     {
       "id": "东方卫视4K",
       "name": "东方卫视4K",
-      "programs": 321,
-      "todayPrograms": 38,
+      "programs": 317,
+      "todayPrograms": 34,
       "source": "erwcc",
       "aliases": [
         "东方卫视4K超高清",
@@ -2373,9 +2406,9 @@
     {
       "id": "东营公共",
       "name": "东营公共",
-      "programs": 82,
-      "todayPrograms": 19,
-      "source": "suming",
+      "programs": 40,
+      "todayPrograms": 21,
+      "source": "tv-mao",
       "aliases": [
         "东营公共频道",
         "DYTV-2"
@@ -2504,12 +2537,18 @@
     {
       "id": "中天新闻",
       "name": "中天新闻",
-      "programs": 140,
-      "todayPrograms": 24,
+      "programs": 20,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
-      "hasGap": false,
-      "gaps": []
+      "hasGap": true,
+      "gaps": [
+        {
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
+        }
+      ]
     },
     {
       "id": "中学生",
@@ -2658,9 +2697,9 @@
     {
       "id": "优优宝贝",
       "name": "优优宝贝",
-      "programs": 198,
+      "programs": 50,
       "todayPrograms": 50,
-      "source": "suming",
+      "source": "epgpw",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2945,8 +2984,8 @@
     {
       "id": "北京卫视",
       "name": "北京卫视",
-      "programs": 362,
-      "todayPrograms": 40,
+      "programs": 381,
+      "todayPrograms": 58,
       "source": "plsy1",
       "aliases": [
         "北京卫视高清",
@@ -2962,8 +3001,8 @@
     {
       "id": "北京卫视4K",
       "name": "北京卫视4K",
-      "programs": 362,
-      "todayPrograms": 40,
+      "programs": 381,
+      "todayPrograms": 58,
       "source": "plsy1",
       "aliases": [
         "北京卫视4K超高清",
@@ -3379,8 +3418,8 @@
     {
       "id": "四川卫视",
       "name": "四川卫视",
-      "programs": 245,
-      "todayPrograms": 38,
+      "programs": 247,
+      "todayPrograms": 40,
       "source": "erwcc",
       "aliases": [
         "四川卫视高清",
@@ -3395,8 +3434,8 @@
     {
       "id": "四川卫视4K",
       "name": "四川卫视4K",
-      "programs": 245,
-      "todayPrograms": 38,
+      "programs": 247,
+      "todayPrograms": 40,
       "source": "erwcc",
       "aliases": [
         "四川卫视4K超高清",
@@ -3595,14 +3634,20 @@
     {
       "id": "娱乐新闻",
       "name": "娱乐新闻",
-      "programs": 282,
-      "todayPrograms": 47,
+      "programs": 47,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [
         "TVB娱乐新闻"
       ],
-      "hasGap": false,
-      "gaps": []
+      "hasGap": true,
+      "gaps": [
+        {
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
+        }
+      ]
     },
     {
       "id": "孝感公共",
@@ -3697,96 +3742,16 @@
     {
       "id": "定陶综合",
       "name": "定陶综合",
-      "programs": 114,
-      "todayPrograms": 29,
+      "programs": 29,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:05",
-          "stop": "07:30",
-          "duration": 25
-        },
-        {
-          "start": "08:07",
-          "stop": "08:53",
-          "duration": 46
-        },
-        {
-          "start": "08:56",
-          "stop": "09:45",
-          "duration": 49
-        },
-        {
-          "start": "09:47",
-          "stop": "10:33",
-          "duration": 46
-        },
-        {
-          "start": "10:35",
-          "stop": "11:20",
-          "duration": 45
-        },
-        {
-          "start": "11:22",
-          "stop": "11:57",
-          "duration": 35
-        },
-        {
-          "start": "12:12",
-          "stop": "12:40",
-          "duration": 28
-        },
-        {
-          "start": "12:42",
-          "stop": "13:27",
-          "duration": 45
-        },
-        {
-          "start": "13:30",
-          "stop": "14:15",
-          "duration": 45
-        },
-        {
-          "start": "14:17",
-          "stop": "15:02",
-          "duration": 45
-        },
-        {
-          "start": "15:04",
-          "stop": "15:50",
-          "duration": 46
-        },
-        {
-          "start": "15:53",
-          "stop": "16:40",
-          "duration": 47
-        },
-        {
-          "start": "16:42",
-          "stop": "17:27",
-          "duration": 45
-        },
-        {
-          "start": "17:30",
-          "stop": "18:26",
-          "duration": 56
-        },
-        {
-          "start": "19:40",
-          "stop": "19:52",
-          "duration": 12
-        },
-        {
-          "start": "20:15",
-          "stop": "21:30",
-          "duration": 75
-        },
-        {
-          "start": "21:34",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 26
+          "duration": 900
         }
       ]
     },
@@ -4001,46 +3966,16 @@
     {
       "id": "岱岳综合",
       "name": "岱岳综合",
-      "programs": 60,
-      "todayPrograms": 15,
+      "programs": 15,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:15",
-          "stop": "12:30",
-          "duration": 315
-        },
-        {
-          "start": "12:45",
-          "stop": "13:15",
-          "duration": 30
-        },
-        {
-          "start": "13:20",
-          "stop": "15:10",
-          "duration": 110
-        },
-        {
-          "start": "15:15",
-          "stop": "17:05",
-          "duration": 110
-        },
-        {
-          "start": "17:10",
-          "stop": "18:25",
-          "duration": 75
-        },
-        {
-          "start": "19:50",
-          "stop": "20:35",
-          "duration": 45
-        },
-        {
-          "start": "20:45",
-          "stop": "21:30",
-          "duration": 45
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     },
@@ -4057,77 +3992,32 @@
     {
       "id": "崂山综合",
       "name": "崂山综合",
-      "programs": 43,
-      "todayPrograms": 9,
+      "programs": 14,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:30",
-          "stop": "08:00",
-          "duration": 30
-        },
-        {
-          "start": "08:20",
-          "stop": "12:00",
-          "duration": 220
-        },
-        {
-          "start": "12:20",
-          "stop": "18:30",
-          "duration": 370
-        },
-        {
-          "start": "20:10",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 110
+          "duration": 900
         }
       ]
     },
     {
       "id": "平度综合",
       "name": "平度综合",
-      "programs": 78,
-      "todayPrograms": 20,
+      "programs": 19,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:12",
-          "stop": "07:44",
-          "duration": 32
-        },
-        {
-          "start": "08:40",
-          "stop": "11:26",
-          "duration": 166
-        },
-        {
-          "start": "11:30",
-          "stop": "12:00",
-          "duration": 30
-        },
-        {
-          "start": "12:40",
-          "stop": "14:15",
-          "duration": 95
-        },
-        {
-          "start": "15:00",
-          "stop": "17:23",
-          "duration": 143
-        },
-        {
-          "start": "17:33",
-          "stop": "17:56",
-          "duration": 23
-        },
-        {
-          "start": "20:44",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 76
+          "duration": 900
         }
       ]
     },
@@ -4226,7 +4116,7 @@
       "name": "广东经济",
       "programs": 21,
       "todayPrograms": 21,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4286,26 +4176,16 @@
     {
       "id": "张店综合",
       "name": "张店综合",
-      "programs": 25,
-      "todayPrograms": 5,
+      "programs": 6,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:25",
-          "stop": "12:02",
-          "duration": 277
-        },
-        {
-          "start": "12:30",
-          "stop": "18:30",
-          "duration": 360
-        },
-        {
-          "start": "19:32",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 148
+          "duration": 900
         }
       ]
     },
@@ -4370,26 +4250,16 @@
     {
       "id": "招远综合",
       "name": "招远综合",
-      "programs": 69,
-      "todayPrograms": 18,
+      "programs": 18,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:20",
-          "stop": "12:00",
-          "duration": 280
-        },
-        {
-          "start": "12:25",
-          "stop": "18:20",
-          "duration": 355
-        },
-        {
-          "start": "20:35",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 85
+          "duration": 900
         }
       ]
     },
@@ -4450,41 +4320,16 @@
     {
       "id": "日照公共",
       "name": "日照公共",
-      "programs": 58,
-      "todayPrograms": 14,
+      "programs": 15,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "08:30",
-          "stop": "11:20",
-          "duration": 170
-        },
-        {
-          "start": "13:20",
-          "stop": "17:00",
-          "duration": 220
-        },
-        {
-          "start": "17:48",
-          "stop": "18:10",
-          "duration": 22
-        },
-        {
-          "start": "18:30",
-          "stop": "19:00",
-          "duration": 30
-        },
-        {
-          "start": "19:15",
-          "stop": "19:45",
-          "duration": 30
-        },
-        {
-          "start": "21:30",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 30
+          "duration": 900
         }
       ]
     },
@@ -4543,36 +4388,16 @@
     {
       "id": "昌乐综合",
       "name": "昌乐综合",
-      "programs": 58,
-      "todayPrograms": 15,
+      "programs": 15,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:11",
-          "stop": "11:45",
-          "duration": 274
-        },
-        {
-          "start": "12:10",
-          "stop": "13:10",
-          "duration": 60
-        },
-        {
-          "start": "13:15",
-          "stop": "17:15",
-          "duration": 240
-        },
-        {
-          "start": "17:25",
-          "stop": "18:10",
-          "duration": 45
-        },
-        {
-          "start": "20:15",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 105
+          "duration": 900
         }
       ]
     },
@@ -4601,66 +4426,41 @@
     {
       "id": "曲阜综合",
       "name": "曲阜综合",
-      "programs": 30,
-      "todayPrograms": 7,
+      "programs": 8,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:01",
-          "stop": "12:00",
-          "duration": 299
-        },
-        {
-          "start": "12:30",
-          "stop": "18:30",
-          "duration": 360
-        },
-        {
-          "start": "20:00",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 120
+          "duration": 900
         }
       ]
     },
     {
       "id": "桓台综合",
       "name": "桓台综合",
-      "programs": 60,
-      "todayPrograms": 17,
+      "programs": 13,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:20",
-          "stop": "12:00",
-          "duration": 280
-        },
-        {
-          "start": "12:20",
-          "stop": "14:00",
-          "duration": 100
-        },
-        {
-          "start": "14:47",
-          "stop": "18:30",
-          "duration": 223
-        },
-        {
-          "start": "20:43",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 77
+          "duration": 900
         }
       ]
     },
     {
       "id": "梨园",
       "name": "梨园",
-      "programs": 88,
-      "todayPrograms": 15,
-      "source": "suming",
+      "programs": 14,
+      "todayPrograms": 14,
+      "source": "zmt",
       "aliases": [
         "梨园频道",
         "河南戏曲",
@@ -4698,7 +4498,7 @@
     {
       "id": "武城综合",
       "name": "武城综合",
-      "programs": 6,
+      "programs": 2,
       "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
@@ -5019,103 +4819,48 @@
     {
       "id": "沂水生活",
       "name": "沂水生活",
-      "programs": 26,
-      "todayPrograms": 7,
+      "programs": 6,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "07:11",
-          "duration": 11
-        },
-        {
-          "start": "07:35",
-          "stop": "12:40",
-          "duration": 305
-        },
-        {
-          "start": "12:55",
-          "stop": "18:52",
-          "duration": 357
-        },
-        {
-          "start": "19:45",
-          "stop": "20:30",
-          "duration": 45
-        },
-        {
-          "start": "20:50",
           "stop": "22:00",
-          "duration": 70
+          "duration": 900
         }
       ]
     },
     {
       "id": "沂水综合",
       "name": "沂水综合",
-      "programs": 36,
-      "todayPrograms": 8,
-      "source": "suming",
-      "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:01",
-          "stop": "07:40",
-          "duration": 39
-        },
-        {
-          "start": "08:10",
-          "stop": "08:55",
-          "duration": 45
-        },
-        {
-          "start": "09:30",
-          "stop": "12:20",
-          "duration": 170
-        },
-        {
-          "start": "12:40",
-          "stop": "18:00",
-          "duration": 320
-        },
-        {
-          "start": "19:38",
-          "stop": "22:00",
-          "duration": 142
-        }
-      ]
-    },
-    {
-      "id": "河东综合",
-      "name": "河东综合",
-      "programs": 44,
-      "todayPrograms": 11,
+      "programs": 8,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "11:45",
-          "duration": 285
-        },
+          "stop": "22:00",
+          "duration": 900
+        }
+      ]
+    },
+    {
+      "id": "河东综合",
+      "name": "河东综合",
+      "programs": 11,
+      "todayPrograms": 0,
+      "source": "suming",
+      "aliases": [],
+      "hasGap": true,
+      "gaps": [
         {
-          "start": "12:15",
-          "stop": "16:58",
-          "duration": 283
-        },
-        {
-          "start": "17:10",
-          "stop": "18:30",
-          "duration": 80
-        },
-        {
-          "start": "20:05",
-          "stop": "21:40",
-          "duration": 95
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     },
@@ -5134,8 +4879,8 @@
     {
       "id": "河北卫视",
       "name": "河北卫视",
-      "programs": 291,
-      "todayPrograms": 43,
+      "programs": 290,
+      "todayPrograms": 42,
       "source": "erwcc",
       "aliases": [
         "河北卫视高清"
@@ -5159,9 +4904,9 @@
     {
       "id": "河北影视",
       "name": "河北影视",
-      "programs": 13,
+      "programs": 39,
       "todayPrograms": 13,
-      "source": "zmt",
+      "source": "suming",
       "aliases": [
         "河北影视剧高清",
         "河北影视剧"
@@ -5306,7 +5051,7 @@
     {
       "id": "沾化综合",
       "name": "沾化综合",
-      "programs": 18,
+      "programs": 0,
       "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
@@ -5452,31 +5197,16 @@
     {
       "id": "泰山综合",
       "name": "泰山综合",
-      "programs": 86,
-      "todayPrograms": 23,
+      "programs": 21,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:30",
-          "stop": "08:00",
-          "duration": 30
-        },
-        {
-          "start": "08:16",
-          "stop": "12:30",
-          "duration": 254
-        },
-        {
-          "start": "13:08",
-          "stop": "18:30",
-          "duration": 322
-        },
-        {
-          "start": "20:20",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 100
+          "duration": 900
         }
       ]
     },
@@ -5501,9 +5231,9 @@
     {
       "id": "济南娱乐",
       "name": "济南娱乐",
-      "programs": 31,
-      "todayPrograms": 7,
-      "source": "suming",
+      "programs": 16,
+      "todayPrograms": 8,
+      "source": "tv-mao",
       "aliases": [
         "济南娱乐频道"
       ],
@@ -5513,14 +5243,20 @@
     {
       "id": "济南少儿",
       "name": "济南少儿",
-      "programs": 68,
-      "todayPrograms": 17,
-      "source": "suming",
+      "programs": 27,
+      "todayPrograms": 10,
+      "source": "tv-mao",
       "aliases": [
         "济南少儿频道"
       ],
-      "hasGap": false,
-      "gaps": []
+      "hasGap": true,
+      "gaps": [
+        {
+          "start": "07:00",
+          "stop": "14:02",
+          "duration": 422
+        }
+      ]
     },
     {
       "id": "济南教育",
@@ -5589,26 +5325,16 @@
     {
       "id": "济宁公共",
       "name": "济宁公共",
-      "programs": 97,
-      "todayPrograms": 25,
+      "programs": 22,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "09:45",
-          "stop": "12:00",
-          "duration": 135
-        },
-        {
-          "start": "15:00",
-          "stop": "16:10",
-          "duration": 70
-        },
-        {
-          "start": "17:20",
-          "stop": "19:00",
-          "duration": 100
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     },
@@ -5681,8 +5407,8 @@
     {
       "id": "淄博影视",
       "name": "淄博影视",
-      "programs": 12,
-      "todayPrograms": 3,
+      "programs": 3,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [
         "淄博影视频道",
@@ -5692,18 +5418,8 @@
       "gaps": [
         {
           "start": "07:00",
-          "stop": "11:00",
-          "duration": 240
-        },
-        {
-          "start": "11:30",
-          "stop": "18:10",
-          "duration": 400
-        },
-        {
-          "start": "18:30",
-          "stop": "21:40",
-          "duration": 190
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     },
@@ -5875,8 +5591,8 @@
     {
       "id": "湖南卫视",
       "name": "湖南卫视",
-      "programs": 252,
-      "todayPrograms": 31,
+      "programs": 253,
+      "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
         "湖南卫视高清",
@@ -5891,8 +5607,8 @@
     {
       "id": "湖南卫视4K",
       "name": "湖南卫视4K",
-      "programs": 252,
-      "todayPrograms": 31,
+      "programs": 253,
+      "todayPrograms": 32,
       "source": "plsy1",
       "aliases": [
         "湖南卫视4K超高清",
@@ -5949,35 +5665,14 @@
     {
       "id": "滨州民生",
       "name": "滨州民生",
-      "programs": 21,
-      "todayPrograms": 8,
-      "source": "suming",
+      "programs": 28,
+      "todayPrograms": 28,
+      "source": "epgpw",
       "aliases": [
         "滨州民生频道"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "07:15",
-          "duration": 15
-        },
-        {
-          "start": "07:35",
-          "stop": "08:25",
-          "duration": 50
-        },
-        {
-          "start": "08:44",
-          "stop": "11:48",
-          "duration": 184
-        },
-        {
-          "start": "12:26",
-          "stop": "22:00",
-          "duration": 574
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "潍坊公共",
@@ -6021,9 +5716,9 @@
     {
       "id": "潍坊经济生活",
       "name": "潍坊经济生活",
-      "programs": 72,
-      "todayPrograms": 36,
-      "source": "tv-mao",
+      "programs": 87,
+      "todayPrograms": 23,
+      "source": "suming",
       "aliases": [
         "潍坊生活频道",
         "WFTV-2"
@@ -6034,16 +5729,16 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 28,
-      "todayPrograms": 0,
-      "source": "suming",
+      "programs": 13,
+      "todayPrograms": 13,
+      "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -6060,18 +5755,12 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 40,
-      "todayPrograms": 0,
+      "programs": 60,
+      "todayPrograms": 20,
       "source": "suming",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "烟台公共",
@@ -6112,9 +5801,9 @@
     {
       "id": "烟台经济",
       "name": "烟台经济",
-      "programs": 42,
-      "todayPrograms": 23,
-      "source": "tv-mao",
+      "programs": 35,
+      "todayPrograms": 19,
+      "source": "suming",
       "aliases": [
         "烟台经济科技"
       ],
@@ -6329,62 +6018,32 @@
     {
       "id": "禹城综合",
       "name": "禹城综合",
-      "programs": 36,
-      "todayPrograms": 9,
+      "programs": 9,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "11:00",
-          "duration": 240
-        },
-        {
-          "start": "11:30",
-          "stop": "18:30",
-          "duration": 420
-        },
-        {
-          "start": "20:20",
           "stop": "22:00",
-          "duration": 100
+          "duration": 900
         }
       ]
     },
     {
       "id": "禹城综艺",
       "name": "禹城综艺",
-      "programs": 24,
-      "todayPrograms": 6,
+      "programs": 6,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "07:25",
-          "duration": 25
-        },
-        {
-          "start": "08:00",
-          "stop": "11:30",
-          "duration": 210
-        },
-        {
-          "start": "12:00",
-          "stop": "17:30",
-          "duration": 330
-        },
-        {
-          "start": "18:00",
-          "stop": "21:00",
-          "duration": 180
-        },
-        {
-          "start": "21:20",
           "stop": "22:00",
-          "duration": 40
+          "duration": 900
         }
       ]
     },
@@ -6531,51 +6190,16 @@
     {
       "id": "胶州综合",
       "name": "胶州综合",
-      "programs": 111,
-      "todayPrograms": 29,
+      "programs": 27,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:01",
-          "stop": "07:26",
-          "duration": 25
-        },
-        {
-          "start": "07:31",
-          "stop": "08:00",
-          "duration": 29
-        },
-        {
-          "start": "08:15",
-          "stop": "09:00",
-          "duration": 45
-        },
-        {
-          "start": "09:28",
-          "stop": "11:52",
-          "duration": 144
-        },
-        {
-          "start": "12:32",
-          "stop": "13:02",
-          "duration": 30
-        },
-        {
-          "start": "13:07",
-          "stop": "17:56",
-          "duration": 289
-        },
-        {
-          "start": "18:01",
-          "stop": "18:30",
-          "duration": 29
-        },
-        {
-          "start": "21:05",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 55
+          "duration": 900
         }
       ]
     },
@@ -6613,21 +6237,16 @@
     {
       "id": "莱西综合",
       "name": "莱西综合",
-      "programs": 28,
-      "todayPrograms": 6,
+      "programs": 7,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:09",
-          "stop": "18:25",
-          "duration": 676
-        },
-        {
-          "start": "19:32",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 148
+          "duration": 900
         }
       ]
     },
@@ -6725,8 +6344,8 @@
     {
       "id": "西藏卫视",
       "name": "西藏卫视",
-      "programs": 627,
-      "todayPrograms": 41,
+      "programs": 744,
+      "todayPrograms": 97,
       "source": "plsy1",
       "aliases": [
         "西藏卫视高清"
@@ -6817,31 +6436,16 @@
     {
       "id": "邹城综合",
       "name": "邹城综合",
-      "programs": 50,
-      "todayPrograms": 12,
+      "programs": 11,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "08:00",
-          "stop": "12:00",
-          "duration": 240
-        },
-        {
-          "start": "12:25",
-          "stop": "12:55",
-          "duration": 30
-        },
-        {
-          "start": "14:00",
-          "stop": "18:15",
-          "duration": 255
-        },
-        {
-          "start": "20:05",
-          "stop": "21:40",
-          "duration": 95
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     },
@@ -6932,36 +6536,16 @@
     {
       "id": "长岛综合",
       "name": "长岛综合",
-      "programs": 48,
-      "todayPrograms": 12,
+      "programs": 12,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "09:18",
-          "stop": "12:30",
-          "duration": 192
-        },
-        {
-          "start": "12:55",
-          "stop": "15:50",
-          "duration": 175
-        },
-        {
-          "start": "16:00",
-          "stop": "18:30",
-          "duration": 150
-        },
-        {
-          "start": "20:10",
-          "stop": "21:00",
-          "duration": 50
-        },
-        {
-          "start": "21:15",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 45
+          "duration": 900
         }
       ]
     },
@@ -6980,41 +6564,16 @@
     {
       "id": "陵城综合",
       "name": "陵城综合",
-      "programs": 76,
-      "todayPrograms": 19,
+      "programs": 19,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:09",
-          "stop": "07:31",
-          "duration": 22
-        },
-        {
-          "start": "07:58",
-          "stop": "09:55",
-          "duration": 117
-        },
-        {
-          "start": "10:21",
-          "stop": "12:00",
-          "duration": 99
-        },
-        {
-          "start": "12:38",
-          "stop": "15:37",
-          "duration": 179
-        },
-        {
-          "start": "16:00",
-          "stop": "18:30",
-          "duration": 150
-        },
-        {
-          "start": "21:10",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 50
+          "duration": 900
         }
       ]
     },
@@ -7045,8 +6604,8 @@
     {
       "id": "青岛QTV-1",
       "name": "青岛QTV-1",
-      "programs": 27,
-      "todayPrograms": 0,
+      "programs": 94,
+      "todayPrograms": 31,
       "source": "suming",
       "aliases": [
         "青岛新闻综合频道",
@@ -7057,9 +6616,24 @@
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "start": "09:33",
+          "stop": "11:30",
+          "duration": 117
+        },
+        {
+          "start": "12:56",
+          "stop": "13:11",
+          "duration": 15
+        },
+        {
+          "start": "14:15",
+          "stop": "16:50",
+          "duration": 155
+        },
+        {
+          "start": "19:56",
+          "stop": "21:33",
+          "duration": 97
         }
       ]
     },
@@ -7079,8 +6653,8 @@
     {
       "id": "青岛QTV-3",
       "name": "青岛QTV-3",
-      "programs": 5,
-      "todayPrograms": 0,
+      "programs": 15,
+      "todayPrograms": 5,
       "source": "suming",
       "aliases": [
         "青岛影视频道",
@@ -7090,8 +6664,28 @@
       "gaps": [
         {
           "start": "07:00",
+          "stop": "08:18",
+          "duration": 78
+        },
+        {
+          "start": "08:33",
+          "stop": "13:53",
+          "duration": 320
+        },
+        {
+          "start": "14:38",
+          "stop": "20:00",
+          "duration": 322
+        },
+        {
+          "start": "20:02",
+          "stop": "20:53",
+          "duration": 51
+        },
+        {
+          "start": "21:13",
           "stop": "22:00",
-          "duration": 900
+          "duration": 47
         }
       ]
     },
@@ -7122,8 +6716,8 @@
     {
       "id": "青岛QTV-5",
       "name": "青岛QTV-5",
-      "programs": 16,
-      "todayPrograms": 0,
+      "programs": 59,
+      "todayPrograms": 25,
       "source": "suming",
       "aliases": [
         "青岛教育频道",
@@ -7133,8 +6727,18 @@
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "07:11",
+          "duration": 11
+        },
+        {
+          "start": "12:00",
+          "stop": "15:57",
+          "duration": 237
+        },
+        {
+          "start": "19:00",
+          "stop": "20:30",
+          "duration": 90
         }
       ]
     },
@@ -7183,92 +6787,32 @@
     {
       "id": "鱼台生活",
       "name": "鱼台生活",
-      "programs": 53,
-      "todayPrograms": 12,
+      "programs": 13,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:01",
-          "stop": "07:28",
-          "duration": 27
-        },
-        {
-          "start": "07:40",
-          "stop": "08:26",
-          "duration": 46
-        },
-        {
-          "start": "08:28",
-          "stop": "11:33",
-          "duration": 185
-        },
-        {
-          "start": "11:35",
-          "stop": "12:05",
-          "duration": 30
-        },
-        {
-          "start": "12:07",
-          "stop": "12:20",
-          "duration": 13
-        },
-        {
-          "start": "12:53",
-          "stop": "13:58",
-          "duration": 65
-        },
-        {
-          "start": "14:53",
-          "stop": "17:57",
-          "duration": 184
-        },
-        {
-          "start": "18:16",
-          "stop": "20:36",
-          "duration": 140
-        },
-        {
-          "start": "20:48",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 72
+          "duration": 900
         }
       ]
     },
     {
       "id": "鱼台综合",
       "name": "鱼台综合",
-      "programs": 64,
-      "todayPrograms": 16,
+      "programs": 16,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:11",
-          "stop": "07:38",
-          "duration": 27
-        },
-        {
-          "start": "07:40",
-          "stop": "12:30",
-          "duration": 290
-        },
-        {
-          "start": "12:46",
-          "stop": "18:22",
-          "duration": 336
-        },
-        {
-          "start": "20:45",
-          "stop": "21:30",
-          "duration": 45
-        },
-        {
-          "start": "21:40",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 20
+          "duration": 900
         }
       ]
     },
@@ -7299,46 +6843,16 @@
     {
       "id": "黄岛生活",
       "name": "黄岛生活",
-      "programs": 87,
-      "todayPrograms": 21,
+      "programs": 22,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:50",
-          "stop": "11:10",
-          "duration": 200
-        },
-        {
-          "start": "11:35",
-          "stop": "12:00",
-          "duration": 25
-        },
-        {
-          "start": "12:35",
-          "stop": "16:00",
-          "duration": 205
-        },
-        {
-          "start": "16:50",
-          "stop": "17:15",
-          "duration": 25
-        },
-        {
-          "start": "17:30",
-          "stop": "18:30",
-          "duration": 60
-        },
-        {
-          "start": "20:00",
-          "stop": "20:30",
-          "duration": 30
-        },
-        {
-          "start": "21:35",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 25
+          "duration": 900
         }
       ]
     },
@@ -7426,8 +6940,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 244,
-      "todayPrograms": 33,
+      "programs": 246,
+      "todayPrograms": 35,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
@@ -7438,31 +6952,16 @@
     {
       "id": "齐河综合",
       "name": "齐河综合",
-      "programs": 38,
-      "todayPrograms": 9,
+      "programs": 9,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:12",
-          "stop": "12:02",
-          "duration": 290
-        },
-        {
-          "start": "12:14",
-          "stop": "18:30",
-          "duration": 376
-        },
-        {
-          "start": "19:35",
-          "stop": "19:50",
-          "duration": 15
-        },
-        {
-          "start": "20:20",
+          "start": "07:00",
           "stop": "22:00",
-          "duration": 100
+          "duration": 900
         }
       ]
     },
@@ -7519,66 +7018,16 @@
     {
       "id": "龙口综合",
       "name": "龙口综合",
-      "programs": 156,
-      "todayPrograms": 40,
+      "programs": 38,
+      "todayPrograms": 0,
       "source": "suming",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
-          "start": "07:06",
-          "stop": "07:52",
-          "duration": 46
-        },
-        {
-          "start": "07:59",
-          "stop": "08:46",
-          "duration": 47
-        },
-        {
-          "start": "08:50",
-          "stop": "09:37",
-          "duration": 47
-        },
-        {
-          "start": "09:42",
-          "stop": "10:29",
-          "duration": 47
-        },
-        {
-          "start": "10:33",
-          "stop": "11:20",
-          "duration": 47
-        },
-        {
-          "start": "12:36",
-          "stop": "13:23",
-          "duration": 47
-        },
-        {
-          "start": "13:30",
-          "stop": "14:16",
-          "duration": 46
-        },
-        {
-          "start": "14:22",
-          "stop": "15:08",
-          "duration": 46
-        },
-        {
-          "start": "15:16",
-          "stop": "16:01",
-          "duration": 45
-        },
-        {
-          "start": "16:08",
-          "stop": "16:54",
-          "duration": 46
-        },
-        {
-          "start": "20:28",
-          "stop": "21:30",
-          "duration": 62
+          "start": "07:00",
+          "stop": "22:00",
+          "duration": 900
         }
       ]
     }
