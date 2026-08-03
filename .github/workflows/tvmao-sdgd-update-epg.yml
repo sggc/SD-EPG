@@ -2,7 +2,8 @@ name: TVMAO & SDGD & SDM EPG
 
 on:
   schedule:
-    - cron: '0 18 * * *'  # 北京时间 02:00
+    # 北京时间 02:00 — 三个任务统一运行
+    - cron: '0 18 * * *'
   workflow_dispatch:
     inputs:
       run_tvmao:
@@ -22,9 +23,15 @@ on:
         type: boolean
 
 jobs:
+  # ============================================================
+  #  TVMAO EPG
+  # ============================================================
   tvmao:
-    if: github.event_name == 'schedule' || inputs.run_tvmao
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_tvmao == 'true')
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout public repository
       uses: actions/checkout@v4
@@ -73,9 +80,15 @@ jobs:
           echo "无 TVMAO 变更，跳过提交"
         fi
 
+  # ============================================================
+  #  SDGD EPG
+  # ============================================================
   sdgd:
-    if: github.event_name == 'schedule' || inputs.run_sdgd
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_sdgd == 'true')
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout public repository
       uses: actions/checkout@v4
@@ -127,9 +140,15 @@ jobs:
           echo "无 SDGD 变更，跳过提交"
         fi
 
+  # ============================================================
+  #  SDM EPG (山东移动)
+  # ============================================================
   sdm:
-    if: github.event_name == 'schedule' || inputs.run_sdm
+    if: |
+      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_sdm == 'true')
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout public repository (SD-EPG)
       uses: actions/checkout@v4
