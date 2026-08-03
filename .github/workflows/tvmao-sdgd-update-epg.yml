@@ -4,8 +4,6 @@ on:
   schedule:
     # 北京时间 02:00 — 三个任务全跑
     - cron: '0 18 * * *'
-    # 北京时间 10:00, 18:00 — 仅 SDM
-    - cron: '0 2,10 * * *'
   workflow_dispatch:
     inputs:
       run_tvmao:
@@ -30,7 +28,7 @@ jobs:
   # ============================================================
   tvmao:
     if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
+      github.event_name == 'schedule' ||
       (github.event_name == 'workflow_dispatch' && inputs.run_tvmao == 'true')
     runs-on: ubuntu-latest
 
@@ -87,7 +85,7 @@ jobs:
   # ============================================================
   sdgd:
     if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
+      github.event_name == 'schedule' ||
       (github.event_name == 'workflow_dispatch' && inputs.run_sdgd == 'true')
     runs-on: ubuntu-latest
 
