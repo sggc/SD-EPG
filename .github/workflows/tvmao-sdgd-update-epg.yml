@@ -53,10 +53,13 @@ jobs:
         fi
 
     - name: Run TVMAO EPG Crawler
+      id: crawl_tvmao
+      continue-on-error: true
       run: |
         python scripts/tvmao_epg_crawler.py --output EPG --log-dir log
 
     - name: Upload TVMAO files
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: epg-tvmao
@@ -65,7 +68,20 @@ jobs:
           EPG/tvmao.xml.gz
           log/tvmao.txt
         retention-days: 3
-        if-no-files-found: warn
+        if-no-files-found: ignore
+
+    - name: Set TVMAO status
+      id: status
+      if: always()
+      run: |
+        if [ "${{ steps.crawl_tvmao.outcome }}" == "success" ]; then
+          echo "result=success" >> $GITHUB_OUTPUT
+        else
+          echo "result=failed" >> $GITHUB_OUTPUT
+        fi
+
+    outputs:
+      result: ${{ steps.status.outputs.result }}
 
   # ============================================================
   #  SDGD EPG 抓取
@@ -97,6 +113,8 @@ jobs:
         fi
 
     - name: Run SDGD EPG Crawler
+      id: crawl_sdgd
+      continue-on-error: true
       env:
         SDGD_TOKEN: ${{ secrets.SDGD_TOKEN }}
         SDGD_APP_ID: ${{ secrets.SDGD_APP_ID }}
@@ -104,12 +122,26 @@ jobs:
         python scripts/fetch_epg_sdgd.py
 
     - name: Upload SDGD files
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: epg-sdgd
         path: EPG/sdgd.xml.gz
         retention-days: 3
-        if-no-files-found: warn
+        if-no-files-found: ignore
+
+    - name: Set SDGD status
+      id: status
+      if: always()
+      run: |
+        if [ "${{ steps.crawl_sdgd.outcome }}" == "success" ]; then
+          echo "result=success" >> $GITHUB_OUTPUT
+        else
+          echo "result=failed" >> $GITHUB_OUTPUT
+        fi
+
+    outputs:
+      result: ${{ steps.status.outputs.result }}
 
   # ============================================================
   #  SDM EPG 抓取 (山东移动)
@@ -143,22 +175,39 @@ jobs:
       run: pip install requests
 
     - name: Run SDM EPG fetcher
+      id: crawl_sdm
+      continue-on-error: true
       run: |
         cd public_repo
         python ../private_repo/SD-EPG/scripts/fetch_sdm_epg.py \
           --output ./EPG/sdm.xml.gz
 
     - name: Upload SDM files
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: epg-sdm
         path: public_repo/EPG/sdm.xml.gz
         retention-days: 3
-        if-no-files-found: warn
+        if-no-files-found: ignore
+
+    - name: Set SDM status
+      id: status
+      if: always()
+      run: |
+        if [ "${{ steps.crawl_sdm.outcome }}" == "success" ]; then
+          echo "result=success" >> $GITHUB_OUTPUT
+        else
+          echo "result=failed" >> $GITHUB_OUTPUT
+        fi
+
+    outputs:
+      result: ${{ steps.status.outputs.result }}
 
   # ============================================================
   #  汇总提交 — 下载所有成功的 artifact，统一提交推送
   #  即使某个抓取 Job 失败，成功的依然会提交
+  #  整体工作流状态由本 Job 决定，不会因抓取失败而标记失败
   # ============================================================
   commit:
     needs: [tvmao, sdgd, sdm]
@@ -173,21 +222,21 @@ jobs:
         ref: ${{ github.ref }}
 
     - name: Download TVMAO artifact
-      if: ${{ needs.tvmao.result == 'success' }}
+      if: ${{ needs.tvmao.outputs.result == 'success' }}
       uses: actions/download-artifact@v4
       with:
         name: epg-tvmao
         path: tmp-tvmao
 
     - name: Download SDGD artifact
-      if: ${{ needs.sdgd.result == 'success' }}
+      if: ${{ needs.sdgd.outputs.result == 'success' }}
       uses: actions/download-artifact@v4
       with:
         name: epg-sdgd
         path: tmp-sdgd
 
     - name: Download SDM artifact
-      if: ${{ needs.sdm.result == 'success' }}
+      if: ${{ needs.sdm.outputs.result == 'success' }}
       uses: actions/download-artifact@v4
       with:
         name: epg-sdm
@@ -226,9 +275,9 @@ jobs:
     - name: Display results
       run: |
         echo "=== 任务结果 ==="
-        echo "TVMAO: ${{ needs.tvmao.result }}"
-        echo "SDGD:  ${{ needs.sdgd.result }}"
-        echo "SDM:   ${{ needs.sdm.result }}"
+        echo "TVMAO: ${{ needs.tvmao.outputs.result }}"
+        echo "SDGD:  ${{ needs.sdgd.outputs.result }}"
+        echo "SDM:   ${{ needs.sdm.outputs.result }}"
         echo ""
         echo "=== EPG 目录 ==="
         ls -lh EPG/
@@ -241,17 +290,38 @@ jobs:
         git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz EPG/sdm.xml.gz log/tvmao.txt 2>/dev/null || true
 
         if ! git diff --cached --quiet; then
-          git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.result }} SDGD:${{ needs.sdgd.result }} SDM:${{ needs.sdm.result }}]"
+          git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.outputs.result }} SDGD:${{ needs.sdgd.outputs.result }} SDM:${{ needs.sdm.outputs.result }}]"
           git fetch origin ${{ github.ref_name }}
           if ! git rebase origin/${{ github.ref_name }} -X theirs; then
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
             git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz EPG/sdm.xml.gz log/tvmao.txt 2>/dev/null || true
-            git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.result }} SDGD:${{ needs.sdgd.result }} SDM:${{ needs.sdm.result }}]"
+            git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.outputs.result }} SDGD:${{ needs.sdgd.outputs.result }} SDM:${{ needs.sdm.outputs.result }}]"
           fi
           git push
           echo "EPG 已成功提交并推送"
         else
           echo "无 EPG 变更，跳过提交"
+        fi
+
+    - name: Check overall result
+      if: always()
+      run: |
+        TVMAO="${{ needs.tvmao.outputs.result }}"
+        SDGD="${{ needs.sdgd.outputs.result }}"
+        SDM="${{ needs.sdm.outputs.result }}"
+
+        echo "=== 最终结果 ==="
+        echo "TVMAO: $TVMAO"
+        echo "SDGD:  $SDGD"
+        echo "SDM:   $SDM"
+
+        # 只要有任意一个成功，就标记为成功
+        if [ "$TVMAO" == "success" ] || [ "$SDGD" == "success" ] || [ "$SDM" == "success" ]; then
+          echo "::notice::EPG 更新完成 (TVMAO:$TVMAO SDGD:$SDGD SDM:$SDM)"
+          exit 0
+        else
+          echo "::error::所有抓取任务均失败"
+          exit 1
         fi
