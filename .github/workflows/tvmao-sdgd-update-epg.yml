@@ -24,16 +24,14 @@ on:
 
 jobs:
   # ============================================================
-  #  TVMAO EPG
+  #  TVMAO EPG 抓取
   # ============================================================
   tvmao:
-    if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
-      (github.event_name == 'workflow_dispatch' && inputs.run_tvmao == 'true')
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.run_tvmao == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout public repository
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -58,39 +56,26 @@ jobs:
       run: |
         python scripts/tvmao_epg_crawler.py --output EPG --log-dir log
 
-    - name: Commit and push
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
-
-        if ! git diff --cached --quiet; then
-          git commit -m "TVMAO EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          git fetch origin ${{ github.ref_name }}
-          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
-            echo "::warning::Rebase failed, falling back to reset+recommit"
-            git rebase --abort
-            git reset --soft origin/${{ github.ref_name }}
-            git add EPG/tvmao.xml EPG/tvmao.xml.gz log/tvmao.txt
-            git commit -m "TVMAO EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          fi
-          git push
-          echo "TVMAO EPG 已成功提交并推送"
-        else
-          echo "无 TVMAO 变更，跳过提交"
-        fi
+    - name: Upload TVMAO files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-tvmao
+        path: |
+          EPG/tvmao.xml
+          EPG/tvmao.xml.gz
+          log/tvmao.txt
+        retention-days: 3
+        if-no-files-found: warn
 
   # ============================================================
-  #  SDGD EPG
+  #  SDGD EPG 抓取
   # ============================================================
   sdgd:
-    if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
-      (github.event_name == 'workflow_dispatch' && inputs.run_sdgd == 'true')
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.run_sdgd == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout public repository
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -118,35 +103,19 @@ jobs:
       run: |
         python scripts/fetch_epg_sdgd.py
 
-    - name: Commit and push
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add EPG/sdgd.xml.gz
-
-        if ! git diff --cached --quiet; then
-          git commit -m "SDGD EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          git fetch origin ${{ github.ref_name }}
-          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
-            echo "::warning::Rebase failed, falling back to reset+recommit"
-            git rebase --abort
-            git reset --soft origin/${{ github.ref_name }}
-            git add EPG/sdgd.xml.gz
-            git commit -m "SDGD EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          fi
-          git push
-          echo "SDGD EPG 已成功提交并推送"
-        else
-          echo "无 SDGD 变更，跳过提交"
-        fi
+    - name: Upload SDGD files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-sdgd
+        path: EPG/sdgd.xml.gz
+        retention-days: 3
+        if-no-files-found: warn
 
   # ============================================================
-  #  SDM EPG (山东移动)
+  #  SDM EPG 抓取 (山东移动)
   # ============================================================
   sdm:
-    if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 18 * * *') ||
-      (github.event_name == 'workflow_dispatch' && inputs.run_sdm == 'true')
+    if: ${{ github.event_name == 'schedule' || github.event.inputs.run_sdm == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -173,35 +142,116 @@ jobs:
     - name: Install dependencies
       run: pip install requests
 
-    - name: Configure git
-      run: |
-        cd public_repo
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-
     - name: Run SDM EPG fetcher
       run: |
         cd public_repo
         python ../private_repo/SD-EPG/scripts/fetch_sdm_epg.py \
           --output ./EPG/sdm.xml.gz
 
+    - name: Upload SDM files
+      uses: actions/upload-artifact@v4
+      with:
+        name: epg-sdm
+        path: public_repo/EPG/sdm.xml.gz
+        retention-days: 3
+        if-no-files-found: warn
+
+  # ============================================================
+  #  汇总提交 — 下载所有成功的 artifact，统一提交推送
+  #  即使某个抓取 Job 失败，成功的依然会提交
+  # ============================================================
+  commit:
+    needs: [tvmao, sdgd, sdm]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref }}
+
+    - name: Download TVMAO artifact
+      if: ${{ needs.tvmao.result == 'success' }}
+      uses: actions/download-artifact@v4
+      with:
+        name: epg-tvmao
+        path: tmp-tvmao
+
+    - name: Download SDGD artifact
+      if: ${{ needs.sdgd.result == 'success' }}
+      uses: actions/download-artifact@v4
+      with:
+        name: epg-sdgd
+        path: tmp-sdgd
+
+    - name: Download SDM artifact
+      if: ${{ needs.sdm.result == 'success' }}
+      uses: actions/download-artifact@v4
+      with:
+        name: epg-sdm
+        path: tmp-sdm
+
+    - name: Merge artifacts into EPG directory
+      run: |
+        mkdir -p EPG log
+
+        # TVMAO
+        if [ -d tmp-tvmao ]; then
+          cp -f tmp-tvmao/EPG/tvmao.xml EPG/ 2>/dev/null || true
+          cp -f tmp-tvmao/EPG/tvmao.xml.gz EPG/ 2>/dev/null || true
+          cp -f tmp-tvmao/log/tvmao.txt log/ 2>/dev/null || true
+          echo "TVMAO: 已合并"
+        else
+          echo "TVMAO: 无数据（抓取失败或跳过）"
+        fi
+
+        # SDGD
+        if [ -d tmp-sdgd ]; then
+          cp -f tmp-sdgd/sdgd.xml.gz EPG/ 2>/dev/null || true
+          echo "SDGD: 已合并"
+        else
+          echo "SDGD: 无数据（抓取失败或跳过）"
+        fi
+
+        # SDM
+        if [ -d tmp-sdm ]; then
+          cp -f tmp-sdm/sdm.xml.gz EPG/ 2>/dev/null || true
+          echo "SDM: 已合并"
+        else
+          echo "SDM: 无数据（抓取失败或跳过）"
+        fi
+
+    - name: Display results
+      run: |
+        echo "=== 任务结果 ==="
+        echo "TVMAO: ${{ needs.tvmao.result }}"
+        echo "SDGD:  ${{ needs.sdgd.result }}"
+        echo "SDM:   ${{ needs.sdm.result }}"
+        echo ""
+        echo "=== EPG 目录 ==="
+        ls -lh EPG/
+
     - name: Commit and push
       run: |
-        cd public_repo
-        git add EPG/sdm.xml.gz
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+        git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz EPG/sdm.xml.gz log/tvmao.txt 2>/dev/null || true
 
         if ! git diff --cached --quiet; then
-          git commit -m "山东移动EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.result }} SDGD:${{ needs.sdgd.result }} SDM:${{ needs.sdm.result }}]"
           git fetch origin ${{ github.ref_name }}
           if ! git rebase origin/${{ github.ref_name }} -X theirs; then
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
-            git add EPG/sdm.xml.gz
-            git commit -m "山东移动EPG $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+            git add EPG/tvmao.xml EPG/tvmao.xml.gz EPG/sdgd.xml.gz EPG/sdm.xml.gz log/tvmao.txt 2>/dev/null || true
+            git commit -m "EPG 更新 $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') [TVMAO:${{ needs.tvmao.result }} SDGD:${{ needs.sdgd.result }} SDM:${{ needs.sdm.result }}]"
           fi
           git push
-          echo "SDM EPG 已成功提交并推送"
+          echo "EPG 已成功提交并推送"
         else
-          echo "无 SDM 变更，跳过提交"
+          echo "无 EPG 变更，跳过提交"
         fi
