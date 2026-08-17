@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-08-17 11:16:06",
+  "lastUpdate": "2026-08-17 17:01:51",
   "whitelistChannels": 511,
   "matchedChannels": 480,
   "unmatchedChannels": 31,
-  "totalPrograms": 107388,
-  "filteredPrograms": 11269,
+  "totalPrograms": 107146,
+  "filteredPrograms": 11381,
   "dateRange": "20260811 ~ 20260818",
   "aliasCount": 578,
   "epgSources": [
@@ -19,7 +19,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
-      "programs": 55389,
+      "programs": 55329,
       "matched": 99
     },
     {
@@ -34,7 +34,7 @@
       "enabled": true,
       "channels": 525,
       "programs": 130010,
-      "matched": 158
+      "matched": 163
     },
     {
       "name": "suming",
@@ -67,8 +67,8 @@
     {
       "name": "mxdyeah",
       "enabled": true,
-      "channels": 1410,
-      "programs": 333792,
+      "channels": 1411,
+      "programs": 357826,
       "matched": 10
     },
     {
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 460,
-      "programs": 19844,
+      "programs": 20661,
       "matched": 1
     },
     {
@@ -1676,8 +1676,8 @@
     {
       "id": "CCTV4",
       "name": "CCTV4",
-      "programs": 362,
-      "todayPrograms": 49,
+      "programs": 363,
+      "todayPrograms": 50,
       "source": "plsy1",
       "aliases": [
         "CCTV-4",
@@ -2103,9 +2103,9 @@
     {
       "id": "CGTN俄语",
       "name": "CGTN俄语",
-      "programs": 376,
+      "programs": 329,
       "todayPrograms": 47,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2113,9 +2113,9 @@
     {
       "id": "CGTN法语",
       "name": "CGTN法语",
-      "programs": 328,
+      "programs": 286,
       "todayPrograms": 41,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2123,9 +2123,9 @@
     {
       "id": "CGTN纪录",
       "name": "CGTN纪录",
-      "programs": 288,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 240,
+      "todayPrograms": 34,
+      "source": "erwcc",
       "aliases": [
         "CGTN英文纪录",
         "CGTN纪录片频道",
@@ -2137,9 +2137,9 @@
     {
       "id": "CGTN西语",
       "name": "CGTN西语",
-      "programs": 390,
+      "programs": 342,
       "todayPrograms": 49,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [
         "CGTN西班牙语",
         "CGTN西班牙语频道",
@@ -2151,9 +2151,9 @@
     {
       "id": "CGTN阿语",
       "name": "CGTN阿语",
-      "programs": 360,
+      "programs": 315,
       "todayPrograms": 45,
-      "source": "plsy1",
+      "source": "erwcc",
       "aliases": [
         "CGTN阿拉伯语",
         "CGTN阿拉伯语频道",
@@ -2195,8 +2195,8 @@
     {
       "id": "CHC动作电影",
       "name": "CHC动作电影",
-      "programs": 216,
-      "todayPrograms": 30,
+      "programs": 215,
+      "todayPrograms": 29,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -2215,8 +2215,8 @@
     {
       "id": "CHC影迷电影",
       "name": "CHC影迷电影",
-      "programs": 125,
-      "todayPrograms": 16,
+      "programs": 126,
+      "todayPrograms": 17,
       "source": "plsy1",
       "aliases": [],
       "hasGap": false,
@@ -3897,8 +3897,8 @@
     {
       "id": "吉林卫视",
       "name": "吉林卫视",
-      "programs": 299,
-      "todayPrograms": 40,
+      "programs": 297,
+      "todayPrograms": 38,
       "source": "plsy1",
       "aliases": [
         "吉林卫视高清"
@@ -4378,8 +4378,8 @@
     {
       "id": "宁夏卫视",
       "name": "宁夏卫视",
-      "programs": 327,
-      "todayPrograms": 44,
+      "programs": 324,
+      "todayPrograms": 41,
       "source": "plsy1",
       "aliases": [
         "宁夏卫视高清"
@@ -8116,8 +8116,8 @@
     {
       "id": "青海卫视",
       "name": "青海卫视",
-      "programs": 251,
-      "todayPrograms": 36,
+      "programs": 244,
+      "todayPrograms": 29,
       "source": "plsy1",
       "aliases": [
         "青海卫视高清"
@@ -8428,8 +8428,8 @@
     {
       "id": "黑龙江卫视",
       "name": "黑龙江卫视",
-      "programs": 243,
-      "todayPrograms": 35,
+      "programs": 242,
+      "todayPrograms": 34,
       "source": "plsy1",
       "aliases": [
         "黑龙江卫视高清"
