@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-08-24 11:27:56",
+  "lastUpdate": "2026-08-24 17:05:28",
   "whitelistChannels": 511,
   "matchedChannels": 480,
   "unmatchedChannels": 31,
-  "totalPrograms": 107861,
-  "filteredPrograms": 14071,
+  "totalPrograms": 107505,
+  "filteredPrograms": 14386,
   "dateRange": "20260818 ~ 20260825",
   "aliasCount": 575,
   "epgSources": [
@@ -68,21 +68,21 @@
       "name": "mxdyeah",
       "enabled": true,
       "channels": 1413,
-      "programs": 323845,
+      "programs": 347551,
       "matched": 10
     },
     {
       "name": "epgpw",
       "enabled": true,
-      "channels": 15616,
-      "programs": 1188046,
+      "channels": 15633,
+      "programs": 1098750,
       "matched": 10
     },
     {
       "name": "liliu",
       "enabled": true,
       "channels": 465,
-      "programs": 18977,
+      "programs": 19440,
       "matched": 1
     },
     {
@@ -481,54 +481,30 @@
     },
     {
       "index": 31,
-      "name": "澳视体育",
-      "id": "澳视体育",
-      "todayPrograms": 1
-    },
-    {
-      "index": 32,
-      "name": "澳视综艺",
-      "id": "澳视综艺",
-      "todayPrograms": 1
-    },
-    {
-      "index": 33,
-      "name": "随州农村",
-      "id": "随州农村",
-      "todayPrograms": 1
-    },
-    {
-      "index": 34,
-      "name": "随州综合",
-      "id": "随州综合",
-      "todayPrograms": 1
-    },
-    {
-      "index": 35,
       "name": "任城生活",
       "id": "任城生活",
       "todayPrograms": 2
     },
     {
-      "index": 36,
+      "index": 32,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 2
     },
     {
-      "index": 37,
+      "index": 33,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 38,
+      "index": 34,
       "name": "夏津公共",
       "id": "夏津公共",
       "todayPrograms": 4
     },
     {
-      "index": 39,
+      "index": 35,
       "name": "威海新闻",
       "id": "威海新闻",
       "todayPrograms": 4
@@ -1107,14 +1083,14 @@
       "id": "澳视体育",
       "name": "澳视体育",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
       "gaps": [
-        "07:00-22:00"
+        "07:00-09:59"
       ]
     },
     {
@@ -1284,20 +1260,6 @@
         "12:38-15:37",
         "16:00-18:30",
         "21:10-22:00"
-      ]
-    },
-    {
-      "id": "随州农村",
-      "name": "随州农村",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
-    {
-      "id": "随州综合",
-      "name": "随州综合",
-      "gaps": [
-        "07:00-22:00"
       ]
     },
     {
@@ -6968,16 +6930,16 @@
     {
       "id": "澳视体育",
       "name": "澳视体育",
-      "programs": 80,
-      "todayPrograms": 1,
-      "source": "suming",
+      "programs": 15,
+      "todayPrograms": 15,
+      "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -6994,16 +6956,16 @@
     {
       "id": "澳视综艺",
       "name": "澳视综艺",
-      "programs": 90,
-      "todayPrograms": 1,
-      "source": "suming",
+      "programs": 15,
+      "todayPrograms": 15,
+      "source": "epgpw",
       "aliases": [],
       "hasGap": true,
       "gaps": [
         {
           "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
+          "stop": "09:59",
+          "duration": 179
         }
       ]
     },
@@ -8044,38 +8006,26 @@
     {
       "id": "随州农村",
       "name": "随州农村",
-      "programs": 126,
-      "todayPrograms": 1,
-      "source": "suming",
+      "programs": 21,
+      "todayPrograms": 21,
+      "source": "epgpw",
       "aliases": [
         "随州农村频道"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "随州综合",
       "name": "随州综合",
-      "programs": 133,
-      "todayPrograms": 1,
-      "source": "suming",
+      "programs": 22,
+      "todayPrograms": 22,
+      "source": "epgpw",
       "aliases": [
         "随州综合频道"
       ],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "青岛QTV-1",
