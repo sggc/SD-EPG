@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-08-28 12:32:01",
+  "lastUpdate": "2026-08-28 22:26:08",
   "whitelistChannels": 511,
   "matchedChannels": 481,
   "unmatchedChannels": 30,
-  "totalPrograms": 96081,
-  "filteredPrograms": 14251,
+  "totalPrograms": 89312,
+  "filteredPrograms": 12801,
   "dateRange": "20260822 ~ 20260829",
   "aliasCount": 577,
   "epgSources": [
@@ -16,11 +16,18 @@
       "matched": 166
     },
     {
+      "name": "sggc-sdu",
+      "enabled": true,
+      "channels": 126,
+      "programs": 19064,
+      "matched": 53
+    },
+    {
       "name": "plsy1",
       "enabled": true,
       "channels": 162,
       "programs": 42171,
-      "matched": 85
+      "matched": 46
     },
     {
       "name": "filegear-sg",
@@ -41,21 +48,21 @@
       "enabled": true,
       "channels": 1128,
       "programs": 309353,
-      "matched": 158
+      "matched": 156
     },
     {
       "name": "tv-sou",
       "enabled": true,
       "channels": 72,
       "programs": 3323,
-      "matched": 30
+      "matched": 29
     },
     {
       "name": "tv-mao",
       "enabled": true,
       "channels": 132,
       "programs": 6024,
-      "matched": 66
+      "matched": 65
     },
     {
       "name": "zmt",
@@ -82,8 +89,8 @@
       "name": "liliu",
       "enabled": true,
       "channels": 464,
-      "programs": 20160,
-      "matched": 4
+      "programs": 20248,
+      "matched": 3
     },
     {
       "name": "loc",
@@ -318,84 +325,78 @@
     },
     {
       "index": 5,
-      "name": "好学生",
-      "id": "好学生",
-      "todayPrograms": 0
-    },
-    {
-      "index": 6,
       "name": "娱乐新闻",
       "id": "娱乐新闻",
       "todayPrograms": 0
     },
     {
-      "index": 7,
+      "index": 6,
       "name": "寰宇财经台",
       "id": "寰宇财经台",
       "todayPrograms": 0
     },
     {
-      "index": 8,
+      "index": 7,
       "name": "招远综合",
       "id": "招远综合",
       "todayPrograms": 0
     },
     {
-      "index": 9,
+      "index": 8,
       "name": "沾化综合",
       "id": "沾化综合",
       "todayPrograms": 0
     },
     {
-      "index": 10,
+      "index": 9,
       "name": "湖北生活",
       "id": "湖北生活",
       "todayPrograms": 0
     },
     {
-      "index": 11,
+      "index": 10,
       "name": "滨州公共",
       "id": "滨州公共",
       "todayPrograms": 0
     },
     {
-      "index": 12,
+      "index": 11,
       "name": "聚鲨环球精选",
       "id": "聚鲨环球精选",
       "todayPrograms": 0
     },
     {
-      "index": 13,
+      "index": 12,
       "name": "龙华卡通",
       "id": "龙华卡通",
       "todayPrograms": 0
     },
     {
-      "index": 14,
+      "index": 13,
       "name": "龙口综合",
       "id": "龙口综合",
       "todayPrograms": 0
     },
     {
-      "index": 15,
+      "index": 14,
       "name": "任城生活",
       "id": "任城生活",
       "todayPrograms": 2
     },
     {
-      "index": 16,
+      "index": 15,
       "name": "淄博影视",
       "id": "淄博影视",
       "todayPrograms": 3
     },
     {
-      "index": 17,
+      "index": 16,
       "name": "夏津公共",
       "id": "夏津公共",
       "todayPrograms": 4
     },
     {
-      "index": 18,
+      "index": 17,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
@@ -568,13 +569,6 @@
         "07:10-12:00",
         "12:10-18:30",
         "20:15-22:00"
-      ]
-    },
-    {
-      "id": "好学生",
-      "name": "好学生",
-      "gaps": [
-        "07:00-22:00"
       ]
     },
     {
@@ -2072,9 +2066,9 @@
     {
       "id": "IPTV法治",
       "name": "IPTV法治",
-      "programs": 336,
-      "todayPrograms": 56,
-      "source": "plsy1",
+      "programs": 54,
+      "todayPrograms": 54,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2082,9 +2076,9 @@
     {
       "id": "IPTV野外",
       "name": "IPTV野外",
-      "programs": 174,
-      "todayPrograms": 29,
-      "source": "plsy1",
+      "programs": 28,
+      "todayPrograms": 28,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2136,9 +2130,9 @@
     {
       "id": "NewTV军旅剧场",
       "name": "NewTV军旅剧场",
-      "programs": 221,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 35,
+      "todayPrograms": 35,
+      "source": "sggc-sdu",
       "aliases": [
         "军旅剧场"
       ],
@@ -2148,9 +2142,9 @@
     {
       "id": "NewTV军旅剧场_dup",
       "name": "NewTV军旅剧场",
-      "programs": 221,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 35,
+      "todayPrograms": 35,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -2182,9 +2176,9 @@
     {
       "id": "NewTV古装剧场",
       "name": "NewTV古装剧场",
-      "programs": 216,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 36,
+      "todayPrograms": 36,
+      "source": "sggc-sdu",
       "aliases": [
         "古装剧场"
       ],
@@ -2695,9 +2689,9 @@
     {
       "id": "中学生",
       "name": "中学生",
-      "programs": 321,
+      "programs": 224,
       "todayPrograms": 44,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [
         "CCTV中学生",
         "中学生频道"
@@ -2999,9 +2993,9 @@
     {
       "id": "光影",
       "name": "光影",
-      "programs": 97,
-      "todayPrograms": 19,
-      "source": "plsy1",
+      "programs": 18,
+      "todayPrograms": 18,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3128,9 +3122,9 @@
     {
       "id": "军事",
       "name": "军事",
-      "programs": 356,
-      "todayPrograms": 61,
-      "source": "plsy1",
+      "programs": 58,
+      "todayPrograms": 58,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3202,9 +3196,9 @@
     {
       "id": "动作影院",
       "name": "动作影院",
-      "programs": 91,
-      "todayPrograms": 12,
-      "source": "plsy1",
+      "programs": 11,
+      "todayPrograms": 11,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3222,9 +3216,9 @@
     {
       "id": "动画",
       "name": "动画",
-      "programs": 1029,
-      "todayPrograms": 172,
-      "source": "plsy1",
+      "programs": 164,
+      "todayPrograms": 164,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3604,9 +3598,9 @@
     {
       "id": "发现之旅",
       "name": "发现之旅",
-      "programs": 310,
+      "programs": 208,
       "todayPrograms": 50,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3793,9 +3787,9 @@
     {
       "id": "喜剧影院",
       "name": "喜剧影院",
-      "programs": 104,
-      "todayPrograms": 19,
-      "source": "plsy1",
+      "programs": 18,
+      "todayPrograms": 18,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3873,9 +3867,9 @@
     {
       "id": "国学",
       "name": "国学",
-      "programs": 249,
-      "todayPrograms": 43,
-      "source": "plsy1",
+      "programs": 41,
+      "todayPrograms": 41,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3883,9 +3877,9 @@
     {
       "id": "地理",
       "name": "地理",
-      "programs": 255,
-      "todayPrograms": 42,
-      "source": "plsy1",
+      "programs": 41,
+      "todayPrograms": 41,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3893,9 +3887,9 @@
     {
       "id": "城市剧场",
       "name": "城市剧场",
-      "programs": 221,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 35,
+      "todayPrograms": 35,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -3903,9 +3897,9 @@
     {
       "id": "墨宝",
       "name": "墨宝",
-      "programs": 243,
-      "todayPrograms": 40,
-      "source": "plsy1",
+      "programs": 39,
+      "todayPrograms": 39,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4002,18 +3996,12 @@
     {
       "id": "好学生",
       "name": "好学生",
-      "programs": 116,
-      "todayPrograms": 0,
-      "source": "plsy1",
+      "programs": 38,
+      "todayPrograms": 38,
+      "source": "sggc-sdu",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "好消息",
@@ -4281,9 +4269,9 @@
     {
       "id": "家庭影院",
       "name": "家庭影院",
-      "programs": 98,
-      "todayPrograms": 16,
-      "source": "plsy1",
+      "programs": 15,
+      "todayPrograms": 15,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4327,9 +4315,9 @@
     {
       "id": "少儿动画",
       "name": "少儿动画",
-      "programs": 107,
+      "programs": 17,
       "todayPrograms": 17,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4789,9 +4777,9 @@
     {
       "id": "戏曲",
       "name": "戏曲",
-      "programs": 123,
-      "todayPrograms": 25,
-      "source": "plsy1",
+      "programs": 78,
+      "todayPrograms": 24,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -4943,9 +4931,9 @@
     {
       "id": "早教",
       "name": "早教",
-      "programs": 220,
-      "todayPrograms": 38,
-      "source": "plsy1",
+      "programs": 37,
+      "todayPrograms": 37,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5003,9 +4991,9 @@
     {
       "id": "星影",
       "name": "星影",
-      "programs": 88,
-      "todayPrograms": 16,
-      "source": "plsy1",
+      "programs": 15,
+      "todayPrograms": 15,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5133,9 +5121,9 @@
     {
       "id": "武侠剧场",
       "name": "武侠剧场",
-      "programs": 213,
-      "todayPrograms": 35,
-      "source": "plsy1",
+      "programs": 34,
+      "todayPrograms": 34,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -5174,9 +5162,9 @@
     {
       "id": "武术",
       "name": "武术",
-      "programs": 313,
-      "todayPrograms": 67,
-      "source": "plsy1",
+      "programs": 64,
+      "todayPrograms": 64,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6596,9 +6584,9 @@
     {
       "id": "潍坊科教文化",
       "name": "潍坊科教文化",
-      "programs": 56,
-      "todayPrograms": 28,
-      "source": "tv-mao",
+      "programs": 55,
+      "todayPrograms": 12,
+      "source": "sggc-sdu",
       "aliases": [
         "潍坊科教频道",
         "WFTV-4"
@@ -6712,9 +6700,9 @@
     {
       "id": "热播剧场",
       "name": "热播剧场",
-      "programs": 255,
-      "todayPrograms": 38,
-      "source": "plsy1",
+      "programs": 36,
+      "todayPrograms": 36,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6734,9 +6722,9 @@
     {
       "id": "爱体育",
       "name": "爱体育",
-      "programs": 236,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 36,
+      "todayPrograms": 36,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6754,9 +6742,9 @@
     {
       "id": "爱生活",
       "name": "爱生活",
-      "programs": 229,
-      "todayPrograms": 37,
-      "source": "plsy1",
+      "programs": 35,
+      "todayPrograms": 35,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6968,9 +6956,9 @@
     {
       "id": "精选",
       "name": "精选",
-      "programs": 85,
+      "programs": 13,
       "todayPrograms": 13,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6978,9 +6966,9 @@
     {
       "id": "红色影院",
       "name": "红色影院",
-      "programs": 109,
-      "todayPrograms": 19,
-      "source": "plsy1",
+      "programs": 18,
+      "todayPrograms": 18,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6988,9 +6976,9 @@
     {
       "id": "经典剧场",
       "name": "经典剧场",
-      "programs": 209,
-      "todayPrograms": 35,
-      "source": "plsy1",
+      "programs": 34,
+      "todayPrograms": 34,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -6998,9 +6986,9 @@
     {
       "id": "经典电影",
       "name": "经典电影",
-      "programs": 101,
+      "programs": 16,
       "todayPrograms": 16,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7018,9 +7006,9 @@
     {
       "id": "美人",
       "name": "美人",
-      "programs": 216,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 34,
+      "todayPrograms": 34,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7038,9 +7026,9 @@
     {
       "id": "美妆",
       "name": "美妆",
-      "programs": 216,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 34,
+      "todayPrograms": 34,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7058,9 +7046,9 @@
     {
       "id": "老故事",
       "name": "老故事",
-      "programs": 334,
+      "programs": 231,
       "todayPrograms": 58,
-      "source": "plsy1",
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7366,9 +7354,9 @@
     {
       "id": "解密",
       "name": "解密",
-      "programs": 270,
-      "todayPrograms": 45,
-      "source": "plsy1",
+      "programs": 43,
+      "todayPrograms": 43,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7408,9 +7396,9 @@
     {
       "id": "足球",
       "name": "足球",
-      "programs": 176,
-      "todayPrograms": 29,
-      "source": "plsy1",
+      "programs": 28,
+      "todayPrograms": 28,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7542,9 +7530,9 @@
     {
       "id": "鉴赏",
       "name": "鉴赏",
-      "programs": 210,
-      "todayPrograms": 35,
-      "source": "plsy1",
+      "programs": 33,
+      "todayPrograms": 33,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7823,9 +7811,9 @@
     {
       "id": "音乐现场",
       "name": "音乐现场",
-      "programs": 180,
-      "todayPrograms": 30,
-      "source": "plsy1",
+      "programs": 28,
+      "todayPrograms": 28,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
@@ -7843,9 +7831,9 @@
     {
       "id": "魅力时尚",
       "name": "魅力时尚",
-      "programs": 217,
-      "todayPrograms": 36,
-      "source": "plsy1",
+      "programs": 35,
+      "todayPrograms": 35,
+      "source": "sggc-sdu",
       "aliases": [],
       "hasGap": false,
       "gaps": []
