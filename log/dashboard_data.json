@@ -1,10 +1,10 @@
 {
-  "lastUpdate": "2026-09-02 15:10:36",
+  "lastUpdate": "2026-09-02 20:47:38",
   "whitelistChannels": 511,
   "matchedChannels": 480,
   "unmatchedChannels": 31,
-  "totalPrograms": 94301,
-  "filteredPrograms": 8491,
+  "totalPrograms": 94302,
+  "filteredPrograms": 8449,
   "dateRange": "20260827 ~ 20260903",
   "aliasCount": 579,
   "epgSources": [
@@ -82,7 +82,7 @@
       "name": "liliu",
       "enabled": true,
       "channels": 462,
-      "programs": 19612,
+      "programs": 20309,
       "matched": 4
     },
     {
@@ -103,7 +103,7 @@
       "name": "plsy1",
       "enabled": true,
       "channels": 161,
-      "programs": 48350,
+      "programs": 48803,
       "matched": 4
     }
   ],
@@ -297,61 +297,48 @@
   "lowProgramChannels": [
     {
       "index": 1,
-      "name": "中医药",
-      "id": "中医药",
-      "todayPrograms": 0
-    },
-    {
-      "index": 2,
       "name": "凤凰卫视电影台",
       "id": "凤凰卫视电影台",
       "todayPrograms": 0
     },
     {
-      "index": 3,
+      "index": 2,
       "name": "日照公共",
       "id": "日照公共",
       "todayPrograms": 0
     },
     {
-      "index": 4,
+      "index": 3,
       "name": "湖北生活",
       "id": "湖北生活",
       "todayPrograms": 0
     },
     {
-      "index": 5,
+      "index": 4,
       "name": "滨州公共",
       "id": "滨州公共",
       "todayPrograms": 0
     },
     {
-      "index": 6,
+      "index": 5,
       "name": "任城生活",
       "id": "任城生活",
       "todayPrograms": 2
     },
     {
-      "index": 7,
+      "index": 6,
       "name": "夏津公共",
       "id": "夏津公共",
       "todayPrograms": 4
     },
     {
-      "index": 8,
+      "index": 7,
       "name": "武城综合",
       "id": "武城综合",
       "todayPrograms": 4
     }
   ],
   "gapChannels": [
-    {
-      "id": "中医药",
-      "name": "中医药",
-      "gaps": [
-        "07:00-22:00"
-      ]
-    },
     {
       "id": "临淄TV-1",
       "name": "临淄TV-1",
@@ -2467,18 +2454,12 @@
     {
       "id": "中医药",
       "name": "中医药",
-      "programs": 84,
-      "todayPrograms": 0,
-      "source": "suming",
+      "programs": 85,
+      "todayPrograms": 42,
+      "source": "liliu",
       "aliases": [],
-      "hasGap": true,
-      "gaps": [
-        {
-          "start": "07:00",
-          "stop": "22:00",
-          "duration": 900
-        }
-      ]
+      "hasGap": false,
+      "gaps": []
     },
     {
       "id": "中华特产",
