@@ -1,0 +1,255 @@
+name: PlanB - Desc注入
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'EPG/sggc.xml.gz'
+  workflow_dispatch:
+    inputs:
+      run_extract:
+        description: '运行 Desc 提取（别家EPG）'
+        required: true
+        default: true
+        type: boolean
+      run_fetch:
+        description: '运行 Desc 刮削（TMDB）'
+        required: true
+        default: true
+        type: boolean
+      run_inject:
+        description: '运行 Desc 注入'
+        required: true
+        default: true
+        type: boolean
+
+concurrency:
+  group: plan-b-desc
+  cancel-in-progress: false
+
+jobs:
+  # ============================================================
+  #  Job A: 从别家EPG提取desc (extract_desc.py)
+  #  对应原 Extract EPG Desc 工作流
+  # ============================================================
+  extract-desc:
+    if: ${{ github.event_name == 'push' || github.event.inputs.run_extract == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests lxml beautifulsoup4
+
+    - name: Run extract_desc.py
+      id: extract
+      continue-on-error: true
+      run: |
+        python scripts/extract_desc.py \
+          --config config/desc_config.json \
+          --output database/desc_database.json \
+          --log-dir log
+
+    - name: Commit and push
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add database/desc_database.json log/desc_database_log.txt
+
+        if git diff --staged --quiet; then
+          echo "No changes to extract-desc"
+        else
+          git commit -m "PlanB提取Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add database/desc_database.json log/desc_database_log.txt
+            git commit -m "PlanB提取Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
+          git push
+        fi
+
+  # ============================================================
+  #  Job B: 从TMDB刮削desc (fetch_epg_desc.py)
+  #  对应原 Fetch EPG Descriptions 工作流
+  #  注意: 读取上一次的 sggc-desc.xml.gz，补充未匹配desc的节目
+  # ============================================================
+  fetch-desc:
+    if: ${{ github.event_name == 'push' || github.event.inputs.run_fetch == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+    - name: Checkout public repo (SD-EPG)
+      uses: actions/checkout@v4
+      with:
+        path: public_repo
+        fetch-depth: 0
+
+    - name: Checkout private repo (SDU-IPTV-NEW)
+      uses: actions/checkout@v4
+      with:
+        repository: sggc/SDU-IPTV-NEW
+        path: private_repo
+        token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        fetch-depth: 0
+        clean: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install requests lxml
+
+    - name: Create directories
+      run: mkdir -p EPG Debug database
+      workdir: public_repo
+
+    - name: Run fetch_epg_desc.py
+      id: fetch
+      continue-on-error: true
+      env:
+        XML_GZ_URL: https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc-desc.xml.gz
+        RESUME: 'false'
+        CLEAN_NON_WHITELIST: 'false'
+      run: python ../private_repo/SD-EPG/scripts/fetch_epg_desc.py
+      workdir: public_repo
+
+    - name: Remove private scripts
+      run: rm -rf private_repo
+      workdir: public_repo
+
+    - name: Commit and push
+      run: |
+        cd public_repo
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add database/ Debug/
+
+        if git diff --staged --quiet; then
+          echo "No changes to fetch-desc"
+        else
+          git commit -m "PlanB刮削Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add database/ Debug/
+            git commit -m "PlanB刮削Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
+          git push
+        fi
+
+  # ============================================================
+  #  Job C: 注入desc生成sggc-desc.xml.gz (add_desc.py)
+  #  对应原 EPG Aggregation 工作流的后半部分
+  #  等待 Job A 和 Job B 完成后执行
+  # ============================================================
+  inject-desc:
+    needs: [extract-desc, fetch-desc]
+    if: ${{ always() && (github.event_name == 'push' || github.event.inputs.run_inject == 'true') }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout public repo (SD-EPG)
+      uses: actions/checkout@v4
+      with:
+        path: public_repo
+        fetch-depth: 0
+
+    - name: Checkout private repo (SDU-IPTV-NEW)
+      uses: actions/checkout@v4
+      with:
+        repository: sggc/SDU-IPTV-NEW
+        path: private_repo
+        token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        fetch-depth: 0
+        clean: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install requests lxml beautifulsoup4
+
+    - name: Wait for GitHub raw URLs to update
+      run: |
+        echo "等待 15 秒，确保 Job A/B 的提交已同步到 raw.githubusercontent.com"
+        sleep 15
+
+    - name: Run add_desc.py (注入Desc)
+      id: inject
+      continue-on-error: true
+      run: |
+        cd public_repo
+        python ../private_repo/SD-EPG/scripts/add_desc.py \
+          --input ./EPG/sggc.xml.gz \
+          --desc-db-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/desc_database.json,https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/apidb.json" \
+          --man-made-url "https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/database/man-made.json" \
+          --output ./EPG/sggc-desc.xml.gz \
+          --log ./log/desc_match_log.txt
+
+    - name: Run merge_dashboard_data.py (合并仪表盘数据)
+      continue-on-error: true
+      run: |
+        cd public_repo
+        python ../private_repo/SD-EPG/scripts/merge_dashboard_data.py \
+          --epg ./log/dashboard_data.json \
+          --desc ./log/desc_match_log.json \
+          --output ./log/unified_dashboard_data.json
+
+    - name: Remove private scripts
+      run: rm -rf private_repo
+      workdir: public_repo
+
+    - name: Commit and push
+      run: |
+        cd public_repo
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json log/unified_dashboard_data.json
+
+        if git diff --staged --quiet; then
+          echo "No changes to inject-desc"
+        else
+          git commit -m "PlanB注入Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          git fetch origin ${{ github.ref_name }}
+          if ! git rebase origin/${{ github.ref_name }} -X theirs; then
+            echo "::warning::Rebase failed, falling back to reset+recommit"
+            git rebase --abort
+            git reset --soft origin/${{ github.ref_name }}
+            git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json log/unified_dashboard_data.json
+            git commit -m "PlanB注入Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          fi
+          git push
+          echo "PlanB Desc注入完成"
+        fi
+
+    - name: Summary
+      if: always()
+      run: |
+        echo "=== PlanB Desc注入 结果 ==="
+        echo "提取Desc (Job A): ${{ needs.extract-desc.result }}"
+        echo "刮削Desc (Job B): ${{ needs.fetch-desc.result }}"
+        echo "注入Desc (Job C): ${{ steps.inject.outcome }}"
+        echo "=============================="
