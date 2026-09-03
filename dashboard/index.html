@@ -32,26 +32,23 @@
                 <h2 class="section-title">总体概览</h2>
                 <div class="stat-grid" id="statGrid">
                     <div class="stat-card">
+                        <div class="stat-value" id="statChannels">--</div>
+                        <div class="stat-label">频道数</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-value" id="statPrograms">--</div>
-                        <div class="stat-label">总节目数</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statExisting">--</div>
-                        <div class="stat-label">已有描述</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statManual">--</div>
-                        <div class="stat-label">人工匹配</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statUnmatched">--</div>
-                        <div class="stat-label">未匹配</div>
+                        <div class="stat-label">节目数</div>
                     </div>
                     <div class="stat-card highlight">
                         <div class="stat-value" id="statMatchRate">--</div>
-                        <div class="stat-label">匹配率</div>
+                        <div class="stat-label">Desc匹配率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTimeRange" style="font-size:16px">--</div>
+                        <div class="stat-label">EPG时间范围</div>
                     </div>
                 </div>
+                <div class="epg-status" id="epgStatus">正在加载EPG数据...</div>
             </section>
 
             <section class="section" id="channelsSection">
@@ -65,11 +62,11 @@
                         <option value="name">按名称排序</option>
                         <option value="matchRate">按匹配率排序</option>
                         <option value="programCount">按节目数排序</option>
+                        <option value="todayCount">按今日节目排序</option>
                     </select>
-                    <label class="filter-label">
-                        <input type="checkbox" id="filterLowMatch">
-                        仅显示低匹配率 (&lt;50%)
-                    </label>
+                    <select class="sort-select" id="groupSelect">
+                        <option value="">全部分组</option>
+                    </select>
                 </div>
                 <div class="table-wrapper">
                     <table class="data-table" id="channelTable">
@@ -77,8 +74,11 @@
                             <tr>
                                 <th>频道名称</th>
                                 <th>tvg-id</th>
+                                <th>分组</th>
                                 <th class="num">节目总数</th>
+                                <th class="num">今日节目</th>
                                 <th class="num">匹配率</th>
+                                <th>间隙</th>
                             </tr>
                         </thead>
                         <tbody id="channelTableBody"></tbody>

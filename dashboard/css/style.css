@@ -481,6 +481,57 @@ body {
     }
 }
 
+.epg-status {
+    margin-top: 12px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background: var(--color-primary-light);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.epg-status.loaded {
+    color: var(--color-success);
+    background: var(--color-success-light);
+}
+
+.epg-status.error {
+    color: var(--color-danger);
+    background: var(--color-danger-light);
+}
+
+.group-tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    background: #f0f1f3;
+    color: var(--color-text-secondary);
+}
+
+.group-tag.ungrouped {
+    color: var(--color-text-muted);
+    background: #f9fafb;
+}
+
+.gap-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+}
+
+.gap-indicator.ok {
+    color: var(--color-success);
+}
+
+.gap-indicator.warn {
+    color: var(--color-warning);
+    font-weight: 600;
+}
+
 .modal {
     position: fixed;
     inset: 0;
