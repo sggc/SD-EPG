@@ -205,15 +205,6 @@ jobs:
           --output ./EPG/sggc-desc.xml.gz \
           --log ./log/desc_match_log.txt
 
-    - name: Run merge_dashboard_data.py (合并仪表盘数据)
-      continue-on-error: true
-      run: |
-        cd public_repo
-        python ../private_repo/SD-EPG/scripts/merge_dashboard_data.py \
-          --epg ./log/dashboard_data.json \
-          --desc ./log/desc_match_log.json \
-          --output ./log/unified_dashboard_data.json
-
     - name: Remove private scripts
       run: rm -rf private_repo
 
@@ -222,7 +213,7 @@ jobs:
         cd public_repo
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json log/unified_dashboard_data.json
+        git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json
 
         if git diff --staged --quiet; then
           echo "No changes to inject-desc"
@@ -233,7 +224,7 @@ jobs:
             echo "::warning::Rebase failed, falling back to reset+recommit"
             git rebase --abort
             git reset --soft origin/${{ github.ref_name }}
-            git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json log/unified_dashboard_data.json
+            git add EPG/sggc-desc.xml.gz log/desc_match_log.txt log/desc_match_log.json
             git commit -m "注入Desc $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
           fi
           git push

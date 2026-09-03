@@ -16,16 +16,12 @@
             <div class="header-inner">
                 <div class="header-left">
                     <h1 class="title">SD-EPG 仪表盘</h1>
-                    <p class="subtitle">EPG 聚合与 Desc 注入数据监控</p>
+                    <p class="subtitle">Desc 注入数据监控</p>
                 </div>
                 <div class="header-right">
                     <div class="meta-item">
                         <span class="meta-label">更新时间</span>
                         <span class="meta-value" id="updateTime">--</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">数据范围</span>
-                        <span class="meta-value" id="dateRange">--</span>
                     </div>
                 </div>
             </div>
@@ -36,47 +32,25 @@
                 <h2 class="section-title">总体概览</h2>
                 <div class="stat-grid" id="statGrid">
                     <div class="stat-card">
-                        <div class="stat-value" id="statChannels">--</div>
-                        <div class="stat-label">白名单频道</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statMatched">--</div>
-                        <div class="stat-label">已匹配频道</div>
-                    </div>
-                    <div class="stat-card">
                         <div class="stat-value" id="statPrograms">--</div>
                         <div class="stat-label">总节目数</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="statFiltered">--</div>
-                        <div class="stat-label">已过滤节目</div>
+                        <div class="stat-value" id="statExisting">--</div>
+                        <div class="stat-label">已有描述</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="statDescChannels">--</div>
-                        <div class="stat-label">有描述频道</div>
+                        <div class="stat-value" id="statManual">--</div>
+                        <div class="stat-label">人工匹配</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statUnmatched">--</div>
+                        <div class="stat-label">未匹配</div>
                     </div>
                     <div class="stat-card highlight">
                         <div class="stat-value" id="statMatchRate">--</div>
-                        <div class="stat-label">描述匹配率</div>
+                        <div class="stat-label">匹配率</div>
                     </div>
-                </div>
-            </section>
-
-            <section class="section" id="sourcesSection">
-                <h2 class="section-title">数据源统计</h2>
-                <div class="table-wrapper">
-                    <table class="data-table" id="sourceTable">
-                        <thead>
-                            <tr>
-                                <th>数据源</th>
-                                <th>状态</th>
-                                <th class="num">频道数</th>
-                                <th class="num">节目数</th>
-                                <th class="num">已匹配</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sourceTableBody"></tbody>
-                    </table>
                 </div>
             </section>
 
@@ -91,7 +65,6 @@
                         <option value="name">按名称排序</option>
                         <option value="matchRate">按匹配率排序</option>
                         <option value="programCount">按节目数排序</option>
-                        <option value="todayCount">按今日节目数排序</option>
                     </select>
                     <label class="filter-label">
                         <input type="checkbox" id="filterLowMatch">
@@ -104,13 +77,8 @@
                             <tr>
                                 <th>频道名称</th>
                                 <th>tvg-id</th>
-                                <th>数据源</th>
                                 <th class="num">节目总数</th>
-                                <th class="num">今日节目</th>
-                                <th class="num">需匹配</th>
-                                <th class="num">已匹配</th>
                                 <th class="num">匹配率</th>
-                                <th>状态</th>
                             </tr>
                         </thead>
                         <tbody id="channelTableBody"></tbody>
@@ -127,6 +95,22 @@
             <span class="footer-sep">·</span>
             <a href="https://github.com/sggc/SD-EPG" class="footer-link" target="_blank">GitHub</a>
         </footer>
+    </div>
+
+    <div class="modal" id="channelModal" style="display:none">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">节目单</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="modal-loading">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载节目单...</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="loading" id="loading">

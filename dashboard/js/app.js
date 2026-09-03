@@ -1,10 +1,12 @@
-const DATA_URL = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/log/unified_dashboard_data.json';
+const DATA_URL = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/log/desc_match_log.json';
+const EPG_URL = 'https://raw.githubusercontent.com/sggc/SD-EPG/main/EPG/sggc-desc.xml.gz';
 const PAGE_SIZE = 50;
 
 let allChannels = [];
 let filteredChannels = [];
 let currentPage = 1;
 let currentSort = 'name';
+let epgXmlCache = null;
 
 function formatNumber(n) {
     if (n === undefined || n === null) return '--';
@@ -38,40 +40,18 @@ async function loadData() {
 }
 
 function renderData(data) {
-    const meta = data['元数据'] || {};
-    const stats = data['总体统计'] || {};
-    const sources = data['数据源统计'] || [];
+    const stats = data['统计'] || {};
     allChannels = data['频道列表'] || [];
 
-    document.getElementById('updateTime').textContent = meta['最后更新时间'] || '--';
-    document.getElementById('dateRange').textContent = meta['数据日期范围'] || '--';
+    document.getElementById('updateTime').textContent = data['时间戳'] || '--';
 
-    document.getElementById('statChannels').textContent = formatNumber(stats['白名单频道数']);
-    document.getElementById('statMatched').textContent = formatNumber(stats['已匹配频道数']);
-    document.getElementById('statPrograms').textContent = formatNumber(stats['总节目数']);
-    document.getElementById('statFiltered').textContent = formatNumber(stats['已过滤节目数']);
-    document.getElementById('statDescChannels').textContent = formatNumber(stats['有描述数据频道数']);
-    document.getElementById('statMatchRate').textContent = `${stats['整体描述匹配率'] || 0}%`;
+    document.getElementById('statPrograms').textContent = formatNumber(stats['节目总数']);
+    document.getElementById('statExisting').textContent = formatNumber(stats['已有描述']);
+    document.getElementById('statManual').textContent = formatNumber(stats['人工匹配']);
+    document.getElementById('statUnmatched').textContent = formatNumber(stats['未匹配']);
+    document.getElementById('statMatchRate').textContent = `${stats['匹配率'] || 0}%`;
 
-    renderSources(sources);
     renderChannels();
-}
-
-function renderSources(sources) {
-    const tbody = document.getElementById('sourceTableBody');
-    tbody.innerHTML = sources.map(s => {
-        const enabled = s['是否启用'];
-        const statusBadge = enabled
-            ? '<span class="badge badge-success">启用</span>'
-            : '<span class="badge badge-muted">停用</span>';
-        return `<tr>
-            <td><strong>${s['名称']}</strong></td>
-            <td>${statusBadge}</td>
-            <td class="num">${formatNumber(s['频道数'])}</td>
-            <td class="num">${formatNumber(s['节目数'])}</td>
-            <td class="num">${formatNumber(s['已匹配数'])}</td>
-        </tr>`;
-    }).join('');
 }
 
 function renderChannels() {
@@ -81,12 +61,11 @@ function renderChannels() {
     filteredChannels = allChannels.filter(ch => {
         const name = (ch['频道名称'] || '').toLowerCase();
         const tvgId = (ch['tvg_id'] || '').toLowerCase();
-        const aliases = (ch['频道别名'] || []).join(' ').toLowerCase();
-        if (search && !name.includes(search) && !tvgId.includes(search) && !aliases.includes(search)) {
+        if (search && !name.includes(search) && !tvgId.includes(search)) {
             return false;
         }
         if (filterLow) {
-            const rate = (ch['描述统计'] || {})['匹配率'] || 0;
+            const rate = ch['匹配率'] || 0;
             if (rate >= 50) return false;
         }
         return true;
@@ -104,11 +83,9 @@ function sortChannels() {
     filteredChannels.sort((a, b) => {
         switch (currentSort) {
             case 'matchRate':
-                return (b['描述统计']?.['匹配率'] || 0) - (a['描述统计']?.['匹配率'] || 0);
+                return (b['匹配率'] || 0) - (a['匹配率'] || 0);
             case 'programCount':
                 return (b['节目总数'] || 0) - (a['节目总数'] || 0);
-            case 'todayCount':
-                return (b['今日节目数'] || 0) - (a['今日节目数'] || 0);
             default:
                 return (a['频道名称'] || '').localeCompare(b['频道名称'] || '', 'zh-CN');
         }
@@ -123,39 +100,12 @@ function renderChannelPage() {
 
     const tbody = document.getElementById('channelTableBody');
     tbody.innerHTML = pageItems.map(ch => {
-        const desc = ch['描述统计'] || {};
-        const rate = desc['匹配率'] || 0;
-        const hasGap = ch['存在时间空隙'];
-        const hasDesc = ch['有描述数据'];
-
-        let statusHtml = '';
-        if (hasGap) {
-            statusHtml += '<span class="status-dot status-dot-warn"></span>';
-        } else {
-            statusHtml += '<span class="status-dot status-dot-ok"></span>';
-        }
-        if (!hasDesc) {
-            statusHtml += '<span class="badge badge-danger">无描述</span>';
-        }
-
-        const aliases = ch['频道别名'] || [];
-        const aliasStr = aliases.length > 0
-            ? `<div class="channel-aliases">别名: ${aliases.slice(0, 3).join(', ')}${aliases.length > 3 ? '...' : ''}</div>`
-            : '';
-
-        return `<tr>
-            <td>
-                <div class="channel-name">${ch['频道名称'] || '--'}</div>
-                ${aliasStr}
-            </td>
+        const rate = ch['匹配率'] || 0;
+        return `<tr class="channel-row" onclick="showChannelEpg('${ch['tvg_id'] || ''}', '${(ch['频道名称'] || '').replace(/'/g, "\\'")}')">
+            <td><strong>${ch['频道名称'] || '--'}</strong></td>
             <td><code style="font-size:11px;color:var(--color-text-muted)">${ch['tvg_id'] || '--'}</code></td>
-            <td><span class="source-tag">${ch['数据源'] || '--'}</span></td>
             <td class="num">${formatNumber(ch['节目总数'])}</td>
-            <td class="num">${formatNumber(ch['今日节目数'])}</td>
-            <td class="num">${formatNumber(desc['需匹配节目数'])}</td>
-            <td class="num">${formatNumber(desc['已匹配描述数'])}</td>
             <td class="num">${matchRateBadge(rate)}</td>
-            <td>${statusHtml}</td>
         </tr>`;
     }).join('');
 
@@ -196,6 +146,74 @@ function goToPage(page) {
     document.getElementById('channelsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+async function fetchEpgXml() {
+    if (epgXmlCache) return epgXmlCache;
+
+    const res = await fetch(EPG_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const decompressed = res.body.pipeThrough(new DecompressionStream('gzip'));
+    const text = await new Response(decompressed).text();
+
+    const parser = new DOMParser();
+    epgXmlCache = parser.parseFromString(text, 'text/xml');
+    return epgXmlCache;
+}
+
+function parseTime(timeStr) {
+    if (!timeStr) return '';
+    const match = timeStr.match(/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/);
+    if (!match) return timeStr;
+    const [, y, m, d, h, min] = match;
+    return `${m}/${d} ${h}:${min}`;
+}
+
+async function showChannelEpg(tvgId, channelName) {
+    const modal = document.getElementById('channelModal');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+
+    modal.style.display = 'flex';
+    modalTitle.textContent = `${channelName} 节目单`;
+    modalBody.innerHTML = `<div class="modal-loading"><div class="loading-spinner"></div><p>正在加载节目单...</p></div>`;
+
+    try {
+        const xml = await fetchEpgXml();
+        const programmes = xml.querySelectorAll(`programme[channel="${tvgId}"]`);
+
+        if (programmes.length === 0) {
+            modalBody.innerHTML = '<div class="epg-empty">未找到该频道的节目信息</div>';
+            return;
+        }
+
+        let html = '<table class="epg-table"><thead><tr><th>时间</th><th>标题</th><th>描述</th></tr></thead><tbody>';
+        const maxShow = 200;
+        const count = Math.min(programmes.length, maxShow);
+        for (let i = 0; i < count; i++) {
+            const p = programmes[i];
+            const start = p.getAttribute('start') || '';
+            const title = p.querySelector('title')?.textContent || '--';
+            const desc = p.querySelector('desc')?.textContent || '';
+            html += `<tr>
+                <td class="time-col">${parseTime(start)}</td>
+                <td class="title-col">${title}</td>
+                <td class="desc-col">${desc || '<span style="color:var(--color-text-muted)">无描述</span>'}</td>
+            </tr>`;
+        }
+        html += `</tbody></table>`;
+        if (programmes.length > maxShow) {
+            html += `<div class="epg-empty">仅显示前 ${maxShow} 条，共 ${programmes.length} 条节目</div>`;
+        }
+        modalBody.innerHTML = html;
+    } catch (err) {
+        modalBody.innerHTML = `<div class="epg-empty">加载失败: ${err.message}</div>`;
+    }
+}
+
+function closeModal() {
+    document.getElementById('channelModal').style.display = 'none';
+}
+
 document.getElementById('searchInput').addEventListener('input', () => {
     renderChannels();
 });
@@ -208,6 +226,10 @@ document.getElementById('sortSelect').addEventListener('change', (e) => {
 
 document.getElementById('filterLowMatch').addEventListener('change', () => {
     renderChannels();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
 });
 
 loadData();
