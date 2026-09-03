@@ -670,3 +670,15 @@ body {
 .channel-row {
     cursor: pointer;
 }
+
+.epg-table tr.current-programme {
+    background: var(--color-primary-light);
+}
+
+.epg-table tr.current-programme td {
+    font-weight: 600;
+}
+
+.epg-table tr.current-programte td.time-col {
+    color: var(--color-primary);
+}

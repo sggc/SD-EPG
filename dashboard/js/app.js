@@ -38,16 +38,24 @@ function formatTimeRange(minStr, maxStr) {
     var min = parseXmlTime(minStr);
     var max = parseXmlTime(maxStr);
     if (!min || !max) return '--';
-    return min.mo + '/' + min.d + ' ' + min.h + ':' + min.mi + ' ~ ' + max.mo + '/' + max.d + ' ' + max.h + ':' + max.mi;
+    return min.y + '-' + min.mo + '-' + min.d + ' ~ ' + max.y + '-' + max.mo + '-' + max.d;
 }
 
 function getTodayStr() {
+    var now = getNowStr();
+    return now.substring(0, 8);
+}
+
+function getNowStr() {
     var now = new Date();
     var beijing = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
     var y = beijing.getFullYear();
     var mo = String(beijing.getMonth() + 1).padStart(2, '0');
     var d = String(beijing.getDate()).padStart(2, '0');
-    return y + mo + d;
+    var h = String(beijing.getHours()).padStart(2, '0');
+    var mi = String(beijing.getMinutes()).padStart(2, '0');
+    var s = String(beijing.getSeconds()).padStart(2, '0');
+    return y + mo + d + h + mi + s;
 }
 
 function xmlTimeToDate(timeStr) {
@@ -147,6 +155,12 @@ function mergeAndCompute(todayStr) {
                 return (sa ? sa.str : '').localeCompare(sb ? sb.str : '');
             });
             for (var i = 0; i < sorted.length - 1; i++) {
+                var stopT = parseXmlTime(sorted[i].stop);
+                var startT = parseXmlTime(sorted[i + 1].start);
+                if (!stopT || !startT) continue;
+                var stopHour = parseInt(stopT.h) + parseInt(stopT.mi) / 60;
+                var startHour = parseInt(startT.h) + parseInt(startT.mi) / 60;
+                if (stopHour < 5 || startHour > 23) continue;
                 var gapMin = timeDiffMinutes(sorted[i].stop, sorted[i + 1].start);
                 if (gapMin >= 10) { hasGap = true; break; }
             }
@@ -319,19 +333,41 @@ function showChannelEpg(tvgId, channelName) {
         var sb = parseXmlTime(b.start);
         return (sa ? sa.str : '').localeCompare(sb ? sb.str : '');
     });
+
+    var nowStr = getNowStr();
+    var currentIdx = -1;
+    for (var i = 0; i < sorted.length; i++) {
+        var sp = parseXmlTime(sorted[i].start);
+        var ep = parseXmlTime(sorted[i].stop);
+        if (sp && ep && sp.str <= nowStr && nowStr < ep.str) {
+            currentIdx = i;
+            break;
+        }
+    }
+
     var html = '<table class="epg-table"><thead><tr><th>时间</th><th>标题</th><th>描述</th></tr></thead><tbody>';
     var maxShow = 200;
-    var count = Math.min(sorted.length, maxShow);
-    for (var i = 0; i < count; i++) {
+    var startIdx = 0;
+    if (currentIdx >= 0 && currentIdx < sorted.length) {
+        startIdx = Math.max(0, currentIdx - 5);
+    }
+    var endIdx = Math.min(sorted.length, startIdx + maxShow);
+    for (var i = startIdx; i < endIdx; i++) {
         var p = sorted[i];
         var sp = parseXmlTime(p.start);
         var timeStr = sp ? sp.mo + '/' + sp.d + ' ' + sp.h + ':' + sp.mi : p.start;
         var descHtml = p.desc ? p.desc : '<span style="color:var(--color-text-muted)">无描述</span>';
-        html += '<tr><td class="time-col">' + timeStr + '</td><td class="title-col">' + (p.title || '--') + '</td><td class="desc-col">' + descHtml + '</td></tr>';
+        var rowClass = (i === currentIdx) ? 'current-programme' : '';
+        html += '<tr id="pgm-row-' + i + '" class="' + rowClass + '"><td class="time-col">' + timeStr + '</td><td class="title-col">' + (p.title || '--') + '</td><td class="desc-col">' + descHtml + '</td></tr>';
     }
     html += '</tbody></table>';
-    if (sorted.length > maxShow) html += '<div class="epg-empty">仅显示前 ' + maxShow + ' 条，共 ' + sorted.length + ' 条节目</div>';
+    if (sorted.length > maxShow) html += '<div class="epg-empty">显示第 ' + (startIdx + 1) + ' ~ ' + endIdx + ' 条，共 ' + sorted.length + ' 条节目</div>';
     modalBody.innerHTML = html;
+
+    if (currentIdx >= 0) {
+        var row = document.getElementById('pgm-row-' + currentIdx);
+        if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 }
 
 function closeModal() {
