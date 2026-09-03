@@ -1,0 +1,118 @@
+name: 处理EPG文件（删除desc字段）
+
+on:
+  # 当 main 分支有 push 时触发
+  push:
+    branches:
+      - main
+    # 仅当 sggc-desc.xml.gz 文件发生变化时触发（精准过滤）
+    paths:
+      - 'EPG/sggc-desc.xml.gz'
+  
+  # 手动触发（测试用）
+  workflow_dispatch:
+
+jobs:
+  process-epg:
+    runs-on: ubuntu-latest
+    
+    # 防止多个并发任务同时处理
+    concurrency:
+      group: epg-processing
+      cancel-in-progress: true
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1  # 只需要最新版本
+    
+    - name: 设置Python环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: 安装依赖
+      run: pip install requests
+    
+    - name: 处理EPG文件
+      id: processor
+      run: |
+        python << 'EOF'
+        import os
+        import gzip
+        import shutil
+        import xml.etree.ElementTree as ET
+        from datetime import datetime
+        
+        print(f"🔄 开始处理: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        # 文件路径（工作流已检出仓库，文件在EPG目录下）
+        INPUT_GZ = "EPG/sggc-desc.xml.gz"
+        OUTPUT_GZ = "EPG/sggc.xml.gz"  # 保存到同目录
+        
+        # 1. 解压
+        xml_path = INPUT_GZ.replace('.gz', '')
+        print(f"📂 解压: {INPUT_GZ}")
+        with gzip.open(INPUT_GZ, 'rb') as f_in:
+            with open(xml_path, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        
+        # 2. 解析并删除所有 desc 字段
+        print("✂️ 删除所有 desc 字段...")
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+        
+        desc_count = 0
+        # 遍历所有元素，删除名为 'desc' 的子元素
+        for elem in list(root.iter()):
+            desc_elements = elem.findall('desc')
+            for desc in desc_elements:
+                elem.remove(desc)
+                desc_count += 1
+        
+        # 保存修改后的XML
+        tree.write(xml_path, encoding='utf-8', xml_declaration=True)
+        print(f"   已删除 {desc_count} 个 desc 字段")
+        
+        # 3. 重新压缩为 sggc.xml.gz
+        print(f"📦 压缩: {OUTPUT_GZ}")
+        with open(xml_path, 'rb') as f_in:
+            with gzip.open(OUTPUT_GZ, 'wb', compresslevel=9) as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        
+        # 4. 清理临时文件
+        os.remove(xml_path)
+        print(f"🧹 清理完成")
+        
+        print("=" * 50)
+        print(f"✅ 处理成功！")
+        print(f"📊 删除 desc 字段数: {desc_count}")
+        print(f"📁 输出文件: {OUTPUT_GZ}")
+        print("=" * 50)
+        
+        # 设置输出变量
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            f.write(f"desc_count={desc_count}\n")
+            f.write(f"output_file={OUTPUT_GZ}\n")
+        EOF
+    
+    - name: 提交并推送处理结果
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # 配置git用户
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # 添加生成的文件
+        git add EPG/sggc.xml.gz
+        
+        # 检查是否有变更需要提交
+        if git diff --staged --quiet; then
+          echo "⏭️ 没有新文件需要提交"
+        else
+          git commit -m "自动生成: 删除desc字段后的EPG文件 [skip ci]"
+          git push
+          echo "✅ 已提交并推送 sggc.xml.gz"
+        fi
