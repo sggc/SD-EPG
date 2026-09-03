@@ -50,6 +50,19 @@ function getTodayStr() {
     return y + mo + d;
 }
 
+function xmlTimeToDate(timeStr) {
+    var t = parseXmlTime(timeStr);
+    if (!t) return null;
+    return new Date(Date.UTC(parseInt(t.y), parseInt(t.mo) - 1, parseInt(t.d), parseInt(t.h), parseInt(t.mi), parseInt(t.s)));
+}
+
+function timeDiffMinutes(stopStr, startStr) {
+    var stop = xmlTimeToDate(stopStr);
+    var start = xmlTimeToDate(startStr);
+    if (!stop || !start) return 0;
+    return (start.getTime() - stop.getTime()) / 60000;
+}
+
 async function loadDescData() {
     var res = await fetch(DATA_URL);
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -134,14 +147,8 @@ function mergeAndCompute(todayStr) {
                 return (sa ? sa.str : '').localeCompare(sb ? sb.str : '');
             });
             for (var i = 0; i < sorted.length - 1; i++) {
-                var stopA = parseXmlTime(sorted[i].stop);
-                var startB = parseXmlTime(sorted[i + 1].start);
-                var stopStr = stopA ? stopA.str : '';
-                var startStr = startB ? startB.str : '';
-                if (stopStr && startStr && stopStr < startStr) {
-                    var gapMin = (parseInt(startStr) - parseInt(stopStr)) / 100;
-                    if (gapMin > 5) { hasGap = true; break; }
-                }
+                var gapMin = timeDiffMinutes(sorted[i].stop, sorted[i + 1].start);
+                if (gapMin >= 10) { hasGap = true; break; }
             }
         }
 
