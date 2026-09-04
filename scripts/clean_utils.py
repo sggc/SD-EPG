@@ -109,7 +109,59 @@ def clean_program_title_default(title):
     if not title:
         return ""
     
-    cleaned = title.strip()
+    cleaned = fix_html_entities(title.strip())
+    
+    bracket_lang_patterns = [
+        r'\[粵/普\]', r'\[粵/日\]', r'\[粵/英\]', r'\[粵/韓\]',
+        r'\[粵/英/馬會\]', r'\[英/普\]', r'\[普/粵\]', r'\[粵/日/PG\]',
+        r'\[粵\]', r'\[普\]', r'\[日\]', r'\[英\]', r'\[韓\]',
+        r'\[粤\]', r'\[粤/普\]', r'\[粤/日\]', r'\[粤/英\]', r'\[粤/韩\]',
+        r'\[马会\]', r'\[馬會\]', r'\[PG\]', r'\[直播\]',
+    ]
+    for pattern in bracket_lang_patterns:
+        cleaned = re.sub(pattern, '', cleaned)
+    
+    tw_rating_patterns = [
+        r'\(普\)', r'\(護\)', r'\(护\)',
+        r'\(輔\d+\)', r'\(辅\d+\)',
+        r'\(首\)', r'\(新\)', r'\(完\)',
+        r'（普）', r'（護）', r'（护）',
+        r'（輔\d+）', r'（辅\d+）',
+        r'（首）', r'（新）', r'（完）',
+    ]
+    for pattern in tw_rating_patterns:
+        cleaned = re.sub(pattern, '', cleaned)
+    
+    cleaned = re.sub(r'^.*呈[獻献][：:]?\s*', '', cleaned)
+    
+    cleaned = re.sub(r'^重播\s*', '', cleaned)
+    cleaned = re.sub(r'\s*重播$', '', cleaned)
+    cleaned = re.sub(r'[\(（]重播[\)）]', '', cleaned)
+    cleaned = re.sub(r'\(Live\)', '', cleaned)
+    
+    cleaned = re.sub(r'\s*HD\s*$', '', cleaned)
+    cleaned = re.sub(r'[\(（][48]K[\)）]', '', cleaned)
+    
+    cleaned = re.sub(r'\s*#\s*\d+\s*', '', cleaned)
+    
+    cleaned = re.sub(r'\s*-\s*EP\s*\d+\s*$', '', cleaned, flags=re.IGNORECASE)
+    
+    cleaned = re.sub(r'\s*第\d+季\s*', '', cleaned)
+    cleaned = re.sub(r'第[一二三四五六七八九十]+季', '', cleaned)
+    
+    cleaned = re.sub(r'[\(（]大结局[\)）]', '', cleaned)
+    
+    cleaned = re.sub(r'\(\d+\)(?=:)', '', cleaned)
+    cleaned = re.sub(r'（\d+）(?=:)', '', cleaned)
+    
+    cleaned = re.sub(r'第\d{1,4}期(?=[^\s])', '', cleaned)
+    
+    cleaned = re.sub(r'^\d+[_\s](?=[^\d])', '', cleaned)
+    
+    cleaned = re.sub(r'\[DVD版\]', '', cleaned)
+    cleaned = re.sub(r'\[蓝光版\]', '', cleaned)
+    
+    cleaned = re.sub(r'\d{6,}[期集回]?(?=\s*$)', '', cleaned)
     
     date_patterns = [
         r'\s*[\(（]?\d{4}[-./年]\d{1,2}[-./月]\d{1,2}[日]?[\)）]?\s*',
@@ -124,21 +176,53 @@ def clean_program_title_default(title):
         r'\s*[\(（]\d+[\)）]\s*$',
         r'\s*第\d{1,4}[期集回]\s*$',
         r'\s*EP?\d{1,4}\s*$',
-        r'\s*[第]?[一二三四五六七八九十百千]+[期集回季届部]\s*$',
+        r'\s*第[一二三四五六七八九十百千]+[期集回季届部]\s*$',
     ]
     for pattern in episode_patterns:
         cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
     
-    cleaned = re.sub(r'\s*\d{4}\s*$', '', cleaned)
+    cleaned = re.sub(r'\s\d{4}\s*$', '', cleaned)
     cleaned = re.sub(r'\s*[\(（]?[重首直]播[\)）]?\s*', '', cleaned)
     cleaned = re.sub(r'\s*[\(（]?高清[\)）]?\s*', '', cleaned)
-    cleaned = re.sub(r'\s*[\(（]?[上中下][\)）]?\s*$', '', cleaned)
+    cleaned = re.sub(r'\s*[\(（][上中下][\)）]\s*$', '', cleaned)
     
-    new_cleaned = re.sub(r'\s*\d{1,3}\s*$', '', cleaned)
-    if new_cleaned.strip() and len(new_cleaned) >= 2:
+    new_cleaned = re.sub(r'(?<!\d)\d{1,3}\s*$', '', cleaned)
+    if new_cleaned.strip() and len(new_cleaned) >= 2 and not re.match(r'^\d', new_cleaned.strip()):
         cleaned = new_cleaned
     
-    cleaned = re.sub(r'[-—_·\s]+$', '', cleaned)
+    cleaned = re.sub(r'\s*宣传片\s*$', '', cleaned)
+    cleaned = re.sub(r'\s*MV\s*$', '', cleaned)
+    cleaned = re.sub(r'\s*片段展播\s*$', '', cleaned)
+    cleaned = re.sub(r'\s*精彩片段\s*$', '', cleaned)
+    
+    cleaned = re.sub(r'【雙語版】', '', cleaned)
+    cleaned = re.sub(r'【双语版】', '', cleaned)
+    
+    cleaned = re.sub(r'^8K超高清\s*', '', cleaned)
+    cleaned = re.sub(r'^4K超高清\s*', '', cleaned)
+    cleaned = re.sub(r'^\d{4}年\s*', '', cleaned)
+    
+    cleaned = re.sub(r'（\d+）(?=\d)', '', cleaned)
+    
+    cleaned = re.sub(r'^第\d{1,4}[集期回][：:]\s*', '', cleaned)
+    cleaned = re.sub(r'^第\d{1,4}[集期回]\s+', '', cleaned)
+    
+    cleaned = re.sub(r'^Ep\d+,?\d*\s*', '', cleaned, flags=re.IGNORECASE)
+    
+    cleaned = re.sub(r'\s*第\d{1,4}[集期回]\s*-\s*', ' ', cleaned)
+    cleaned = re.sub(r'\s*第\d{1,4}[集期回]\s+', ' ', cleaned)
+    
+    cleaned = re.sub(r'《([^》]+)》（\d+）', r'《\1》', cleaned)
+    cleaned = re.sub(r'《([^》]+)\((\d+)\)》', r'《\1》', cleaned)
+    
+    cleaned = re.sub(r'\s*-\s*\d{4}\s*$', '', cleaned)
+    cleaned = re.sub(r'-\d{4}-\d+\s*$', '', cleaned)
+    
+    cleaned = re.sub(r'\(Ep\d+[\s,\-]*\d*[\s\-]*\d*\)', '', cleaned, flags=re.IGNORECASE)
+    
+    cleaned = re.sub(r'^\[中国节拍\]\s*', '', cleaned)
+    
+    cleaned = re.sub(r'[-—_·\s：:]+$', '', cleaned)
     cleaned = re.sub(r'^[-—_·\s]+', '', cleaned)
     cleaned = cleaned.strip()
     
@@ -160,7 +244,7 @@ def clean_program_title_with_rule(title, channel_name, rule_manager):
     if rule.get("clean_episode") is False:
         return title.strip()
     
-    cleaned = title.strip()
+    cleaned = fix_html_entities(title.strip())
     
     if "remove_prefix" in rule:
         for prefix in rule["remove_prefix"]:
@@ -203,10 +287,8 @@ def clean_program_title_with_rule(title, channel_name, rule_manager):
         cleaned = cleaned.strip()
         if not cleaned:
             cleaned = title.strip()
-    elif not has_specific_rules or rule.get("use_default"):
-        cleaned = clean_program_title_default(cleaned)
     else:
-        cleaned = cleaned.strip()
+        cleaned = clean_program_title_default(cleaned)
         if not cleaned:
             cleaned = title.strip()
     
