@@ -66,11 +66,20 @@ class ChannelCleanRuleManager:
             if rule.get("inherit_from"):
                 self._resolving.add(norm_channel)
                 try:
-                    result = self.get_rule(rule["inherit_from"], _depth + 1)
+                    parent_result = self.get_rule(rule["inherit_from"], _depth + 1)
                 finally:
                     self._resolving.discard(norm_channel)
                 if rule.get("use_default"):
                     result = self.config.get("default", {})
+                else:
+                    result = dict(parent_result)
+                    for key, value in rule.items():
+                        if key in ("rule_name", "note", "inherit_from", "use_default"):
+                            continue
+                        if key in ("remove_prefix", "remove_suffix") and key in result:
+                            result[key] = result[key] + value
+                        else:
+                            result[key] = value
             elif rule.get("use_default"):
                 result = self.config.get("default", {})
             else:
@@ -134,6 +143,8 @@ def clean_program_title_default(title):
     
     cleaned = re.sub(r'^.*呈[獻献][：:]?\s*', '', cleaned)
     
+    cleaned = re.sub(r'^重播[：:]\s*', '', cleaned)
+    cleaned = re.sub(r'^直播[：:]\s*', '', cleaned)
     cleaned = re.sub(r'^重播\s*', '', cleaned)
     cleaned = re.sub(r'\s*重播$', '', cleaned)
     cleaned = re.sub(r'[\(（]重播[\)）]', '', cleaned)
@@ -151,9 +162,7 @@ def clean_program_title_default(title):
     
     cleaned = re.sub(r'[\(（]大结局[\)）]', '', cleaned)
     
-    cleaned = re.sub(r'\(\d+\)(?=:)', '', cleaned)
-    cleaned = re.sub(r'（\d+）(?=:)', '', cleaned)
-    
+
     cleaned = re.sub(r'第\d{1,4}期(?=[^\s])', '', cleaned)
     
     cleaned = re.sub(r'^\d+[_\s](?=[^\d])', '', cleaned)
@@ -186,10 +195,7 @@ def clean_program_title_default(title):
     cleaned = re.sub(r'\s*[\(（]?高清[\)）]?\s*', '', cleaned)
     cleaned = re.sub(r'\s*[\(（][上中下][\)）]\s*$', '', cleaned)
     
-    new_cleaned = re.sub(r'(?<!\d)\d{1,3}\s*$', '', cleaned)
-    if new_cleaned.strip() and len(new_cleaned) >= 2 and not re.match(r'^\d', new_cleaned.strip()):
-        cleaned = new_cleaned
-    
+
     cleaned = re.sub(r'\s*宣传片\s*$', '', cleaned)
     cleaned = re.sub(r'\s*MV\s*$', '', cleaned)
     cleaned = re.sub(r'\s*片段展播\s*$', '', cleaned)
@@ -221,6 +227,23 @@ def clean_program_title_default(title):
     cleaned = re.sub(r'\(Ep\d+[\s,\-]*\d*[\s\-]*\d*\)', '', cleaned, flags=re.IGNORECASE)
     
     cleaned = re.sub(r'^\[中国节拍\]\s*', '', cleaned)
+    
+    m = re.match(r'^([^\s：:]{1,10}[\(（]\d+[\)）]?)[：:]\s*(.+)$', cleaned)
+    if m:
+        cleaned = m.group(2)
+
+    
+    m = re.match(r'^(.+?)HD[-—]\s*《([^》]+)》.*$', cleaned)
+    if m:
+        cleaned = m.group(2)
+    
+    cleaned = re.sub(r'^\d+_', '', cleaned)
+    
+    cleaned = re.sub(r'^.*?[-—]\s*《([^》]+)》.*$', r'\1', cleaned)
+    
+    cleaned = re.sub(r'^8K超高清\s*', '', cleaned)
+    cleaned = re.sub(r'^4K超高清\s*', '', cleaned)
+    cleaned = re.sub(r'^\d{4}年\s*', '', cleaned)
     
     cleaned = re.sub(r'[-—_·\s：:]+$', '', cleaned)
     cleaned = re.sub(r'^[-—_·\s]+', '', cleaned)
