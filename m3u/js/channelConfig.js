@@ -70,6 +70,14 @@ class ChannelConfig {
     }
 
     /**
+     * 在末尾添加一个频道
+     */
+    addChannel(channel) {
+        this.channels.push(channel);
+        return this.channels.length - 1;
+    }
+
+    /**
      * 批量删除频道（按索引数组，降序删除避免索引偏移）
      */
     deleteChannels(indices) {

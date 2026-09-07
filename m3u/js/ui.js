@@ -151,6 +151,10 @@ class UIHandler {
         el.deleteSelectedBtn.addEventListener('click', () => this.deleteSelectedChannels());
         el.autoMatchLogoBtn.addEventListener('click', () => this.autoMatchLogo());
 
+        // 添加频道按钮
+        const addChannelBtn = document.getElementById('addChannelBtn');
+        if (addChannelBtn) addChannelBtn.addEventListener('click', () => this.showAddChannelModal());
+
         // 自动分类按钮
         const autoClassifyBtn = document.getElementById('autoClassifyBtn');
         if (autoClassifyBtn) autoClassifyBtn.addEventListener('click', () => this.autoClassify());
@@ -749,6 +753,53 @@ class UIHandler {
             });
             el.channelList.parentElement.parentElement.appendChild(toggleBtn);
         }
+    }
+
+    showAddChannelModal() {
+        const modal = document.createElement('div'); modal.className = 'modal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.innerHTML = `
+            <h3 style="margin-bottom: 20px;">➕ 添加频道</h3>
+            <div class="form-group"><label for="add-name" class="form-label">频道名称</label><input type="text" id="add-name" class="form-control" placeholder="请输入频道名称"></div>
+            <div class="form-group"><label for="add-url" class="form-label">URL</label><input type="text" id="add-url" class="form-control" placeholder="请输入直播源URL"></div>
+            <div class="form-group"><label for="add-tvgId" class="form-label">tvg-id</label><input type="text" id="add-tvgId" class="form-control" placeholder="可选"></div>
+            <div class="form-group"><label for="add-tvgName" class="form-label">tvg-name</label><input type="text" id="add-tvgName" class="form-control" placeholder="可选"></div>
+            <div class="form-group"><label for="add-logo" class="form-label">Logo URL</label><input type="text" id="add-logo" class="form-control" placeholder="可选"></div>
+            <div class="form-group"><label for="add-group" class="form-label">分组</label><input type="text" id="add-group" class="form-control" placeholder="可选"></div>
+            <div class="form-group"><label for="add-catchup" class="form-label">回看类型</label><select id="add-catchup" class="form-control"><option value="">无</option><option value="append">append</option><option value="default">default</option></select></div>
+            <div class="form-group"><label for="add-catchupSource" class="form-label">catchup-source</label><input type="text" id="add-catchupSource" class="form-control" placeholder="可选"></div>
+            <div class="form-group"><label for="add-catchupDays" class="form-label">catchup-days</label><input type="text" id="add-catchupDays" class="form-control" placeholder="可选"></div>
+            <div class="modal-actions"><button id="cancel-add" class="btn btn-outline">取消</button><button id="save-add" class="btn btn-primary">保存</button></div>
+        `;
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        document.getElementById('save-add').addEventListener('click', () => {
+            const name = document.getElementById('add-name').value.trim();
+            const url = document.getElementById('add-url').value.trim();
+            if (!name) { this.showToast('请输入频道名称', 'warning'); return; }
+            if (!url) { this.showToast('请输入直播源URL', 'warning'); return; }
+            this._saveSnapshot();
+            this.editorConfig.addChannel({
+                name: name,
+                url: url,
+                tvgId: document.getElementById('add-tvgId').value.trim(),
+                tvgName: document.getElementById('add-tvgName').value.trim(),
+                logo: document.getElementById('add-logo').value.trim(),
+                group: document.getElementById('add-group').value.trim(),
+                catchup: document.getElementById('add-catchup').value,
+                catchupSource: document.getElementById('add-catchupSource').value.trim(),
+                catchupDays: document.getElementById('add-catchupDays').value.trim()
+            });
+            document.body.removeChild(modal);
+            this._channelListExpanded = true;
+            this.renderChannelList(); this.updateStats();
+            this.showToast('频道已添加到列表末尾', 'success');
+        });
+        document.getElementById('cancel-add').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+        modal.querySelector('input').focus();
     }
 
     editChannel(index) {
