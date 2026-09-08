@@ -11,6 +11,7 @@ let allGroups = [];
 let currentPage = 1;
 let currentSort = 'name';
 let currentGroup = '';
+let epgLoaded = false;
 
 function formatNumber(n) {
     if (n === undefined || n === null) return '--';
@@ -130,91 +131,34 @@ async function loadEpgData() {
     return { minTime: minTime, maxTime: maxTime, totalPrograms: programmes.length };
 }
 
-function mergeAndCompute(todayStr) {
+function mergeAndComputeFromLog() {
     var groupSet = new Set();
-
     mergedChannels = descChannels.map(function(descCh) {
-        var tvgId = descCh['tvg_id'] || '';
-        var epgCh = epgChannels.get(tvgId);
-        var progs = epgProgrammes.get(tvgId) || [];
-
-        var group = epgCh ? epgCh.group : '';
+        var group = descCh['分组'] || '';
         if (group) groupSet.add(group);
-
-        var todayCount = 0;
-        progs.forEach(function(p) {
-            var sp = parseXmlTime(p.start);
-            if (sp && sp.y + sp.mo + sp.d === todayStr) todayCount++;
-        });
-
-        var hasGap = false;
-        if (progs.length > 1) {
-            var sorted = progs.slice().sort(function(a, b) {
-                var sa = parseXmlTime(a.start);
-                var sb = parseXmlTime(b.start);
-                return (sa ? sa.str : '').localeCompare(sb ? sb.str : '');
-            });
-            for (var i = 0; i < sorted.length - 1; i++) {
-                var stopT = parseXmlTime(sorted[i].stop);
-                var startT = parseXmlTime(sorted[i + 1].start);
-                if (!stopT || !startT) continue;
-                var stopHour = parseInt(stopT.h) + parseInt(stopT.mi) / 60;
-                var startHour = parseInt(startT.h) + parseInt(startT.mi) / 60;
-                if (stopHour < 5 || startHour > 23) continue;
-                var gapMin = timeDiffMinutes(sorted[i].stop, sorted[i + 1].start);
-                if (gapMin >= 10) { hasGap = true; break; }
-            }
-        }
-
         return {
-            tvg_id: tvgId,
-            频道名称: descCh['频道名称'] || tvgId,
+            tvg_id: descCh['tvg_id'] || '',
+            频道名称: descCh['频道名称'] || descCh['tvg_id'] || '',
             group: group,
-            节目总数: descCh['节目总数'] || progs.length,
-            今日节目数: todayCount,
+            节目总数: descCh['节目总数'] || 0,
+            今日节目数: descCh['今日节目数'] || 0,
             匹配率: descCh['匹配率'] || 0,
-            存在间隙: hasGap
+            存在间隙: false
         };
     });
-
-    epgChannels.forEach(function(epgCh, id) {
-        var found = false;
-        for (var i = 0; i < descChannels.length; i++) {
-            if (descChannels[i]['tvg_id'] === id) { found = true; break; }
-        }
-        if (!found) {
-            var group = epgCh.group || '';
-            if (group) groupSet.add(group);
-            var progs = epgProgrammes.get(id) || [];
-            var todayCount = 0;
-            progs.forEach(function(p) {
-                var sp = parseXmlTime(p.start);
-                if (sp && sp.y + sp.mo + sp.d === todayStr) todayCount++;
-            });
-            mergedChannels.push({
-                tvg_id: id,
-                频道名称: epgCh.name || id,
-                group: group,
-                节目总数: progs.length,
-                今日节目数: todayCount,
-                匹配率: 0,
-                存在间隙: false
-            });
-        }
-    });
-
     allGroups = Array.from(groupSet).sort(function(a, b) { return a.localeCompare(b, 'zh-CN'); });
 }
 
-function renderOverview(descData, epgInfo) {
+function renderOverview(descData, epgOverview) {
     document.getElementById('updateTime').textContent = descData['时间戳'] || '--';
     var stats = descData['统计'] || {};
     document.getElementById('statMatchRate').textContent = (stats['匹配率'] || 0) + '%';
 
-    if (epgInfo) {
-        document.getElementById('statChannels').textContent = formatNumber(epgChannels.size);
-        document.getElementById('statPrograms').textContent = formatNumber(epgInfo.totalPrograms);
-        document.getElementById('statTimeRange').textContent = formatTimeRange(epgInfo.minTime, epgInfo.maxTime);
+    if (epgOverview) {
+        document.getElementById('statChannels').textContent = formatNumber(epgOverview['频道总数'] || 0);
+        document.getElementById('statPrograms').textContent = formatNumber(epgOverview['节目总数'] || 0);
+        var timeRange = epgOverview['时间范围'] || {};
+        document.getElementById('statTimeRange').textContent = formatTimeRange(timeRange.start, timeRange.stop);
     }
 }
 
@@ -321,7 +265,11 @@ function showChannelEpg(tvgId, channelName) {
     var modalBody = document.getElementById('modalBody');
     modal.style.display = 'flex';
     document.getElementById('modalTitle').textContent = channelName + ' 节目单';
-    modalBody.innerHTML = '<div class="modal-loading"><div class="loading-spinner"></div><p>正在加载节目单...</p></div>';
+
+    if (!epgLoaded) {
+        modalBody.innerHTML = '<div class="modal-loading"><div class="loading-spinner"></div><p>EPG数据正在加载中，请稍候...</p></div>';
+        return;
+    }
 
     var programmes = epgProgrammes.get(tvgId) || [];
     if (programmes.length === 0) {
@@ -378,25 +326,27 @@ async function init() {
     try {
         var descData = await loadDescData();
         descChannels = descData['频道列表'] || [];
-        renderOverview(descData, null);
+        var epgOverview = descData['EPG概览'] || {};
+
+        mergeAndComputeFromLog();
+        renderOverview(descData, epgOverview);
+        renderGroupFilter();
         renderChannels();
         document.getElementById('loading').style.display = 'none';
 
-        try {
-            var epgInfo = await loadEpgData();
-            var todayStr = getTodayStr();
-            mergeAndCompute(todayStr);
-            renderOverview(descData, epgInfo);
-            renderGroupFilter();
-            renderChannels();
-            var statusEl = document.getElementById('epgStatus');
+        var statusEl = document.getElementById('epgStatus');
+        statusEl.textContent = '概览已加载，正在后台加载完整EPG数据...';
+        statusEl.className = 'epg-status';
+
+        loadEpgData().then(function(epgInfo) {
+            epgLoaded = true;
             statusEl.textContent = 'EPG已加载: ' + epgChannels.size + ' 频道, ' + epgInfo.totalPrograms + ' 节目';
             statusEl.className = 'epg-status loaded';
-        } catch (err) {
-            var statusEl2 = document.getElementById('epgStatus');
-            statusEl2.textContent = 'EPG加载失败: ' + err.message;
-            statusEl2.className = 'epg-status error';
-        }
+        }).catch(function(err) {
+            epgLoaded = true;
+            statusEl.textContent = 'EPG后台加载失败: ' + err.message + '（节目单可能不可用）';
+            statusEl.className = 'epg-status error';
+        });
     } catch (err) {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('error').style.display = 'flex';
