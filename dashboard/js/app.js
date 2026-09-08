@@ -134,39 +134,18 @@ async function loadEpgData() {
     return { minTime: minTime, maxTime: maxTime, totalPrograms: programmes.length };
 }
 
-function classifyChannel(name) {
-    if (!name) return '其余';
-    if (/^(风云音乐|风云足球|风云剧场|第一剧场|兵器科技|怀旧剧场|女性时尚|世界地理|卫生健康|央视台球|央视文化精品|高尔夫网球|电视指南|发现之旅|老故事|中学生)/.test(name)) return '央视收费';
-    if (/^CCTV/i.test(name) || /^CGTN/i.test(name) || /^CNC/i.test(name) || /^CETV/i.test(name) || /^中国教育/.test(name)) return '央视';
-    if (/^(国防军事|奥林匹克|农业农村|体育赛事)/.test(name)) return '央视';
-    if (/卫视/.test(name)) return '卫视';
-    if (/^(CHC|家庭影院|动作电影|NewTV|iHOT|华数|咪咕|咪视界|爱大剧|爱电影|爱生活|爱体育|爱综艺|爱上4K|熊猫频道|高清大片|经典电影|军事大片|热剧联播|赛事经典|体坛名汇|新片映厅|四海钓鱼|摄影频道)/.test(name)) return '收费';
-    if (/^(TVB|ViuTV|凤凰|澳门|澳视|澳亚|香港|民视|三立|中视|台视|华视|纬来|龙华|八大|年代|壹电视|壹新闻|壹综合|中天|星空|长城|新时代|亚太|阳光|赛马|城市电视|美亚电影|龙祥电影|黄金华剧|DAZN|beIN|原住民|人间卫视|霹雳|有线|面包|耀才|Astro|欢喜台)/.test(name)) return '其余';
-    var provinces = ['北京','上海','广东','深圳','浙江','杭州','宁波','温州','绍兴','嘉兴','金华','台州','湖州','丽水','衢州','舟山','之江','江苏','湖南','湖北','四川','天津','重庆','辽宁','黑龙江','吉林','安徽','河北','河南','江西','福建','陕西','山西','云南','贵州','甘肃','内蒙古','宁夏','青海','新疆','西藏','海南','广西','山东','济南','青岛','烟台','潍坊','淄博','济宁','临沂','威海','德州','聊城','菏泽','泰安','滨州','枣庄','日照','东营','莱芜','QTV','游戏风云','法治天地','都市频道','生活时尚','金色频道','欢笑剧场','纪实人文','新闻综合','第一财经','嵊泗','普陀','康巴','延边','兵团','大湾区','东南','厦门','三沙','农林'];
-    for (var i = 0; i < provinces.length; i++) {
-        if (name.indexOf(provinces[i]) === 0) return '各省份';
-    }
-    return '其余';
-}
-
 function mergeAndComputeFromLog() {
-    var groupSet = new Set();
     mergedChannels = descChannels.map(function(descCh) {
-        var group = descCh['分组'] || '';
-        if (group) groupSet.add(group);
-        var chName = descCh['频道名称'] || descCh['tvg_id'] || '';
         return {
             tvg_id: descCh['tvg_id'] || '',
-            频道名称: chName,
-            group: group,
-            _group: classifyChannel(chName),
+            频道名称: descCh['频道名称'] || descCh['tvg_id'] || '',
+            group: descCh['分组'] || '',
             节目总数: descCh['节目总数'] || 0,
             今日节目数: descCh['今日节目数'] || 0,
             匹配率: descCh['匹配率'] || 0,
             存在间隙: false
         };
     });
-    allGroups = Array.from(groupSet).sort(function(a, b) { return a.localeCompare(b, 'zh-CN'); });
 }
 
 function renderOverview(descData, epgOverview) {
@@ -183,24 +162,23 @@ function renderOverview(descData, epgOverview) {
 }
 
 function renderGroupButtons() {
-    var groups = ['全部', '央视', '央视收费', '卫视', '收费', '各省份', '其余'];
+    var groupList = [];
     var counts = {};
     mergedChannels.forEach(function(ch) {
-        var g = ch._group || '其余';
+        var g = ch.group || '未分组';
+        if (groupList.indexOf(g) === -1) groupList.push(g);
         counts[g] = (counts[g] || 0) + 1;
     });
-    var html = '';
-    groups.forEach(function(g) {
-        var active = (currentGroup === g || (g === '全部' && !currentGroup)) ? ' active' : '';
-        var count = g === '全部' ? mergedChannels.length : (counts[g] || 0);
-        if (g !== '全部' && count === 0) return;
-        html += '<button class="group-btn' + active + '" data-group="' + g + '">' + g + ' <span class="group-count">' + count + '</span></button>';
+    var html = '<button class="group-btn' + (!currentGroup ? ' active' : '') + '" data-group="">全部 <span class="group-count">' + mergedChannels.length + '</span></button>';
+    groupList.forEach(function(g) {
+        var active = currentGroup === g ? ' active' : '';
+        html += '<button class="group-btn' + active + '" data-group="' + g + '">' + g + ' <span class="group-count">' + counts[g] + '</span></button>';
     });
     var container = document.getElementById('groupButtons');
     container.innerHTML = html;
     container.querySelectorAll('.group-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            currentGroup = btn.dataset.group === '全部' ? '' : btn.dataset.group;
+            currentGroup = btn.dataset.group;
             renderGroupButtons();
             renderChannels();
         });
@@ -215,7 +193,7 @@ function renderChannels() {
         var tvgId = (ch['tvg_id'] || '').toLowerCase();
         if (search && name.indexOf(search) === -1 && tvgId.indexOf(search) === -1) return false;
         if (currentGroup) {
-            if ((ch._group || '其余') !== currentGroup) return false;
+            if ((ch.group || '未分组') !== currentGroup) return false;
         }
         return true;
     });

@@ -593,7 +593,7 @@ body {
 .modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 0;
+    padding: 8px 0 0 0;
 }
 
 .modal-loading {
@@ -831,7 +831,7 @@ body {
     gap: 6px;
     padding: 8px 24px;
     border-bottom: 1px solid var(--color-border);
-    overflow-x: auto;
+
 }
 
 .date-btn {
