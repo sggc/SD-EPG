@@ -90,11 +90,14 @@ async function loadEpgData() {
     channels.forEach(function(ch) {
         var id = ch.getAttribute('id');
         if (!id) return;
-        var displayName = ch.querySelector('display-name');
+        var displayNames = ch.querySelectorAll('display-name');
+        var names = [];
+        displayNames.forEach(function(dn) { if (dn.textContent) names.push(dn.textContent.trim()); });
         var groupEl = ch.querySelector('group');
         epgChannels.set(id, {
-            name: displayName ? displayName.textContent : id,
-            group: groupEl ? groupEl.textContent : ''
+            name: names[0] || id,
+            group: groupEl ? groupEl.textContent : '',
+            aliases: names
         });
     });
 
@@ -131,15 +134,32 @@ async function loadEpgData() {
     return { minTime: minTime, maxTime: maxTime, totalPrograms: programmes.length };
 }
 
+function classifyChannel(name) {
+    if (!name) return '其余';
+    if (/^(风云音乐|风云足球|风云剧场|第一剧场|兵器科技|怀旧剧场|女性时尚|世界地理|卫生健康|央视台球|央视文化精品|高尔夫网球|电视指南|发现之旅|老故事|中学生)/.test(name)) return '央视收费';
+    if (/^CCTV/i.test(name) || /^CGTN/i.test(name) || /^CNC/i.test(name) || /^CETV/i.test(name) || /^中国教育/.test(name)) return '央视';
+    if (/^(国防军事|奥林匹克|农业农村|体育赛事)/.test(name)) return '央视';
+    if (/卫视/.test(name)) return '卫视';
+    if (/^(CHC|家庭影院|动作电影|NewTV|iHOT|华数|咪咕|咪视界|爱大剧|爱电影|爱生活|爱体育|爱综艺|爱上4K|熊猫频道|高清大片|经典电影|军事大片|热剧联播|赛事经典|体坛名汇|新片映厅|四海钓鱼|摄影频道)/.test(name)) return '收费';
+    if (/^(TVB|ViuTV|凤凰|澳门|澳视|澳亚|香港|民视|三立|中视|台视|华视|纬来|龙华|八大|年代|壹电视|壹新闻|壹综合|中天|星空|长城|新时代|亚太|阳光|赛马|城市电视|美亚电影|龙祥电影|黄金华剧|DAZN|beIN|原住民|人间卫视|霹雳|有线|面包|耀才|Astro|欢喜台)/.test(name)) return '其余';
+    var provinces = ['北京','上海','广东','深圳','浙江','杭州','宁波','温州','绍兴','嘉兴','金华','台州','湖州','丽水','衢州','舟山','之江','江苏','湖南','湖北','四川','天津','重庆','辽宁','黑龙江','吉林','安徽','河北','河南','江西','福建','陕西','山西','云南','贵州','甘肃','内蒙古','宁夏','青海','新疆','西藏','海南','广西','山东','济南','青岛','烟台','潍坊','淄博','济宁','临沂','威海','德州','聊城','菏泽','泰安','滨州','枣庄','日照','东营','莱芜','QTV','游戏风云','法治天地','都市频道','生活时尚','金色频道','欢笑剧场','纪实人文','新闻综合','第一财经','嵊泗','普陀','康巴','延边','兵团','大湾区','东南','厦门','三沙','农林'];
+    for (var i = 0; i < provinces.length; i++) {
+        if (name.indexOf(provinces[i]) === 0) return '各省份';
+    }
+    return '其余';
+}
+
 function mergeAndComputeFromLog() {
     var groupSet = new Set();
     mergedChannels = descChannels.map(function(descCh) {
         var group = descCh['分组'] || '';
         if (group) groupSet.add(group);
+        var chName = descCh['频道名称'] || descCh['tvg_id'] || '';
         return {
             tvg_id: descCh['tvg_id'] || '',
-            频道名称: descCh['频道名称'] || descCh['tvg_id'] || '',
+            频道名称: chName,
             group: group,
+            _group: classifyChannel(chName),
             节目总数: descCh['节目总数'] || 0,
             今日节目数: descCh['今日节目数'] || 0,
             匹配率: descCh['匹配率'] || 0,
@@ -162,16 +182,29 @@ function renderOverview(descData, epgOverview) {
     }
 }
 
-function renderGroupFilter() {
-    var select = document.getElementById('groupSelect');
-    var currentValue = currentGroup;
-    var html = '<option value="">全部分组</option>';
-    for (var i = 0; i < allGroups.length; i++) {
-        html += '<option value="' + allGroups[i] + '">' + allGroups[i] + '</option>';
-    }
-    html += '<option value="__ungrouped__">未分组</option>';
-    select.innerHTML = html;
-    select.value = currentValue;
+function renderGroupButtons() {
+    var groups = ['全部', '央视', '央视收费', '卫视', '收费', '各省份', '其余'];
+    var counts = {};
+    mergedChannels.forEach(function(ch) {
+        var g = ch._group || '其余';
+        counts[g] = (counts[g] || 0) + 1;
+    });
+    var html = '';
+    groups.forEach(function(g) {
+        var active = (currentGroup === g || (g === '全部' && !currentGroup)) ? ' active' : '';
+        var count = g === '全部' ? mergedChannels.length : (counts[g] || 0);
+        if (g !== '全部' && count === 0) return;
+        html += '<button class="group-btn' + active + '" data-group="' + g + '">' + g + ' <span class="group-count">' + count + '</span></button>';
+    });
+    var container = document.getElementById('groupButtons');
+    container.innerHTML = html;
+    container.querySelectorAll('.group-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            currentGroup = btn.dataset.group === '全部' ? '' : btn.dataset.group;
+            renderGroupButtons();
+            renderChannels();
+        });
+    });
 }
 
 function renderChannels() {
@@ -181,10 +214,8 @@ function renderChannels() {
         var name = (ch['频道名称'] || '').toLowerCase();
         var tvgId = (ch['tvg_id'] || '').toLowerCase();
         if (search && name.indexOf(search) === -1 && tvgId.indexOf(search) === -1) return false;
-        if (currentGroup === '__ungrouped__') {
-            if (ch.group) return false;
-        } else if (currentGroup) {
-            if (ch.group !== currentGroup) return false;
+        if (currentGroup) {
+            if ((ch._group || '其余') !== currentGroup) return false;
         }
         return true;
     });
@@ -263,53 +294,109 @@ function goToPage(page) {
 function showChannelEpg(tvgId, channelName) {
     var modal = document.getElementById('channelModal');
     var modalBody = document.getElementById('modalBody');
+    var modalInfo = document.getElementById('modalChannelInfo');
+    var dateBar = document.getElementById('modalDateBar');
     modal.style.display = 'flex';
     document.getElementById('modalTitle').textContent = channelName + ' 节目单';
 
     if (!epgLoaded) {
+        modalInfo.innerHTML = '';
+        dateBar.innerHTML = '';
         modalBody.innerHTML = '<div class="modal-loading"><div class="loading-spinner"></div><p>EPG数据正在加载中，请稍候...</p></div>';
         return;
     }
 
     var programmes = epgProgrammes.get(tvgId) || [];
     if (programmes.length === 0) {
+        modalInfo.innerHTML = '';
+        dateBar.innerHTML = '';
         modalBody.innerHTML = '<div class="epg-empty">未找到该频道的节目信息</div>';
         return;
     }
+
+    var epgCh = epgChannels.get(tvgId);
+    var infoHtml = '<div class="channel-info-name"><strong>' + channelName + '</strong></div>';
+    if (epgCh && epgCh.aliases && epgCh.aliases.length > 1) {
+        var aliases = epgCh.aliases.filter(function(a) { return a !== channelName; });
+        if (aliases.length > 0) {
+            infoHtml += '<div class="channel-info-aliases"><span class="alias-label">别名：</span>' + aliases.map(function(a) { return '<span class="alias-tag">' + a + '</span>'; }).join('') + '</div>';
+        }
+    }
+    modalInfo.innerHTML = infoHtml;
+
     var sorted = programmes.slice().sort(function(a, b) {
         var sa = parseXmlTime(a.start);
         var sb = parseXmlTime(b.start);
         return (sa ? sa.str : '').localeCompare(sb ? sb.str : '');
     });
 
+    var dateSet = [];
+    sorted.forEach(function(p) {
+        var sp = parseXmlTime(p.start);
+        if (sp) {
+            var d = sp.y + sp.mo + sp.d;
+            if (dateSet.indexOf(d) === -1) dateSet.push(d);
+        }
+    });
+    dateSet.sort();
+
+    var todayStr = getTodayStr().substring(0, 8);
+    var selectedDate = dateSet.indexOf(todayStr) >= 0 ? todayStr : (dateSet[0] || '');
+
+    var dateHtml = '';
+    dateSet.forEach(function(d) {
+        var label = d.substring(4, 6) + '/' + d.substring(6, 8);
+        var active = d === selectedDate ? ' active' : '';
+        dateHtml += '<button class="date-btn' + active + '" data-date="' + d + '">' + label + '</button>';
+    });
+    dateBar.innerHTML = dateHtml;
+    dateBar.querySelectorAll('.date-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            dateBar.querySelectorAll('.date-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            renderEpgForDate(sorted, btn.dataset.date);
+        });
+    });
+
+    renderEpgForDate(sorted, selectedDate);
+}
+
+function renderEpgForDate(sorted, dateStr) {
+    var modalBody = document.getElementById('modalBody');
+    var dayProgs = sorted.filter(function(p) {
+        var sp = parseXmlTime(p.start);
+        return sp && sp.y + sp.mo + sp.d === dateStr;
+    });
+
+    if (dayProgs.length === 0) {
+        modalBody.innerHTML = '<div class="epg-empty">该日期无节目</div>';
+        return;
+    }
+
     var nowStr = getNowStr();
+    var todayDateStr = getTodayStr().substring(0, 8);
     var currentIdx = -1;
-    for (var i = 0; i < sorted.length; i++) {
-        var sp = parseXmlTime(sorted[i].start);
-        var ep = parseXmlTime(sorted[i].stop);
-        if (sp && ep && sp.str <= nowStr && nowStr < ep.str) {
-            currentIdx = i;
-            break;
+    if (dateStr === todayDateStr) {
+        for (var i = 0; i < dayProgs.length; i++) {
+            var sp = parseXmlTime(dayProgs[i].start);
+            var ep = parseXmlTime(dayProgs[i].stop);
+            if (sp && ep && sp.str <= nowStr && nowStr < ep.str) {
+                currentIdx = i;
+                break;
+            }
         }
     }
 
     var html = '<table class="epg-table"><thead><tr><th>时间</th><th>标题</th><th>描述</th></tr></thead><tbody>';
-    var maxShow = 200;
-    var startIdx = 0;
-    if (currentIdx >= 0 && currentIdx < sorted.length) {
-        startIdx = Math.max(0, currentIdx - 5);
-    }
-    var endIdx = Math.min(sorted.length, startIdx + maxShow);
-    for (var i = startIdx; i < endIdx; i++) {
-        var p = sorted[i];
+    for (var i = 0; i < dayProgs.length; i++) {
+        var p = dayProgs[i];
         var sp = parseXmlTime(p.start);
-        var timeStr = sp ? sp.mo + '/' + sp.d + ' ' + sp.h + ':' + sp.mi : p.start;
+        var timeStr = sp ? sp.h + ':' + sp.mi : p.start;
         var descHtml = p.desc ? p.desc : '<span style="color:var(--color-text-muted)">无描述</span>';
         var rowClass = (i === currentIdx) ? 'current-programme' : '';
         html += '<tr id="pgm-row-' + i + '" class="' + rowClass + '"><td class="time-col">' + timeStr + '</td><td class="title-col">' + (p.title || '--') + '</td><td class="desc-col">' + descHtml + '</td></tr>';
     }
-    html += '</tbody></table>';
-    if (sorted.length > maxShow) html += '<div class="epg-empty">显示第 ' + (startIdx + 1) + ' ~ ' + endIdx + ' 条，共 ' + sorted.length + ' 条节目</div>';
+    html += '</tbody></table><div class="epg-empty">共 ' + dayProgs.length + ' 条节目</div>';
     modalBody.innerHTML = html;
 
     if (currentIdx >= 0) {
@@ -330,7 +417,7 @@ async function init() {
 
         mergeAndComputeFromLog();
         renderOverview(descData, epgOverview);
-        renderGroupFilter();
+        renderGroupButtons();
         renderChannels();
         document.getElementById('loading').style.display = 'none';
 
@@ -356,7 +443,20 @@ async function init() {
 
 document.getElementById('searchInput').addEventListener('input', function() { renderChannels(); });
 document.getElementById('sortSelect').addEventListener('change', function(e) { currentSort = e.target.value; sortChannels(); renderChannelPage(); });
-document.getElementById('groupSelect').addEventListener('change', function(e) { currentGroup = e.target.value; renderChannels(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+document.querySelectorAll('.btn-copy').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var url = btn.dataset.url;
+        navigator.clipboard.writeText(url).then(function() {
+            var orig = btn.textContent;
+            btn.textContent = '✓ 已复制';
+            setTimeout(function() { btn.textContent = orig; }, 1500);
+        });
+    });
+});
+document.querySelectorAll('.btn-download').forEach(function(btn) {
+    btn.addEventListener('click', function() { window.open(btn.dataset.url, '_blank'); });
+});
 
 init();

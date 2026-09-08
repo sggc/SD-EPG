@@ -51,11 +51,59 @@
                 <div class="epg-status" id="epgStatus">正在加载EPG数据...</div>
             </section>
 
+            <section class="section" id="downloadSection">
+                <h2 class="section-title">📥 EPG 下载地址</h2>
+                <div class="download-list">
+                    <div class="download-item">
+                        <div class="download-info">
+                            <span class="download-label">带Desc描述（直连）</span>
+                            <code class="download-url">https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz</code>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-sm btn-copy" data-url="https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz">📋 复制</button>
+                            <button class="btn-sm btn-download" data-url="https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz">⬇ 下载</button>
+                        </div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-info">
+                            <span class="download-label">不带描述（直连）</span>
+                            <code class="download-url">https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz</code>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-sm btn-copy" data-url="https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz">📋 复制</button>
+                            <button class="btn-sm btn-download" data-url="https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz">⬇ 下载</button>
+                        </div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-info">
+                            <span class="download-label">带Desc描述（加速）</span>
+                            <code class="download-url">https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz</code>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-sm btn-copy" data-url="https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz">📋 复制</button>
+                            <button class="btn-sm btn-download" data-url="https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc-desc.xml.gz">⬇ 下载</button>
+                        </div>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-info">
+                            <span class="download-label">不带描述（加速）</span>
+                            <code class="download-url">https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz</code>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-sm btn-copy" data-url="https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz">📋 复制</button>
+                            <button class="btn-sm btn-download" data-url="https://gh-proxy.org/https://github.com/sggc/SD-EPG/raw/main/EPG/sggc.xml.gz">⬇ 下载</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="section" id="channelsSection">
                 <h2 class="section-title">
                     频道列表
                     <span class="count-badge" id="channelCount">0</span>
+                    <span class="section-hint">点击频道可查看详细节目单</span>
                 </h2>
+                <div class="group-buttons" id="groupButtons"></div>
                 <div class="toolbar">
                     <input type="text" class="search-input" id="searchInput" placeholder="搜索频道名称或 tvg-id...">
                     <select class="sort-select" id="sortSelect">
@@ -63,9 +111,6 @@
                         <option value="matchRate">按匹配率排序</option>
                         <option value="programCount">按节目数排序</option>
                         <option value="todayCount">按今日节目排序</option>
-                    </select>
-                    <select class="sort-select" id="groupSelect">
-                        <option value="">全部分组</option>
                     </select>
                 </div>
                 <div class="table-wrapper">
@@ -104,6 +149,8 @@
                 <h3 id="modalTitle">节目单</h3>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
+            <div class="modal-channel-info" id="modalChannelInfo"></div>
+            <div class="modal-date-bar" id="modalDateBar"></div>
             <div class="modal-body" id="modalBody">
                 <div class="modal-loading">
                     <div class="loading-spinner"></div>
