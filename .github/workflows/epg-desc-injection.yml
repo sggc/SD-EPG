@@ -205,6 +205,14 @@ jobs:
           --output ./EPG/sggc-desc.xml.gz \
           --log ./log/desc_match_log.txt
 
+    - name: Generate dashboard summary (解析xml生成概要log)
+      if: always() && steps.inject.outcome == 'success'
+      run: |
+        cd public_repo
+        python scripts/generate_dashboard_summary.py \
+          --input ./EPG/sggc-desc.xml.gz \
+          --log ./log/desc_match_log.json
+
     - name: Remove private scripts
       run: rm -rf private_repo
 
