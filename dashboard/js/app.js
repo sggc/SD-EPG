@@ -232,7 +232,7 @@ function renderChannelPage() {
             ? '<span class="group-tag">' + ch.group + '</span>'
             : '<span class="group-tag ungrouped">未分组</span>';
         var gapHtml = ch['存在间隙']
-            ? '<span class="gap-indicator warn" title="最大间隙' + (ch['最大间隙分钟'] || 0) + '分钟">' + (ch['间隙数'] || 0) + '处</span>'
+            ? '<span class="gap-indicator warn">有间隙</span>'
             : '<span class="gap-indicator ok">—</span>';
         var safeName = (ch['频道名称'] || '').replace(/'/g, "\\'");
         html += '<tr class="channel-row" onclick="showChannelEpg(\'' + (ch['tvg_id'] || '') + '\', \'' + safeName + '\')">' +

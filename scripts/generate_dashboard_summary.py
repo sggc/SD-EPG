@@ -94,12 +94,12 @@ def main():
                 descCount += 1
             if s and s.strftime('%Y%m%d') == todayStr:
                 todayCount += 1
-        sortedPairs = sorted([(s, e) for (s, e, hd) in progs if s and e], key=lambda x: x[0])
+        todayPairs = sorted([(s, e) for (s, e, hd) in progs if s and e and s.strftime('%Y%m%d') == todayStr], key=lambda x: x[0])
         gapCount = 0
         maxGapMin = 0.0
-        for i in range(len(sortedPairs) - 1):
-            curStop = sortedPairs[i][1]
-            nextStart = sortedPairs[i + 1][0]
+        for i in range(len(todayPairs) - 1):
+            curStop = todayPairs[i][1]
+            nextStart = todayPairs[i + 1][0]
             if curStop and nextStart and nextStart > curStop:
                 gapMin = (nextStart - curStop).total_seconds() / 60.0
                 if gapMin > GAP_THRESHOLD_MIN:
