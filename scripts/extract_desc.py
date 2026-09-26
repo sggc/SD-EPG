@@ -102,6 +102,7 @@ class DescExtractor:
             r'^无节目描述',
             r'^无描述',
             r'^无简介',
+            r'^10月1日e域名头关闭',
         ]
 
         self.stats = {
@@ -312,6 +313,16 @@ class DescExtractor:
         except Exception as e:
             logger.error(f"解析失败 {source_name}: {e}")
 
+    def filter_invalid_existing(self):
+        before = len(self.desc_db.entries)
+        self.desc_db.entries = [
+            e for e in self.desc_db.entries
+            if self.is_valid_desc(e.get('desc', ''))
+        ]
+        removed = before - len(self.desc_db.entries)
+        if removed > 0:
+            logger.info(f"过滤已存数据库无效描述: {removed} 条")
+
     def load_existing_db(self):
         existing_path = self.config.get('existing_db')
 
@@ -322,6 +333,7 @@ class DescExtractor:
                 if response.status_code == 200:
                     data = response.json()
                     self.desc_db.load_from_list(data)
+                    self.filter_invalid_existing()
                     stats = self.desc_db.get_stats()
                     logger.info(f"加载现有数据库: {stats['total']} 条记录, {stats['channels']} 个频道")
                     return
@@ -333,6 +345,7 @@ class DescExtractor:
                 with open(self.output_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 self.desc_db.load_from_list(data)
+                self.filter_invalid_existing()
                 stats = self.desc_db.get_stats()
                 logger.info(f"加载本地数据库: {stats['total']} 条记录, {stats['channels']} 个频道")
             except Exception as e:
