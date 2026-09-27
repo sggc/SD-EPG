@@ -1,7 +1,7 @@
 {
   "version": "1.1",
   "description": "频道专属节目名清洗规则配置",
-  "last_updated": "2026-09-26",
+  "last_updated": "2026-09-27",
   "channel_rules": {
     "Astro AEC": {
       "rule_name": "Astro AEC 规则",
@@ -2034,7 +2034,8 @@
     "NewTV中国功夫": {
       "rule_name": "NewTV中国功夫频道规则",
       "note": "节目名都很干净，暂时保持原样",
-      "use_default": false
+      "use_default": false,
+      "title_transform": "^\\d{2}_"
     },
     "NewTV军事评论": {
       "rule_name": "NewTV军事评论频道规则",
@@ -2068,6 +2069,18 @@
           "from": "第\\d+季第\\d+集$",
           "to": ""
         }
+      ],
+      "episode_patterns": [
+        "第\\d+集",
+        "第[一二三四五六七八九十百]+集",
+        "（[一二三四五六七八九十]+）",
+        "\\([一二三四五六七八九十]+\\)",
+        "（\\d+）",
+        "\\(\\d+\\)",
+        "（上集）",
+        "（下集）",
+        "（上）",
+        "（下）"
       ]
     },
     "NewTV军旅剧场": {
@@ -2915,16 +2928,7 @@
     "北京文艺": {
       "rule_name": "北京文艺规则",
       "note": "去除集数标记",
-      "title_transform": [
-        {
-          "from": "（(\\d+)）$",
-          "to": ""
-        },
-        {
-          "from": "\\((\\d+)\\)$",
-          "to": ""
-        }
-      ]
+      "title_transform": "^重播:"
     },
     "北京新闻": {
       "rule_name": "北京新闻规则",
@@ -6704,6 +6708,13 @@
           "from": "\\((\\d+)\\)\\(护\\)$",
           "to": ""
         }
+      ],
+      "episode_patterns": [
+        "\\(普\\)",
+        "\\(護\\)",
+        "\\(輔12\\)",
+        "\\(輔15\\)",
+        "\\(首\\)"
       ]
     },
     "龙华经典": {
@@ -6884,6 +6895,10 @@
       "note": "保留宣传片等后缀，避免default清洗删除",
       "keep_suffix": [
         "宣传片"
+      ],
+      "episode_patterns": [
+        "\\d{4}-\\d{3}$",
+        "\\d{4}-\\d{3}（播出版）$"
       ]
     },
     "浙江新闻": {
@@ -8372,7 +8387,10 @@
     "南京新闻综合": {
       "rule_name": "南京新闻综合规则",
       "note": "strip(复)/(直播)后缀",
-      "keep_suffix": [],
+      "keep_suffix": [
+        "直播",
+        "宣传片"
+      ],
       "title_transform": [
         {
           "from": "（复）$",
@@ -8394,7 +8412,85 @@
           "from": "^南京广播电视台.*$",
           "to": "南京广播电视台总片头"
         }
+      ],
+      "episode_patterns": [
+        "\\(复\\)",
+        "\\(直播\\)"
       ]
+    },
+    "4K电视剧": {
+      "episode_patterns": [
+        "\\d{1,3}$"
+      ],
+      "keep_suffix": []
+    },
+    "陕西新闻资讯": {
+      "title_transform": "^(晨光剧场|百家剧场|第一剧场|星光剧场):\\s*",
+      "episode_patterns": [
+        "\\s+\\d+$",
+        "\\s+\\d+-\\d+$",
+        "\\s+\\d+-\\d+\\s*\\(.*\\)$"
+      ],
+      "keep_suffix": []
+    },
+    "陕西秦腔": {
+      "title_transform": "\\s+[CD]\\d+$",
+      "episode_patterns": [
+        "\\(第\\d+期\\)",
+        "\\(重播\\d+\\)"
+      ],
+      "keep_suffix": []
+    },
+    "无锡电视娱乐": {
+      "title_transform": "^当前直播",
+      "episode_patterns": [
+        "－\\d+$",
+        "3－\\d$",
+        "2－\\d$",
+        "\\d{3}－"
+      ],
+      "keep_suffix": []
+    },
+    "贵州法制": {
+      "episode_patterns": [
+        "\\(\\d+\\)"
+      ],
+      "keep_suffix": []
+    },
+    "吉视教育": {
+      "episode_patterns": [
+        "\\(重播\\)"
+      ],
+      "keep_suffix": []
+    },
+    "绍兴公共频道": {
+      "episode_patterns": [
+        "（重播）"
+      ],
+      "keep_suffix": []
+    },
+    "靖天映画": {
+      "episode_patterns": [
+        "\\(普\\)",
+        "\\(護\\)",
+        "\\(輔12\\)",
+        "\\(輔15\\)",
+        "\\s+\\d+$"
+      ],
+      "keep_suffix": []
+    },
+    "TVBS精采": {
+      "episode_patterns": [
+        "\\(保護級\\)"
+      ],
+      "keep_suffix": []
+    },
+    "iHOT爱科幻": {
+      "episode_patterns": [
+        "\\(普通话版\\)",
+        "\\(\\d+\\)"
+      ],
+      "keep_suffix": []
     }
   },
   "default": {
