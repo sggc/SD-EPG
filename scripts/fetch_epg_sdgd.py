@@ -20,8 +20,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Lock
+from urllib.parse import urljoin, urlparse
 
 BASE_URL = "https://api-lc.sdcabletv.cn:4443"
+_ALLOWED_HOST = urlparse(BASE_URL).netloc
 
 print_lock = Lock()
 
@@ -86,7 +88,9 @@ def get_headers(token):
 
 def api_request(token, endpoint, **params):
     """发送 API 请求"""
-    url = f"{BASE_URL}{endpoint}"
+    url = urljoin(BASE_URL + "/", endpoint.lstrip("/"))
+    if urlparse(url).netloc != _ALLOWED_HOST:
+        return None
     headers = get_headers(token)
     
     try:
