@@ -175,6 +175,12 @@ class UIHandler {
         const catchupConfigBtn = document.getElementById('catchupConfigBtn');
         if (catchupConfigBtn) catchupConfigBtn.addEventListener('click', () => this.showCatchupConfigModal());
 
+        const appendParamsBtn = document.getElementById('appendParamsBtn');
+        if (appendParamsBtn) appendParamsBtn.addEventListener('click', () => this.showAppendParamsModal());
+
+        const multicastConvertBtn = document.getElementById('multicastConvertBtn');
+        if (multicastConvertBtn) multicastConvertBtn.addEventListener('click', () => this.showMulticastConvertModal());
+
         // 自定义分组按钮
         const customClassifyBtn = document.getElementById('customClassifyBtn');
         if (customClassifyBtn) customClassifyBtn.addEventListener('click', () => this.showCustomClassifyModal());
@@ -1736,6 +1742,222 @@ class UIHandler {
 
         this.renderChannelList(); this.updateStats();
         this.showToast(`已配置 ${configured} 个频道的回看`, 'success');
+    }
+
+    // ================================================================
+    // 直播源末尾参数添加
+    // ================================================================
+
+    showAppendParamsModal() {
+        if (document.getElementById('appendParamsModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'appendParamsModal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.style.maxWidth = '550px'; content.style.maxHeight = '80vh'; content.style.overflowY = 'auto';
+
+        const channels = this.editorConfig.getChannels();
+        const selectedIndices = this.getSelectedChannelIndices();
+        const sampleChannel = selectedIndices.length > 0 ? channels[selectedIndices[0]] : channels.find(c => c && c.url);
+
+        content.innerHTML = `
+            <h3 style="margin-bottom: 16px;">🔗 直播源末尾参数添加</h3>
+            <div class="form-group">
+                <label class="form-label">追加参数（拼在直播源URL末尾）</label>
+                <input type="text" id="modalAppendParamInput" class="form-control" placeholder="示例: ?playseek=\${(b)yyyyMMddHHmmss}-\${(e)yyyyMMddHHmmss}" autocomplete="off">
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                智能连接符：输入以 ? 开头但URL已含 ? 时自动改为 &amp;；输入以 &amp; 开头但URL无 ? 时自动改为 ?；已包含相同参数的频道自动跳过
+            </div>
+            <div class="form-group">
+                <label class="form-label">效果预览</label>
+                <div id="modalAppendPreview" style="font-size: 12px; padding: 8px 10px; background: var(--bg-secondary, #f5f5f5); border-radius: 6px; word-break: break-all; color: var(--text-muted);">请输入参数</div>
+            </div>
+            <div class="flex gap-10 flex-wrap" style="margin-top: 12px;">
+                <button id="modalAppendSelectedBtn" class="btn btn-secondary btn-sm">追加到选中频道</button>
+                <button id="modalAppendAllBtn" class="btn btn-primary btn-sm">追加到全部频道</button>
+            </div>
+            <div class="modal-actions" style="margin-top: 16px;">
+                <button id="closeAppendParamsModal" class="btn btn-outline btn-sm">关闭</button>
+            </div>
+        `;
+
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        const paramInput = document.getElementById('modalAppendParamInput');
+        const previewBox = document.getElementById('modalAppendPreview');
+        const refreshPreview = () => {
+            const param = paramInput.value;
+            if (!param || !sampleChannel || !sampleChannel.url) {
+                previewBox.textContent = param ? '（无频道数据可预览）' : '请输入参数';
+                return;
+            }
+            previewBox.innerHTML = `原: ${this.escapeHtml(sampleChannel.url)}<br>新: <strong>${this.escapeHtml(sampleChannel.url + this.buildUrlSuffix(sampleChannel.url, param))}</strong>`;
+        };
+        paramInput.addEventListener('input', refreshPreview);
+        refreshPreview();
+
+        document.getElementById('modalAppendSelectedBtn').addEventListener('click', () => this.applyAppendParams('selected'));
+        document.getElementById('modalAppendAllBtn').addEventListener('click', () => this.applyAppendParams('all'));
+        document.getElementById('closeAppendParamsModal').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    buildUrlSuffix(url, param) {
+        let suffix = param;
+        if (/^[?&]/.test(suffix)) {
+            const hasQuery = url.includes('?');
+            if (suffix.startsWith('?') && hasQuery) suffix = '&' + suffix.slice(1);
+            else if (suffix.startsWith('&') && !hasQuery) suffix = '?' + suffix.slice(1);
+        }
+        return suffix;
+    }
+
+    applyAppendParams(mode) {
+        const param = document.getElementById('modalAppendParamInput').value.trim();
+        if (!param) { this.showToast('请输入要追加的参数', 'warning'); return; }
+
+        const channels = this.editorConfig.getChannels();
+        const indices = mode === 'selected' ? this.getSelectedChannelIndices() : channels.map((_, i) => i);
+        if (indices.length === 0) { this.showToast('没有选中的频道', 'warning'); return; }
+
+        this._saveSnapshot();
+        let appended = 0, skipped = 0;
+        indices.forEach(idx => {
+            const ch = channels[idx];
+            if (!ch.url) { skipped++; return; }
+            if (ch.url.includes(param)) { skipped++; return; }
+            this.editorConfig.updateChannel(idx, { url: ch.url + this.buildUrlSuffix(ch.url, param) });
+            appended++;
+        });
+
+        this.renderChannelList(); this.updateStats();
+        this.showToast(`已追加 ${appended} 个频道${skipped ? `，跳过 ${skipped} 个（无URL或已含参数）` : ''}`, 'success');
+    }
+
+    // ================================================================
+    // 组播转单播（rtp/udp/rtsp/http 协议前缀替换）
+    // ================================================================
+
+    showMulticastConvertModal() {
+        if (document.getElementById('multicastConvertModal')) return;
+        const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'multicastConvertModal';
+        const content = document.createElement('div'); content.className = 'modal-content';
+        content.style.maxWidth = '580px'; content.style.maxHeight = '80vh'; content.style.overflowY = 'auto';
+
+        const channels = this.editorConfig.getChannels();
+        const selectedIndices = this.getSelectedChannelIndices();
+        const targetIndices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
+        const targetLabel = selectedIndices.length > 0 ? `选中的 ${selectedIndices.length} 个频道` : `全部 ${channels.length} 个频道`;
+
+        // 统计各协议数量
+        const protoCount = { rtp: 0, udp: 0, rtsp: 0, http: 0, https: 0 };
+        const protoSample = {};
+        targetIndices.forEach(idx => {
+            const m = (channels[idx].url || '').match(/^(rtp|udp|rtsp|https?):\/\//i);
+            if (!m) return;
+            const proto = m[1].toLowerCase();
+            protoCount[proto]++;
+            if (!protoSample[proto]) protoSample[proto] = channels[idx].url;
+        });
+
+        const detected = Object.keys(protoCount).filter(p => protoCount[p] > 0);
+        if (detected.length === 0) {
+            this.showToast('目标频道中没有 rtp://、udp://、rtsp:// 或 http(s):// 协议的直播源', 'warning');
+            return;
+        }
+
+        const defaultPrefix = { rtp: 'http://ip:port/rtp/', udp: 'http://ip:port/udp/', rtsp: 'http://ip:port/rtsp/', http: 'http://ip:port/http/', https: 'http://ip:port/https/' };
+
+        const protoRows = detected.map(p => `
+            <div class="form-group">
+                <label style="font-size:13px;display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <input type="checkbox" class="mc-proto-check" data-proto="${p}" checked>
+                    <code>${p}://</code> × ${protoCount[p]} 个
+                </label>
+                <input type="text" class="form-control mc-proto-prefix" data-proto="${p}" value="${defaultPrefix[p]}" placeholder="替换后的前缀，如 http://192.168.1.1:4022/rtp/" autocomplete="off">
+                ${protoSample[p] ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;word-break:break-all;">示例: ${this.escapeHtml(protoSample[p])} → <strong>${this.escapeHtml(defaultPrefix[p] + protoSample[p].replace(new RegExp('^' + p + ':\\/\\/', 'i'), ''))}</strong></div>` : ''}
+            </div>
+        `).join('');
+
+        content.innerHTML = `
+            <h3 style="margin-bottom: 16px;">📡 组播转单播</h3>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}（勾选并编辑各协议要替换成的前缀，前缀末尾自动补 /）</div>
+            ${protoRows}
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                常见格式：udpxy 网关用 http://192.168.1.1:4022/rtp/ 或 /udp/；取消勾选的协议保持原样
+            </div>
+            <div class="flex gap-10 flex-wrap" style="margin-top: 12px;">
+                <button id="mcConvertSelectedBtn" class="btn btn-secondary btn-sm">转换选中频道</button>
+                <button id="mcConvertAllBtn" class="btn btn-primary btn-sm">一键全部转换</button>
+            </div>
+            <div class="modal-actions" style="margin-top: 16px;">
+                <button id="closeMulticastConvertModal" class="btn btn-outline btn-sm">关闭</button>
+            </div>
+        `;
+
+        modal.appendChild(content); document.body.appendChild(modal);
+
+        // 示例预览随前缀输入实时更新
+        content.querySelectorAll('.mc-proto-prefix').forEach(input => {
+            input.addEventListener('input', () => {
+                const p = input.dataset.proto;
+                const sample = protoSample[p];
+                if (!sample) return;
+                const exampleDiv = input.parentElement.querySelector('div[style*="word-break"]');
+                if (!exampleDiv) return;
+                let prefix = input.value.trim();
+                if (prefix && !/[/?#]$/.test(prefix)) prefix += '/';
+                const rest = sample.replace(new RegExp('^' + p + ':\\/\\/', 'i'), '');
+                exampleDiv.innerHTML = `示例: ${this.escapeHtml(sample)} → <strong>${this.escapeHtml(prefix + rest)}</strong>`;
+            });
+        });
+
+        document.getElementById('mcConvertSelectedBtn').addEventListener('click', () => this.applyMulticastConvert('selected'));
+        document.getElementById('mcConvertAllBtn').addEventListener('click', () => this.applyMulticastConvert('all'));
+        document.getElementById('closeMulticastConvertModal').addEventListener('click', () => { document.body.removeChild(modal); });
+        let mouseDownTarget = null;
+        modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
+        modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) document.body.removeChild(modal); mouseDownTarget = null; });
+    }
+
+    applyMulticastConvert(mode) {
+        const modal = document.getElementById('multicastConvertModal');
+        const prefixMap = {};
+        modal.querySelectorAll('.mc-proto-check:checked').forEach(check => {
+            const p = check.dataset.proto;
+            const input = modal.querySelector(`.mc-proto-prefix[data-proto="${p}"]`);
+            const prefix = input.value.trim();
+            if (prefix) prefixMap[p] = prefix;
+        });
+        const protos = Object.keys(prefixMap);
+        if (protos.length === 0) { this.showToast('请至少为一个协议填写替换前缀', 'warning'); return; }
+
+        const channels = this.editorConfig.getChannels();
+        const indices = mode === 'selected' ? this.getSelectedChannelIndices() : channels.map((_, i) => i);
+        if (indices.length === 0) { this.showToast('没有选中的频道', 'warning'); return; }
+
+        this._saveSnapshot();
+        const converted = {};
+        let total = 0;
+        indices.forEach(idx => {
+            const ch = channels[idx];
+            const m = (ch.url || '').match(/^(rtp|udp|rtsp|https?):\/\//i);
+            if (!m) return;
+            const proto = m[1].toLowerCase();
+            const prefix = prefixMap[proto];
+            if (!prefix) return;
+            let p = prefix;
+            if (!/[/?#]$/.test(p)) p += '/';
+            const rest = ch.url.slice(m[0].length);
+            this.editorConfig.updateChannel(idx, { url: p + rest });
+            converted[proto] = (converted[proto] || 0) + 1;
+            total++;
+        });
+
+        this.renderChannelList(); this.updateStats();
+        const detail = Object.entries(converted).map(([p, n]) => `${p}://${n}个`).join('、');
+        this.showToast(total ? `已转换 ${total} 个频道（${detail}）` : '目标频道中没有匹配的协议', total ? 'success' : 'warning');
     }
 
     // ================================================================
