@@ -81,7 +81,7 @@ class FormatConverter {
         const channels = [];
 
         // 已知的标准属性
-        const knownAttrs = ['tvg-id', 'tvg-name', 'tvg-logo', 'group-title', 'catchup', 'catchup-source', 'catchup-days', 'catchup-mode'];
+        const knownAttrs = ['tvg-id', 'tvg-name', 'tvg-logo', 'group-title', 'catchup', 'catchup-source', 'catchup-days'];
 
         // 提取#EXTM3U行中的EPG信息
         let epgUrl = '';

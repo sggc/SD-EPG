@@ -1337,14 +1337,14 @@ class UIHandler {
         if (document.getElementById('clearParamsModal')) return;
         const modal = document.createElement('div'); modal.className = 'modal'; modal.id = 'clearParamsModal';
         const content = document.createElement('div'); content.className = 'modal-content';
-        content.style.maxWidth = '450px';
+        content.style.maxWidth = '480px'; content.style.maxHeight = '75vh'; content.style.overflowY = 'auto';
 
         const channels = this.editorConfig.getChannels();
         const selectedIndices = this.getSelectedChannelIndices();
         const targetIndices = selectedIndices.length > 0 ? selectedIndices : channels.map((_, i) => i);
         const targetLabel = selectedIndices.length > 0 ? `选中的 ${selectedIndices.length} 个频道` : `全部 ${channels.length} 个频道`;
 
-        // 检测目标频道中哪些参数有值
+        // 固定参数定义
         const paramDefs = [
             { key: 'tvgId', label: 'tvg-id' },
             { key: 'tvgName', label: 'tvg-name' },
@@ -1352,30 +1352,42 @@ class UIHandler {
             { key: 'group', label: 'group-title (分类)' },
             { key: 'catchup', label: 'catchup (回看类型)' },
             { key: 'catchupSource', label: 'catchup-source' },
-            { key: 'catchupDays', label: 'catchup-days' },
-            { key: 'extraAttrs', label: '额外属性' }
-        ];
+            { key: 'catchupDays', label: 'catchup-days' }
+        ].map(p => ({ ...p, count: targetIndices.filter(idx => channels[idx][p.key]).length }));
 
-        const availableParams = paramDefs.filter(p => {
-            if (p.key === 'extraAttrs') {
-                return targetIndices.some(idx => channels[idx].extraAttrs && Object.keys(channels[idx].extraAttrs).length > 0);
-            }
-            return targetIndices.some(idx => channels[idx][p.key]);
+        // 动态扫描目标频道中 extraAttrs 的所有自定义属性（如 tvg-rec、user-agent 等）
+        const extraKeyCount = {};
+        targetIndices.forEach(idx => {
+            const ex = channels[idx].extraAttrs || {};
+            Object.keys(ex).forEach(k => {
+                if (ex[k]) extraKeyCount[k] = (extraKeyCount[k] || 0) + 1;
+            });
         });
+        const extraDefs = Object.keys(extraKeyCount).sort().map(k => ({ key: 'extra:' + k, label: k, count: extraKeyCount[k] }));
 
-        if (availableParams.length === 0) {
+        // URL 查询/锚点参数（?xxx 或 #xxx 之后的部分）
+        const urlParamCount = targetIndices.filter(idx => /[?#]/.test(channels[idx].url || '')).length;
+        const urlDefs = urlParamCount > 0 ? [{ key: 'urlparam', label: 'URL 查询参数 (?/# 之后)', count: urlParamCount }] : [];
+
+        const allDefs = [...paramDefs, ...extraDefs, ...urlDefs].filter(p => p.count > 0);
+
+        if (allDefs.length === 0) {
             this.showToast('目标频道没有可清除的参数', 'warning'); return;
         }
 
-        const paramCheckboxes = availableParams.map(p =>
+        const paramCheckboxes = allDefs.map(p =>
             `<label style="font-size:13px;display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-                <input type="checkbox" class="clear-param-check" data-param="${p.key}"> ${p.label}
+                <input type="checkbox" class="clear-param-check" data-param="${this.escapeHtml(p.key)}"> ${this.escapeHtml(p.label)} <span style="color:var(--text-muted);font-size:11px;">(${p.count}个有值)</span>
             </label>`
         ).join('');
 
         content.innerHTML = `
             <h3 style="margin-bottom: 16px;">🚫 清除参数</h3>
-            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">目标: ${targetLabel}（属性列表自动扫描自目标频道的实际数据）</div>
+            <div class="flex gap-10" style="margin-bottom: 10px;">
+                <button id="clearParamSelectAllBtn" class="btn btn-outline btn-sm" style="padding:2px 10px;">全选</button>
+                <button id="clearParamSelectNoneBtn" class="btn btn-outline btn-sm" style="padding:2px 10px;">全不选</button>
+            </div>
             <div style="margin-bottom: 12px;">${paramCheckboxes}</div>
             <div class="modal-actions">
                 <button id="doClearParamsBtn" class="btn btn-danger btn-sm">确认清除</button>
@@ -1384,6 +1396,13 @@ class UIHandler {
         `;
 
         modal.appendChild(content); document.body.appendChild(modal);
+
+        document.getElementById('clearParamSelectAllBtn').addEventListener('click', () => {
+            content.querySelectorAll('.clear-param-check').forEach(c => c.checked = true);
+        });
+        document.getElementById('clearParamSelectNoneBtn').addEventListener('click', () => {
+            content.querySelectorAll('.clear-param-check').forEach(c => c.checked = false);
+        });
 
         document.getElementById('doClearParamsBtn').addEventListener('click', () => {
             const checks = content.querySelectorAll('.clear-param-check:checked');
@@ -1396,8 +1415,17 @@ class UIHandler {
                 const ch = channels[idx];
                 const update = {};
                 params.forEach(p => {
-                    if (p === 'extraAttrs') {
-                        if (ch.extraAttrs && Object.keys(ch.extraAttrs).length > 0) { update.extraAttrs = {}; }
+                    if (p === 'urlparam') {
+                        if (ch.url && /[?#]/.test(ch.url)) {
+                            update.url = ch.url.replace(/[?#].*$/, '');
+                        }
+                    } else if (p.startsWith('extra:')) {
+                        const key = p.slice(6);
+                        if (ch.extraAttrs && ch.extraAttrs[key]) {
+                            const newExtra = { ...ch.extraAttrs };
+                            delete newExtra[key];
+                            update.extraAttrs = newExtra;
+                        }
                     } else if (ch[p]) {
                         update[p] = '';
                     }
