@@ -157,18 +157,27 @@
         <section id="channelEditor" class="tab-content" role="tabpanel" aria-labelledby="tab-channelEditor">
             <article class="card">
                 <h3>📥 加载直播源</h3>
-                <div id="editorDropArea" class="drop-area">
-                    <div class="drop-icon">📁</div>
-                    <p>拖放M3U文件到此处或点击选择文件（支持多文件融合）</p>
-                    <button id="editorSelectFilesBtn" class="btn btn-primary">📂 选择文件</button>
-                    <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
+                <div class="flex gap-15 flex-wrap" style="align-items: stretch;">
+                    <div id="editorDropArea" class="drop-area drop-area-compact">
+                        <div class="drop-icon">📁</div>
+                        <p>拖放或点击选择文件<br>支持多文件融合</p>
+                        <button id="editorSelectFilesBtn" class="btn btn-primary btn-sm">📂 选择文件</button>
+                        <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 260px; margin-bottom: 0; display: flex; flex-direction: column;">
+                        <label for="editorTextInput" class="form-label">📝 或粘贴文本</label>
+                        <textarea id="editorTextInput" class="form-control" style="flex: 1; min-height: 140px; resize: vertical;" placeholder="粘贴M3U/TXT频道列表文本..."></textarea>
+                    </div>
                 </div>
-                <div id="editorFileList" class="mt-20" aria-live="polite"></div>
+                <div id="editorFileList" class="mt-10" aria-live="polite"></div>
                 <div class="form-group mt-15">
-                    <label for="editorTextInput" class="form-label">📝 或粘贴文本</label>
-                    <textarea id="editorTextInput" class="form-control" rows="5" placeholder="粘贴M3U/TXT频道列表文本..."></textarea>
+                    <label for="editorUrlInput" class="form-label">🌐 从 URL 下载解析</label>
+                    <div class="flex gap-10 flex-wrap">
+                        <input type="text" id="editorUrlInput" class="form-control" style="flex: 1; min-width: 220px;" placeholder="输入直播源URL，如 https://example.com/live.m3u" autocomplete="off">
+                        <button id="editorFetchUrlBtn" class="btn btn-primary">⬇️ 下载解析</button>
+                    </div>
                 </div>
-                <div class="flex gap-10 flex-wrap">
+                <div class="flex gap-10 flex-wrap mt-15">
                     <button id="editorParseTextBtn" class="btn btn-secondary">📥 解析文本</button>
                     <label class="form-check">
                         <input type="checkbox" id="editorDeduplicate" class="form-check-input">

@@ -49,6 +49,8 @@ class UIHandler {
             editorFileList: document.getElementById('editorFileList'),
             editorTextInput: document.getElementById('editorTextInput'),
             editorParseTextBtn: document.getElementById('editorParseTextBtn'),
+            editorUrlInput: document.getElementById('editorUrlInput'),
+            editorFetchUrlBtn: document.getElementById('editorFetchUrlBtn'),
             editorDeduplicate: document.getElementById('editorDeduplicate'),
             channelSearch: document.getElementById('channelSearch'),
             channelListHead: document.getElementById('channelListHead'),
@@ -147,6 +149,8 @@ class UIHandler {
         el.editorFileInput.addEventListener('change', () => { if (el.editorFileInput.files.length > 0) this.handleEditorFiles(el.editorFileInput.files); });
 
         el.editorParseTextBtn.addEventListener('click', () => this.parseEditorText());
+        el.editorFetchUrlBtn.addEventListener('click', () => this.fetchEditorUrl());
+        el.editorUrlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') this.fetchEditorUrl(); });
         el.channelSearch.addEventListener('input', () => this.renderChannelList());
         el.deleteSelectedBtn.addEventListener('click', () => this.deleteSelectedChannels());
         el.autoMatchLogoBtn.addEventListener('click', () => this.autoMatchLogo());
@@ -426,25 +430,64 @@ class UIHandler {
         if (!text) { this.showToast('请输入文本内容', 'warning'); return; }
 
         try {
-            const ext = this.core.formatter.detectFormat(text);
-            const result = this.core.formatter.parseFileContent(text, ext);
-            let channels = this.elements.editorDeduplicate.checked ?
-                this.core.deduplicateChannels(result.channels) : result.channels;
-
-            // 融合模式
-            channels = this.mergeChannels(channels);
-
-            this.editorConfig.setChannels(channels);
-            // 自动填入原有EPG
-            if (result.epgUrl && !this.elements.editorEpgUrl.value.trim()) {
-                this.elements.editorEpgUrl.value = result.epgUrl;
-            }
-            this.renderChannelList();
-            this.updateStats();
-            this.showToast(`成功解析文本，共 ${channels.length} 个频道`, 'success');
+            const count = this.loadEditorChannels(text);
+            this.showToast(`成功解析文本，共 ${count} 个频道`, 'success');
         } catch (error) {
             this.showToast(`解析文本时出错: ${error.message}`, 'error');
         }
+    }
+
+    /**
+     * 从URL下载直播源并解析（自动识别格式，支持跨域代理失败提示）
+     */
+    async fetchEditorUrl() {
+        const url = this.elements.editorUrlInput.value.trim();
+        if (!url) { this.showToast('请输入直播源URL', 'warning'); return; }
+        if (!/^https?:\/\//i.test(url)) { this.showToast('URL 需以 http:// 或 https:// 开头', 'warning'); return; }
+
+        const btn = this.elements.editorFetchUrlBtn;
+        const originalHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> 下载中...';
+
+        try {
+            const resp = await fetch(url, { redirect: 'follow' });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
+            const text = await resp.text();
+            if (!text.trim()) throw new Error('下载内容为空');
+            this.loadEditorChannels(text);
+            this.showToast(`成功下载解析 ${this.editorConfig.getCount()} 个频道`, 'success');
+        } catch (error) {
+            const msg = String(error.message || error);
+            const hint = (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS'))
+                ? '（可能是跨域CORS限制或网络问题，可将内容复制后用"粘贴文本"方式导入）' : '';
+            this.showToast(`下载解析失败: ${msg}${hint}`, 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+        }
+    }
+
+    /**
+     * 编辑器统一频道加载入口：解析文本 → 去重 → 融合 → 渲染
+     */
+    loadEditorChannels(text) {
+        const ext = this.core.formatter.detectFormat(text);
+        const result = this.core.formatter.parseFileContent(text, ext);
+        let channels = this.elements.editorDeduplicate.checked ?
+            this.core.deduplicateChannels(result.channels) : result.channels;
+
+        // 融合模式
+        channels = this.mergeChannels(channels);
+
+        this.editorConfig.setChannels(channels);
+        // 自动填入原有EPG
+        if (result.epgUrl && !this.elements.editorEpgUrl.value.trim()) {
+            this.elements.editorEpgUrl.value = result.epgUrl;
+        }
+        this.renderChannelList();
+        this.updateStats();
+        return channels.length;
     }
 
     // ================================================================
