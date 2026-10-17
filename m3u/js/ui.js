@@ -115,7 +115,7 @@ class UIHandler {
         });
         if (el.selectFilesBtn) el.selectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.fileInput.click(); });
         el.dropArea.addEventListener('click', (e) => {
-            if (e.target === el.dropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P' || e.target.classList.contains('drop-title')) el.fileInput.click();
+            if (e.target === el.dropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P') el.fileInput.click();
         });
         el.fileInput.addEventListener('change', () => { if (el.fileInput.files.length > 0) this.handleConverterFiles(el.fileInput.files); });
 
@@ -156,7 +156,7 @@ class UIHandler {
         });
         if (el.editorSelectFilesBtn) el.editorSelectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.editorFileInput.click(); });
         el.editorDropArea.addEventListener('click', (e) => {
-            if (e.target === el.editorDropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P' || e.target.classList.contains('drop-title')) el.editorFileInput.click();
+            if (e.target === el.editorDropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P') el.editorFileInput.click();
         });
         el.editorFileInput.addEventListener('change', () => { if (el.editorFileInput.files.length > 0) this.handleEditorFiles(el.editorFileInput.files); });
 

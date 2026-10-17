@@ -44,12 +44,14 @@
             <article class="card">
                 <h3>📥 文件输入</h3>
                 <div class="load-grid">
-                    <div id="dropArea" class="drop-area drop-area-compact">
-                        <div class="drop-title">从文件中解析</div>
-                        <div class="drop-icon">📁</div>
-                        <p>拖放或点击选择<br>支持多文件</p>
-                        <input type="file" id="fileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml" aria-describedby="fileInputDesc">
-                        <span id="fileInputDesc" class="sr-only">支持的文件格式: M3U, M3U8, TXT, CSV, JSON, XML</span>
+                    <div class="form-group">
+                        <label for="fileInput" class="form-label">📁 从文件中解析</label>
+                        <div id="dropArea" class="drop-area drop-area-compact">
+                            <div class="drop-icon">📂</div>
+                            <p>拖放或点击选择<br>支持多文件</p>
+                            <input type="file" id="fileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml" aria-describedby="fileInputDesc">
+                            <span id="fileInputDesc" class="sr-only">支持的文件格式: M3U, M3U8, TXT, CSV, JSON, XML</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="textInput" class="form-label">📝 或粘贴文本</label>
@@ -168,11 +170,13 @@
             <article class="card">
                 <h3>📥 加载直播源</h3>
                 <div class="load-grid">
-                    <div id="editorDropArea" class="drop-area drop-area-compact">
-                        <div class="drop-title">从文件中解析</div>
-                        <div class="drop-icon">📁</div>
-                        <p>拖放或点击选择<br>支持多文件融合</p>
-                        <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
+                    <div class="form-group">
+                        <label for="editorFileInput" class="form-label">📁 从文件中解析</label>
+                        <div id="editorDropArea" class="drop-area drop-area-compact">
+                            <div class="drop-icon">📂</div>
+                            <p>拖放或点击选择<br>支持多文件融合</p>
+                            <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="editorTextInput" class="form-label">📝 或粘贴文本</label>

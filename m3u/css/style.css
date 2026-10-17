@@ -518,7 +518,7 @@ select.form-control {
     margin-bottom: 16px;
 }
 
-/* 加载区 grid 布局：左侧拖放框与右侧文本框等宽等高 */
+/* 加载区 grid 布局：左右各有 label + 框，两框强制等高 */
 .load-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -538,8 +538,9 @@ select.form-control {
     resize: vertical;
 }
 
-/* Drop Area 紧凑变体（左侧小四方块，随 grid 拉伸与文本框等高） */
+/* Drop Area 紧凑变体（撑满 label 下方剩余空间，与右侧文本框等高） */
 .drop-area.drop-area-compact {
+    flex: 1;
     width: 100%;
     padding: 14px 12px;
     display: flex;
@@ -547,12 +548,6 @@ select.form-control {
     align-items: center;
     justify-content: center;
     gap: 8px;
-}
-
-.drop-area.drop-area-compact .drop-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
 }
 
 .drop-area.drop-area-compact .drop-icon {
