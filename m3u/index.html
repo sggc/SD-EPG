@@ -44,20 +44,31 @@
         <section id="converter" class="tab-content active" role="tabpanel" aria-labelledby="tab-converter">
             <article class="card">
                 <h3>📥 文件输入</h3>
-                <div id="dropArea" class="drop-area">
-                    <div class="drop-icon">📁</div>
-                    <p>拖放文件到此处或点击下方按钮选择文件</p>
-                    <button id="selectFilesBtn" class="btn btn-primary">📂 选择文件</button>
-                    <input type="file" id="fileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml" aria-describedby="fileInputDesc">
-                    <span id="fileInputDesc" class="sr-only">支持的文件格式: M3U, M3U8, TXT, CSV, JSON, XML</span>
+                <div class="load-grid">
+                    <div id="dropArea" class="drop-area drop-area-compact">
+                        <div class="drop-title">从文件中解析</div>
+                        <div class="drop-icon">📁</div>
+                        <p>拖放或点击选择<br>支持多文件</p>
+                        <input type="file" id="fileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml" aria-describedby="fileInputDesc">
+                        <span id="fileInputDesc" class="sr-only">支持的文件格式: M3U, M3U8, TXT, CSV, JSON, XML</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="textInput" class="form-label">📝 或粘贴文本</label>
+                        <textarea id="textInput" class="form-control" placeholder="粘贴频道列表文本..."></textarea>
+                    </div>
                 </div>
-                <div id="fileList" class="mt-20" aria-live="polite"></div>
+                <div id="fileList" class="mt-10" aria-live="polite"></div>
                 <div class="form-group mt-15">
-                    <label for="textInput" class="form-label">📝 或粘贴文本</label>
-                    <textarea id="textInput" class="form-control" rows="5" placeholder="粘贴频道列表文本..."></textarea>
+                    <label for="converterUrlInput" class="form-label">🌐 从 URL 下载解析</label>
+                    <div class="flex gap-10 flex-wrap">
+                        <input type="text" id="converterUrlInput" class="form-control" style="flex: 1; min-width: 220px;" placeholder="输入直播源URL，如 https://example.com/live.m3u" autocomplete="off">
+                        <button id="converterFetchUrlBtn" class="btn btn-primary">⬇️ 下载解析</button>
+                    </div>
+                    <div id="converterUrlStatus" style="font-size: 12px; color: var(--text-muted); margin-top: 6px; min-height: 16px;"></div>
                 </div>
-                <div class="flex gap-10 flex-wrap">
-                    <button id="parseTextBtn" class="btn btn-secondary">📥 解析文本</button>
+                <div class="flex gap-10 flex-wrap mt-15" style="align-items: center;">
+                    <button id="converterParseFilesBtn" class="btn btn-secondary" disabled title="先在上方选择文件">📥 解析文件</button>
+                    <button id="parseTextBtn" class="btn btn-secondary">📝 解析文本</button>
                     <label class="form-check">
                         <input type="checkbox" id="deduplicate" class="form-check-input">
                         <span class="form-check-label">自动去重</span>
@@ -157,16 +168,16 @@
         <section id="channelEditor" class="tab-content" role="tabpanel" aria-labelledby="tab-channelEditor">
             <article class="card">
                 <h3>📥 加载直播源</h3>
-                <div class="flex gap-15 flex-wrap" style="align-items: stretch;">
+                <div class="load-grid">
                     <div id="editorDropArea" class="drop-area drop-area-compact">
                         <div class="drop-title">从文件中解析</div>
                         <div class="drop-icon">📁</div>
                         <p>拖放或点击选择<br>支持多文件融合</p>
                         <input type="file" id="editorFileInput" multiple accept=".m3u,.m3u8,.txt,.csv,.json,.xml">
                     </div>
-                    <div class="form-group" style="flex: 1; min-width: 260px; margin-bottom: 0; display: flex; flex-direction: column;">
+                    <div class="form-group">
                         <label for="editorTextInput" class="form-label">📝 或粘贴文本</label>
-                        <textarea id="editorTextInput" class="form-control" style="flex: 1; min-height: 150px; resize: vertical;" placeholder="粘贴M3U/TXT频道列表文本..."></textarea>
+                        <textarea id="editorTextInput" class="form-control" placeholder="粘贴M3U/TXT频道列表文本..."></textarea>
                     </div>
                 </div>
                 <div id="editorFileList" class="mt-10" aria-live="polite"></div>

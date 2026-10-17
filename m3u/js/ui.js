@@ -28,6 +28,10 @@ class UIHandler {
             fileInput: document.getElementById('fileInput'),
             selectFilesBtn: document.getElementById('selectFilesBtn'),
             fileList: document.getElementById('fileList'),
+            converterParseFilesBtn: document.getElementById('converterParseFilesBtn'),
+            converterUrlInput: document.getElementById('converterUrlInput'),
+            converterFetchUrlBtn: document.getElementById('converterFetchUrlBtn'),
+            converterUrlStatus: document.getElementById('converterUrlStatus'),
             textInput: document.getElementById('textInput'),
             parseTextBtn: document.getElementById('parseTextBtn'),
             deduplicate: document.getElementById('deduplicate'),
@@ -104,18 +108,24 @@ class UIHandler {
         const el = this.elements;
 
         el.dropArea.addEventListener('dragover', (e) => { e.preventDefault(); el.dropArea.classList.add('highlight'); });
-        el.dropArea.addEventListener('dragleave', () => { el.dropArea.classList.remove('highlight'); });
+        el.dropArea.addEventListener('dragleave', () => el.dropArea.classList.remove('highlight'));
         el.dropArea.addEventListener('drop', (e) => {
             e.preventDefault(); el.dropArea.classList.remove('highlight');
             if (e.dataTransfer.files.length > 0) this.handleConverterFiles(e.dataTransfer.files);
         });
-        el.selectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.fileInput.click(); });
+        if (el.selectFilesBtn) el.selectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.fileInput.click(); });
         el.dropArea.addEventListener('click', (e) => {
-            if (e.target === el.dropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P') el.fileInput.click();
+            if (e.target === el.dropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P' || e.target.classList.contains('drop-title')) el.fileInput.click();
         });
         el.fileInput.addEventListener('change', () => { if (el.fileInput.files.length > 0) this.handleConverterFiles(el.fileInput.files); });
 
         el.parseTextBtn.addEventListener('click', () => this.parseConverterText());
+        el.converterParseFilesBtn.addEventListener('click', () => {
+            if (!this._converterFiles || this._converterFiles.length === 0) { this.showToast('请先在上方选择文件', 'warning'); return; }
+            this.parseConverterAllFiles(this._converterFiles);
+        });
+        el.converterFetchUrlBtn.addEventListener('click', () => this.fetchConverterUrl());
+        el.converterUrlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') this.fetchConverterUrl(); });
 
         el.fieldOrder.addEventListener('change', () => {
             if (el.fieldOrder.value === 'custom') { el.customOrderContainer.classList.remove('hidden'); this.renderCustomOrderFields(); }
@@ -245,8 +255,20 @@ class UIHandler {
     // ================================================================
 
     handleConverterFiles(files) {
-        const currentFiles = Array.from(files);
-        this.renderFileList(currentFiles, this.elements.fileList, () => this.parseConverterAllFiles(currentFiles));
+        this._converterFiles = Array.from(files);
+        this.renderFileList(this._converterFiles, this.elements.fileList, () => this.parseConverterAllFiles(this._converterFiles), {
+            inlineParseBtn: false,
+            onFilesChanged: () => this.syncConverterParseFilesBtn()
+        });
+        this.syncConverterParseFilesBtn();
+    }
+
+    syncConverterParseFilesBtn() {
+        const btn = this.elements.converterParseFilesBtn;
+        if (!btn) return;
+        const hasFiles = this._converterFiles && this._converterFiles.length > 0;
+        btn.disabled = !hasFiles;
+        btn.title = hasFiles ? `解析选中的 ${this._converterFiles.length} 个文件` : '先在上方选择文件';
     }
 
     parseConverterAllFiles(files) {
@@ -294,20 +316,84 @@ class UIHandler {
         if (!text) { this.showToast('请输入文本内容', 'warning'); return; }
 
         try {
-            const ext = this.core.formatter.detectFormat(text);
-            const result = this.core.formatter.parseFileContent(text, ext);
-            this.converterChannels = this.elements.deduplicate.checked ?
-                this.core.deduplicateChannels(result.channels) : result.channels;
-            // 保存原有EPG信息
-            this.sourceEpgUrl = result.epgUrl || '';
-            this.sourceEpgAttr = result.epgAttr || '';
-            if (result.epgUrl && !this.elements.epgUrl.value.trim()) {
-                this.elements.epgUrl.value = result.epgUrl;
-            }
-            this.showToast(`成功解析文本，共 ${this.converterChannels.length} 个频道`, 'success');
+            const count = this.loadConverterChannels(text);
+            this.showToast(`成功解析文本，共 ${count} 个频道`, 'success');
         } catch (error) {
             this.showToast(`解析文本时出错: ${error.message}`, 'error');
         }
+    }
+
+    /**
+     * 从URL下载直播源并解析（转换工具）
+     * 直连失败（跨域/超时）自动依次尝试公共CORS代理
+     */
+    async fetchConverterUrl() {
+        const url = this.elements.converterUrlInput.value.trim();
+        if (!url) { this.showToast('请输入直播源URL', 'warning'); return; }
+        if (!/^https?:\/\//i.test(url)) { this.showToast('URL 需以 http:// 或 https:// 开头', 'warning'); return; }
+
+        const btn = this.elements.converterFetchUrlBtn;
+        const statusEl = this.elements.converterUrlStatus;
+        const originalHtml = btn.innerHTML;
+        const setStatus = (text) => { if (statusEl) statusEl.textContent = text || ''; };
+        const setBusy = (busy, text) => {
+            btn.disabled = busy;
+            btn.innerHTML = busy ? `<span class="spinner"></span> ${text}` : originalHtml;
+        };
+
+        const candidates = [
+            { label: '直连', url: url },
+            { label: '代理1', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url) },
+            { label: '代理2', url: 'https://corsproxy.io/?url=' + encodeURIComponent(url) }
+        ];
+
+        let lastError = '';
+        for (const cand of candidates) {
+            setBusy(true, '下载中');
+            setStatus(`⏳ 正在下载（${cand.label}）...`);
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 20000);
+            try {
+                const resp = await fetch(cand.url, { redirect: 'follow', signal: controller.signal });
+                clearTimeout(timer);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const text = await resp.text();
+                if (!text.trim()) throw new Error('下载内容为空');
+                setBusy(false, '');
+                const count = this.loadConverterChannels(text);
+                setStatus(`✅ ${cand.label}成功，解析 ${count} 个频道`);
+                this.showToast(`成功下载解析 ${count} 个频道（${cand.label}）`, 'success');
+                return;
+            } catch (error) {
+                clearTimeout(timer);
+                lastError = error.name === 'AbortError' ? '超时(20秒)' : String(error.message || error);
+                setStatus(`⚠️ ${cand.label}失败：${lastError}，尝试下一种方式...`);
+            }
+        }
+
+        setBusy(false, '');
+        const isFileProto = location.protocol === 'file:';
+        const hint = isFileProto
+            ? '本地 file:// 打开时浏览器限制直连，代理也失败了。可复制内容后用"粘贴文本"导入，或通过 http 服务打开页面'
+            : '目标源限制跨域或网络不可达，可复制内容后用"粘贴文本"导入';
+        setStatus(`❌ 下载失败：${lastError}。${hint}`);
+        this.showToast('下载解析失败，详见输入框下方提示', 'error');
+    }
+
+    /**
+     * 转换工具统一频道加载入口：解析文本 → 去重 → 存 converterChannels
+     */
+    loadConverterChannels(text) {
+        const ext = this.core.formatter.detectFormat(text);
+        const result = this.core.formatter.parseFileContent(text, ext);
+        this.converterChannels = this.elements.deduplicate.checked ?
+            this.core.deduplicateChannels(result.channels) : result.channels;
+        this.sourceEpgUrl = result.epgUrl || '';
+        this.sourceEpgAttr = result.epgAttr || '';
+        if (result.epgUrl && !this.elements.epgUrl.value.trim()) {
+            this.elements.epgUrl.value = result.epgUrl;
+        }
+        return this.converterChannels.length;
     }
 
     // ================================================================
