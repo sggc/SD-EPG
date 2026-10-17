@@ -430,7 +430,9 @@ class UIHandler {
                 case 'txt': result = formatter.convertToTXT(this.converterChannels, fieldOrder); break;
                 case 'csv': result = formatter.convertToCSV(this.converterChannels, fieldOrder); break;
                 case 'json': result = formatter.convertToJSON(this.converterChannels, fieldOrder); break;
-                case 'excel': formatter.convertToExcel(this.converterChannels, fieldOrder); this.showToast('Excel文件已生成', 'success'); return;
+                case 'excel': formatter.convertToExcel(this.converterChannels, fieldOrder)
+                    .then(ok => { this.showToast(ok ? 'Excel文件已生成' : 'Excel导出失败', ok ? 'success' : 'error'); })
+                    .catch(err => { this.showToast(`Excel导出失败: ${err.message}`, 'error'); }); return;
                 case 'xml': result = formatter.convertToXML(this.converterChannels, fieldOrder); break;
                 default: result = '不支持的输出格式';
             }

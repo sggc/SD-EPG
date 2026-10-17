@@ -371,8 +371,36 @@ class FormatConverter {
         }), null, 2);
     }
 
-    convertToExcel(channels, fieldOrder = ['name', 'url', 'logo', 'group']) {
+    /**
+     * 按需动态加载 XLSX 库（带超时与多CDN回退），避免在 head 同步加载阻塞页面初始化
+     */
+    loadXlsxLibrary() {
+        if (window.XLSX) return Promise.resolve(window.XLSX);
+        if (this._xlsxLoading) return this._xlsxLoading;
+        const urls = [
+            'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+            'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+        ];
+        this._xlsxLoading = new Promise((resolve, reject) => {
+            let idx = 0;
+            const tryNext = () => {
+                if (idx >= urls.length) { reject(new Error('XLSX 库加载失败（所有CDN均不可达）')); return; }
+                const script = document.createElement('script');
+                const timer = setTimeout(() => { script.remove(); idx++; tryNext(); }, 15000);
+                script.src = urls[idx];
+                script.onload = () => { clearTimeout(timer); window.XLSX ? resolve(window.XLSX) : (idx++, tryNext()); };
+                script.onerror = () => { clearTimeout(timer); script.remove(); idx++; tryNext(); };
+                document.head.appendChild(script);
+            };
+            tryNext();
+        });
+        return this._xlsxLoading;
+    }
+
+    async convertToExcel(channels, fieldOrder = ['name', 'url', 'logo', 'group']) {
         try {
+            await this.loadXlsxLibrary();
             const data = channels.map(channel => {
                 const result = {};
                 fieldOrder.forEach(field => {
