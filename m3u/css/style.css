@@ -518,10 +518,10 @@ select.form-control {
     margin-bottom: 16px;
 }
 
-/* 加载区 grid 布局：左右各有 label + 框，两框强制等高 */
+/* 加载区 grid 布局：左侧拖放框固定窄列近似正方形，多余宽度让给右侧文本框 */
 .load-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 170px 1fr;
     gap: 15px;
     align-items: stretch;
 }
