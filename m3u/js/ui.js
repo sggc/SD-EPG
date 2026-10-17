@@ -47,10 +47,12 @@ class UIHandler {
             editorFileInput: document.getElementById('editorFileInput'),
             editorSelectFilesBtn: document.getElementById('editorSelectFilesBtn'),
             editorFileList: document.getElementById('editorFileList'),
+            editorParseFilesBtn: document.getElementById('editorParseFilesBtn'),
             editorTextInput: document.getElementById('editorTextInput'),
             editorParseTextBtn: document.getElementById('editorParseTextBtn'),
             editorUrlInput: document.getElementById('editorUrlInput'),
             editorFetchUrlBtn: document.getElementById('editorFetchUrlBtn'),
+            editorUrlStatus: document.getElementById('editorUrlStatus'),
             editorDeduplicate: document.getElementById('editorDeduplicate'),
             channelSearch: document.getElementById('channelSearch'),
             channelListHead: document.getElementById('channelListHead'),
@@ -137,18 +139,22 @@ class UIHandler {
         const el = this.elements;
 
         el.editorDropArea.addEventListener('dragover', (e) => { e.preventDefault(); el.editorDropArea.classList.add('highlight'); });
-        el.editorDropArea.addEventListener('dragleave', () => { el.editorDropArea.classList.remove('highlight'); });
+        el.editorDropArea.addEventListener('dragleave', () => el.editorDropArea.classList.remove('highlight'));
         el.editorDropArea.addEventListener('drop', (e) => {
             e.preventDefault(); el.editorDropArea.classList.remove('highlight');
             if (e.dataTransfer.files.length > 0) this.handleEditorFiles(e.dataTransfer.files);
         });
-        el.editorSelectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.editorFileInput.click(); });
+        if (el.editorSelectFilesBtn) el.editorSelectFilesBtn.addEventListener('click', (e) => { e.stopPropagation(); el.editorFileInput.click(); });
         el.editorDropArea.addEventListener('click', (e) => {
-            if (e.target === el.editorDropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P') el.editorFileInput.click();
+            if (e.target === el.editorDropArea || e.target.classList.contains('drop-icon') || e.target.tagName === 'P' || e.target.classList.contains('drop-title')) el.editorFileInput.click();
         });
         el.editorFileInput.addEventListener('change', () => { if (el.editorFileInput.files.length > 0) this.handleEditorFiles(el.editorFileInput.files); });
 
         el.editorParseTextBtn.addEventListener('click', () => this.parseEditorText());
+        el.editorParseFilesBtn.addEventListener('click', () => {
+            if (!this._editorFiles || this._editorFiles.length === 0) { this.showToast('请先在上方选择文件', 'warning'); return; }
+            this.parseEditorAllFiles(this._editorFiles);
+        });
         el.editorFetchUrlBtn.addEventListener('click', () => this.fetchEditorUrl());
         el.editorUrlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') this.fetchEditorUrl(); });
         el.channelSearch.addEventListener('input', () => this.renderChannelList());
@@ -378,8 +384,20 @@ class UIHandler {
     // ================================================================
 
     handleEditorFiles(files) {
-        const currentFiles = Array.from(files);
-        this.renderFileList(currentFiles, this.elements.editorFileList, () => this.parseEditorAllFiles(currentFiles));
+        this._editorFiles = Array.from(files);
+        this.renderFileList(this._editorFiles, this.elements.editorFileList, () => this.parseEditorAllFiles(this._editorFiles), {
+            inlineParseBtn: false,
+            onFilesChanged: () => this.syncEditorParseFilesBtn()
+        });
+        this.syncEditorParseFilesBtn();
+    }
+
+    syncEditorParseFilesBtn() {
+        const btn = this.elements.editorParseFilesBtn;
+        if (!btn) return;
+        const hasFiles = this._editorFiles && this._editorFiles.length > 0;
+        btn.disabled = !hasFiles;
+        btn.title = hasFiles ? `解析选中的 ${this._editorFiles.length} 个文件` : '先在上方选择文件';
     }
 
     parseEditorAllFiles(files) {
@@ -438,7 +456,8 @@ class UIHandler {
     }
 
     /**
-     * 从URL下载直播源并解析（自动识别格式，支持跨域代理失败提示）
+     * 从URL下载直播源并解析
+     * 直连失败（跨域/超时）自动依次尝试公共CORS代理，全部失败给出明确提示
      */
     async fetchEditorUrl() {
         const url = this.elements.editorUrlInput.value.trim();
@@ -446,26 +465,51 @@ class UIHandler {
         if (!/^https?:\/\//i.test(url)) { this.showToast('URL 需以 http:// 或 https:// 开头', 'warning'); return; }
 
         const btn = this.elements.editorFetchUrlBtn;
+        const statusEl = this.elements.editorUrlStatus;
         const originalHtml = btn.innerHTML;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> 下载中...';
+        const setStatus = (text) => { if (statusEl) statusEl.textContent = text || ''; };
+        const setBusy = (busy, text) => {
+            btn.disabled = busy;
+            btn.innerHTML = busy ? `<span class="spinner"></span> ${text}` : originalHtml;
+        };
 
-        try {
-            const resp = await fetch(url, { redirect: 'follow' });
-            if (!resp.ok) throw new Error(`HTTP ${resp.status} ${resp.statusText}`);
-            const text = await resp.text();
-            if (!text.trim()) throw new Error('下载内容为空');
-            this.loadEditorChannels(text);
-            this.showToast(`成功下载解析 ${this.editorConfig.getCount()} 个频道`, 'success');
-        } catch (error) {
-            const msg = String(error.message || error);
-            const hint = (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS'))
-                ? '（可能是跨域CORS限制或网络问题，可将内容复制后用"粘贴文本"方式导入）' : '';
-            this.showToast(`下载解析失败: ${msg}${hint}`, 'error');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = originalHtml;
+        const candidates = [
+            { label: '直连', url: url },
+            { label: '代理1', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url) },
+            { label: '代理2', url: 'https://corsproxy.io/?url=' + encodeURIComponent(url) }
+        ];
+
+        let lastError = '';
+        for (const cand of candidates) {
+            setBusy(true, '下载中');
+            setStatus(`⏳ 正在下载（${cand.label}）...`);
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 20000);
+            try {
+                const resp = await fetch(cand.url, { redirect: 'follow', signal: controller.signal });
+                clearTimeout(timer);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const text = await resp.text();
+                if (!text.trim()) throw new Error('下载内容为空');
+                setBusy(false, '');
+                const count = this.loadEditorChannels(text);
+                setStatus(`✅ ${cand.label}成功，解析 ${count} 个频道`);
+                this.showToast(`成功下载解析 ${count} 个频道（${cand.label}）`, 'success');
+                return;
+            } catch (error) {
+                clearTimeout(timer);
+                lastError = error.name === 'AbortError' ? '超时(20秒)' : String(error.message || error);
+                setStatus(`⚠️ ${cand.label}失败：${lastError}，尝试下一种方式...`);
+            }
         }
+
+        setBusy(false, '');
+        const isFileProto = location.protocol === 'file:';
+        const hint = isFileProto
+            ? '本地 file:// 打开时浏览器限制直连，代理也失败了。可复制内容后用"粘贴文本"导入，或通过 http 服务打开页面'
+            : '目标源限制跨域或网络不可达，可复制内容后用"粘贴文本"导入';
+        setStatus(`❌ 下载失败：${lastError}。${hint}`);
+        this.showToast('下载解析失败，详见输入框下方提示', 'error');
     }
 
     /**
@@ -1115,9 +1159,14 @@ class UIHandler {
     // 通用 UI 方法
     // ================================================================
 
-    renderFileList(files, container, onParse) {
+    renderFileList(files, container, onParse, options = {}) {
+        const { inlineParseBtn = true, onFilesChanged = null } = options;
         container.innerHTML = '';
-        if (files.length === 0) { container.innerHTML = '<p class="text-muted">没有选择文件</p>'; return; }
+        if (files.length === 0) {
+            container.innerHTML = '<p class="text-muted">没有选择文件</p>';
+            if (onFilesChanged) onFilesChanged();
+            return;
+        }
 
         const list = document.createElement('ul'); list.className = 'file-list';
         files.forEach((file, index) => {
@@ -1130,13 +1179,16 @@ class UIHandler {
             fileDetails.appendChild(fileName); fileDetails.appendChild(fileSize);
             fileInfo.appendChild(fileIcon); fileInfo.appendChild(fileDetails);
             const removeBtn = document.createElement('button'); removeBtn.className = 'btn btn-danger btn-sm'; removeBtn.innerHTML = '✕'; removeBtn.setAttribute('aria-label', '移除文件');
-            removeBtn.addEventListener('click', (e) => { e.stopPropagation(); files.splice(index, 1); this.renderFileList(files, container, onParse); });
+            removeBtn.addEventListener('click', (e) => { e.stopPropagation(); files.splice(index, 1); this.renderFileList(files, container, onParse, options); });
             item.appendChild(fileInfo); item.appendChild(removeBtn); list.appendChild(item);
         });
         container.appendChild(list);
 
-        const parseBtn = document.createElement('button'); parseBtn.className = 'btn btn-secondary mt-15'; parseBtn.innerHTML = '📥 解析文件';
-        parseBtn.addEventListener('click', onParse); container.appendChild(parseBtn);
+        if (inlineParseBtn) {
+            const parseBtn = document.createElement('button'); parseBtn.className = 'btn btn-secondary mt-15'; parseBtn.innerHTML = '📥 解析文件';
+            parseBtn.addEventListener('click', onParse); container.appendChild(parseBtn);
+        }
+        if (onFilesChanged) onFilesChanged();
     }
 
     getFileIcon(filename) {

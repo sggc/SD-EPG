@@ -518,17 +518,22 @@ select.form-control {
     margin-bottom: 16px;
 }
 
-/* Drop Area 紧凑变体（左侧小四方块） */
+/* Drop Area 紧凑变体（左侧小四方块，与右侧文本框等高） */
 .drop-area.drop-area-compact {
     flex: 0 0 auto;
     width: 180px;
-    min-height: 170px;
-    padding: 16px 12px;
+    padding: 14px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
+}
+
+.drop-area.drop-area-compact .drop-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
 }
 
 .drop-area.drop-area-compact .drop-icon {
