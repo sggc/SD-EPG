@@ -1711,7 +1711,7 @@ class LogoMatcher {
 
             // 威海
             { pattern: /^威海乳山/, logo: '山东/威海乳山.png', desc: '威海乳山', priority: 25 },
-            { pattern: /^威海文登[12]/, logo: '山东/威海文登${n}.png', desc: '威海文登数字', priority: 30, extract: true },
+            { pattern: /^威海文登([12])/, logo: '山东/威海文登${n}.png', desc: '威海文登数字', priority: 30, extract: true },
             { pattern: /^威海文登/, logo: '山东/威海文登.png', desc: '威海文登', priority: 25 },
             { pattern: /^威海环翠/, logo: '山东/威海环翠.png', desc: '威海环翠', priority: 25 },
             { pattern: /^威海荣成/, logo: '山东/威海荣成.png', desc: '威海荣成', priority: 25 },
@@ -1791,7 +1791,7 @@ class LogoMatcher {
             { pattern: /^济宁/, logo: '山东/济宁.png', desc: '济宁', priority: 20 },
 
             // 淄博
-            { pattern: /^淄博临淄[12]/, logo: '山东/淄博临淄${n}.png', desc: '淄博临淄数字', priority: 30, extract: true },
+            { pattern: /^淄博临淄([12])/, logo: '山东/淄博临淄${n}.png', desc: '淄博临淄数字', priority: 30, extract: true },
             { pattern: /^淄博博山/, logo: '山东/淄博博山.png', desc: '淄博博山', priority: 25 },
             { pattern: /^淄博周村/, logo: '山东/淄博周村.png', desc: '淄博周村', priority: 25 },
             { pattern: /^淄博张店/, logo: '山东/淄博张店.png', desc: '淄博张店', priority: 25 },
@@ -1950,10 +1950,27 @@ class LogoMatcher {
             }
         }
 
-        // 3. 回退：如果直接匹配不到，尝试用"市名+频道名"再匹配
+        // 3. 回退1：去掉开头的城市名前缀再匹配
+        // 例如"青岛QTV1" → "QTV1" → QTV1.png
+        const cityNames = ['济南','青岛','烟台','潍坊','淄博','济宁','临沂','威海','德州','聊城','菏泽','滨州','枣庄','泰安','日照','东营','莱芜'];
+        const prefixCity = cityNames.find(c => name.startsWith(c) && name.length > c.length);
+        if (prefixCity) {
+            const stripped = name.slice(prefixCity.length);
+            for (const rule of sortedRules) {
+                const m = stripped.match(rule.pattern);
+                if (m) {
+                    let logoPath = rule.logo;
+                    if (rule.extract && m[1] !== undefined) {
+                        logoPath = logoPath.replace('${n}', m[1]);
+                    }
+                    return this.getBaseUrl() + logoPath;
+                }
+            }
+        }
+
+        // 4. 回退2：如果直接匹配不到，尝试用"市名+频道名"再匹配
         // 例如"临朐" → 尝试"潍坊临朐"、"济南临朐"等
         // 只匹配山东/路径的规则，且组合名长度必须大于市名（避免"烟台临朐"匹配到"烟台"）
-        const cityNames = ['济南','青岛','烟台','潍坊','淄博','济宁','临沂','威海','德州','聊城','菏泽','滨州','枣庄','泰安','日照','东营','莱芜'];
         for (const city of cityNames) {
             const combinedName = city + name;
             for (const rule of sortedRules) {
