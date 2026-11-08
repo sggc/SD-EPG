@@ -1,0 +1,33 @@
+name: Man-Made Desc Check
+
+# 仅当 man-made.json（或其清理规则）发生变更时校验，不影响定时 EPG 工作流
+on:
+  push:
+    paths:
+      - 'database/man-made.json'
+      - 'scripts/clean_desc_attribution.py'
+      - '.github/workflows/man-made-desc-check.yml'
+  pull_request:
+    paths:
+      - 'database/man-made.json'
+      - 'scripts/clean_desc_attribution.py'
+      - '.github/workflows/man-made-desc-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check-desc-attribution:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Check channel attribution wording
+      run: python scripts/clean_desc_attribution.py --check
