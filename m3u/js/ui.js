@@ -1461,6 +1461,7 @@ class UIHandler {
         const dialog = document.createElement('div');
         dialog.style.cssText = 'background:var(--card-bg);border-radius:12px;padding:24px;min-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.3);';
 
+        const selCount = this.getSelectedChannelIndices().length;
         dialog.innerHTML = `
             <h3 style="margin:0 0 16px 0;font-size:16px;">🎯 匹配Logo</h3>
             <div style="margin-bottom:14px;">
@@ -1478,6 +1479,22 @@ class UIHandler {
                 <button id="matchAllBtn" class="btn btn-primary btn-sm">匹配所有</button>
                 <button id="matchMissingBtn" class="btn btn-primary btn-sm">只匹配没有的</button>
                 <button id="matchCancelBtn" class="btn btn-outline btn-sm">取消</button>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border-color);margin:16px 0 12px;">
+            <div style="margin-bottom:10px;">
+                <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">批量设置为同一个 Logo 地址</label>
+                <input type="text" id="batchLogoUrl" class="form-control" style="width:100%;padding:4px 8px;font-size:12px;"
+                    placeholder="完整 URL，或图标库内的文件名（如 CCTV1.png）">
+                <div style="font-size:10px;color:var(--text-muted);margin-top:2px;">
+                    填文件名会自动拼上面的图标库地址；留空表示清除 Logo。
+                </div>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;">
+                <button id="batchApplySelectedBtn" class="btn btn-primary btn-sm"${selCount ? '' : ' disabled'}>
+                    应用到选中${selCount ? `（${selCount}）` : ''}
+                </button>
+                <button id="batchApplyAllBtn" class="btn btn-outline btn-sm">应用到全部</button>
             </div>
         `;
         overlay.appendChild(dialog);
@@ -1506,6 +1523,36 @@ class UIHandler {
 
         dialog.querySelector('#matchAllBtn').addEventListener('click', () => doMatch(true));
         dialog.querySelector('#matchMissingBtn').addEventListener('click', () => doMatch(false));
+
+        // ---------------- 批量设置为同一 Logo 地址 ----------------
+        const doBatch = (mode) => {
+            const urlRaw = dialog.querySelector('#batchLogoUrl').value.trim();
+            const basePathInput = dialog.querySelector('#logoBasePathInput').value.trim();
+            const accelInput = dialog.querySelector('#logoAccelPrefix').value.trim();
+            const base = (accelInput || '') + (basePathInput || 'https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/');
+
+            let url = urlRaw;
+            // 只填了文件名/相对路径时，按图标库地址补全
+            if (url && !/^(https?:)?\/\//i.test(url) && !/^data:/i.test(url)) {
+                url = base + url.replace(/^\/+/, '');
+            }
+
+            const idxs = mode === 'selected' ? this.getSelectedChannelIndices() : channels.map((_, i) => i);
+            if (idxs.length === 0) { this.showToast('请先在频道列表中勾选', 'warning'); return; }
+            if (!url && !confirm(`未填写地址，将清除这 ${idxs.length} 个频道的 Logo，确定继续？`)) return;
+
+            this._saveSnapshot();
+            idxs.forEach(i => this.editorConfig.setLogo(i, url));
+            this.renderChannelList();
+            this.updateStats();
+            this.showToast(
+                url ? `已为 ${idxs.length} 个频道设置统一 Logo` : `已清除 ${idxs.length} 个频道的 Logo`,
+                'success'
+            );
+            close();
+        };
+        dialog.querySelector('#batchApplySelectedBtn').addEventListener('click', () => doBatch('selected'));
+        dialog.querySelector('#batchApplyAllBtn').addEventListener('click', () => doBatch('all'));
     }
 
     // ================================================================
@@ -2474,17 +2521,30 @@ class UIHandler {
         content.innerHTML = `
             <h3 style="margin-top:0;">🔢 频道排序</h3>
             <div class="form-group">
-                <label class="form-label">分组排列顺序（用↑↓按钮调整）</label>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;">
+                    <label class="form-label" style="margin:0;">分组排列顺序</label>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <label style="display:flex; align-items:center; gap:4px; font-size:12px; font-weight:normal; cursor:pointer;">
+                            <input type="checkbox" id="sortSelectAll"> 全选
+                        </label>
+                        <button id="sortMoveUpBtn" class="btn btn-outline btn-sm" title="把勾选的分组整体上移">↑ 上移</button>
+                        <button id="sortMoveDownBtn" class="btn btn-outline btn-sm" title="把勾选的分组整体下移">↓ 下移</button>
+                    </div>
+                </div>
                 <ul id="sortGroupList" style="list-style:none; padding:0; margin:0; max-height: 300px; overflow-y: auto;">
                     ${allGroups.map((g, i) => {
                         const count = channels.filter(ch => ch.group === g).length;
-                        return `<li data-group="${g}" style="display:flex; align-items:center; gap:8px; padding:6px 8px; margin:2px 0; background:var(--bg-secondary); border-radius:4px;">
-                            <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-up">↑</span>
-                            <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-down">↓</span>
+                        return `<li data-group="${g}" class="sort-item" style="display:flex; align-items:center; gap:8px; padding:6px 8px; margin:2px 0; background:var(--bg-secondary); border-radius:4px; cursor:pointer; user-select:none;">
+                            <input type="checkbox" class="sort-check" style="margin:0; cursor:pointer;">
+                            <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-up" title="上移一位">↑</span>
+                            <span style="cursor:pointer; font-size:16px; color:var(--text-muted);" class="sort-down" title="下移一位">↓</span>
                             <span style="flex:1; font-size:13px;">${g} <span style="color:var(--text-muted);">(${count})</span></span>
                         </li>`;
                     }).join('')}
                 </ul>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:6px; line-height:1.5;">
+                    勾选多个分组后点「↑ 上移 / ↓ 下移」可整体移动；按住 Shift 点击可连续选择一段。
+                </div>
             </div>
             <div class="form-group" style="margin-top:12px;">
                 <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer;">
@@ -2507,7 +2567,7 @@ class UIHandler {
         modal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
         modal.addEventListener('mouseup', (e) => { if (mouseDownTarget === modal && e.target === modal) close(); mouseDownTarget = null; });
 
-        // 上下移动
+        // 上下移动（单个）
         const list = content.querySelector('#sortGroupList');
         content.querySelectorAll('.sort-up').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -2525,6 +2585,70 @@ class UIHandler {
                 if (next) list.insertBefore(next, li);
             });
         });
+
+        // ---------------- 多选 + 整体移动 ----------------
+        const selectAllEl = content.querySelector('#sortSelectAll');
+        const checkboxes = () => [...list.querySelectorAll('.sort-check')];
+        const isChecked = (li) => !!li.querySelector('.sort-check').checked;
+        const syncSelectAll = () => {
+            const all = checkboxes();
+            const checked = all.filter(cb => cb.checked).length;
+            selectAllEl.checked = all.length > 0 && checked === all.length;
+            selectAllEl.indeterminate = checked > 0 && checked < all.length;
+        };
+
+        // 点击整行切换勾选；Shift 点击连选一段
+        let lastClickIdx = null;
+        list.querySelectorAll('li').forEach((li, idx) => {
+            li.addEventListener('click', (e) => {
+                if (e.target.closest('.sort-up') || e.target.closest('.sort-down')) return;
+                if (e.target.classList.contains('sort-check')) { syncSelectAll(); lastClickIdx = idx; return; }
+                const cb = li.querySelector('.sort-check');
+                const items = [...list.children];
+                if (e.shiftKey && lastClickIdx !== null && lastClickIdx < items.length) {
+                    const target = !cb.checked;
+                    const [from, to] = [Math.min(lastClickIdx, idx), Math.max(lastClickIdx, idx)];
+                    for (let i = from; i <= to; i++) items[i].querySelector('.sort-check').checked = target;
+                } else {
+                    cb.checked = !cb.checked;
+                }
+                lastClickIdx = idx;
+                syncSelectAll();
+            });
+        });
+
+        selectAllEl.addEventListener('change', () => {
+            checkboxes().forEach(cb => { cb.checked = selectAllEl.checked; });
+            syncSelectAll();
+        });
+
+        // 整体上移 / 下移：连续选中的一组会作为一个整体移动一格
+        // 每移动一次就重新读取子节点，避免索引与 DOM 不同步
+        const moveSelected = (dir) => {
+            if (![...list.children].some(isChecked)) {
+                this.showToast('请先勾选要移动的分组', 'warning');
+                return;
+            }
+            if (dir === 'up') {
+                let nodes = [...list.children];
+                for (let i = 1; i < nodes.length; i++) {
+                    if (isChecked(nodes[i]) && !isChecked(nodes[i - 1])) {
+                        list.insertBefore(nodes[i], nodes[i - 1]);
+                        nodes = [...list.children];
+                    }
+                }
+            } else {
+                let nodes = [...list.children];
+                for (let i = nodes.length - 2; i >= 0; i--) {
+                    if (isChecked(nodes[i]) && !isChecked(nodes[i + 1])) {
+                        list.insertBefore(nodes[i + 1], nodes[i]);
+                        nodes = [...list.children];
+                    }
+                }
+            }
+        };
+        content.querySelector('#sortMoveUpBtn').addEventListener('click', () => moveSelected('up'));
+        content.querySelector('#sortMoveDownBtn').addEventListener('click', () => moveSelected('down'));
 
         // 应用排序
         content.querySelector('#sortApplyBtn').addEventListener('click', () => {
