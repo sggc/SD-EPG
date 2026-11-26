@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPG 电子节目单解析工具</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <script>
+        // 缺失简介栏的最小化状态：尽早恢复，避免页面闪烁
+        try {
+            if (localStorage.getItem('epg_missing_panel_collapsed') === '1') {
+                document.documentElement.classList.add('mp-collapsed');
+            }
+        } catch (e) { /* 隐私模式等场景忽略 */ }
+    </script>
 </head>
 <body>
     <header class="app-header">
@@ -127,10 +135,15 @@
                         <p>选择节目查看详情</p>
                     </div>
                 </div>
-                <div class="missing-panel">
-                    <div class="mp-header">
-                        <h4>⚠ 缺失简介的节目</h4>
-                        <span class="mp-count" id="missing-count"></span>
+                <div class="missing-panel" id="missing-panel">
+                    <div class="mp-header" id="missing-header">
+                        <div class="mp-title">
+                            <h4>⚠ 缺失简介的节目</h4>
+                            <span class="mp-count" id="missing-count"></span>
+                            <span class="mp-hint">已最小化 · 点击展开</span>
+                        </div>
+                        <button class="mp-toggle" id="missing-toggle" type="button"
+                                title="最小化此栏" aria-label="最小化缺失简介栏" aria-expanded="true">－</button>
                     </div>
                     <ul class="missing-list" id="missing-list"></ul>
                     <div class="mp-actions">
@@ -175,6 +188,6 @@
 
     <script src="js/utils.js?v=2"></script>
     <script src="js/epg-parser.js?v=2"></script>
-    <script src="js/ui.js?v=2"></script>
+    <script src="js/ui.js?v=3"></script>
 </body>
 </html>

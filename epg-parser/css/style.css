@@ -526,19 +526,106 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
     padding: 8px 14px 4px;
     flex-shrink: 0;
+}
+
+.missing-panel .mp-title {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-width: 0;
 }
 
 .missing-panel h4 {
     font-size: 13px;
     font-weight: 700;
     color: var(--rate-mid);
+    white-space: nowrap;
 }
 
 .missing-panel .mp-count {
     font-size: 11px;
     color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.missing-panel .mp-hint {
+    display: none;
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.missing-panel .mp-toggle {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.missing-panel .mp-toggle:hover {
+    background: var(--bg-hover);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.missing-panel .mp-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+/* 最小化状态：底部面板改为上下排列，缺失简介栏只保留一行标题条 */
+html.mp-collapsed .bottom-panels {
+    flex-direction: column;
+    height: auto;
+}
+
+html.mp-collapsed .bottom-panels .prog-detail {
+    flex: 0 0 178px;
+    border-right: none;
+    border-bottom: none;
+}
+
+html.mp-collapsed .bottom-panels .missing-panel {
+    flex: 0 0 auto;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+}
+
+html.mp-collapsed .bottom-panels .missing-panel .mp-header {
+    padding: 6px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+
+html.mp-collapsed .bottom-panels .missing-panel .mp-header:hover {
+    background: var(--bg-hover);
+}
+
+html.mp-collapsed .bottom-panels .missing-list,
+html.mp-collapsed .bottom-panels .mp-actions {
+    display: none;
+}
+
+html.mp-collapsed .bottom-panels .mp-hint {
+    display: inline;
 }
 
 .missing-list {

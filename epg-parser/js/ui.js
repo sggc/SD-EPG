@@ -42,6 +42,9 @@ class EPGUI {
             missingCount: $('#missing-count'),
             missingList: $('#missing-list'),
             copyMissingBtn: $('#copy-missing-btn'),
+            missingPanel: $('#missing-panel'),
+            missingHeader: $('#missing-header'),
+            missingToggle: $('#missing-toggle'),
 
             loadingOverlay: $('#loading-overlay'),
             loadingText: $('#loading-text'),
@@ -68,6 +71,8 @@ class EPGUI {
         this.el.localDate.addEventListener('change', () => this._onLocalFilterChange());
         this.el.descFilter.addEventListener('change', () => this._onLocalFilterChange());
         this.el.copyMissingBtn.addEventListener('click', () => this._copyMissingList());
+
+        this._initMissingPanelCollapse();
 
         document.getElementById('btn-load-file').addEventListener('click', () => this.el.fileInput.click());
         this.el.fileInput.addEventListener('change', (e) => {
@@ -494,6 +499,51 @@ class EPGUI {
                 this.el.statusText.textContent = '\uD83D\uDCCB \u7F3A\u5931\u7B80\u4ECB\u5217\u8868\u5DF2\u590D\u5236\u5230\u526A\u8D34\u677F';
             });
         }
+    }
+
+    /* ── 缺失简介栏：最小化 / 恢复（浏览器本地记忆） ── */
+    _initMissingPanelCollapse() {
+        // 初始状态由 index.html 头部脚本提前恢复，这里只同步按钮外观
+        const collapsed = document.documentElement.classList.contains('mp-collapsed');
+        this._syncMissingToggleUI(collapsed);
+
+        this.el.missingToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this._setMissingPanelCollapsed(!this._isMissingPanelCollapsed(), true);
+        });
+
+        // 最小化后整条标题栏都可点击展开
+        this.el.missingHeader.addEventListener('click', () => {
+            if (this._isMissingPanelCollapsed()) {
+                this._setMissingPanelCollapsed(false, true);
+            }
+        });
+    }
+
+    _isMissingPanelCollapsed() {
+        return document.documentElement.classList.contains('mp-collapsed');
+    }
+
+    _setMissingPanelCollapsed(collapsed, persist) {
+        document.documentElement.classList.toggle('mp-collapsed', collapsed);
+        this._syncMissingToggleUI(collapsed);
+
+        if (persist) {
+            try {
+                localStorage.setItem('epg_missing_panel_collapsed', collapsed ? '1' : '0');
+            } catch (e) { /* 隐私模式下忽略存储失败 */ }
+            this.el.statusText.textContent = collapsed
+                ? '\u23F1 \u7F3A\u5931\u7B80\u4ECB\u680F\u5DF2\u6700\u5C0F\u5316\uFF08\u5C06\u5728\u672C\u6D4F\u89C8\u5668\u4E2D\u8BB0\u4F4F\uFF09'
+                : '\uD83D\uDCCC \u7F3A\u5931\u7B80\u4ECB\u680F\u5DF2\u6062\u590D';
+        }
+    }
+
+    _syncMissingToggleUI(collapsed) {
+        const btn = this.el.missingToggle;
+        btn.textContent = collapsed ? '\u25B4' : '\uFF0D';
+        btn.title = collapsed ? '\u5C55\u5F00\u7F3A\u5931\u7B80\u4ECB\u680F' : '\u6700\u5C0F\u5316\u6B64\u680F';
+        btn.setAttribute('aria-expanded', String(!collapsed));
+        btn.setAttribute('aria-label', btn.title);
     }
 
     /* ── Export ── */
